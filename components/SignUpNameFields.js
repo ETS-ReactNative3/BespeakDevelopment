@@ -18,11 +18,19 @@ class SignUpNameFields extends Component {
     _handleText (key, value) {
         if(validateName(value)) {
             this.setState({[key]: value});
+            this.props.handleTextValue(key, value);
             key = 'val_'.concat(key)
             this.setState({[key]: false});
         } else {
+            let val_msg = ''
+            if(value == '') {
+                val_msg = 'This field is required.';
+            } else {
+                val_msg = 'Invalid name.'
+            }
+            this.props.handleTextValue(key, false);
             key = 'val_'.concat(key)
-            this.setState({[key]: 'Invalid Name'});
+            this.setState({[key]: val_msg});
         }
     }
     render () {

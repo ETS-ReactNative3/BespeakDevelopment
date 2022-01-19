@@ -29,6 +29,7 @@ export default function App() {
         <Stack.Screen options={Options.TitleScreen} name="TitleScreen" component={StartScreen.TitleScreen} />
         <Stack.Screen options={Options.ContinueScreen} name="ContinueScreen" component={StartScreen.ContinueScreen} />
         <Stack.Screen options={Options.ContinueScreen} name="SignUpNameScreen" component={SignUpScreen.SignUpNameScreen} />
+        <Stack.Screen options={Options.ContinueScreen} name="SignUpFormScreen" component={SignUpScreen.SignUpFormScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
