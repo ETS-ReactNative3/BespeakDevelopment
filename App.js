@@ -1,20 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, Component } from 'react';
+import  Apploading  from 'expo-app-loading';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import StartScreen from './screens/StartScreen';
+import SignUpScreen from './screens/SignUpScreen';
+
+import useFonts from './hooks/useFonts';
+import Options from './values/Options';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+  const [isLoaded, setIsLoaded] = useState(false);
+  
+  const getFonts = async () => {
+    await useFonts();
+  };
+  if(!isLoaded){
+    return (
+      <Apploading startAsync={getFonts} onFinish={()=> setIsLoaded(true)}
+        onError={() => console.log('error')}/>
+    )
+  } 
+  return(
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen options={Options.TitleScreen} name="TitleScreen" component={StartScreen.TitleScreen} />
+        <Stack.Screen options={Options.ContinueScreen} name="ContinueScreen" component={StartScreen.ContinueScreen} />
+        <Stack.Screen options={Options.ContinueScreen} name="SignUpNameScreen" component={SignUpScreen.SignUpNameScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
