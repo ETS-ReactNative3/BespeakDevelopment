@@ -36,7 +36,7 @@ const homeStyles=StyleSheet.create({
         height: 46,
         borderBottomWidth: 1,
         marginLeft: 40,
-        marginTop: 10,
+        marginTop: -5,
         color: '#eb9834',
         fontSize: 16,
         fontFamily: 'RedHatDisplay-Regular',
