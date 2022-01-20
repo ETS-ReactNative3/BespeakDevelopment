@@ -11,7 +11,8 @@ import {
   Image,
   StyleSheet,
   Document,
-  Alert
+  Alert,
+  KeyboardAvoidingView
 } from 'react-native';
 import { 
   Feather,
@@ -23,6 +24,13 @@ import {
 } from '@expo/vector-icons';
 
 import SignUp from "../styles/SignUp";
+import Validation from '../styles/Validation';
+
+import { 
+    validateEmail,
+    validateMobile,
+    validatePassword
+} from '../helper/TextValidate';
 
 import SignUpNameFields from '../components/SignUpNameFields';
 
@@ -52,7 +60,6 @@ class SignUpNameScreen extends Component {
         if(!(this.state.l_name && this.state.f_name) && !(this.state.org_name)) {
             return
         } 
-
         this.props.navigation.navigate('SignUpFormScreen', params);
     }
     
@@ -80,40 +87,124 @@ class SignUpNameScreen extends Component {
 }
 
 class SignUpFormScreen extends Component {
+    state = {
+        email: {value: '', valid: ''},
+        mobile: {value: '', valid: ''},
+        password: {value: '', valid: ''},
+        confirm: {value: '', valid: ''}
+    }
+    _handleText(key, value) {
+        let val_msg = 'This is a required field.'
+        if(key == 'email') {
+            if(validateEmail(value)) {
+                this.setState({[key]: {'value': value}})
+            } else {
+                if(value) {
+                    val_msg = 'Invalid email format.';
+                }
+                this.setState({[key]: {'value': false}})
+                this.setState({[key]: {'valid': val_msg}})
+            }
+        } else if(key == 'mobile') {
+            if(validateMobile(value)) {
+                this.setState({[key]: {'value': value}})
+            } else {
+                if(value) {
+                    val_msg = 'Invalid mobile number format.';
+                }
+                this.setState({[key]: {'value': false}})
+                this.setState({[key]: {'valid': val_msg}})
+            }
+        } else if(key == 'password'){
+            if(validatePassword(value)) {
+                this.setState({[key]: {'value': value}})
+            } else {
+                if(value) {
+                    val_msg = 'Your password is too weak.';
+                }
+                this.setState({[key]: {'value': false}})
+                this.setState({[key]: {'valid': val_msg}})
+            }
+        } else {
+            if(value == this.state.password.value) {
+                this.setState({[key]: {'value': value}})
+            } else {
+                if(value) {
+                    val_msg = 'Your password does not match.';
+                }
+                this.setState({[key]: {'value': false}})
+                this.setState({[key]: {'valid': val_msg}})
+            }
+        }
+    }
+    _handleSubmit() {
+        let is_valid = true;
+        for(var key in this.state) {
+            if(!this.state[key].value) {
+                is_valid = false;
+                this.setState({[key]: {'valid': 'This is a required field.'}})
+            }
+            is_valid = is_valid && true;
+        }
+
+        if(is_valid) {
+            if(this.state.password.value == this.state.confirm.value) {
+                Alert.alert('Valid', 'All things are valid!');
+            } else {
+                this.setState({'confirm':{'valid': 'Your password does not match.'}})
+            }
+        }
+    }
     render () {
         return (
             <View style={SignUp.SUcontainer}>
-                <ScrollView>
-                    <Text style={SignUp.SUtitleText}>Almost There...</Text>
-                    <Text style={SignUp.SUAltText}>We need additional details to get to know you</Text>
-                    <TextInput style={SignUp.SIinput} placeholder='Email' defaultValue = {this.props.route.params.l_name}/>
-                    <TextInput style={SignUp.SIinput} placeholder='(+63)'/>
-                    <TextInput style={SignUp.SIinput} placeholder='Password' secureTextEntry={true}/>
-                    <TextInput style={SignUp.SIinput} placeholder='Confirm Password' secureTextEntry={true}/>
-                    
-                    <View style={{alignSelf:'center'}}>
-                        <Text style={SignUp.altText}>By clicking the button below, you agree to our</Text>
-                    </View>
-                    <View style={{flexDirection:'row', justifyContent:'center'}}>
-                        <TouchableOpacity>
-                            <Text style={SignUp.btnText}>Terms</Text>
+                <KeyboardAvoidingView>
+                    <ScrollView>
+                        <Text style={SignUp.SUtitleText}>Almost There...</Text>
+                        <Text style={SignUp.SUAltText}>We need additional details to get to know you</Text>
+                        <TextInput style={SignUp.SIinput} placeholder='Email' maxLength={150} 
+                            onChangeText = {text => this._handleText('email', text)}/>
+                        <Text style={Validation.textVal}>
+                            {this.state.email.valid}</Text>   
+                        <TextInput style={SignUp.SIinput} placeholder='(+63)' maxLength={15}
+                            onChangeText = {text => this._handleText('mobile', text)}/>
+                            <Text style={Validation.textVal}>
+                                {this.state.mobile.valid}</Text>  
+                        <TextInput style={SignUp.SIinput} placeholder='Password' secureTextEntry={true}
+                            maxLength = {15}
+                            onChangeText = {text => this._handleText('password', text)}/>
+                            <Text style={Validation.textVal}>
+                                {this.state.password.valid}</Text>  
+                        <TextInput style={SignUp.SIinput} placeholder='Confirm Password' secureTextEntry={true}
+                            maxLength = {15}
+                            onChangeText = {text => this._handleText('confirm', text)}/>
+                            <Text style={Validation.textVal}>
+                                {this.state.confirm.valid}</Text>  
+                        
+                        <View style={{alignSelf:'center'}}>
+                            <Text style={SignUp.altText}>By clicking the button below, you agree to our</Text>
+                        </View>
+                        <View style={{flexDirection:'row', justifyContent:'center'}}>
+                            <TouchableOpacity>
+                                <Text style={SignUp.btnText}>Terms</Text>
+                            </TouchableOpacity>
+                            <Text style={SignUp.andText}> and </Text>
+                            <TouchableOpacity>
+                                <Text style={SignUp.btnText}>Data Policy</Text>
+                            </TouchableOpacity>
+                            <Text style={SignUp.andText}>.</Text>
+                        </View>
+                        
+                        <TouchableOpacity style={SignUp.continuebtn}
+                            onPress={() => this._handleSubmit()}>
+                                <Text style={SignUp.continuebtntext}>I'm done!</Text>
                         </TouchableOpacity>
-                        <Text style={SignUp.andText}> and </Text>
-                        <TouchableOpacity>
-                            <Text style={SignUp.btnText}>Data Policy</Text>
-                        </TouchableOpacity>
-                        <Text style={SignUp.andText}>.</Text>
+                    </ScrollView>
+                    <View style={SignUp.AlmostTherepicContainer}>
+                        <Image style={SignUp.AlmostTherepic}
+                            source={require('../assets/img/AlmostThere.png')}/>
                     </View>
-                    
-                    <TouchableOpacity style={SignUp.continuebtn}
-                        onPress={() => navigation.navigate('SignUp')}>
-                            <Text style={SignUp.continuebtntext}>I'm done!</Text>
-                    </TouchableOpacity>
-                </ScrollView>
-                <View style={SignUp.AlmostTherepicContainer}>
-                    <Image style={SignUp.AlmostTherepic}
-                        source={require('../assets/img/AlmostThere.png')}/>
-                </View>
+                </KeyboardAvoidingView>
             </View>
         );
     }
