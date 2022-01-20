@@ -22,6 +22,7 @@ import {
   FontAwesome5,
   MaterialIcons,
 } from '@expo/vector-icons';
+import { auth, db } from '../firebase';
 
 import SignUp from "../styles/SignUp";
 import Validation from '../styles/Validation';
@@ -97,6 +98,16 @@ class SignUpFormScreen extends Component {
         let val_msg = 'This is a required field.'
         if(key == 'email') {
             if(validateEmail(value)) {
+                auth
+                    .fetchSignInMethodsForEmail(value)
+                    .then(result => {
+                        if(result.length > 0) {
+                            val_msg = 'This email is unavailable.';
+                            this.setState({[key]: {'valid': val_msg}})
+                            value = false;
+                        }
+                    })
+                    .catch(error => Alert.alert(error.message))
                 this.setState({[key]: {'value': value}})
             } else {
                 if(value) {
@@ -149,7 +160,37 @@ class SignUpFormScreen extends Component {
 
         if(is_valid) {
             if(this.state.password.value == this.state.confirm.value) {
-                Alert.alert('Valid', 'All things are valid!');
+                let email = this.state.email.value;
+                let password = this.state.password.value;
+
+                let user = null;
+                auth
+                    .createUserWithEmailAndPassword(email, password)
+                    .then(userCredentials => {
+                        user = userCredentials.user;
+                        Alert.alert(user.email)
+                    })
+                    .catch(error => {
+                        Alert.alert(error.message)
+                        return
+                    })
+
+                db
+                    .collection('user_info')
+                    .add({
+                        first_name: this.props.route.params.f_name,
+                        last_name: this.props.route.params.l_name,
+                        mobile: this.state.mobile,
+                        org_name: this.props.route.params.org_name
+                    })
+                    .then(result => {
+                        Alert.alert('Account Added!');
+                    })
+                    .catch(error => {
+                        Alert.alert(error.message)
+                        return
+                    }) 
+
             } else {
                 this.setState({'confirm':{'valid': 'Your password does not match.'}})
             }
