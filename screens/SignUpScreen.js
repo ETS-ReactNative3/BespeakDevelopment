@@ -1,7 +1,4 @@
-import React, {
-  useState,
-  Component
-} from 'react';
+import React, { Component } from 'react';
 import {
   TextInput,
   ScrollView, 
@@ -9,29 +6,23 @@ import {
   Text, 
   View,
   Image,
-  StyleSheet,
-  Document,
+  BackHandler,
   Alert,
   KeyboardAvoidingView
 } from 'react-native';
-import { 
-  Feather,
-  Ionicons,
-  MaterialCommunityIcons,
-  SimpleLineIcons,
-  FontAwesome5,
-  MaterialIcons,
-} from '@expo/vector-icons';
+
 import { auth, db } from '../firebase';
 
 import SignUp from "../styles/SignUp";
 import Validation from '../styles/Validation';
+import EmailVerification from "../styles/EmailVerification.js";
 
 import { 
     validateEmail,
     validateMobile,
     validatePassword
 } from '../helper/TextValidate';
+import { Messages } from '../values/Messages'
 
 import SignUpNameFields from '../components/SignUpNameFields';
 
@@ -166,31 +157,43 @@ class SignUpFormScreen extends Component {
                 let user = null;
                 auth
                     .createUserWithEmailAndPassword(email, password)
+                    .catch(error => {
+                        Alert.alert('Error!', error.message)
+                        return
+                    })
                     .then(userCredentials => {
                         user = userCredentials.user;
-                        Alert.alert(user.email)
+                        db
+                            .collection('user_info')
+                            .add({
+                                uid: user.uid,
+                                first_name: this.props.route.params.f_name,
+                                last_name: this.props.route.params.l_name,
+                                mobile: this.state.mobile.value,
+                                org_name: this.props.route.params.org_name
+                            })
+                            .catch(error => {
+                                Alert.alert('Error!', error.message)
+                                return
+                            }) 
+                            .then(() => {
+                                let displayName = this.props.route.params.f_name ? 
+                                    this.props.route.params.f_name : this.props.route.params.org_name
+                                user.updateProfile({
+                                    displayName: displayName,
+                                })
+                                .catch(error => {
+                                    Alert.alert('Error!', error.message)
+                                    return
+                                })
+                                .then(function() {
+                                    user.sendEmailVerification();
+                                });
+                                this.props.navigation.navigate('EmailVerificationScreen', {
+                                    'email': email
+                                });
+                            }) 
                     })
-                    .catch(error => {
-                        Alert.alert(error.message)
-                        return
-                    })
-
-                db
-                    .collection('user_info')
-                    .add({
-                        first_name: this.props.route.params.f_name,
-                        last_name: this.props.route.params.l_name,
-                        mobile: this.state.mobile,
-                        org_name: this.props.route.params.org_name
-                    })
-                    .then(result => {
-                        Alert.alert('Account Added!');
-                    })
-                    .catch(error => {
-                        Alert.alert(error.message)
-                        return
-                    }) 
-
             } else {
                 this.setState({'confirm':{'valid': 'Your password does not match.'}})
             }
@@ -226,7 +229,9 @@ class SignUpFormScreen extends Component {
                             <Text style={SignUp.altText}>By clicking the button below, you agree to our</Text>
                         </View>
                         <View style={{flexDirection:'row', justifyContent:'center'}}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress = {
+                                () => Alert.alert("Terms of Service", Messages.terms)
+                            }>
                                 <Text style={SignUp.btnText}>Terms</Text>
                             </TouchableOpacity>
                             <Text style={SignUp.andText}> and </Text>
@@ -251,4 +256,62 @@ class SignUpFormScreen extends Component {
     }
 }
 
-export default { SignUpNameScreen, SignUpFormScreen }
+class EmailVerificationScreen extends Component {
+    _checkVerification() {
+        auth.currentUser.reload();
+        if(auth.currentUser.emailVerified) {
+            this.props.navigation.navigate('TitleScreen');
+        }
+    }
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    }
+    handleBackButton() {
+        return true;
+    }
+    render() {
+        return (
+            <View style={EmailVerification.SIcontainer}>
+                <View style={EmailVerification.TicketContent}>
+                    <View style={EmailVerification.YourTicket}>
+                        <View style={EmailVerification.SampleQRpicContainer}>
+                            <Image style={EmailVerification.SampleQRpic}
+                                source={require('../assets/img/VerifyEmail.png')}/>
+                        </View>
+                        <View  style={EmailVerification.YourTicketContent}>
+                            <Text style={EmailVerification.NameOnTicketWhite}>Verify by Email</Text>
+                            <Text style={EmailVerification.DateRegisteredWhite}>Please check your email {this.props.route.params.email} and follow the instructions</Text>
+                            <Text style={EmailVerification.DateRegisteredWhite}>to verify your account. If you did not receive an email</Text>
+                            <Text style={EmailVerification.DateRegisteredWhite}>or if it expired, you can resend one.</Text>
+                        </View>
+                    </View>
+                    <View style={EmailVerification.doneContainer}>
+                        <TouchableOpacity style={EmailVerification.donebtn}
+                            onPress={() => this.props.navigation.navigate('')}>
+                            <Text style={EmailVerification.donebtntext}>Done</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={EmailVerification.changebtn}
+                            onPress={() => {
+                                this._checkVerification()
+                                auth.currentUser.sendEmailVerification()
+                                        .catch(error => {
+                                            Alert.alert("Error", error.message)
+                                        })
+                                    }}>
+                            <Text style={EmailVerification.changebtntext}>Resend my Verification Email</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
+        );
+    }
+}
+
+export default { 
+    SignUpNameScreen, 
+    SignUpFormScreen,
+    EmailVerificationScreen
+}

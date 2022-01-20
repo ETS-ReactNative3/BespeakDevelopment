@@ -88,7 +88,6 @@ const homeStyles=StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#eb9834',
         height: 40,
-        width: 120,
         padding: 10,
         borderRadius: 10,
         justifyContent:'center',
@@ -101,9 +100,6 @@ const homeStyles=StyleSheet.create({
         color: '#fff',
         fontFamily: 'RedHatDisplay-Medium',
     },   
-
-
-
 })
 
 export default homeStyles;

@@ -9,8 +9,14 @@ const Options = {
             fontSize: 40,
         },
     },
-    ContinueScreen: {
+    NoTitleWithBack: {
         title: ''
+    },
+    NoTitleNoBack: {
+        title:' ',
+        headerShown: false,
+        headerShadowVisible: false,
+        borderWidth:0,
     }
 }
 
