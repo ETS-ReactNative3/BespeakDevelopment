@@ -117,6 +117,29 @@ class LoginScreen extends Component {
     }
 }
 
+class ResetFormScreen extends Component {
+    render() {
+        /*
+        return (
+            //Insert Reset Password Email Form Here
+        )
+        */
+    }
+}
+
+class ResetPasswordScreen extends Component {
+    render() {
+        /*
+        return (
+            //Insert RESEND Reset Password Email Here
+        )
+        */
+    }
+}
+
+
 export default {
-    LoginScreen
+    LoginScreen,
+    ResetFormScreen,
+    ResetPasswordScreen 
 }
