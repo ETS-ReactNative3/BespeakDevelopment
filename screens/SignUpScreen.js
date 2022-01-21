@@ -259,10 +259,7 @@ class SignUpFormScreen extends Component {
 class EmailVerificationScreen extends Component {
     _checkVerification() {
         auth.currentUser.reload();
-        if(auth.currentUser.emailVerified) {
-            return true;
-        }
-        return false;
+        return auth.currentUser.emailVerified
     }
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
@@ -293,7 +290,6 @@ class EmailVerificationScreen extends Component {
                         <TouchableOpacity style={EmailVerification.donebtn}
                             onPress={() => {
                                     if(!this._checkVerification()) {
-                                        auth.signOut()
                                         this.props.navigation.navigate('TitleScreen')
                                         return
                                     } 

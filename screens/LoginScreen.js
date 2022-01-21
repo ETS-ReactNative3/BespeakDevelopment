@@ -17,7 +17,7 @@ import {
     MaterialIcons,
 } from '@expo/vector-icons';
 
-import { auth, db } from '../firebase';
+import { auth } from '../firebase';
 
 import Index from "../styles/Index.js";
 import Validation from "../styles/Validation"
@@ -28,16 +28,6 @@ class LoginScreen extends Component {
         email: {value: '', valid: ''},
         password: {value: '', valid: ''}
     }
-    /*
-    componentDidMount() {
-        var user = auth.currentUser
-        user.reload()
-        if(user) {
-            if(user.emailVerified) {
-
-            }
-        }
-    }*/
     _handleText(key, value) {
         if(value) {
             this.setState({[key]: {'value': value}});
@@ -65,16 +55,24 @@ class LoginScreen extends Component {
             auth
                 .signInWithEmailAndPassword(email, password)
                 .then(userCredentials => {
-                    user = userCredentials.user
+                    var user = userCredentials.user
                     if(!user.emailVerified) {
                         this.props.navigation.navigate('EmailVerificationScreen', {
                             'email': email
                         });
                         return
                     }
-                    Alert.alert('Logged In', 'Test')
                 })
-                .catch(error => Alert.alert('Error', error.message))
+                .catch(error => {
+                    if(error.code == 'auth/invalid-password' ||
+                        error.code == 'auth/invalid-email' ||
+                        error.code == 'auth/user-not-found' ||
+                        error.code == 'auth/wrong-password') {
+                        this.setState({password: {valid: 'Your username or password is incorrect.'}})
+                    } else {
+                        Alert.alert('Error', error.message)
+                    }
+                })
         }
     }
     
