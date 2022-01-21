@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import StartScreen from './screens/StartScreen';
 import SignUpScreen from './screens/SignUpScreen';
+import SignInScreen from './screens/LoginScreen';
 
 import useFonts from './hooks/useFonts';
 import Options from './values/Options';
@@ -27,6 +28,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen options={Options.TitleScreen} name="TitleScreen" component={StartScreen.TitleScreen} />
+        <Stack.Screen options={Options.NoTitleWithBack} name="LoginScreen" component={SignInScreen.LoginScreen} />
         <Stack.Screen options={Options.NoTitleWithBack} name="ContinueScreen" component={StartScreen.ContinueScreen} />
         <Stack.Screen options={Options.NoTitleWithBack} name="SignUpNameScreen" component={SignUpScreen.SignUpNameScreen} />
         <Stack.Screen options={Options.NoTitleWithBack} name="SignUpFormScreen" component={SignUpScreen.SignUpFormScreen} />

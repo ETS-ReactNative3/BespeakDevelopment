@@ -260,8 +260,9 @@ class EmailVerificationScreen extends Component {
     _checkVerification() {
         auth.currentUser.reload();
         if(auth.currentUser.emailVerified) {
-            this.props.navigation.navigate('TitleScreen');
+            return true;
         }
+        return false;
     }
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
@@ -290,16 +291,26 @@ class EmailVerificationScreen extends Component {
                     </View>
                     <View style={EmailVerification.doneContainer}>
                         <TouchableOpacity style={EmailVerification.donebtn}
-                            onPress={() => this.props.navigation.navigate('')}>
+                            onPress={() => {
+                                    if(!this._checkVerification()) {
+                                        auth.signOut()
+                                        this.props.navigation.navigate('TitleScreen')
+                                        return
+                                    } 
+                                    this.props.navigation.navigate('LoginScreen')
+                                }}>
                             <Text style={EmailVerification.donebtntext}>Done</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={EmailVerification.changebtn}
                             onPress={() => {
-                                this._checkVerification()
-                                auth.currentUser.sendEmailVerification()
-                                        .catch(error => {
-                                            Alert.alert("Error", error.message)
-                                        })
+                                if(!this._checkVerification()) {
+                                    auth.currentUser.sendEmailVerification()
+                                            .catch(error => {
+                                                Alert.alert("Error", error.message)
+                                            })
+                                    return
+                                }
+                                this.props.navigation.navigate('LoginScreen')
                                     }}>
                             <Text style={EmailVerification.changebtntext}>Resend my Verification Email</Text>
                         </TouchableOpacity>

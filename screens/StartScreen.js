@@ -1,9 +1,5 @@
-import React, {
-  useState,
-  Component
-} from 'react';
+import React, { Component } from 'react';
 import {
-  TextInput,
   ScrollView, 
   TouchableOpacity, 
   Text, 
@@ -20,8 +16,6 @@ import {
   MaterialIcons,
 } from '@expo/vector-icons';
 
-const UserType = React.createContext('USER_TYPE');
-
 class TitleScreen extends Component {
   render () {
     return (
@@ -33,7 +27,7 @@ class TitleScreen extends Component {
           source={require('../assets/img/TitlePage.png')}/>      
         <View style={Index.footer}>
           <TouchableOpacity style={Index.button}
-            onPress={() => navigation.navigate('SignIn')}>
+            onPress={() => this.props.navigation.navigate('LoginScreen')}>
               <Text style={Index.buttonText}>Log In</Text>
           </TouchableOpacity>
           <Text>{'\n'}</Text>
@@ -80,8 +74,11 @@ class ContinueScreen extends Component {
         </View>
         <View style={Index.SUfooter}>
           <Text style={Index.signin}>Already have an account?</Text>
-          <TouchableOpacity>
-            <Text style={Index.signupbtn}> Sign In</Text>
+          <TouchableOpacity 
+            onPress={() => {
+              this.props.navigation.replace('LoginScreen');
+            }}>
+              <Text style={Index.signupbtn}> Sign In</Text>
           </TouchableOpacity>
           <Text>.</Text>
         </View>
