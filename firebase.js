@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import firebase from "firebase/compat/app";
+import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
@@ -16,7 +16,8 @@ const firebaseConfig = {
   storageBucket: "bespeak-development.appspot.com",
   messagingSenderId: "425255547348",
   appId: "1:425255547348:web:19ba806b45814bdd636641",
-  measurementId: "G-71Q68G6YH7"
+  measurementId: "G-71Q68G6YH7",
+  persistence: true
 };
 
 // Initialize Firebase
