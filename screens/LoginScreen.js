@@ -92,7 +92,7 @@ class LoginScreen extends Component {
                         {this.state.password.valid}</Text>  
 
                     <TouchableOpacity>
-                        <Text style={Index.SIforgotpass}>Forgot Password?</Text>
+                            <Text style={Index.SIforgotpass}>Forgot Password?</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={Index.SIbutton} 
                         onPress={() => { this._handleSubmit() }}>
@@ -111,7 +111,7 @@ class LoginScreen extends Component {
                         <Text style={Index.signupbtn}> Sign Up</Text>
                     </TouchableOpacity>
                     <Text>.</Text>
-              </View>
+                </View>
             </View>  
         );
     }
@@ -119,21 +119,71 @@ class LoginScreen extends Component {
 
 class ResetFormScreen extends Component {
     render() {
-        /*
         return (
-            //Insert Reset Password Email Form Here
+            <View style={Index.SIcontainer}>
+                <View style={Index.createEventheader}>
+                    <TouchableOpacity>
+                        <Image
+                            style={Index.goBack}
+                                source={require('../assets/img/goBack.png')}
+                        />
+                    </TouchableOpacity>      
+                        <Text style={Index.tabTitle}>Forgot Password</Text>
+                </View>
+                <View style={Index.ResetPWContent}>
+                    <View  style={Index.TitleContainer}>
+                        <Text style={Index.Titletxt}>Enter Your Email</Text>
+                    </View>
+                    <View  style={Index.InputContainer}>
+                        <TextInput style={Index.Input} placeholder='Email'></TextInput>
+                    </View>                  
+                    <View style={Index.ResetPWContainer}>
+                        <TouchableOpacity style={Index.ResetPWbtn}
+                            //onPress
+                        >
+                            <Text style={Index.ResetPWbtntext}>Reset My Password</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
         )
-        */
     }
 }
 
 class ResetPasswordScreen extends Component {
     render() {
-        /*
         return (
-            //Insert RESEND Reset Password Email Here
+            <View style={Index.Content}>
+                <ScrollView>
+                    <View style={Index.PhonepicContainer}>
+                        <Image
+                            style={Index.Phonepic}
+                                source={require('../assets/img/ResendResetPWpic.png')}
+                        />
+                    </View>
+                    <View  style={Index.TitleContainer}>
+                        <Text style={Index.Titletxt}>Reset Password</Text>
+                    </View>
+                    <View  style={Index.ResetInfoContainer}>
+                        <Text style={Index.ResetInfotxt}>Please check your email and follow the instructions</Text>
+                        <Text style={Index.ResetInfotxt}>to reset your password. If you did not receive an</Text>
+                        <Text style={Index.ResetInfotxt}>email or if it expired, you can resend one.</Text>
+                    </View>
+                </ScrollView>
+            <View style={Index.IndexContainer}>
+                <TouchableOpacity style={Index.Indexbtn}
+                    //onPress
+                >
+                    <Text style={Index.Indexbtntext}>Done</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={Index.ResendPWEmailbtn}
+                    //onPress
+                >
+                    <Text style={Index.ResendPWEmailbtntext}>Resend password reset email</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
         )
-        */
     }
 }
 

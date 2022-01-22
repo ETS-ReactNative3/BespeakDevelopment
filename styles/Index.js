@@ -40,6 +40,7 @@ const homeStyles=StyleSheet.create({
         borderColor: '#fff',
         borderRadius: 5,
         color: '#fff',
+        marginBottom:27,
     },
     buttonText:{
         fontSize: 20,
@@ -80,7 +81,7 @@ const homeStyles=StyleSheet.create({
         height: 46,
         borderBottomWidth: 1,
         marginLeft: 40,
-        marginTop: 10,
+        marginTop: -5,
         color: '#eb9834',
         fontSize: 16,
         fontFamily: 'RedHatDisplay-Regular',
@@ -144,7 +145,7 @@ const homeStyles=StyleSheet.create({
         backgroundColor: '#fff',
     },
     SUtitleText:{
-        marginTop: 10,
+        marginTop: 23,
         fontSize: 35,
         color: '#000',
         fontFamily: 'RedHatDisplay-Medium',
@@ -230,6 +231,123 @@ const homeStyles=StyleSheet.create({
         color:'#eb9834', 
         fontFamily:'RedHatDisplay-Medium'
     },
+
+//ResendResetPW
+    tabTitle:{
+        fontFamily:'RedHatDisplay-Medium',
+        marginLeft:10,
+        fontSize: 24,
+        color:'#eb9834',
+        marginTop:-6,
+    },
+    Content:{
+        paddingTop:170,
+        flex:1,
+        backgroundColor:'#fff',
+        justifyContent:'center',
+        alignItems:'center',
+    },
+    PhonepicContainer: {
+        alignItems:'center',
+        justifyContent:'center',
+    },
+    Phonepic: {
+        marginBottom:10,
+        width: 90,
+        height:160,
+        justifyContent:'center',
+    },
+    TitleContainer:{
+        alignSelf:'center',
+        margin:25
+    },
+    Titletxt:{
+        fontFamily:'RedHatDisplay-Medium',
+        fontSize:24,
+    },
+    ResetInfoContainer:{
+        alignSelf:'center',
+    },
+    ResetInfotxt:{
+        fontSize:16,
+        fontFamily:'RedHatDisplay-Regular',
+        alignSelf:'center'
+    },
+    Input:{
+        height: 46,
+        borderBottomWidth: 1,
+        borderBottomColor:'#ddd',
+        marginLeft: 40,
+        marginTop: 10,
+        color: '#eb9834',
+        fontSize: 16,
+        fontFamily: 'RedHatDisplay-Regular',
+        marginRight: 40,
+    },
+    ResendResetPWContainer:{
+        alignSelf:'center',
+        margin:30,
+    },
+    ResendResetPWbtn: {
+        marginBottom: 10,
+        alignItems: 'center',
+        backgroundColor: '#eb9834',
+        height: 40,
+        width: 370,
+        padding: 10,
+        borderRadius: 10,
+        justifyContent:'center',
+    },
+    ResendResetPWbtntext:{
+        marginTop: -2,
+        fontSize: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#fff',
+        fontFamily: 'RedHatDisplay-Medium',
+    },
+    ResendPWEmailbtn: {
+        marginBottom: 20,
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        height: 40,
+        borderRadius: 10,
+        justifyContent:'center',
+    },
+    ResendPWEmailbtntext:{
+        fontSize: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#eb9834',
+        fontFamily: 'RedHatDisplay-Medium',
+    }, 
+//ResetPW
+    ResetPWContent:{
+        flex:1,
+        backgroundColor:'#fff',
+    },
+    ResetPWContainer:{
+        alignSelf:'center',
+        margin:30,
+    },
+    ResetPWbtn: {
+        marginBottom: 60,
+        alignItems: 'center',
+        backgroundColor: '#eb9834',
+        height: 40,
+        width: 340,
+        padding: 10,
+        borderRadius: 10,
+        justifyContent:'center',
+    },
+    ResetPWbtntext:{
+        marginTop: -2,
+        fontSize: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#fff',
+        fontFamily: 'RedHatDisplay-Medium',
+    },  
 
 
 })

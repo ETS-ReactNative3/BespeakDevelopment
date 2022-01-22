@@ -30,7 +30,6 @@ class TitleScreen extends Component {
             onPress={() => this.props.navigation.navigate('LoginScreen')}>
               <Text style={Index.buttonText}>Log In</Text>
           </TouchableOpacity>
-          <Text>{'\n'}</Text>
           <TouchableOpacity style={Index.button2}
             onPress={() => this.props.navigation.navigate('ContinueScreen')}>
               <Text style={Index.buttonText2}>Sign Up</Text>

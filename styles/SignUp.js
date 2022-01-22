@@ -18,7 +18,7 @@ const homeStyles=StyleSheet.create({
         height:15,
     },
     SItitleText:{
-        marginTop: 10,
+        marginTop: 23,
         fontSize: 35,
         color: '#000',
         fontFamily: 'RedHatDisplay-Medium',
@@ -102,7 +102,7 @@ const homeStyles=StyleSheet.create({
         backgroundColor: '#fff',
     },
     SUtitleText:{
-        marginTop: 10,
+        marginTop: 23,
         fontSize: 35,
         color: '#000',
         fontFamily: 'RedHatDisplay-Medium',
@@ -117,14 +117,14 @@ const homeStyles=StyleSheet.create({
         alignItems: 'center',
     },
     AlmostTherepicContainer:{
-
+        flex:1,
+        marginTop:112,
         alignItems:'center',
         justifyContent:'center',
     },
     AlmostTherepic: {
         width: 280,
         height:250,
-        marginBottom:-30,
         justifyContent:'center',
     },
     

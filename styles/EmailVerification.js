@@ -61,6 +61,8 @@ const homeStyles=StyleSheet.create({
         color: "#fff",
         fontSize: 17,
         fontFamily: 'RedHatDisplay-Regular',
+        width:370,
+        textAlign:'center'
     },
     doneContainer:{
         alignItems:'center',
