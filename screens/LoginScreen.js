@@ -95,7 +95,8 @@ class LoginScreen extends Component {
                     <Text style={Validation.textVal}>
                         {this.state.password.valid}</Text>  
 
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress = {() => this.props.navigation.navigate('ResetFormScreen')}>
                             <Text style={Index.SIforgotpass}>Forgot Password?</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={Index.SIbutton} 
@@ -125,15 +126,6 @@ class ResetFormScreen extends Component {
     render() {
         return (
             <View style={Index.SIcontainer}>
-                <View style={Index.createEventheader}>
-                    <TouchableOpacity>
-                        <Image
-                            style={Index.goBack}
-                                source={require('../assets/img/goBack.png')}
-                        />
-                    </TouchableOpacity>      
-                        <Text style={Index.tabTitle}>Forgot Password</Text>
-                </View>
                 <View style={Index.ResetPWContent}>
                     <View  style={Index.TitleContainer}>
                         <Text style={Index.Titletxt}>Enter Your Email</Text>
