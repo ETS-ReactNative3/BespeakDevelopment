@@ -258,8 +258,9 @@ class SignUpFormScreen extends Component {
 
 class EmailVerificationScreen extends Component {
     _checkVerification() {
-        auth.currentUser.reload();
-        return auth.currentUser.emailVerified
+        let user = auth.currentUser;
+        user.reload()
+        return user.emailVerified
     }
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
@@ -289,24 +290,18 @@ class EmailVerificationScreen extends Component {
                     <View style={EmailVerification.doneContainer}>
                         <TouchableOpacity style={EmailVerification.donebtn}
                             onPress={() => {
-                                    if(!this._checkVerification()) {
-                                        this.props.navigation.navigate('TitleScreen')
-                                        return
-                                    } 
-                                    this.props.navigation.navigate('LoginScreen')
+                                auth.signOut();
+                                this.props.navigation.navigate('TitleScreen')
                                 }}>
                             <Text style={EmailVerification.donebtntext}>Done</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={EmailVerification.changebtn}
                             onPress={() => {
-                                if(!this._checkVerification()) {
-                                    auth.currentUser.sendEmailVerification()
-                                            .catch(error => {
-                                                Alert.alert("Error", error.message)
-                                            })
-                                    return
-                                }
-                                this.props.navigation.navigate('LoginScreen')
+                                auth.currentUser.sendEmailVerification()
+                                        .catch(error => {
+                                            Alert.alert("Error", error.message)
+                                        })
+                                return
                                     }}>
                             <Text style={EmailVerification.changebtntext}>Resend my Verification Email</Text>
                         </TouchableOpacity>

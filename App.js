@@ -22,7 +22,7 @@ export default function App() {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
-  
+  const [dummy, setDummy] = useState(true);
   
   const getFonts = async () => {
     await useFonts();
@@ -36,6 +36,22 @@ export default function App() {
     return subscribe; // unsubscribe on unmount
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      setDummy(!dummy);
+      try {
+        let user = auth.currentUser
+        if (user) {
+          await user.reload();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      
+    }, 1000);
+    return () => clearInterval(interval);
+  });
+
   if(!isLoaded){
     return (
       <Apploading startAsync={getFonts} onFinish={()=> setIsLoaded(true)}
@@ -44,16 +60,9 @@ export default function App() {
   }
   if (initializing) return null;
 
-  if(user) {
-    user.reload()
-    if(!user.emailVerified) {
-      setUser(false);
-    }
-  }
-  
   return(
     <NavigationContainer>
-      {user ? (
+      {user && user.emailVerified ? (
           <Stack.Navigator>
             <Stack.Screen options={Options.NoTitleNoBack} name = "TestHomeScreen" component={HomeScreen.TestHomeScreen} />
           </Stack.Navigator> 

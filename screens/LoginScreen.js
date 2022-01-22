@@ -51,11 +51,15 @@ class LoginScreen extends Component {
         if(is_valid) {
             var email = this.state.email.value
             var password = this.state.password.value
-
+            
+            let user = auth.currentUser
+            if(user) {
+                user.reload()
+            }
             auth
                 .signInWithEmailAndPassword(email, password)
                 .then(userCredentials => {
-                    var user = userCredentials.user
+                    let user = userCredentials.user
                     if(!user.emailVerified) {
                         this.props.navigation.navigate('EmailVerificationScreen', {
                             'email': email
