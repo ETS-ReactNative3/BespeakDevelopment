@@ -307,7 +307,7 @@ const homeStyles=StyleSheet.create({
         fontFamily: 'RedHatDisplay-Medium',
     },
     ResendPWEmailbtn: {
-        marginBottom: 20,
+        marginBottom: 70,
         alignItems: 'center',
         backgroundColor: '#fff',
         height: 40,
@@ -331,7 +331,7 @@ const homeStyles=StyleSheet.create({
         margin:30,
     },
     ResetPWbtn: {
-        marginBottom: 60,
+        marginBottom: 16,
         alignItems: 'center',
         backgroundColor: '#eb9834',
         height: 40,
