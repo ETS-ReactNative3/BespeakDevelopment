@@ -257,11 +257,6 @@ class SignUpFormScreen extends Component {
 }
 
 class EmailVerificationScreen extends Component {
-    _checkVerification() {
-        let user = auth.currentUser;
-        user.reload()
-        return user.emailVerified
-    }
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }

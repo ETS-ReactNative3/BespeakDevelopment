@@ -5,23 +5,19 @@ import {
     TouchableOpacity, 
     Text, 
     View,
+    BackHandler,
     Image,
     Alert
 } from 'react-native';
-import { 
-    Feather,
-    Ionicons,
-    MaterialCommunityIcons,
-    SimpleLineIcons,
-    FontAwesome5,
-    MaterialIcons,
-} from '@expo/vector-icons';
 
 import { auth } from '../firebase';
 
 import Index from "../styles/Index.js";
 import Validation from "../styles/Validation"
-import TitlePage from "../assets/img/TitlePage.png";
+
+import { 
+    validateEmail,
+} from '../helper/TextValidate';
 
 class LoginScreen extends Component {
     state = {
@@ -123,20 +119,56 @@ class LoginScreen extends Component {
 }
 
 class ResetFormScreen extends Component {
+    state = {
+        email: {value: '', valid: ''}
+    }
+    _handleText(value) {
+        if(value) {
+            if(validateEmail(value)) {
+                this.setState({'email': {'value': value, 'valid': ''}})
+                return
+            }
+            this.setState({'email': {'value': false, 'valid': 'Invalid email format.'}})
+        }
+        this.setState({'email': {'value': false, 'valid': 'This is a required field.'}})
+    }
+    _handleSubmit() {
+        if(this.state.email.value) {
+            let email = this.state.email.value
+            auth
+                .sendPasswordResetEmail(email)
+                .catch(error => {
+                    if(error.message = 'auth/user-not-found') {
+                        this.setState({'email': {'valid': 'This email is unavailable.'}})
+                        return
+                    }
+                    Alert.alert("Error!", error.message)
+                })
+                .then(() => {
+                    if(!this.state.email.valid)
+                        this.props.navigation.navigate('ResetPasswordScreen', {email: email})
+                })
+            return
+        }
+        this.setState({'email': {'valid': 'This is a required field.'}})
+    }
+
     render() {
         return (
             <View style={Index.SIcontainer}>
                 <View style={Index.ResetPWContent}>
-                    <View  style={Index.TitleContainer}>
+                    <View style={Index.TitleContainer}>
                         <Text style={Index.Titletxt}>Enter Your Email</Text>
                     </View>
-                    <View  style={Index.InputContainer}>
-                        <TextInput style={Index.Input} placeholder='Email'></TextInput>
+                    <View style={Index.InputContainer}>
+                        <TextInput style={Index.Input} placeholder='Email'
+                            onChangeText = {text => this._handleText(text)}/>
+                        <Text style={Validation.textVal}>
+                            {this.state.email.valid}</Text> 
                     </View>                  
                     <View style={Index.ResetPWContainer}>
                         <TouchableOpacity style={Index.ResetPWbtn}
-                            //onPress
-                        >
+                            onPress = {() => this._handleSubmit()}>
                             <Text style={Index.ResetPWbtntext}>Reset My Password</Text>
                         </TouchableOpacity>
                     </View>
@@ -147,6 +179,15 @@ class ResetFormScreen extends Component {
 }
 
 class ResetPasswordScreen extends Component {
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    }
+    handleBackButton() {
+        return true;
+    }
     render() {
         return (
             <View style={Index.Content}>
@@ -167,15 +208,21 @@ class ResetPasswordScreen extends Component {
                     </View>
                 </ScrollView>
             <View style={Index.IndexContainer}>
-                <TouchableOpacity style={Index.Indexbtn}
-                    //onPress
-                >
-                    <Text style={Index.Indexbtntext}>Done</Text>
+                <TouchableOpacity style={Index.ResetPWbtn}
+                    onPress = {() => this.props.navigation.navigate('TitleScreen')}>
+                        <Text style={Index.ResetPWbtntext}>Done</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={Index.ResendPWEmailbtn}
-                    //onPress
-                >
-                    <Text style={Index.ResendPWEmailbtntext}>Resend password reset email</Text>
+                    onPress = {() => {
+                            let email = this.props.route.params.email;
+
+                            auth
+                                .sendPasswordResetEmail(email)
+                                .catch(error => {
+                                    Alert("Error!", error.message)
+                                })
+                        }}>
+                        <Text style={Index.ResendPWEmailbtntext}>Resend password reset email</Text>
                 </TouchableOpacity>
             </View>
         </View>
