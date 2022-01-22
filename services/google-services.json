@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "425255547348",
+    "project_id": "bespeak-development",
+    "storage_bucket": "bespeak-development.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:425255547348:android:f0a39b1a6c310190636641",
+        "android_client_info": {
+          "package_name": "com.jedpedregosa.Bespeak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "425255547348-lvphp4mp667hst7t4a7tn71sj1ukgumj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGXpsDa2xnakOUd3C7CigGHzwVtTjrEH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "425255547348-lvphp4mp667hst7t4a7tn71sj1ukgumj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

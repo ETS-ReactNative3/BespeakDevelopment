@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
-import firebase from "firebase/compat/app";
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
+import firebase from "@react-native-firebase/app";
+import '@react-native-firebase/auth';
+import '@react-native-firebase/firestore';
 
 //import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -27,8 +27,8 @@ if (firebase.apps.length === 0) {
   app = firebase.app()
 }
 
-const db = app.firestore()
+const db = firebase.firestore()
 const auth = firebase.auth()
 //const analytics = getAnalytics(app);
 
-export { auth, db };
+export { auth };
