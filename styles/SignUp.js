@@ -33,10 +33,10 @@ const homeStyles=StyleSheet.create({
         alignItems: 'center',
     },
     SIinput:{
-        height: 46,
+        height: 41,
         borderBottomWidth: 1,
         marginLeft: 40,
-        marginTop: -5,
+        marginTop: 0,
         color: '#eb9834',
         fontSize: 16,
         fontFamily: 'RedHatDisplay-Regular',
