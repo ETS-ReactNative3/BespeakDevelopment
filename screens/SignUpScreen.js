@@ -158,11 +158,21 @@ class SignUpFormScreen extends Component {
                 auth
                     .createUserWithEmailAndPassword(email, password)
                     .catch(error => {
+                        if(error.code == 'auth/email-already-exists' ||
+                            error.code == 'auth/email-already-in-use') {
+                                this.setState({'email': {'valid': 'This email is unavailable.'}})
+                                return
+                        }
                         Alert.alert('Error!', error.message)
                         return
                     })
                     .then(userCredentials => {
+                        if(!userCredentials) {
+                            return
+                        }
+                        
                         user = userCredentials.user;
+                        
                         db
                             .collection('user_info')
                             .add({
@@ -187,7 +197,14 @@ class SignUpFormScreen extends Component {
                                     return
                                 })
                                 .then(function() {
-                                    user.sendEmailVerification();
+                                    user.sendEmailVerification()
+                                        .catch(error => {
+                                            if(error.code == 'auth/too-many-requests') {
+                                                Alert.alert('Email Verification', 'Please wait, we have sended you the email already.')
+                                                return
+                                            }
+                                            Alert.alert('Error!', error.message)
+                                        });
                                 });
                                 this.props.navigation.navigate('EmailVerificationScreen', {
                                     'email': email
@@ -293,6 +310,10 @@ class EmailVerificationScreen extends Component {
                             onPress={() => {
                                 auth.currentUser.sendEmailVerification()
                                         .catch(error => {
+                                            if(error.code == 'auth/too-many-requests') {
+                                                Alert.alert('Email Verification', 'Please wait, we have sended you the email already.')
+                                                return
+                                            }
                                             Alert.alert("Error", error.message)
                                         })
                                 return

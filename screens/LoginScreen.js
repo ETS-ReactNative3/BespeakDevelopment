@@ -22,12 +22,16 @@ import {
 class LoginScreen extends Component {
     state = {
         email: {value: '', valid: ''},
-        password: {value: '', valid: ''}
+        password: {value: '', valid: ''},
+        submit_result: ''
     }
     _handleText(key, value) {
         if(value) {
             this.setState({[key]: {'value': value}});
         } else {
+            if(this.state.submit_result) {
+                this.setState({'submit_result': ''})
+            }
             this.setState({[key]: {
                 'value': false,
                 'valid': 'This field is required.'
@@ -37,7 +41,7 @@ class LoginScreen extends Component {
     _handleSubmit() {
         let is_valid = true;
         for(var key in this.state) {
-            if(!this.state[key].value) {
+            if(!this.state[key].value && key!='submit_result') {
                 is_valid = false;
                 this.setState({[key]: {'valid': 'This is a required field.'}})
             }
@@ -68,7 +72,9 @@ class LoginScreen extends Component {
                         error.code == 'auth/invalid-email' ||
                         error.code == 'auth/user-not-found' ||
                         error.code == 'auth/wrong-password') {
-                        this.setState({password: {valid: 'Your username or password is incorrect.'}})
+                            this.setState({'submit_result': 'Your username or password is incorrect.'})
+                    } else if(error.code == 'auth/too-many-requests') {
+                        this.setState({'submit_result': 'This account is currently blocked.'})
                     } else {
                         Alert.alert('Error', error.message)
                     }
@@ -89,8 +95,8 @@ class LoginScreen extends Component {
                     <TextInput style={Index.SIinput} placeholder='Password' secureTextEntry={true}
                         maxLength = {15} onChangeText = {text => this._handleText('password', text)}/>
                     <Text style={Validation.textVal}>
-                        {this.state.password.valid}</Text>  
-
+                        {this.state.submit_result ? 
+                            this.state.submit_result : this.state.password.valid}</Text>  
                     <TouchableOpacity
                         onPress = {() => this.props.navigation.navigate('ResetFormScreen')}>
                             <Text style={Index.SIforgotpass}>Forgot Password?</Text>
@@ -140,6 +146,9 @@ class ResetFormScreen extends Component {
                 .catch(error => {
                     if(error.message = 'auth/user-not-found') {
                         this.setState({'email': {'valid': 'This email is unavailable.'}})
+                        return
+                    }else if(error.code == 'auth/too-many-requests') {
+                        Alert.alert('Reset Password', 'Please wait, we have sended you the email already.')
                         return
                     }
                     Alert.alert("Error!", error.message)
@@ -219,7 +228,11 @@ class ResetPasswordScreen extends Component {
                             auth
                                 .sendPasswordResetEmail(email)
                                 .catch(error => {
-                                    Alert("Error!", error.message)
+                                    if(error.code == 'auth/too-many-requests') {
+                                        Alert.alert('Reset Password', 'Please wait, we have sended you the email already.')
+                                        return
+                                    }
+                                    Alert.alert("Error!", error.message)
                                 })
                         }}>
                         <Text style={Index.ResendPWEmailbtntext}>Resend password reset email</Text>
