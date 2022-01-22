@@ -12,6 +12,15 @@ const Options = {
     NoTitleWithBack: {
         title: ''
     },
+    WithTitleWithBack: {
+        ForgotPassword: {
+            title: 'Forgot Password',
+            headerTitleStyle: {
+                fontFamily: 'RedHatDisplay-Medium',
+                color: '#eb9834',
+            },
+        }
+    },
     NoTitleNoBack: {
         title:' ',
         headerShown: false,
