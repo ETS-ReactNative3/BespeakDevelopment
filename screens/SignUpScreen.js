@@ -282,9 +282,8 @@ class EmailVerificationScreen extends Component {
                         </View>
                         <View  style={EmailVerification.YourTicketContent}>
                             <Text style={EmailVerification.NameOnTicketWhite}>Verify by Email</Text>
-                            <Text style={EmailVerification.DateRegisteredWhite}>Please check your email {this.props.route.params.email} and follow the instructions</Text>
-                            <Text style={EmailVerification.DateRegisteredWhite}>to verify your account. If you did not receive an email</Text>
-                            <Text style={EmailVerification.DateRegisteredWhite}>or if it expired, you can resend one.</Text>
+                            <Text style={EmailVerification.DateRegisteredWhite}>Please check your email {this.props.route.params.email} and follow the instructions
+                            to verify your account. If you did not receive an email or if it expired, you can resend one.</Text>
                         </View>
                     </View>
                     <View style={EmailVerification.doneContainer}>
