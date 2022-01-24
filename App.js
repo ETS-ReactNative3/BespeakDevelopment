@@ -28,12 +28,6 @@ export default function App() {
     await useFonts();
   };
 
-  if(user) {
-    Alert.alert('USER LOGGED IN:', user.email)
-  }
-  
-
-
   useEffect(() => {
     const subscribe = auth.onAuthStateChanged((receivedUser) => {
       setUser(receivedUser);
