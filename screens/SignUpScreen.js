@@ -87,6 +87,7 @@ class SignUpFormScreen extends Component {
     }
     _handleText(key, value) {
         let val_msg = 'This is a required field.'
+        this.setState({[key]: {'valid': '', 'value': value}})
         if(key == 'email') {
             if(validateEmail(value)) {
                 auth
@@ -94,127 +95,123 @@ class SignUpFormScreen extends Component {
                     .then(result => {
                         if(result.length > 0) {
                             val_msg = 'This email is unavailable.';
-                            this.setState({[key]: {'valid': val_msg}})
-                            value = false;
+                            this.setState({[key]: {'valid': val_msg, 'value': value}})
                         }
                     })
                     .catch(error => Alert.alert(error.message))
-                this.setState({[key]: {'value': value}})
             } else {
                 if(value) {
                     val_msg = 'Invalid email format.';
                 }
-                this.setState({[key]: {'value': false}})
-                this.setState({[key]: {'valid': val_msg}})
+                this.setState({[key]: {'valid': val_msg, 'value': value}})
             }
         } else if(key == 'mobile') {
-            if(validateMobile(value)) {
-                this.setState({[key]: {'value': value}})
-            } else {
+            if(!validateMobile(value)) {
                 if(value) {
                     val_msg = 'Invalid mobile number format.';
                 }
-                this.setState({[key]: {'value': false}})
-                this.setState({[key]: {'valid': val_msg}})
-            }
+                this.setState({[key]: {'valid': val_msg, 'value': value}})
+            } 
         } else if(key == 'password'){
-            if(validatePassword(value)) {
-                this.setState({[key]: {'value': value}})
-            } else {
+            if(!validatePassword(value)) {
                 if(value) {
                     val_msg = 'Your password is too weak.';
                 }
-                this.setState({[key]: {'value': false}})
-                this.setState({[key]: {'valid': val_msg}})
-            }
-        } else {
-            if(value == this.state.password.value) {
-                this.setState({[key]: {'value': value}})
-            } else {
+                this.setState({[key]: {'valid': val_msg, 'value': value}})
+            } 
+            this.setState({'confirm': {'valid': '', 'value': this.state.confirm.value}})
+            if(value != this.state.confirm.value) {
+                val_msg = 'Your password does not match.';
+                this.setState({'confirm': {'valid': val_msg, 'value': this.state.confirm.value}})
+            } 
+            // # TODO: Optimized Implementation
+        } else if(key == 'confirm'){
+            if(value != this.state.password.value ||
+                    this.state.password.value == '') {
                 if(value) {
                     val_msg = 'Your password does not match.';
                 }
-                this.setState({[key]: {'value': false}})
-                this.setState({[key]: {'valid': val_msg}})
-            }
+                this.setState({[key]: {'valid': val_msg, 'value': value}})
+            } 
         }
     }
     _handleSubmit() {
         let is_valid = true;
         for(var key in this.state) {
-            if(!this.state[key].value) {
+            this._handleText(key, this.state[key].value)
+        }
+        for(var key in this.state) {
+            if(this.state[key].valid != '') {
                 is_valid = false;
-                this.setState({[key]: {'valid': 'This is a required field.'}})
             }
             is_valid = is_valid && true;
         }
 
-        if(is_valid) {
-            if(this.state.password.value == this.state.confirm.value) {
-                let email = this.state.email.value;
-                let password = this.state.password.value;
+        if(!is_valid) {
+            return
+        }
 
-                let user = null;
-                auth
-                    .createUserWithEmailAndPassword(email, password)
-                    .catch(error => {
-                        if(error.code == 'auth/email-already-exists' ||
-                            error.code == 'auth/email-already-in-use') {
-                                this.setState({'email': {'valid': 'This email is unavailable.'}})
-                                return
+        let email = this.state.email.value;
+        let password = this.state.password.value;
+
+        let user = null;
+        auth
+            .createUserWithEmailAndPassword(email, password)
+            .catch(error => {
+                if(error.code == 'auth/email-already-exists' ||
+                    error.code == 'auth/email-already-in-use' ||
+                    error.code == 'auth/invalid-email') {
+                        this.setState({'email': {'valid': 'This email is unavailable.'}})
+                            return
                         }
                         Alert.alert('Error!', error.message)
                         return
                     })
-                    .then(userCredentials => {
-                        if(!userCredentials) {
-                            return
-                        }
+            .then(userCredentials => {
+                if(!userCredentials) {
+                    return
+                }
                         
-                        user = userCredentials.user;
+                user = userCredentials.user;
                         
-                        db
-                            .collection('user_info')
-                            .add({
-                                uid: user.uid,
-                                first_name: this.props.route.params.f_name,
-                                last_name: this.props.route.params.l_name,
-                                mobile: this.state.mobile.value,
-                                org_name: this.props.route.params.org_name
-                            })
-                            .catch(error => {
-                                Alert.alert('Error!', error.message)
-                                return
-                            }) 
-                            .then(() => {
-                                let displayName = this.props.route.params.f_name ? 
-                                    this.props.route.params.f_name : this.props.route.params.org_name
-                                user.updateProfile({
-                                    displayName: displayName,
-                                })
-                                .catch(error => {
-                                    Alert.alert('Error!', error.message)
-                                    return
-                                })
-                                .then(function() {
-                                    user.sendEmailVerification()
-                                        .catch(error => {
-                                            if(error.code == 'auth/too-many-requests') {
-                                                Alert.alert('Email Verification', 'Please wait, we have sended you the email already.')
-                                                return
-                                            }
-                                            Alert.alert('Error!', error.message)
-                                        });
-                                });
-                                this.props.navigation.navigate('EmailVerificationScreen', {
-                                    'email': email
-                                });
-                            }) 
+                db
+                    .collection('user_info')
+                    .add({
+                        uid: user.uid,
+                        first_name: this.props.route.params.f_name,
+                        last_name: this.props.route.params.l_name,
+                        mobile: this.state.mobile.value,
+                        org_name: this.props.route.params.org_name
                     })
-            } else {
-                this.setState({'confirm':{'valid': 'Your password does not match.'}})
-            }
-        }
+                    .catch(error => {
+                        Alert.alert('Error!', error.message)
+                        return
+                    }) 
+                    .then(() => {
+                        let displayName = this.props.route.params.f_name ? 
+                        this.props.route.params.f_name : this.props.route.params.org_name
+                        user.updateProfile({
+                            displayName: displayName,
+                        })
+                        .catch(error => {
+                            Alert.alert('Error!', error.message)
+                            return
+                        })
+                        .then(function() {
+                            user.sendEmailVerification()
+                                .catch(error => {
+                                    if(error.code == 'auth/too-many-requests') {
+                                        Alert.alert('Email Verification', 'Please wait, we have sended you the email already.')
+                                        return
+                                    }
+                                    Alert.alert('Error!', error.message)
+                                });
+                        });
+                            this.props.navigation.navigate('EmailVerificationScreen', {
+                                'email': email
+                            });
+                        }) 
+                })
     }
     render () {
         return (

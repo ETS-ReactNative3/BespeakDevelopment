@@ -1,10 +1,18 @@
 var regularName = /^[a-zA-Z ]*$/;
+var regularOrgName = /^[a-zA-Z0-9.#+_! ]*$/;
 var regularEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-var regularMobile = /^[0-9-+]*$/;
+var regularMobile = /^[0-9-+)(]*$/;
 var regularPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
 export function validateName(value) {
     if (!value.match(regularName) || value.length < 2){
+        return false;
+    }
+    return true;
+}
+
+export function validateOrgName(value) {
+    if (!value.match(regularOrgName) || value.length < 2){
         return false;
     }
     return true;

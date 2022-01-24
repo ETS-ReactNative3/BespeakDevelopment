@@ -4,9 +4,11 @@ import { TextInput, View, Text, Alert} from 'react-native';
 import SignUp from "../styles/SignUp";
 import Validation from "../styles/Validation"
 
-import { validateName } from "../helper/TextValidate";
+import { validateName, validateOrgName } from "../helper/TextValidate";
 
 class SignUpNameFields extends Component {
+    //#TODO: Optimized Implementation
+        //Transfer the Whole form as the component.
     state = {
         l_name: '',
         f_name: '',
@@ -16,11 +18,12 @@ class SignUpNameFields extends Component {
         val_org_name: '',
     }
     _handleText (key, value) {
-        if(validateName(value)) {
-            this.setState({[key]: value});
-            this.props.handleTextValue(key, value);
-            key = 'val_'.concat(key)
-            this.setState({[key]: false});
+        if(validateName(value) ||
+            (validateOrgName(value) && key == 'org_name')) {
+                this.setState({[key]: value});
+                this.props.handleTextValue(key, value);
+                key = 'val_'.concat(key)
+                this.setState({[key]: false});
         } else {
             let val_msg = ''
             if(value == '') {
