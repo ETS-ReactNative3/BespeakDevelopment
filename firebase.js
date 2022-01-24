@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
-import firebase from "firebase/compat/app";
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
+import firebase from "@react-native-firebase/app"
+import '@react-native-firebase/auth';
+import '@react-native-firebase/firestore';
 
 //import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -10,13 +10,13 @@ import 'firebase/compat/firestore';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAYqdMo2D7E8Nw9dorbI8aJHnMp4LxitUc",
-  authDomain: "bespeak-development.firebaseapp.com",
-  projectId: "bespeak-development",
-  storageBucket: "bespeak-development.appspot.com",
-  messagingSenderId: "425255547348",
-  appId: "1:425255547348:web:19ba806b45814bdd636641",
-  measurementId: "G-71Q68G6YH7"
+  clientId: '425255547348-lvphp4mp667hst7t4a7tn71sj1ukgumj.apps.googleusercontent.com',
+  appId: '1:425255547348:android:f0a39b1a6c310190636641',
+  apiKey: 'AIzaSyCGXpsDa2xnakOUd3C7CigGHzwVtTjrEH8',
+  storageBucket: 'bespeak-development.appspot.com',
+  messagingSenderId: '425255547348',
+  projectId: 'bespeak-development',
+  databaseURL: 'https://bespeak-development-default-rtdb.firebaseio.com/'
 };
 
 // Initialize Firebase
