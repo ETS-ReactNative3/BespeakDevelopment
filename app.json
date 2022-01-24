@@ -4,9 +4,9 @@
     "slug": "Bespeak",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/bespeak-icon-test.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/bespeak-splash-test.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,7 +23,7 @@
     "android": {
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/bespeak-icon-test.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.jedpedregosa.Bespeak"

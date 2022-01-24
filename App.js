@@ -23,10 +23,16 @@ export default function App() {
   const [user, setUser] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
   const [dummy, setDummy] = useState(true);
-  
+
   const getFonts = async () => {
     await useFonts();
   };
+
+  if(user) {
+    Alert.alert('USER LOGGED IN:', user.email)
+  }
+  
+
 
   useEffect(() => {
     const subscribe = auth.onAuthStateChanged((receivedUser) => {
@@ -43,7 +49,7 @@ export default function App() {
         let user = auth.currentUser
         if (user) {
           await user.reload();
-        }
+        } 
       } catch (error) {
         console.log(error);
       }
@@ -59,6 +65,10 @@ export default function App() {
     )
   }
   if (initializing) return null;
+
+  auth.onAuthStateChanged((receivedUser) => {
+    setUser(receivedUser);
+  })
 
   return(
     <NavigationContainer>
