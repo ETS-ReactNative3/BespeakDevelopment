@@ -36,6 +36,7 @@ class SignUpNameScreen extends Component {
         super(props);
         this.user_type = props.route.params.USER_TYPE
         this._handleTextValue = this._handleTextValue.bind(this)
+        this._handleSubmit = this._handleSubmit.bind(this)
     }
     
     _handleTextValue(key, value) {
@@ -49,9 +50,7 @@ class SignUpNameScreen extends Component {
             f_name: this.state.f_name,
             org_name: this.state.org_name
         }
-        if(!(this.state.l_name && this.state.f_name) && !(this.state.org_name)) {
-            return
-        } 
+
         this.props.navigation.navigate('SignUpFormScreen', params);
     }
     
@@ -61,13 +60,9 @@ class SignUpNameScreen extends Component {
                 <ScrollView>
                     <Text style={SignUp.SItitleText}>Let's Get Started!</Text>
                     <Text style={SignUp.SUAltText}>Share & see what's happening near you</Text>
-                    <SignUpNameFields USER_TYPE = {this.user_type} handleTextValue={this._handleTextValue}/> 
-                    <View style={{}}>
-                        <TouchableOpacity style={SignUp.continuebtn}
-                            onPress={() => this._handleSubmit()}>
-                                <Text style={SignUp.continuebtntext}>Continue</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <SignUpNameFields USER_TYPE = {this.user_type} 
+                        handleTextValue={this._handleTextValue}
+                        handleParentSubmit={this._handleSubmit}/> 
                     <View style={SignUp.LetsGetStartedpicContainer}>
                         <Image style={SignUp.loginpic}
                             source={require('../assets/img/LetsGetStarted.png')}/>
@@ -135,10 +130,10 @@ class SignUpFormScreen extends Component {
             } 
         }
     }
-    _handleSubmit() {
+    async _handleSubmit() {
         let is_valid = true;
         for(var key in this.state) {
-            this._handleText(key, this.state[key].value)
+            await this._handleText(key, this.state[key].value)
         }
         for(var key in this.state) {
             if(this.state[key].valid != '') {

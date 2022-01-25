@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput, View, Text, Alert} from 'react-native';
+import { TextInput, View, Text, TouchableOpacity} from 'react-native';
 
 import SignUp from "../styles/SignUp";
 import Validation from "../styles/Validation"
@@ -10,36 +10,43 @@ class SignUpNameFields extends Component {
     //#TODO: Optimized Implementation
         //Transfer the Whole form as the component.
     state = {
-        l_name: '',
-        f_name: '',
-        org_name: '', 
-        val_l_name: '',
-        val_f_name: '',
-        val_org_name: '',
+        l_name: {value: '', valid: ''},
+        f_name: {value: '', valid: ''},
+        org_name: {value: '', valid: ''}, 
     }
     _handleText (key, value) {
+        this.setState({[key]: {value: value, valid: ''}});
         if(validateName(value) ||
             (validateOrgName(value) && key == 'org_name')) {
-                this.setState({[key]: value});
                 this.props.handleTextValue(key, value);
-                key = 'val_'.concat(key)
-                this.setState({[key]: false});
         } else {
             let val_msg = ''
             if(value == '') {
-                val_msg = 'This field is required.';
+                val_msg = 'This is a required field.';
             } else {
                 val_msg = 'Invalid name.'
             }
-            this.props.handleTextValue(key, false);
-            key = 'val_'.concat(key)
-            this.setState({[key]: val_msg});
+            this.setState({[key]: {value: value, valid: val_msg}});
         }
+    }
+    async _handleChildSubmit() {
+        if(this.props.USER_TYPE == 'INDIV') {
+            await this._handleText('f_name', this.state.f_name.value) 
+            await this._handleText('l_name', this.state.l_name.value) 
+        } else {
+            await this._handleText('org_name', this.state.org_name.value) 
+        }
+
+        if(this.state.l_name.valid == '' &&
+            this.state.f_name.valid == '' &&
+            this.state.org_name.valid == '') {
+                this.props.handleParentSubmit();
+        } 
     }
     render () {
         if(this.props.USER_TYPE == 'INDIV') {
             return (
-                <View>
+                <>
                     <TextInput style={SignUp.SIinput}
                         type='text'
                         id='first-name' 
@@ -48,7 +55,7 @@ class SignUpNameFields extends Component {
                         maxLength = {26}
                         onChangeText = {text => this._handleText('f_name', text)}/>
                     <Text style={Validation.textVal}>
-                        {this.state.val_f_name}</Text>     
+                        {this.state.f_name.valid}</Text>     
                     <TextInput style={SignUp.SIinput}
                         type='text'
                         id='last-name' 
@@ -57,12 +64,16 @@ class SignUpNameFields extends Component {
                         maxLength = {26}
                         onChangeText = {text => this._handleText('l_name', text)}/> 
                     <Text style={Validation.textVal}>
-                        {this.state.val_l_name}</Text>                 
-                </View>
+                        {this.state.l_name.valid}</Text>
+                    <TouchableOpacity style={SignUp.continuebtn}
+                        onPress={() => this._handleChildSubmit()}>
+                            <Text style={SignUp.continuebtntext}>Continue</Text>
+                    </TouchableOpacity>                 
+                </>
             );
         } else {
             return (
-                <View>
+                <>
                     <TextInput style={SignUp.SIinput}
                         type='text'
                         id='org_name' 
@@ -71,8 +82,12 @@ class SignUpNameFields extends Component {
                         maxLength = {46}
                         onChangeText = {text => this._handleText('org_name', text)}/>
                     <Text style={Validation.textVal}>
-                        {this.state.val_org_name}</Text>     
-                </View>
+                        {this.state.org_name.valid}</Text>     
+                    <TouchableOpacity style={SignUp.continuebtn}
+                        onPress={() => this._handleChildSubmit()}>
+                            <Text style={SignUp.continuebtntext}>Continue</Text>
+                    </TouchableOpacity>
+                </>
             );
         }
     }
