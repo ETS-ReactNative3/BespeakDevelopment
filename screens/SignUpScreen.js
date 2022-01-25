@@ -10,9 +10,11 @@ import {
   Alert,
   KeyboardAvoidingView
 } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import { auth, db } from '../firebase';
 
+import SystemStyle from "../styles/SystemStyle";
 import SignUp from "../styles/SignUp";
 import Validation from '../styles/Validation';
 import EmailVerification from "../styles/EmailVerification.js";
@@ -78,7 +80,8 @@ class SignUpFormScreen extends Component {
         email: {value: '', valid: ''},
         mobile: {value: '', valid: ''},
         password: {value: '', valid: ''},
-        confirm: {value: '', valid: ''}
+        confirm: {value: '', valid: ''},
+        is_loading: false
     }
     _handleText(key, value) {
         let val_msg = 'This is a required field.'
@@ -93,7 +96,9 @@ class SignUpFormScreen extends Component {
                             this.setState({[key]: {'valid': val_msg, 'value': value}})
                         }
                     })
-                    .catch(error => Alert.alert(error.message))
+                    .catch(error => {
+                        if(error.code != 'auth/too-many-requests') Alert.alert("Error!", error.message)
+                    })
             } else {
                 if(value) {
                     val_msg = 'Invalid email format.';
@@ -130,13 +135,16 @@ class SignUpFormScreen extends Component {
             } 
         }
     }
-    async _handleSubmit() {
+     _processSubmit() {
         let is_valid = true;
         for(var key in this.state) {
-            await this._handleText(key, this.state[key].value)
+            if(key != 'is_loading') {
+                this._handleText(key, this.state[key].value)
+            }
         }
         for(var key in this.state) {
-            if(this.state[key].valid != '') {
+            if(this.state[key].valid != '' &&
+                key != 'is_loading') {
                 is_valid = false;
             }
             is_valid = is_valid && true;
@@ -202,35 +210,63 @@ class SignUpFormScreen extends Component {
                                     Alert.alert('Error!', error.message)
                                 });
                         });
+                            this.setState({'is_loading': false})
                             this.props.navigation.navigate('EmailVerificationScreen', {
                                 'email': email
                             });
                         }) 
                 })
+       
+    }
+    _handleSubmit() {
+        this.setState({'is_loading': true})
+        setTimeout(() => {
+            this._processSubmit()
+        }, 100);
     }
     render () {
+        const loading = this.state.is_loading;
         return (
             <View style={SignUp.SUcontainer}>
+                {
+                    this.state.is_loading && 
+                    <Spinner visible={true} textContent={'We\'re setting your account now.'}
+                        textStyle={SystemStyle.defaultLoader}
+                        animation = 'fade'
+                        overlayColor = 'rgba(0, 0, 0, 0.50)'/>
+                }
                 <KeyboardAvoidingView>
                     <ScrollView>
                         <Text style={SignUp.SUtitleText}>Almost There...</Text>
                         <Text style={SignUp.SUAltText}>We need additional details to get to know you</Text>
                         <TextInput style={SignUp.SIinput} placeholder='Email' maxLength={150} 
-                            onChangeText = {text => this._handleText('email', text)}/>
+                            onChangeText = {text => this._handleText('email', text)}
+                            returnKeyType="next"
+                            onSubmitEditing={() => { this.txtMobile.focus(); }}
+                            blurOnSubmit={false}/>
                         <Text style={Validation.textVal}>
                             {this.state.email.valid}</Text>   
                         <TextInput style={SignUp.SIinput} placeholder='(+63)' maxLength={15}
-                            onChangeText = {text => this._handleText('mobile', text)}/>
-                            <Text style={Validation.textVal}>
-                                {this.state.mobile.valid}</Text>  
+                            onChangeText = {text => this._handleText('mobile', text)}
+                            returnKeyType="next"
+                            onSubmitEditing={() => { this.txtPassword.focus(); }}
+                            blurOnSubmit={false}
+                            ref={(input) => { this.txtMobile = input; }}/>
+                        <Text style={Validation.textVal}>
+                            {this.state.mobile.valid}</Text>  
                         <TextInput style={SignUp.SIinput} placeholder='Password' secureTextEntry={true}
                             maxLength = {15}
-                            onChangeText = {text => this._handleText('password', text)}/>
-                            <Text style={Validation.textVal}>
-                                {this.state.password.valid}</Text>  
+                            onChangeText = {text => this._handleText('password', text)}
+                            returnKeyType="next"
+                            onSubmitEditing={() => { this.txtConfirm.focus();}}
+                            blurOnSubmit={false}
+                            ref={(input) => { this.txtPassword = input; }}/>
+                        <Text style={Validation.textVal}>
+                            {this.state.password.valid}</Text>  
                         <TextInput style={SignUp.SIinput} placeholder='Confirm Password' secureTextEntry={true}
                             maxLength = {15}
-                            onChangeText = {text => this._handleText('confirm', text)}/>
+                            onChangeText = {text => this._handleText('confirm', text)}
+                            ref={(input) => { this.txtConfirm = input; }}/>
                             <Text style={Validation.textVal}>
                                 {this.state.confirm.valid}</Text>  
                         

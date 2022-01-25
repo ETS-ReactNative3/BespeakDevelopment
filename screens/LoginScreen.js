@@ -9,9 +9,11 @@ import {
     Image,
     Alert
 } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import { auth } from '../firebase';
 
+import SystemStyle from "../styles/SystemStyle";
 import Index from "../styles/Index.js";
 import Validation from "../styles/Validation"
 
@@ -23,7 +25,8 @@ class LoginScreen extends Component {
     state = {
         email: {value: '', valid: ''},
         password: {value: '', valid: ''},
-        submit_result: ''
+        submit_result: '',
+        is_loading: false
     }
     _handleText(key, value) {
         this.setState({[key]: {'valid': false, 'value': value}});
@@ -45,10 +48,10 @@ class LoginScreen extends Component {
             }})
         }
     }
-    async _handleSubmit() {
+    async _processSubmit() {
         let is_valid = true;
         for(var key in this.state) {
-            if(key == 'submit_result') break
+            if(key == 'submit_result' || key == 'is_loading') break
             await this._handleText(key, this.state[key].value)
             if(this.state[key].valid) {
                 is_valid = false;
@@ -69,6 +72,7 @@ class LoginScreen extends Component {
                 .then(userCredentials => {
                     let user = userCredentials.user
                     if(!user.emailVerified) {
+                        this.setState({'is_loading': false})
                         this.props.navigation.navigate('EmailVerificationScreen', {
                             'email': email
                         });
@@ -87,21 +91,38 @@ class LoginScreen extends Component {
                         Alert.alert('Error', error.message)
                     }
                 })
+            this.setState({'is_loading': false})
         }
     }
-    
+    _handleSubmit() {
+        this.setState({'is_loading': true})
+        setTimeout(() => {
+            this._processSubmit()
+        }, 100);
+    }
     render() {
         return (
             <View style={Index.SIcontainer}>
+                {
+                    this.state.is_loading && 
+                    <Spinner visible={true} textContent={'Please wait'}
+                        textStyle={SystemStyle.defaultLoader}
+                        animation = 'fade'
+                        overlayColor = 'rgba(0, 0, 0, 0.50)'/>
+                }
                 <ScrollView>
                     <Text style={Index.SItitleText}>Log In</Text>
                     <TextInput style={Index.SIinput} placeholder='Email' maxLength={150} 
-                        onChangeText = {text => this._handleText('email', text)}/>
+                        onChangeText = {text => this._handleText('email', text)}
+                        returnKeyType="next"
+                        onSubmitEditing={() => { this.txtPassword.focus(); }}
+                        blurOnSubmit={false}/>
                     <Text style={Validation.textVal}>
                         {this.state.email.valid}</Text> 
         
                     <TextInput style={Index.SIinput} placeholder='Password' secureTextEntry={true}
-                        maxLength = {15} onChangeText = {text => this._handleText('password', text)}/>
+                        maxLength = {15} onChangeText = {text => this._handleText('password', text)}
+                        ref={(input) => { this.txtPassword = input; }}/>
                     <Text style={Validation.textVal}>
                         {this.state.submit_result ? 
                             this.state.submit_result : this.state.password.valid}</Text>  
@@ -134,7 +155,8 @@ class LoginScreen extends Component {
 
 class ResetFormScreen extends Component {
     state = {
-        email: {value: '', valid: ''}
+        email: {value: '', valid: ''},
+        is_loading: false
     }
     _handleText(value) {
         if(value) {
@@ -146,7 +168,7 @@ class ResetFormScreen extends Component {
         }
         this.setState({'email': {'value': false, 'valid': 'This is a required field.'}})
     }
-    _handleSubmit() {
+    _processSubmit() {
         if(this.state.email.value) {
             let email = this.state.email.value
             auth
@@ -163,16 +185,31 @@ class ResetFormScreen extends Component {
                 })
                 .then(() => {
                     if(!this.state.email.valid)
+                        this.setState({'is_loading': false})
                         this.props.navigation.navigate('ResetPasswordScreen', {email: email})
                 })
             return
         }
+        this.setState({'is_loading': false})
         this.setState({'email': {'valid': 'This is a required field.'}})
+    }
+    _handleSubmit() {
+        if(this.state.email.value) this.setState({'is_loading': true})
+        setTimeout(() => {
+            this._processSubmit()
+        }, 100);
     }
 
     render() {
         return (
             <View style={Index.SIcontainer}>
+                {
+                    this.state.is_loading && 
+                    <Spinner visible={true} textContent={'We\'re sending you an email now.'}
+                        textStyle={SystemStyle.defaultLoader}
+                        animation = 'fade'
+                        overlayColor = 'rgba(0, 0, 0, 0.50)'/>
+                }
                 <View style={Index.ResetPWContent}>
                     <View style={Index.TitleContainer}>
                         <Text style={Index.Titletxt}>Enter Your Email</Text>
