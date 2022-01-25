@@ -47,7 +47,7 @@ class TestHomeScreen extends Component {
                 <Text style={SignUp.SUAltText}>Email: {this.state.user.email}</Text>
                 {this.state.data.org_name ? (
                     <>
-                        <Text style={SignUp.SUAltText}>Last Name: {this.state.data.org_name}</Text>
+                        <Text style={SignUp.SUAltText}>Organization Name: {this.state.data.org_name}</Text>
                     </>
                 ) : (
                     <>

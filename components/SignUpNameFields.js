@@ -53,7 +53,10 @@ class SignUpNameFields extends Component {
                         name='firstname' 
                         placeholder='First Name'
                         maxLength = {26}
-                        onChangeText = {text => this._handleText('f_name', text)}/>
+                        onChangeText = {text => this._handleText('f_name', text)}
+                        returnKeyType="next"
+                        onSubmitEditing={() => { this.txtLName.focus();}}
+                        blurOnSubmit={false}/>
                     <Text style={Validation.textVal}>
                         {this.state.f_name.valid}</Text>     
                     <TextInput style={SignUp.SIinput}
@@ -62,7 +65,8 @@ class SignUpNameFields extends Component {
                         name='lastname'
                         placeholder='Last Name'
                         maxLength = {26}
-                        onChangeText = {text => this._handleText('l_name', text)}/> 
+                        onChangeText = {text => this._handleText('l_name', text)}
+                        ref={(input) => { this.txtLName = input; }}/> 
                     <Text style={Validation.textVal}>
                         {this.state.l_name.valid}</Text>
                     <TouchableOpacity style={SignUp.continuebtn}

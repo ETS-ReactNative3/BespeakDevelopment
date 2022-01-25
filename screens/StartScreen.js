@@ -6,15 +6,11 @@ import {
   View,
   Image
 } from 'react-native';
-import Index from "../styles/Index.js";
 import { 
-  Feather,
   Ionicons,
-  MaterialCommunityIcons,
-  SimpleLineIcons,
-  FontAwesome5,
-  MaterialIcons,
 } from '@expo/vector-icons';
+
+import Index from "../styles/Index.js";
 
 class TitleScreen extends Component {
   render () {
