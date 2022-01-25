@@ -26,24 +26,32 @@ class LoginScreen extends Component {
         submit_result: ''
     }
     _handleText(key, value) {
+        this.setState({[key]: {'valid': false, 'value': value}});
         if(value) {
-            this.setState({[key]: {'value': value}});
+            let val_msg = ''
+            if(key == 'email') {
+                if(!validateEmail(value)) {
+                    val_msg = 'Invalid email format.'
+                }
+            }
+            this.setState({[key]: {'value': value, 'valid': val_msg}});
         } else {
             if(this.state.submit_result) {
                 this.setState({'submit_result': ''})
             }
             this.setState({[key]: {
-                'value': false,
-                'valid': 'This field is required.'
+                'value': value,
+                'valid': 'This is a required field.'
             }})
         }
     }
-    _handleSubmit() {
+    async _handleSubmit() {
         let is_valid = true;
         for(var key in this.state) {
-            if(!this.state[key].value && key!='submit_result') {
+            if(key == 'submit_result') break
+            await this._handleText(key, this.state[key].value)
+            if(this.state[key].valid) {
                 is_valid = false;
-                this.setState({[key]: {'valid': 'This is a required field.'}})
             }
             is_valid = is_valid && true;
         }
