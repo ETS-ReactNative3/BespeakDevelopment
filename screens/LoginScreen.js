@@ -48,57 +48,60 @@ class LoginScreen extends Component {
             }})
         }
     }
-    async _processSubmit() {
+    async _processValidation() {
         let is_valid = true;
         for(var key in this.state) {
             if(key == 'submit_result' || key == 'is_loading') break
             await this._handleText(key, this.state[key].value)
-            if(this.state[key].valid) {
+            if(this.state[key].valid != '') {
                 is_valid = false;
             }
             is_valid = is_valid && true;
         }
-
-        if(is_valid) {
-            var email = this.state.email.value
-            var password = this.state.password.value
-            
-            let user = auth.currentUser
-            if(user) {
-                user.reload()
-            }
-            auth
-                .signInWithEmailAndPassword(email, password)
-                .then(userCredentials => {
-                    let user = userCredentials.user
-                    if(!user.emailVerified) {
-                        this.setState({'is_loading': false})
-                        this.props.navigation.navigate('EmailVerificationScreen', {
-                            'email': email
-                        });
-                        return
-                    }
-                })
-                .catch(error => {
-                    if(error.code == 'auth/invalid-password' ||
-                        error.code == 'auth/invalid-email' ||
-                        error.code == 'auth/user-not-found' ||
-                        error.code == 'auth/wrong-password') {
-                            this.setState({'submit_result': 'Your username or password is incorrect.'})
-                    } else if(error.code == 'auth/too-many-requests') {
-                        this.setState({'submit_result': 'This account is currently blocked.'})
-                    } else {
-                        Alert.alert('Error', error.message)
-                    }
-                })
-            this.setState({'is_loading': false})
-        }
+        return is_valid
     }
-    _handleSubmit() {
-        this.setState({'is_loading': true})
-        setTimeout(() => {
-            this._processSubmit()
-        }, 100);
+    async _processSubmit() {
+        var email = this.state.email.value
+        var password = this.state.password.value
+            
+        let user = auth.currentUser
+        if(user) {
+            user.reload()
+        }
+        await auth
+            .signInWithEmailAndPassword(email, password)
+            .then(userCredentials => {
+                let user = userCredentials.user
+                if(!user.emailVerified) {
+                    this.setState({'is_loading': false})
+                    this.props.navigation.navigate('EmailVerificationScreen', {
+                        'email': email
+                    });
+                    return
+                }
+            })
+            .catch(error => {
+                if(error.code == 'auth/invalid-password' ||
+                    error.code == 'auth/invalid-email' ||
+                    error.code == 'auth/user-not-found' ||
+                    error.code == 'auth/wrong-password') {
+                        this.setState({'submit_result': 'Your username or password is incorrect.'})
+                } else if(error.code == 'auth/too-many-requests') {
+                    this.setState({'submit_result': 'This account is currently blocked.'})
+                } else {
+                    Alert.alert('Error', error.message)
+                }
+            })
+        this.setState({'is_loading': false})
+    }
+    async _handleSubmit() {
+        let is_validated = await this._processValidation();
+        if(is_validated) {
+            this.setState({'is_loading': true})
+            setTimeout(() => {
+                this._processSubmit()
+            }, 100);
+        }
     }
     render() {
         return (
@@ -185,7 +188,6 @@ class ResetFormScreen extends Component {
                 })
                 .then(() => {
                     if(!this.state.email.valid)
-                        this.setState({'is_loading': false})
                         this.props.navigation.navigate('ResetPasswordScreen', {email: email})
                 })
             return
