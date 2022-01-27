@@ -12,4 +12,4 @@ Development of Bespeak Mobile Application
     - ```expo install expo-dev-client```
 5. Run on DEV Client by:
     - ```expo start --dev-client```
-6. Open your mobile device, then scan the giver QR.
+6. Open your mobile device, then scan the given QR.
