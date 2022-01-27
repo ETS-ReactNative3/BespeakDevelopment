@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
+// #TODO: Ensure snackbar is included in the next build.
 
 import { auth, db } from '../firebase';
 
@@ -135,11 +136,11 @@ class SignUpFormScreen extends Component {
             } 
         }
     }
-     _processSubmit() {
+    async _processValidation() {
         let is_valid = true;
         for(var key in this.state) {
             if(key != 'is_loading') {
-                this._handleText(key, this.state[key].value)
+                await this._handleText(key, this.state[key].value)
             }
         }
         for(var key in this.state) {
@@ -149,16 +150,14 @@ class SignUpFormScreen extends Component {
             }
             is_valid = is_valid && true;
         }
-
-        if(!is_valid) {
-            return
-        }
-
+        return is_valid
+    }
+    async _processSubmit() {
         let email = this.state.email.value;
         let password = this.state.password.value;
 
         let user = null;
-        auth
+        await auth
             .createUserWithEmailAndPassword(email, password)
             .catch(error => {
                 if(error.code == 'auth/email-already-exists' ||
@@ -172,6 +171,7 @@ class SignUpFormScreen extends Component {
                     })
             .then(userCredentials => {
                 if(!userCredentials) {
+                    this.setState({'is_loading': false})
                     return
                 }
                         
@@ -210,19 +210,22 @@ class SignUpFormScreen extends Component {
                                     Alert.alert('Error!', error.message)
                                 });
                         });
-                            this.setState({'is_loading': false})
                             this.props.navigation.navigate('EmailVerificationScreen', {
                                 'email': email
                             });
                         }) 
+                    
                 })
-       
+            this.setState({'is_loading': false})
     }
-    _handleSubmit() {
-        this.setState({'is_loading': true})
-        setTimeout(() => {
-            this._processSubmit()
-        }, 100);
+    async _handleSubmit() {
+        let is_validated = await this._processValidation();
+        if(is_validated) {
+            this.setState({'is_loading': true})
+            setTimeout(() => {
+                this._processSubmit()
+            }, 100);
+        }
     }
     render () {
         const loading = this.state.is_loading;
@@ -329,8 +332,8 @@ class EmailVerificationScreen extends Component {
                     <View style={EmailVerification.doneContainer}>
                         <TouchableOpacity style={EmailVerification.donebtn}
                             onPress={() => {
-                                auth.signOut();
-                                this.props.navigation.navigate('TitleScreen')
+                                    auth.signOut(); // #TODO: Error Message Shown
+                                    this.props.navigation.navigate('TitleScreen')
                                 }}>
                             <Text style={EmailVerification.donebtntext}>Done</Text>
                         </TouchableOpacity>
