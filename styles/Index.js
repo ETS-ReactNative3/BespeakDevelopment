@@ -72,6 +72,7 @@ const homeStyles=StyleSheet.create({
     },
     SItitleText:{
         marginTop: 23,
+        marginBottom:20,
         fontSize: 35,
         color: '#000',
         fontFamily: 'RedHatDisplay-Medium',
@@ -79,7 +80,9 @@ const homeStyles=StyleSheet.create({
     },
     SIinput:{
         height: 41,
+        paddingLeft:5,
         borderBottomWidth: 1,
+        borderColor:'#ccc',
         marginLeft: 40,
         marginTop: 0,
         color: '#eb9834',
@@ -88,6 +91,7 @@ const homeStyles=StyleSheet.create({
         marginRight: 40,
     },
     SIforgotpass:{
+        marginTop:-13,
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: 30,
@@ -103,16 +107,19 @@ const homeStyles=StyleSheet.create({
         padding: 10,
         borderWidth: 1,
         borderColor: '#fff',
-        borderRadius: 5,
+        borderRadius: 10,
         color: '#eb9834',
-        margin: 60,
+        marginTop:40,
+        marginLeft: 40,
+        marginRight: 40,
+        marginBottom:80,
         alignItems: 'center',
     },
       SIbuttonText:{
         alignItems: 'center',
         justifyContent: 'center',
         color: '#fff',
-        fontFamily: 'RedHatDisplay-Regular',
+        fontFamily: 'RedHatDisplay-Medium',
         fontSize: 20,
     },
     loginpicContainer: {
@@ -120,7 +127,6 @@ const homeStyles=StyleSheet.create({
         justifyContent:'center',
     },
     loginpic: {
-        marginBottom:10,
         width: 280,
         height:250,
         justifyContent:'center',
