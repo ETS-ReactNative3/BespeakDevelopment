@@ -8,13 +8,12 @@ import { auth } from './firebase';
 import StartScreen from './screens/StartScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import SignInScreen from './screens/LoginScreen';
-import HomeScreen from './screens/HomeScreen'
+
+import UserTabNavigate from './components/MenuTabNavigator'
 
 import useFonts from './hooks/useFonts';
 import Options from './values/Options';
 import { Alert } from 'react-native';
-
-
 
 const Stack = createNativeStackNavigator();
 
@@ -60,17 +59,12 @@ export default function App() {
   }
   if (initializing) return null;
 
-  auth.onAuthStateChanged((receivedUser) => {
-    setUser(receivedUser);
-  })
-
   return(
-    <NavigationContainer>
+    <>
       {user && user.emailVerified ? (
-          <Stack.Navigator>
-            <Stack.Screen options={Options.NoTitleNoBack} name = "TestHomeScreen" component={HomeScreen.TestHomeScreen} />
-          </Stack.Navigator> 
-        ) : (
+        <UserTabNavigate />
+      ) : (
+        <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen options={Options.TitleScreen} name="TitleScreen" component={StartScreen.TitleScreen} />
             <Stack.Screen options={Options.NoTitleWithBack} name="LoginScreen" component={SignInScreen.LoginScreen} />
@@ -81,8 +75,8 @@ export default function App() {
             <Stack.Screen options={Options.NoTitleWithBack} name="SignUpFormScreen" component={SignUpScreen.SignUpFormScreen} />
             <Stack.Screen options={Options.NoTitleNoBack} name="EmailVerificationScreen" component={SignUpScreen.EmailVerificationScreen} />
           </Stack.Navigator>
-        )
-      }
-    </NavigationContainer>
+        </NavigationContainer>
+      )}
+    </>
   );
 }

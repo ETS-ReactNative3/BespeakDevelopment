@@ -11,7 +11,6 @@ import {
   KeyboardAvoidingView
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
-// #TODO: Ensure snackbar is included in the next build.
 
 import { auth, db } from '../firebase';
 
@@ -27,7 +26,7 @@ import {
 } from '../helper/TextValidate';
 import { Messages } from '../values/Messages'
 
-import SignUpNameFields from '../components/SignUpNameFields';
+import SignUpNameForm from '../components/SignUpForm';
 
 class SignUpNameScreen extends Component {
     state = {
@@ -63,7 +62,7 @@ class SignUpNameScreen extends Component {
                 <ScrollView>
                     <Text style={SignUp.SItitleText}>Let's Get Started!</Text>
                     <Text style={SignUp.SUAltText}>Share & see what's happening near you</Text>
-                    <SignUpNameFields USER_TYPE = {this.user_type} 
+                    <SignUpNameForm USER_TYPE = {this.user_type} 
                         handleTextValue={this._handleTextValue}
                         handleParentSubmit={this._handleSubmit}/> 
                     <View style={SignUp.LetsGetStartedpicContainer}>
@@ -332,7 +331,7 @@ class EmailVerificationScreen extends Component {
                     <View style={EmailVerification.doneContainer}>
                         <TouchableOpacity style={EmailVerification.donebtn}
                             onPress={() => {
-                                    auth.signOut(); // #TODO: Error Message Shown
+                                    auth.signOut(); // #TODO: Error Message Shown 'No User Currently Signed In'
                                     this.props.navigation.navigate('TitleScreen')
                                 }}>
                             <Text style={EmailVerification.donebtntext}>Done</Text>
