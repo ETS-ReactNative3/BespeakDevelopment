@@ -1872,10 +1872,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.11.tgz#2f4c6e10bee0786abff4604e39a37ded6f3980ce"
   integrity sha512-rQfMIGSR/1r/SyN87+VD8xHHzDYeHaJq6elOSCAD+0iLagXkSI2pfA0LmSXP21uw5i3em7GkkRjfJ8wpqWXZNw==
 
-"@react-native-firebase/app@^14.2.3":
-  version "14.2.4"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-14.2.4.tgz#0020d416d01b0c94e8660e3dcfd4e829e5f74ce4"
-  integrity sha512-8Tm1KFmvLWCgWLQGEmbI5RE1QrmmmzM7cZUKdIl4moZ5Oy1EjGPLghtsX+2i9kCYK4EEMkobb5mrXb/H5PUrTQ==
+"@react-native-firebase/app@^14.3.0":
+  version "14.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-14.3.0.tgz#a5021e2f0c03aef0d594c4f3d566612578ff6ced"
+  integrity sha512-b9CQw/RVDCLPepA/Veew1qXaWuGemT8nAWuZsZZhB8UfwgpvTmkeE/HSui3FC9Fz8tUWjbkkY+IRMSsKx2lS8g==
   dependencies:
     "@expo/config-plugins" "^4.0.16"
     opencollective-postinstall "^2.0.1"

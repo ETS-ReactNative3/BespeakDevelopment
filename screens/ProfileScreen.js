@@ -82,7 +82,9 @@ import React, {
         </View>
         <View style={homeStyles.createcard}>
           <TextInput style={homeStyles.createCardcontent} placeholder="Create event "></TextInput>
-          <Feather name="plus" size={50} style={homeStyles.cardicon}/>
+          <TouchableOpacity>
+            <Feather name="plus" size={50} style={homeStyles.cardicon}/>
+          </TouchableOpacity>
         </View>
   
         <View style={homeStyles.MyTabsContainer}>

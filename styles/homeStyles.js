@@ -914,7 +914,7 @@ const homeStyles=StyleSheet.create({
   },
   counterint:{
     flexDirection:'row', 
-    fontSize: 20,
+    fontSize: 16,
     fontFamily:'RedHatDisplay-Medium',
   },
   boardtextOne:{
@@ -929,11 +929,6 @@ const homeStyles=StyleSheet.create({
     fontSize: 16,
     marginLeft:10,
     marginTop:1.5
-  },
-  editprofilearea:{
-    flexDirection:'row',
-    justifyContent:'center',
-    padding: 10,
   },
   addbioarea:{
     padding: 20,
@@ -1318,8 +1313,8 @@ const homeStyles=StyleSheet.create({
     fontFamily: 'RedHatDisplay-Medium',
   },
   secondSection:{
-    marginLeft:20,
-    marginRight:20,
+    marginLeft:15,
+    marginRight:15,
   },
   ProfileName:{
     fontFamily:'RedHatDisplay-Medium',
@@ -1583,7 +1578,67 @@ const homeStyles=StyleSheet.create({
     marginTop:-3,
     padding:10,
   },
+  MyTabsContainer:{
+    justifyContent:'space-around',
+    flexDirection:'row',
+    padding:10,
+    borderBottomWidth: 1.5,
+    borderBottomColor: '#ddd',
+  },
+  MyTabs:{
+    alignSelf:'stretch',
+    fontSize:18,
+    fontFamily:'RedHatDisplay-Regular',
+  },
+  MyTabsSelect:{
+    borderBottomWidth:4,
+    borderBottomColor:'#eb9834',
+    marginBottom:-10
+  },
+  MyTicketStub:{
+    margin:20,
+    borderRadius:20,
+    backgroundColor:'#eb9834',
+    width: 370,
+    height: 140,
+  },
+  MyTicketStubDiv:{
+    margin:20,
+    flexDirection:'row',
+    justifyContent:'space-between'
+  },
+  MyTicketEvent:{
+    color:'#fff',
+    fontSize:23,
+    fontFamily:'RedHatDisplay-Medium',
+  },
+  MyTicketDate:{
+    color:'#fff',
+    fontSize:15,
+    marginBottom:10,
+    fontFamily:'RedHatDisplay-Light',
+  },
+  MyTicketOrganizer:{
+    color:'#fff',
+    fontSize:20,
+    fontFamily:'RedHatDisplay-Medium',
+  },
+  MyTicketLocation:{
+    color:'#fff',
+    fontSize:15,
+    fontFamily:'RedHatDisplay-Light',
+  },
+  MyTicketQRContainer:{
 
+    borderRadius:20,
+    width: 100,
+    height: 100,
+  },
+  MyTicketQR:{
+    borderRadius: 15,
+    width: 100,
+    height: 100,
+  }
 
 
 

@@ -34,16 +34,15 @@ const homeStyles=StyleSheet.create({
     },
     SIinput:{
         height: 41,
-        borderBottomWidth: 1,
+        borderBottomWidth:1,
+        borderColor:'#ccc',
         marginLeft: 40,
         marginTop: 0,
         color: '#eb9834',
+        paddingLeft:5,
         fontSize: 16,
         fontFamily: 'RedHatDisplay-Regular',
         marginRight: 40,
-    },
-    SIinputFocus: { 
-        borderColor: '#719ECE',
     },
     altText:{
         alignItems: 'center',
@@ -76,7 +75,7 @@ const homeStyles=StyleSheet.create({
         borderRadius: 15,
         marginLeft:110,
         marginRight:110,
-        marginTop:40,
+        marginTop:25,
         marginBottom:80,
     },
     continuebtntext: {
@@ -109,6 +108,7 @@ const homeStyles=StyleSheet.create({
         marginLeft: 40,
     },
     SUAltText:{
+        marginBottom:25,
         fontSize: 16,
         justifyContent: 'center',
         marginLeft: 40,
