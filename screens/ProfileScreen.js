@@ -68,7 +68,6 @@ import React, {
             <Text style={homeStyles.boardtextTwo}>Following</Text>
           </View>
         </View>
-        <ScrollView>
         <View style={homeStyles.MyTabsContainer}>
             <TouchableOpacity style={homeStyles.MyTabsSelect}>
             <Text style={homeStyles.MyTabs}>My Events</Text>
@@ -80,6 +79,7 @@ import React, {
             <Text style={homeStyles.MyTabs}>Bookmarks</Text>
             </TouchableOpacity>
         </View>
+        <ScrollView>
         <View style={homeStyles.createcard}>
           <TextInput style={homeStyles.createCardcontent} placeholder="Create event "></TextInput>
           <TouchableOpacity>
@@ -163,7 +163,13 @@ import React, {
   function ProfileDetailScreen() {
     return (
       <View style={homeStyles.detailsScreencontainer}>
-          <View style={homeStyles.editProfileheader}>
+        <View style={homeStyles.editProfileheader}>
+          <TouchableOpacity style={homeStyles.goBack}>
+            <Image
+              style={homeStyles.goBack}
+                source={require('../assets/img/goBack.png')}
+              />
+          </TouchableOpacity>
             <Text style={homeStyles.tabTitle}>Edit Profile</Text>
             <Text style={homeStyles.tabSave}>Save</Text>
           </View>
@@ -203,6 +209,12 @@ import React, {
             auth.signOut()
           }}>
           <Text style={homeStyles.changepwtxt}> Change Password</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={homeStyles.signout}
+          onPress = {() => {
+            auth.signOut()
+          }}>
+          <Text style={homeStyles.signouttxt}> Log Out</Text>
         </TouchableOpacity>
         </ScrollView>
         
