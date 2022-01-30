@@ -46,13 +46,19 @@ class SignUpNameScreen extends Component {
     }
 
     _handleSubmit() {
-        let params = {
-            USER_TYPE: this.user_type,
-            l_name: this.state.l_name,
-            f_name: this.state.f_name,
-            org_name: this.state.org_name
+        let params = []
+        if(this.user_type == 'INDIV') {
+            params = {
+                user_type: this.user_type,
+                l_name: this.state.l_name,
+                f_name: this.state.f_name,
+            }
+        } else {
+            params = {
+                org_name: this.state.org_name,
+                user_type: this.user_type
+            }
         }
-
         this.props.navigation.navigate('SignUpFormScreen', params);
     }
     
@@ -175,15 +181,14 @@ class SignUpFormScreen extends Component {
                 }
                         
                 user = userCredentials.user;
-                        
+                
+                var data = this.props.route.params;
+                data.mobile = this.state.mobile.value;
                 db
                     .collection('user_info')
-                    .add({
-                        uid: user.uid,
-                        first_name: this.props.route.params.f_name,
-                        last_name: this.props.route.params.l_name,
-                        mobile: this.state.mobile.value,
-                        org_name: this.props.route.params.org_name
+                    .doc(user.uid)
+                    .set({
+                        ...data
                     })
                     .catch(error => {
                         Alert.alert('Error!', error.message)

@@ -1,62 +1,103 @@
-import React, { 
-    useState,
-    useRef, 
-    Component 
-  } from "react";
-  import {
-    SafeAreaView,
-    TextInput, 
-    ScrollView, 
-    TouchableOpacity,
-    Text, 
-    View,
-    Image,
-     Alert, Modal,Pressable, StyleSheet
-  } from 'react-native';
-  import homeStyles from "../styles/homeStyles";
-  import { 
-    Feather,
-    Ionicons,
-    MaterialCommunityIcons,
-    SimpleLineIcons,
-    FontAwesome5,
-    MaterialIcons,
-  } from '@expo/vector-icons';
-  import A from "../assets/img/A.jpg";
-  
-  import { auth } from '../firebase'
+import React, { Component } from "react";
+import {
+  TextInput, 
+  ScrollView, 
+  TouchableOpacity,
+  Text, 
+  View,
+  Image,
+  Alert
+} from 'react-native';
+import { 
+  Feather,
+  Ionicons,
+  SimpleLineIcons,
+  MaterialIcons,
+} from '@expo/vector-icons';
+import { auth, db } from '../firebase';
 
-  function ProfileScreen({ navigation }) {
+import homeStyles from "../styles/homeStyles";
+  
+class ProfileScreen extends Component {
+  state = {
+    user: auth.currentUser,
+    data: {}
+  }
+  async _loadUserData(uid) {
+    const user_info = db.collection("user_info")
+    const query = user_info.doc(uid)
+    const snapshot = await query.get()
+
+    if(snapshot.empty) {
+      console.log('No matching documents.');
+      return;
+    } 
+
+    //Arrange Data
+    var raw_data = snapshot.data()
+
+    var profile_name = ''
+    if(raw_data.user_type == "INDIV") {
+      profile_name = raw_data.f_name 
+        + ' ' + raw_data.l_name;
+    } else {
+      profile_name = raw_data.org_name
+    }
+    
+    this.setState({'data': {'profile_name': profile_name}})
+    console.log('Profile Name: ', this.state.data.profile_name)
+  }
+  componentDidMount() {
+    let uid = auth.currentUser.uid
+    console.log('User ID: ' + uid);
+
+    this._loadUserData(uid)
+  }
+  render() {
     return (
       <View style={homeStyles.uHcontainer}>
         <View style={homeStyles.Profileheader}/>
         <View style={homeStyles.profilecoverimgContainer}>
-          <Image
-          style={homeStyles.profilecoverimg}
-          source={require('../assets/img/F.jpg')}
-          />
-          </View>
+          <Image style={homeStyles.profilecoverimg}
+            source={require('../assets/img/F.jpg')}/>
+        </View>
         <View style={homeStyles.firstSection}>
           <View style={homeStyles.profileimgContainer}>
-            <Image
-            style={homeStyles.profileimg}
-            source={require('../assets/img/SecondPages.png')}
-            />
+            <Image style={homeStyles.profileimg}
+              source={require('../assets/img/SecondPages.png')}/>
           </View>
           <View>
-          <TouchableOpacity style={homeStyles.EditProfile}
-            onPress={() => navigation.navigate('ProfileDetailScreen')}>
-            <Text style={homeStyles.EditProfileText}>Edit Profile</Text>
-          </TouchableOpacity>
+            <TouchableOpacity style={homeStyles.EditProfile}
+              onPress={() => this.props.navigation.navigate('EditProfileScreen')}>
+                <Text style={homeStyles.EditProfileText}>Edit Profile</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={homeStyles.secondSection}>
-          <Text style={homeStyles.ProfileName}>Second Pages</Text>
-          <Text style={homeStyles.ProfileBio}>We are the source of low-priced unused, as well as previously-owned, books and bargain publications from the U.S., Canada, Australia and the UK. We are also a distributor of locally-printed slick Pinoy magazines in both English and Pilipino.</Text>
-          <View style={{flexDirection:'row'}}>
-            <SimpleLineIcons name="location-pin" size={13} color="black" />
-            <Text style={homeStyles.ProfileLocation}> Market! Market! Mall,  26th Street Corner C5, Taguig</Text>
-          </View>
+          <Text style={homeStyles.ProfileName}>
+            {
+              this.state.data.profile_name
+            }
+          </Text>
+          {
+            this.state.data.bio ? (
+              <Text style={homeStyles.ProfileBio}>
+                {
+                  this.state.data.bio
+                }
+              </Text>
+            ) : null
+          }
+          { this.state.data.location ? (
+            <View style={{flexDirection:'row'}}>
+              <SimpleLineIcons name="location-pin" size={13} color="black" />
+              <Text style={homeStyles.ProfileLocation}>
+                {
+                  this.state.data.location
+                }
+              </Text>
+            </View>
+          ) : null}
         </View>
         <View style={homeStyles.dashboard}>
           <View style={homeStyles.counter}>            
@@ -69,15 +110,15 @@ import React, {
           </View>
         </View>
         <View style={homeStyles.MyTabsContainer}>
-            <TouchableOpacity style={homeStyles.MyTabsSelect}>
+          <TouchableOpacity style={homeStyles.MyTabsSelect}>
             <Text style={homeStyles.MyTabs}>My Events</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-            <Text style={homeStyles.MyTabs}>My Tickets</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
+          </TouchableOpacity>
+          <TouchableOpacity>
+              <Text style={homeStyles.MyTabs}>My Tickets</Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
             <Text style={homeStyles.MyTabs}>Bookmarks</Text>
-            </TouchableOpacity>
+          </TouchableOpacity>
         </View>
         <ScrollView>
         <View style={homeStyles.createcard}>
@@ -153,76 +194,12 @@ import React, {
             </TouchableOpacity>
           </View>     
         </TouchableOpacity>
-  
-  
       </ScrollView>
     </View>
     );
   }
+}
   
-  function ProfileDetailScreen() {
-    return (
-      <View style={homeStyles.detailsScreencontainer}>
-        <View style={homeStyles.editProfileheader}>
-          <TouchableOpacity style={homeStyles.goBack}>
-            <Image
-              style={homeStyles.goBack}
-                source={require('../assets/img/goBack.png')}
-              />
-          </TouchableOpacity>
-            <Text style={homeStyles.tabTitle}>Edit Profile</Text>
-            <Text style={homeStyles.tabSave}>Save</Text>
-          </View>
-          <TouchableOpacity>
-          <View style={homeStyles.editprofilecoverimgContainer}>
-          <Feather name="plus" size={50} style={homeStyles.editcoverimg}/>
-          <Image
-            style={homeStyles.editprofilecoverimg}
-            source={require('../assets/img/F.jpg')}
-            />
-          </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-          <View style={homeStyles.firstSection}>
-          <View style={homeStyles.editprofileimgContainer}>
-          <Feather name="plus" size={50} style={homeStyles.editimg}/>
-            <Image
-            style={homeStyles.editprofileimg}
-            source={require('../assets/img/SecondPages.png')}
-            />
-          </View>
-        </View>
-        </TouchableOpacity>
-        <ScrollView>
-        <Text style={homeStyles.Info}>Organization Name</Text>
-        <TextInput style={homeStyles.Profileinput} placeholder='Second Pages'/>
-        <Text style={homeStyles.Info}>Bio</Text>
-        <TextInput style={homeStyles.Profileinput} placeholder='We are the source of low-priced unused, as well as previously-owned, books and bargain publications from the U.S., Canada, Australia and the UK. We are also a distributor of locally-printed slick Pinoy magazines in both English and Pilipino.'/>
-        <Text style={homeStyles.Info}>Location</Text>
-        <TextInput style={homeStyles.Profileinput} placeholder='Market! Market! Mall,  26th Street Corner C5, Taguig'/>
-        <Text style={homeStyles.Info}>Email</Text>
-        <TextInput style={homeStyles.Profileinput} placeholder='secondpages@gmail.com'/>
-        <Text style={homeStyles.Info}>Phone Number</Text>
-        <TextInput style={homeStyles.Profileinput} placeholder='+639123456789'/>
-        <TouchableOpacity style={homeStyles.changepw}
-          onPress = {() => {
-            auth.signOut()
-          }}>
-          <Text style={homeStyles.changepwtxt}> Change Password</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={homeStyles.signout}
-          onPress = {() => {
-            auth.signOut()
-          }}>
-          <Text style={homeStyles.signouttxt}> Log Out</Text>
-        </TouchableOpacity>
-        </ScrollView>
-        
-      </View>
-    );
-  }
-
 export default {
     ProfileScreen,
-    ProfileDetailScreen
 }

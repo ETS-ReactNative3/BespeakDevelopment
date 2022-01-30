@@ -1,10 +1,15 @@
 import React, { Component } from "react";
+import {
+  Button,
+  Text, 
+} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomeScreens from '../screens/HomeScreen'
 import SearchScreens from '../screens/SearchScreen'
 import NotificationScreens from '../screens/NotificationScreen';
 import ProfileScreens from '../screens/ProfileScreen'
+import EditProfileScreens from '../screens/EditProfileScreen'
 
 const MenuStack = createNativeStackNavigator();
 
@@ -77,11 +82,15 @@ class ProfileNavigator extends Component {
             headerShown: false,
             tabBarShowLabel:false
           }}/>
-        <MenuStack.Screen name="ProfileDetailScreen" component={ProfileScreens.ProfileDetailScreen}
+        <MenuStack.Screen name="EditProfileScreen" component={EditProfileScreens.EditProfileScreen}
           options={{
-            title: ' ',
-            headerShown: false,
-            tabBarShowLabel:false
+            title: 'Edit Profile',
+            headerShown: true,
+            tabBarShowLabel:false,
+            headerTitleStyle: {
+              fontFamily: 'RedHatDisplay-Medium',
+              color: '#eb9834',
+            }
           }}/>
       </MenuStack.Navigator>
     );

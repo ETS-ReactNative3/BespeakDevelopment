@@ -529,9 +529,9 @@ const homeStyles=StyleSheet.create({
     backgroundColor: '#f5f5f5',
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight: 20,
+    marginTop: '1%',
+    marginLeft: '1%',
+    marginRight: '1%',
     borderRadius: 20,
   },
   cardicon:{
@@ -1351,8 +1351,9 @@ const homeStyles=StyleSheet.create({
     marginTop:4,
     color: '#eb9834',
     fontFamily: 'RedHatDisplay-Medium',
-    fontSize: 16,
+    fontSize: 18,
     marginRight:20,
+    fontWeight: 'bold'
   },
   editprofilecoverimgContainer: {
     alignItems:'center',
