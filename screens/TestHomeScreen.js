@@ -16,7 +16,7 @@ import { auth, db } from '../firebase';
 import SignUp from "../styles/SignUp";
 
 // For Integration Testing
-class TestHomeScreen extends Component {
+export default class TestHomeScreen extends Component {
     state = {
         user: auth.currentUser,
         data: {}
@@ -30,6 +30,7 @@ class TestHomeScreen extends Component {
             .catch(error => Alert.alert("Error!", error.message))
             .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
+                    console.log('Value: ' + doc)
                     // doc.data() is never undefined for query doc snapshots
                     //console.log(doc.id, " => ", doc.data());
                     //Alert.alert(doc.id, doc.data().last_name)
@@ -71,6 +72,3 @@ class TestHomeScreen extends Component {
     }
 }
 
-export default {
-    TestHomeScreen
-}
