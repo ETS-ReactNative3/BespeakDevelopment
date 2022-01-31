@@ -13,3 +13,7 @@ Development of Bespeak Mobile Application
 5. Run on DEV Client by:
     - ```expo start --dev-client```
 6. Open your mobile device, then scan the given QR.
+
+
+#Packages Installed
+- https://www.npmjs.com/package/react-native-image-crop-picker
