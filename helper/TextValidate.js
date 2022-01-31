@@ -1,5 +1,5 @@
 var regularName = /^[a-zA-Z ]*$/;
-var regularOrgName = /^[a-zA-Z0-9.#+_! ]*$/;
+var regularOrgName = /^[a-zA-Z0-9.#+_!' ]*$/;
 var regularEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 var regularMobile = /^[0-9-+)(]*$/;
 var regularPassword = /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*@._-]{8,16}$/;

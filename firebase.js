@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import firebase from "@react-native-firebase/app"
+import '@react-native-firebase/storage'
 import '@react-native-firebase/auth';
 import '@react-native-firebase/firestore';
 
@@ -28,7 +29,8 @@ if (firebase.apps.length === 0) {
 }
 
 const db = app.firestore()
+const storage = app.storage()
 const auth = firebase.auth()
 //const analytics = getAnalytics(app);
 
-export { auth, db };
+export { auth, db, storage};
