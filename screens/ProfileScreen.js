@@ -14,16 +14,20 @@ import {
   SimpleLineIcons,
   MaterialIcons,
 } from '@expo/vector-icons';
-import { auth, db } from '../firebase';
+import Spinner from 'react-native-loading-spinner-overlay';
+import { auth, db, storage } from '../firebase';
 
+import SystemStyle from "../styles/SystemStyle";
 import homeStyles from "../styles/homeStyles";
   
 class ProfileScreen extends Component {
   state = {
     user: auth.currentUser,
-    data: {}
+    data: {},
+    is_loading: true
   }
-  async _loadUserData(uid) {
+  async _getUserData() {
+    var uid = this.state.user.uid;
     const user_info = db.collection("user_info")
     const query = user_info.doc(uid)
     const snapshot = await query.get()
@@ -44,27 +48,87 @@ class ProfileScreen extends Component {
       profile_name = raw_data.org_name
     }
     
-    this.setState({'data': {'profile_name': profile_name}})
+    let profile_image = null
+    let cover_image = null
+
+    await storage.ref(`/users/${uid}/profile`)
+      .getDownloadURL()
+      .then((url) => { 
+        profile_image = url
+        console.log("User's Profile Photo: ", url)
+      }).catch((error) => {
+        if(error.code == '[storage/object-not-found]') {
+          return;
+        }
+        Alert.alert('Error!', error)
+      })
+
+    await storage.ref(`/users/${uid}/cover`)
+      .getDownloadURL()
+      .then((url) => { 
+        cover_image = url
+        console.log("User's Cover Photo: ", url)
+      }).catch((error) => {
+        if(error.code == '[storage/object-not-found]') {
+          return;
+        }
+        Alert.alert('Error!', error)
+      })
+    
+    this.setState({'data': {
+      'profile_name': profile_name,
+      'profile_photo': profile_image,
+      'cover_photo': cover_image,
+      ...raw_data
+    }})
     console.log('Profile Name: ', this.state.data.profile_name)
+    this.setState({'is_loading': false})
+  }
+  _loadUserData() {
+    setTimeout(() => {
+      this._getUserData()
+    }, 100);
   }
   componentDidMount() {
     let uid = auth.currentUser.uid
     console.log('User ID: ' + uid);
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this._loadUserData()
+    });
 
-    this._loadUserData(uid)
+    this._loadUserData()
+  }
+  componentWillUnmount() {
+    this._unsubscribe();
   }
   render() {
     return (
       <View style={homeStyles.uHcontainer}>
+        {
+          this.state.is_loading && 
+            <Spinner visible={true} 
+              textStyle={SystemStyle.whiteLoader}
+              color = '#eb9834'
+              animation = 'fade'
+              overlayColor = 'rgba(0, 0, 0, 0.50)'/>
+        }
         <View style={homeStyles.Profileheader}/>
         <View style={homeStyles.profilecoverimgContainer}>
           <Image style={homeStyles.profilecoverimg}
-            source={require('../assets/img/F.jpg')}/>
+            source={
+              this.state.data.cover_photo ?
+              {uri: this.state.data.cover_photo}:
+              require('../assets/img/blank-cover.png')
+            }/>
         </View>
         <View style={homeStyles.firstSection}>
           <View style={homeStyles.profileimgContainer}>
             <Image style={homeStyles.profileimg}
-              source={require('../assets/img/SecondPages.png')}/>
+              source={
+                this.state.data.profile_photo ?
+                {uri: this.state.data.profile_photo}:
+                require('../assets/img/blank-profile.png')
+              }/>
           </View>
           <View>
             <TouchableOpacity style={homeStyles.EditProfile}

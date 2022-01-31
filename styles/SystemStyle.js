@@ -5,6 +5,10 @@ const SystemStyle = StyleSheet.create({
       color: 'white',
       fontFamily: 'RedHatDisplay-Regular',
     },
+    whiteLoader: {
+      color: '#eb9834',
+      fontFamily: 'RedHatDisplay-Regular',
+    },
 });
 
 export default SystemStyle
