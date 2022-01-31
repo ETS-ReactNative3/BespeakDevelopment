@@ -15,5 +15,5 @@ Development of Bespeak Mobile Application
 6. Open your mobile device, then scan the given QR.
 
 
-#Packages Installed
+# Packages Installed
 - https://www.npmjs.com/package/react-native-image-crop-picker
