@@ -18,9 +18,11 @@ import React, {
     Feather,
   } from '@expo/vector-icons';
   import A from "../assets/img/A.jpg";
+import ProfileContent from "../components/ProfileContent";
 
 //forSearch
 function SearchScreen({ navigation }) {
+
     return (
       <View style={homeStyles.uHcontainer}>
       <View style={homeStyles.cardsearchheader}> 
@@ -28,22 +30,15 @@ function SearchScreen({ navigation }) {
       <TextInput style={homeStyles.searchBar} placeholder=' Search event... '></TextInput>
       </View>
   
-      <ScrollView style={homeStyles.homecontent}>
-        <TouchableOpacity style={homeStyles.card}
-          onPress={() => navigation.navigate('SearchDetailScreen')}>
-          <Text style={homeStyles.cardTitle}>Events</Text> 
-        </TouchableOpacity>        
-        <TouchableOpacity style={homeStyles.card}
-          onPress={() => navigation.navigate('SearchDetailScreen')}>
-          <Text style={homeStyles.cardTitle}>Organizers</Text> 
-        </TouchableOpacity>        
-      </ScrollView>
+
+      <ProfileContent/>       
+
   
       <View style={homeStyles.searchfooter}>
         <Text style={homeStyles.bespeaklogo}>bespeak</Text>
         <Text style={homeStyles.signin}>© Sandbox Technologies.</Text>
       </View>
-    </View>
+    </View> 
     );
   }
   
