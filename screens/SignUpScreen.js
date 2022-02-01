@@ -281,14 +281,14 @@ class SignUpFormScreen extends Component {
                             <Text style={SignUp.altText}>By clicking the button below, you agree to our</Text>
                         </View>
                         <View style={{flexDirection:'row', justifyContent:'center'}}>
-                            <TouchableOpacity onPress = {
-                                () => Alert.alert("Terms of Service", Messages.terms)
-                            }>
-                                <Text style={SignUp.btnText}>Terms</Text>
+                            <TouchableOpacity 
+                                onPress = {() => Alert.alert("Terms of Service", Messages.terms)}>
+                                    <Text style={SignUp.btnText}>Terms</Text>
                             </TouchableOpacity>
                             <Text style={SignUp.andText}> and </Text>
-                            <TouchableOpacity>
-                                <Text style={SignUp.btnText}>Data Policy</Text>
+                            <TouchableOpacity
+                                onPress = {() => Alert.alert("Data Policy", Messages.policy)}>
+                                    <Text style={SignUp.btnText}>Data Policy</Text>
                             </TouchableOpacity>
                             <Text style={SignUp.andText}>.</Text>
                         </View>
