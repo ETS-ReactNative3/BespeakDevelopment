@@ -17,3 +17,9 @@ Development of Bespeak Mobile Application
 
 # Packages Installed
 - https://www.npmjs.com/package/react-native-image-crop-picker
+- https://reactnavigation.org/docs/material-top-tab-navigator/
+
+# Bespeak DEV Client Version 1.4
+Install the following modules:
+    - ```expo install @react-navigation/material-top-tabs react-native-tab-view```
+    - ```expo install react-native-pager-view```
