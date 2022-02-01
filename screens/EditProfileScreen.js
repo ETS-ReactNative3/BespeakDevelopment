@@ -35,13 +35,16 @@ class EditProfileScreen extends Component {
         cover_photo: {uri: '', hasChange: false},
         is_loading: false
     }
-    async _loadUserData(uid) {
+    async _loadUserData() {
+        let uid = auth.currentUser.uid
+        console.log('Edit User ID: ' + uid);
+        
         const user_info = db.collection("user_info")
         const query = user_info.doc(uid)
         const snapshot = await query.get()
     
         if(snapshot.empty) {
-          console.log('No matching documents.');
+          console.log('No data found for user: ', uid);
           return;
         } 
         var raw_data = snapshot.data()
@@ -94,10 +97,8 @@ class EditProfileScreen extends Component {
                 </TouchableOpacity>
             ),
         });
-        let uid = auth.currentUser.uid
-        console.log('User ID: ' + uid);
     
-        this._loadUserData(uid)
+        this._loadUserData()
     }
     _selectImage(upload_type) {
         //#TODO: Add Support for IOS, Optimize, Seperate to Option File
@@ -107,7 +108,7 @@ class EditProfileScreen extends Component {
             cropperCircleOverlay: upload_type == "dp" ? true : false,
             mediaType: 'photo'
         }).then(images => {
-            console.log(images);
+            console.log('Attached Image: ', images.path);
             if(upload_type == "dp") {
                 this.setState({'profile_photo': {
                     'uri': images.path,
@@ -141,12 +142,12 @@ class EditProfileScreen extends Component {
                 Alert.alert('Error!', error.message)
                 return
             }) 
-            .then(() => {
+            .then(async () => {
                 if (this.state.profile_photo.hasChange) {
-                    this._uploadToStorage(this.state.profile_photo.uri, `/users/${this.state.user.uid}/profile`)
+                    await this._uploadToStorage(this.state.profile_photo.uri, `/users/${this.state.user.uid}/profile`)
                 }
                 if (this.state.cover_photo.hasChange) {
-                    this._uploadToStorage(this.state.cover_photo.uri, `/users/${this.state.user.uid}/cover`)
+                    await this._uploadToStorage(this.state.cover_photo.uri, `/users/${this.state.user.uid}/cover`)
                 }
 
                 this.setState({'is_loading': false})
@@ -177,11 +178,11 @@ class EditProfileScreen extends Component {
         let reference = storage.ref(imageName);         
         let task = reference.putFile(path);            
 
-        task.then(() => {                                 
-            console.log('Image uploaded to the bucket!');
+        return task.then(() => {                                 
+            console.log('Photo Uploaded to Storage', path);
         }).catch((e) => {
             Alert.alert('Error!', e)
-            console.log('uploading image error => ', e)
+            console.log('Uploading Image Error: ', e)
         });
     }
     _handleText(key, value) {

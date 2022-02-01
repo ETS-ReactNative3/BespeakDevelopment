@@ -6,7 +6,8 @@ import {
   Text, 
   View,
   Image,
-  Alert
+  Alert,
+  SafeAreaView, RefreshControl
 } from 'react-native';
 import { 
   Feather,
@@ -24,32 +25,38 @@ class ProfileScreen extends Component {
   state = {
     user: auth.currentUser,
     data: {},
-    is_loading: true
+    is_loading: true,
+    refreshing: false
   }
-  async _getUserData() {
+  constructor() {
+    super()
+    this.onRefresh = this.onRefresh.bind(this)
+  }
+  async _loadUserData() {
     var uid = this.state.user.uid;
+    console.log('User ID: ' + uid);
+
     const user_info = db.collection("user_info")
     const query = user_info.doc(uid)
     const snapshot = await query.get()
 
     if(snapshot.empty) {
-      console.log('No matching documents.');
+      console.log('No data found for user: ', uid);
       return;
     } 
 
-    //Arrange Data
     var raw_data = snapshot.data()
 
     var profile_name = ''
+    let profile_image = null
+    let cover_image = null
+
     if(raw_data.user_type == "INDIV") {
       profile_name = raw_data.f_name 
         + ' ' + raw_data.l_name;
     } else {
       profile_name = raw_data.org_name
     }
-    
-    let profile_image = null
-    let cover_image = null
 
     await storage.ref(`/users/${uid}/profile`)
       .getDownloadURL()
@@ -84,14 +91,7 @@ class ProfileScreen extends Component {
     console.log('Profile Name: ', this.state.data.profile_name)
     this.setState({'is_loading': false})
   }
-  _loadUserData() {
-    setTimeout(() => {
-      this._getUserData()
-    }, 100);
-  }
   componentDidMount() {
-    let uid = auth.currentUser.uid
-    console.log('User ID: ' + uid);
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
       this._loadUserData()
     });
@@ -101,165 +101,190 @@ class ProfileScreen extends Component {
   componentWillUnmount() {
     this._unsubscribe();
   }
+  doRefresh() {
+    return new Promise((resolve) => {
+      this._loadUserData()
+      setTimeout(resolve, 1000)
+    });
+  }
+  async onRefresh() {
+    console.log("Refreshing...")
+    this.setState({'refreshing': true})
+    await this.doRefresh().then(() => this.setState({'refreshing': false}))
+    console.log("Refreshed.")
+  }
+
   render() {
     return (
-      <View style={homeStyles.uHcontainer}>
-        {
-          this.state.is_loading && 
-            <Spinner visible={true} 
-              textStyle={SystemStyle.whiteLoader}
-              color = '#eb9834'
-              animation = 'fade'
-              overlayColor = 'rgba(0, 0, 0, 0.50)'/>
-        }
-        <View style={homeStyles.Profileheader}/>
-        <View style={homeStyles.profilecoverimgContainer}>
-          <Image style={homeStyles.profilecoverimg}
-            source={
-              this.state.data.cover_photo ?
-              {uri: this.state.data.cover_photo}:
-              require('../assets/img/blank-cover.png')
-            }/>
-        </View>
-        <View style={homeStyles.firstSection}>
-          <View style={homeStyles.profileimgContainer}>
-            <Image style={homeStyles.profileimg}
-              source={
-                this.state.data.profile_photo ?
-                {uri: this.state.data.profile_photo}:
-                require('../assets/img/blank-profile.png')
-              }/>
-          </View>
-          <View>
-            <TouchableOpacity style={homeStyles.EditProfile}
-              onPress={() => this.props.navigation.navigate('EditProfileScreen')}>
-                <Text style={homeStyles.EditProfileText}>Edit Profile</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={homeStyles.secondSection}>
-          <Text style={homeStyles.ProfileName}>
+      <SafeAreaView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}/>
+          }>
+            <View style={homeStyles.uHcontainer}>
             {
-              this.state.data.profile_name
+              this.state.is_loading && 
+                <Spinner visible={true} 
+                  textStyle={SystemStyle.whiteLoader}
+                  color = '#eb9834'
+                  animation = 'fade'
+                  overlayColor = 'rgba(0, 0, 0, 0.50)'/>
             }
-          </Text>
-          {
-            this.state.data.bio ? (
-              <Text style={homeStyles.ProfileBio}>
-                {
-                  this.state.data.bio
-                }
-              </Text>
-            ) : null
-          }
-          { this.state.data.location ? (
-            <View style={{flexDirection:'row'}}>
-              <SimpleLineIcons name="location-pin" size={13} color="black" />
-              <Text style={homeStyles.ProfileLocation}>
-                {
-                  this.state.data.location
-                }
-              </Text>
+            <View style={homeStyles.Profileheader}/>
+            <View style={homeStyles.profilecoverimgContainer}>
+              <Image style={homeStyles.profilecoverimg}
+                key = {this.state.data.cover_photo}
+                source={
+                  this.state.data.cover_photo ?
+                  {uri: this.state.data.cover_photo}:
+                  require('../assets/img/blank-cover.png')
+                }/>
             </View>
-          ) : null}
-        </View>
-        <View style={homeStyles.dashboard}>
-          <View style={homeStyles.counter}>            
-            <Text style={homeStyles.counterint}>814</Text>
-            <Text style={homeStyles.boardtextOne}>Followers</Text>
-          </View>
-          <View style={homeStyles.counter}>            
-            <Text style={homeStyles.counterint}>26</Text>
-            <Text style={homeStyles.boardtextTwo}>Following</Text>
-          </View>
-        </View>
-        <View style={homeStyles.MyTabsContainer}>
-          <TouchableOpacity style={homeStyles.MyTabsSelect}>
-            <Text style={homeStyles.MyTabs}>My Events</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-              <Text style={homeStyles.MyTabs}>My Tickets</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={homeStyles.MyTabs}>Bookmarks</Text>
-          </TouchableOpacity>
-        </View>
-        <ScrollView>
-        <View style={homeStyles.createcard}>
-          <TextInput style={homeStyles.createCardcontent} placeholder="Create event "></TextInput>
-          <TouchableOpacity>
-            <Feather name="plus" size={50} style={homeStyles.cardicon}/>
-          </TouchableOpacity>
-        </View>
-  
-        <View style={homeStyles.MyTabsContainer}>
-            <TouchableOpacity>
-            <Text style={homeStyles.MyTabs}>My Events</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={homeStyles.MyTabsSelect}>
-            <Text style={homeStyles.MyTabs}>My Tickets</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-            <Text style={homeStyles.MyTabs}>Bookmarks</Text>
-            </TouchableOpacity>
-        </View>
-        <TouchableOpacity>
-        <View style={homeStyles.MyTicketStub}> 
-        <View style={homeStyles.MyTicketStubDiv}>
-          <View>
-          <Text style={homeStyles.MyTicketEvent}>Sunday Worship Service</Text>
-          <Text style={homeStyles.MyTicketDate}>Sunday November 14 Starts at 9:00AM </Text>
-  
-          <Text style={homeStyles.MyTicketOrganizer}>Sunday Worship Service</Text>
-          <Text style={homeStyles.MyTicketLocation}>L3 Alpha Kokak</Text>
-          </View>
-          <View style={homeStyles.MyTicketQRContainer}>
-              <Image
-                  style={homeStyles.MyTicketQR}
-                  source={require('../assets/img/SampleQR.png')}
-              />
+            <View style={homeStyles.firstSection}>
+              <View style={homeStyles.profileimgContainer}>
+                <Image style={homeStyles.profileimg}
+                  key = {this.state.data.profile_photo}
+                  source={
+                    this.state.data.profile_photo ?
+                    {uri: this.state.data.profile_photo}:
+                    require('../assets/img/blank-profile.png')
+                  }/>
               </View>
-        </View>
-        </View>
-        </TouchableOpacity>
-  
-        <View style={homeStyles.MyTabsContainer}>
-            <TouchableOpacity>
-            <Text style={homeStyles.MyTabs}>My Events</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-            <Text style={homeStyles.MyTabs}>My Tickets</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={homeStyles.MyTabsSelect}>
-            <Text style={homeStyles.MyTabs}>Bookmarks</Text>
-            </TouchableOpacity>
-        </View>
-  
-        <TouchableOpacity style={homeStyles.feed}>
-          <Image
-          style={homeStyles.firstpic}
-          source={require('../assets/img/A.jpg')}
-          />
-          <View style={homeStyles.eventInfoTab}>
-            <Text style={homeStyles.eventTitlecontent}>Not Bad Sunday</Text>
-            <Text style={homeStyles.eventDTRcontent}>Sunday, November 14 ∘ 12:00PM</Text>
-            <Text style={homeStyles.eventLOCcontent}>Every Nation Campus</Text>
-            <View style={homeStyles.GeoLocTabcontent}>
-              <SimpleLineIcons name="location-pin" size={16} color="black"/>
-              <Text style={homeStyles.feedcontent}>Bulacan, Bulacan</Text>
+              <View>
+                <TouchableOpacity style={homeStyles.EditProfile}
+                  onPress={() => this.props.navigation.navigate('EditProfileScreen')}>
+                    <Text style={homeStyles.EditProfileText}>Edit Profile</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-          <View style={homeStyles.eventOptionTabcontent}>
+            <View style={homeStyles.secondSection}>
+              <Text style={homeStyles.ProfileName}>
+                {
+                  this.state.data.profile_name
+                }
+              </Text>
+              {
+                this.state.data.bio ? (
+                  <Text style={homeStyles.ProfileBio}>
+                    {
+                      this.state.data.bio
+                    }
+                  </Text>
+                ) : null
+              }
+              { this.state.data.location ? (
+                <View style={{flexDirection:'row'}}>
+                  <SimpleLineIcons name="location-pin" size={13} color="black" />
+                  <Text style={homeStyles.ProfileLocation}>
+                    {
+                      this.state.data.location
+                    }
+                  </Text>
+                </View>
+              ) : null}
+            </View>
+            <View style={homeStyles.dashboard}>
+              <View style={homeStyles.counter}>            
+                <Text style={homeStyles.counterint}>814</Text>
+                <Text style={homeStyles.boardtextOne}>Followers</Text>
+              </View>
+              <View style={homeStyles.counter}>            
+                <Text style={homeStyles.counterint}>26</Text>
+                <Text style={homeStyles.boardtextTwo}>Following</Text>
+              </View>
+            </View>
+            <View style={homeStyles.MyTabsContainer}>
+              <TouchableOpacity style={homeStyles.MyTabsSelect}>
+                <Text style={homeStyles.MyTabs}>My Events</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                  <Text style={homeStyles.MyTabs}>My Tickets</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text style={homeStyles.MyTabs}>Bookmarks</Text>
+              </TouchableOpacity>
+            </View>
+            <ScrollView>
+            <View style={homeStyles.createcard}>
+              <TextInput style={homeStyles.createCardcontent} placeholder="Create event "></TextInput>
+              <TouchableOpacity>
+                <Feather name="plus" size={50} style={homeStyles.cardicon}/>
+              </TouchableOpacity>
+            </View>
+      
+            <View style={homeStyles.MyTabsContainer}>
+                <TouchableOpacity>
+                <Text style={homeStyles.MyTabs}>My Events</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={homeStyles.MyTabsSelect}>
+                <Text style={homeStyles.MyTabs}>My Tickets</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                <Text style={homeStyles.MyTabs}>Bookmarks</Text>
+                </TouchableOpacity>
+            </View>
             <TouchableOpacity>
-            <Ionicons name="share-social-outline" size={22} color="black" />
+            <View style={homeStyles.MyTicketStub}> 
+            <View style={homeStyles.MyTicketStubDiv}>
+              <View>
+              <Text style={homeStyles.MyTicketEvent}>Sunday Worship Service</Text>
+              <Text style={homeStyles.MyTicketDate}>Sunday November 14 Starts at 9:00AM </Text>
+      
+              <Text style={homeStyles.MyTicketOrganizer}>Sunday Worship Service</Text>
+              <Text style={homeStyles.MyTicketLocation}>L3 Alpha Kokak</Text>
+              </View>
+              <View style={homeStyles.MyTicketQRContainer}>
+                  <Image
+                      style={homeStyles.MyTicketQR}
+                      source={require('../assets/img/SampleQR.png')}
+                  />
+                  </View>
+            </View>
+            </View>
             </TouchableOpacity>
-            <TouchableOpacity>
-            <MaterialIcons name="bookmark" size={22} color="black" />
+      
+            <View style={homeStyles.MyTabsContainer}>
+                <TouchableOpacity>
+                <Text style={homeStyles.MyTabs}>My Events</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                <Text style={homeStyles.MyTabs}>My Tickets</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={homeStyles.MyTabsSelect}>
+                <Text style={homeStyles.MyTabs}>Bookmarks</Text>
+                </TouchableOpacity>
+            </View>
+      
+            <TouchableOpacity style={homeStyles.feed}>
+              <Image
+              style={homeStyles.firstpic}
+              source={require('../assets/img/A.jpg')}
+              />
+              <View style={homeStyles.eventInfoTab}>
+                <Text style={homeStyles.eventTitlecontent}>Not Bad Sunday</Text>
+                <Text style={homeStyles.eventDTRcontent}>Sunday, November 14 ∘ 12:00PM</Text>
+                <Text style={homeStyles.eventLOCcontent}>Every Nation Campus</Text>
+                <View style={homeStyles.GeoLocTabcontent}>
+                  <SimpleLineIcons name="location-pin" size={16} color="black"/>
+                  <Text style={homeStyles.feedcontent}>Bulacan, Bulacan</Text>
+                </View>
+              </View>
+              <View style={homeStyles.eventOptionTabcontent}>
+                <TouchableOpacity>
+                <Ionicons name="share-social-outline" size={22} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                <MaterialIcons name="bookmark" size={22} color="black" />
+                </TouchableOpacity>
+              </View>     
             </TouchableOpacity>
-          </View>     
-        </TouchableOpacity>
+          </ScrollView>
+        </View>
       </ScrollView>
-    </View>
+      </SafeAreaView>
+      
     );
   }
 }
