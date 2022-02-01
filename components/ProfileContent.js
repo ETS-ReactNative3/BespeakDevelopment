@@ -33,7 +33,7 @@ class ProfileEvents extends Component {
     render() {
         console.log('Event is Loaded')
         return (
-            <>
+            <ScrollView>
             <Text>This is events</Text>
             <Text>This is events</Text>
             <Text>This is events</Text>
@@ -46,8 +46,25 @@ class ProfileEvents extends Component {
             <Text>This is events</Text>
             <Text>This is events</Text><Text>This is events</Text>
             <Text>This is events</Text>
-
-            </>
+            <Text>This is events</Text>
+            <Text>This is events</Text>
+            <Text>This is events</Text>
+            <Text>This is events</Text>
+            <Text>This is events</Text>
+            <Text>This is events</Text>
+            <Text>This is events</Text>
+            <Text>This is events</Text>
+            <Text>This is events</Text>
+            <Text>This is events</Text>
+            <Text>This is events</Text>
+            <Text>This is events</Text>
+            <Text>This is events</Text>
+            <Text>This is events</Text>
+            <Text>This is events</Text>
+            <Text>This is events</Text>
+            <Text>This is events</Text>
+            <Text>This is events</Text>
+            </ScrollView>
         );
     }
 }
