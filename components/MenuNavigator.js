@@ -92,6 +92,16 @@ class ProfileNavigator extends Component {
               color: '#eb9834',
             }
           }}/>
+        <MenuStack.Screen name="ChangePasswordScreen" component={EditProfileScreens.ChangePasswordScreen}
+          options={{
+            title: 'Change Password',
+            headerShown: true,
+            tabBarShowLabel:false,
+            headerTitleStyle: {
+              fontFamily: 'RedHatDisplay-Medium',
+              color: '#eb9834',
+            }
+          }}/>
       </MenuStack.Navigator>
     );
   }

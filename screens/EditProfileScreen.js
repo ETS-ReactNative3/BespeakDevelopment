@@ -14,8 +14,9 @@ import {
 import Spinner from 'react-native-loading-spinner-overlay';
 import * as ImagePicker from 'react-native-image-crop-picker';
 
-import { auth, db, storage } from '../firebase';
+import { auth, db, storage, _auth } from '../firebase';
 
+import ChangePass from "../styles/ChangePass";
 import SystemStyle from "../styles/SystemStyle";
 import homeStyles from "../styles/homeStyles";
 import Validation from '../styles/Validation';
@@ -24,6 +25,7 @@ import {
     validateName, 
     validateOrgName,
     validateMobile,
+    validatePassword
 } from '../helper/TextValidate';
 
 class EditProfileScreen extends Component {
@@ -59,10 +61,10 @@ class EditProfileScreen extends Component {
             profile_image = url
             console.log("User's Profile Photo: ", url)
         }).catch((error) => {
-            if(error.code == '[storage/object-not-found]') {
-                return;
+            if(error.code != 'storage/object-not-found') {
+                console.log("Error occured: ", error.code)
+                Alert.alert('Error!', error.message)
             }
-            Alert.alert('Error!', error)
         })
 
         await storage.ref(`/users/${uid}/cover`)
@@ -71,10 +73,10 @@ class EditProfileScreen extends Component {
             cover_image = url
             console.log("User's Cover Photo: ", url)
         }).catch((error) => {
-            if(error.code == '[storage/object-not-found]') {
-                return;
+            if(error.code != 'storage/object-not-found') {
+                console.log("Error occured: ", error.code)
+                Alert.alert('Error!', error.message)
             }
-            Alert.alert('Error!', error)
         })
 
         this.setState({'profile_photo': {
@@ -121,7 +123,7 @@ class EditProfileScreen extends Component {
                 }})
             }
         }).catch(error => {
-            console.log("ERROR!:", error)
+            console.log("Error/Warning: ", error)
         });
     };
     async _handleSubmit() {
@@ -328,12 +330,11 @@ class EditProfileScreen extends Component {
                     <Text style={Validation.textVal}>
                             {this.state.valid.mobile}</Text>
                     <TouchableOpacity style={homeStyles.changepw}
-                        onPress = {() => {}}>
+                        onPress = {() => { this.props.navigation.navigate('ChangePasswordScreen') }}>
                         <Text style={homeStyles.changepwtxt}> Change Password</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={homeStyles.signout}
-                        onPress = {() => {
-                            auth.signOut()}}>
+                        onPress = {() => { auth.signOut() }}>
                         <Text style={homeStyles.signouttxt}> Log Out</Text>
                     </TouchableOpacity>
                 </ScrollView>
@@ -342,6 +343,145 @@ class EditProfileScreen extends Component {
     } 
 }
 
+class ChangePasswordScreen extends Component {
+    state = {
+        user: auth.currentUser,
+        data: {current: '', new: '', confirm: ''},
+        valid: {},
+        is_loading: false
+    }
+    _handleText(key, value) {
+        var dataState = this.state.data
+        var validState = this.state.valid
+        
+        validState[key] = ''
+        dataState[key] = value
+
+        if(key == 'new' || key == 'confirm') {
+            if(dataState.confirm != dataState.new) {
+                validState.confirm = 'Your password does not match.'
+            } else {
+                validState.confirm = ''
+            }
+
+            if(value) {
+                if(!validatePassword(value) && key == 'new') {
+                    validState.new = 'Your password is too weak.'
+                }
+            } else {
+                validState[key] = 'This field is required'
+            }
+        } else {
+            if(!value) {
+                validState.current = 'This field is required'
+            }
+        }
+
+        this.setState({'data': dataState})
+        this.setState({'valid': validState})
+    }
+    async _handleSubmit() {
+        var is_validate = await this._processValidate()
+        if(is_validate) {
+            this.setState({'is_loading': true})
+            await this._processSubmit()
+            this.setState({'is_loading': false})
+        }
+    }
+    async _processSubmit() {
+        console.log('Changing Password for User: ', this.state.user.email)
+        var user_creds = _auth.EmailAuthProvider
+            .credential(this.state.user.email, this.state.data.current)
+        console.log('Started changing password... ')
+        
+        await auth
+            .currentUser
+            .reauthenticateWithCredential(user_creds)
+            .then(() => {
+                console.log('Changing password now...')
+                    auth.currentUser
+                        .updatePassword(this.state.data.new)
+                        .catch(error => {
+                            console.log('Error on Changing Password: ', error.message)
+                            Alert.alert('Error!', error.message)
+                        }).then(() => {
+                            this.props.navigation.goBack()
+                        })
+            })
+            .catch(error => {
+                console.log('Error on Reauthentication: ', error.message)
+                if(error.code == 'auth/wrong-password') {
+                    this.setState({'valid': {'current': 'Your password is incorrect.'}})
+                } else {
+                    Alert.alert('Error!', error.message)
+                }
+            })
+    }
+    async _processValidate() {
+        let is_valid = true;
+        for(var key in this.state.data) {
+            await this._handleText(key, this.state.data[key])
+        }
+        for(var key in this.state.data) {
+            if(this.state.valid[key] != '') {
+                is_valid = false;
+            }
+        }
+        return is_valid
+    }
+    render() {
+        return (
+            <View style={ChangePass.SIcontainer}>
+                {
+                    this.state.is_loading && 
+                        <Spinner visible={true} textContent = {'Updating your password now...'}
+                            textStyle={SystemStyle.defaultLoader}
+                            color = '#fff'
+                            animation = 'fade'
+                            overlayColor = 'rgba(0, 0, 0, 0.50)'/>
+                }
+                <ScrollView>
+                    <Text style={ChangePass.SUAltText}>Current Password</Text>
+                    <TextInput style={ChangePass.SIinput} secureTextEntry={true}
+                        maxLength = {15}
+                        onChangeText = {(text) => this._handleText('current', text)}
+                        returnKeyType="next"
+                        onSubmitEditing={() => { this.txtNewPassword.focus(); }}
+                        blurOnSubmit={false}/>
+                    <Text style={Validation.textVal}>
+                        {this.state.valid.current}</Text>
+                    <Text style={ChangePass.SUAltText}>New Password</Text>
+                    <TextInput style={ChangePass.SIinput} secureTextEntry={true}
+                        maxLength = {15}
+                        onChangeText = {(text) => this._handleText('new', text)}
+                        returnKeyType="next"
+                        onSubmitEditing={() => { this.txtConfirmPassword.focus(); }}
+                        blurOnSubmit={false}
+                        ref={(input) => { this.txtNewPassword = input; }}/>
+                    <Text style={Validation.textVal}>
+                        {this.state.valid.new}</Text>
+                    <Text style={ChangePass.SUAltText}>Confirm Password</Text>
+                    <TextInput style={ChangePass.SIinput} secureTextEntry={true}
+                        maxLength = {15}
+                        onChangeText = {(text) => this._handleText('confirm', text)}
+                        returnKeyType="next"
+                        ref={(input) => { this.txtConfirmPassword = input; }}
+                        blurOnSubmit={false}/>
+                    <Text style={Validation.textVal}>
+                        {this.state.valid.confirm}</Text>
+                </ScrollView>
+                <View>
+                    <TouchableOpacity style={ChangePass.continuebtn}
+                        onPress = {() => { this._handleSubmit() }}>
+                            <Text style={ChangePass.continuebtntext}>Save</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>  
+        );
+    }
+}
+
 export default {
-    EditProfileScreen
+    EditProfileScreen,
+    ChangePasswordScreen
 }

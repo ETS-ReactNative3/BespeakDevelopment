@@ -529,9 +529,10 @@ const homeStyles=StyleSheet.create({
     backgroundColor: '#f5f5f5',
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    marginTop: '1%',
+    marginTop: '1.5%',
     marginLeft: '1%',
     marginRight: '1%',
+    marginBottom: '1.5%',
     borderRadius: 20,
   },
   cardicon:{
@@ -904,31 +905,32 @@ const homeStyles=StyleSheet.create({
     fontFamily:'RedHatDisplay-Medium',
   },
   dashboard:{
-    marginLeft:20,
-    marginTop:15,
+    marginTop: '1%',
     flexDirection:'row',
-    
+    alignItems: 'center'
   },
   counter:{
-    flexDirection:'row', 
+    flexDirection:'row',
+    alignItems: 'center'
   },
   counterint:{
     flexDirection:'row', 
     fontSize: 16,
+    fontWeight: 'bold',
     fontFamily:'RedHatDisplay-Medium',
   },
   boardtextOne:{
     fontFamily:'RedHatDisplay-Regular',
     fontSize: 16,
-    marginLeft:10,
+    marginLeft: 5,
     marginRight:10,
-    marginTop:1.5
+    color: '#808080'
   },
   boardtextTwo:{
     fontFamily:'RedHatDisplay-Regular',
     fontSize: 16,
-    marginLeft:10,
-    marginTop:1.5
+    marginLeft: 5,
+    color: '#808080'
   },
   addbioarea:{
     padding: 20,
@@ -1323,12 +1325,14 @@ const homeStyles=StyleSheet.create({
   ProfileBio:{
     fontFamily:'RedHatDisplay-Regular',
     fontSize:16,
-    marginBottom:5,
+    marginBottom: '1%',
+    marginTop: '1%',
   },
   ProfileLocation:{
-    fontFamily:'RedHatDisplay-Light',
+    fontFamily:'RedHatDisplay-Medium',
     fontSize:16,
-    marginTop:-1
+    marginLeft: 5,
+    color: '#808080'
   },
   editProfileheader:{
     paddingTop: 40,
@@ -1650,7 +1654,6 @@ const homeStyles=StyleSheet.create({
     fontFamily:'RedHatDisplay-Light',
   },
   MyTicketQRContainer:{
-
     borderRadius:20,
     width: 100,
     height: 100,
@@ -1659,12 +1662,13 @@ const homeStyles=StyleSheet.create({
     borderRadius: 15,
     width: 100,
     height: 100,
+  },
+  LocationContainer: {
+    flexDirection:'row',
+    alignItems: 'center',
+    color: '#808080',
+    marginTop: '4%'
   }
-
-
-
-
-
 })
 
 export default homeStyles;

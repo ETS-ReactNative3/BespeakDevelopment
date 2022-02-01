@@ -1,29 +1,24 @@
 import React, { Component } from "react";
 import {
-  TextInput, 
   ScrollView, 
-  TouchableOpacity,
   Text, 
   View,
-  Image,
-  Alert,
-  SafeAreaView, RefreshControl
 } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+import SystemStyle from "../styles/SystemStyle";
+
+import Options from '../values/Options'
 
 const Top = createMaterialTopTabNavigator();
 
 class ProfileContent extends Component {
     render() {
         return (
-            <Top.Navigator initialRouteName="HomeTab"
-                screenOptions={{
-                    tabBarActiveTintColor: '#eb9834',
-                    swipeEnabled: true
-                }}>
-                    <Top.Screen name="ProfileEvents" component={ProfileEvents} />
-                    <Top.Screen name="ProfileTickets" component={ProfileTickets} />
-                    <Top.Screen name="ProfileBookmarks" component={ProfileBookmarks} />
+            <Top.Navigator screenOptions={Options.ProfileTabNavigation}>
+                <Top.Screen name="My Events" component={ProfileEvents} />
+                <Top.Screen name="My Tickets" component={ProfileTickets} />
+                <Top.Screen name="Bookmarks" component={ProfileBookmarks} />
             </Top.Navigator>
         );
     }
@@ -31,64 +26,28 @@ class ProfileContent extends Component {
 
 class ProfileEvents extends Component {
     render() {
-        console.log('Event is Loaded')
         return (
-            <ScrollView>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text><Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text><Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            </ScrollView>
+            <View style={SystemStyle.TabContainer}>
+                <Text style={SystemStyle.TabEmptyList}> No event found</Text>
+            </View>
         );
     }
 }
 class ProfileTickets extends Component {
     render() {
-        console.log('Ticket is Loaded')
         return (
-            <Text>{'Ticket is Loaded'}</Text>
+            <View style={SystemStyle.TabContainer}>
+                <Text style={SystemStyle.TabEmptyList}> No ticket found</Text>
+            </View>
         );
     }
 }
 class ProfileBookmarks extends Component {
     render() {
-        console.log('Bookmark is Loaded')
         return (
-            <ScrollView>
-            <View style={{ flex: 1, 
-                alignItems: "center", 
-                justifyContent: "center" }}>
-                    <Text style={{ color: "#006600", fontSize: 40 }}>
-                        Images Screen!
-                    </Text>
+            <View style={SystemStyle.TabContainer}>
+                <Text style={SystemStyle.TabEmptyList}> No bookmark found</Text>
             </View>
-            </ScrollView>
         );
     }
 }

@@ -66,10 +66,10 @@ class ProfileScreen extends Component {
         profile_image = url
         console.log("User's Profile Photo: ", url)
       }).catch((error) => {
-        if(error.code == '[storage/object-not-found]') {
-          return;
+        if(error.code != 'storage/object-not-found') {
+          console.log("Error occured: ", error.message)
+          Alert.alert('Error!', error.message)
         }
-        Alert.alert('Error!', error.message)
       })
 
     await storage.ref(`/users/${uid}/cover`)
@@ -78,10 +78,10 @@ class ProfileScreen extends Component {
         cover_image = url
         console.log("User's Cover Photo: ", url)
       }).catch((error) => {
-        if(error.code == '[storage/object-not-found]') {
-          return;
+        if(error.code != 'storage/object-not-found') {
+          console.log("Error occured: ", error.code)
+          Alert.alert('Error!', error.message)
         }
-        Alert.alert('Error!', error.message)
       })
     
     this.setState({'data': {
@@ -178,8 +178,8 @@ class ProfileScreen extends Component {
                   ) : null
                 }
                 { this.state.data.location ? (
-                  <View style={{flexDirection:'row'}}>
-                    <SimpleLineIcons name="location-pin" size={13} color="black" />
+                  <View style={homeStyles.LocationContainer}>
+                    <SimpleLineIcons name="location-pin" size={13} color="#808080" />
                     <Text style={homeStyles.ProfileLocation}>
                       {
                         this.state.data.location
@@ -187,17 +187,18 @@ class ProfileScreen extends Component {
                     </Text>
                   </View>
                 ) : null}
-              </View>
-              <View style={homeStyles.dashboard}>
-                <View style={homeStyles.counter}>            
-                  <Text style={homeStyles.counterint}>814</Text>
-                  <Text style={homeStyles.boardtextOne}>Followers</Text>
+                <View style={homeStyles.dashboard}>
+                  <View style={homeStyles.counter}>            
+                    <Text style={homeStyles.counterint}>814</Text>
+                    <Text style={homeStyles.boardtextOne}>Followers</Text>
+                  </View>
+                  <View style={homeStyles.counter}>            
+                    <Text style={homeStyles.counterint}>26</Text>
+                    <Text style={homeStyles.boardtextTwo}>Following</Text>
+                  </View>
                 </View>
-                <View style={homeStyles.counter}>            
-                  <Text style={homeStyles.counterint}>26</Text>
-                  <Text style={homeStyles.boardtextTwo}>Following</Text>
-                </View>
               </View>
+              
           </View>
         </ScrollView>
       </SafeAreaView>
