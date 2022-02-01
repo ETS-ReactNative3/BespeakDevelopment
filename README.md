@@ -21,5 +21,5 @@ Development of Bespeak Mobile Application
 
 # Bespeak DEV Client Version 1.4
 Install the following modules:
-    - ```expo install @react-navigation/material-top-tabs react-native-tab-view```
-    - ```expo install react-native-pager-view```
+- ```expo install @react-navigation/material-top-tabs react-native-tab-view```
+- ```expo install react-native-pager-view```
