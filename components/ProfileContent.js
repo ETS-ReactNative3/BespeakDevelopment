@@ -17,13 +17,24 @@ class ProfileContent extends Component {
     render() {
         return (
             <Top.Navigator initialRouteName="HomeTab"
+            tabBarOptions={{
+                indicatorStyle: {
+                    borderBottomColor: '#eb9834',
+                    borderBottomWidth: 4,
+                    borderRadius:10,
+                    marginLeft:'9%',
+                    marginRight:'-30%',
+                  },
+                }}
                 screenOptions={{
-                    tabBarActiveTintColor: '#eb9834',
-                    swipeEnabled: true
+                    tabBarActiveTintColor: '#000',
+                    tabBarInactiveTintColor:'#ccc',
+                    tabBarPressColor:'#eb9834',
+                    swipeEnabled: true   
                 }}>
-                    <Top.Screen name="ProfileEvents" component={ProfileEvents} />
-                    <Top.Screen name="ProfileTickets" component={ProfileTickets} />
-                    <Top.Screen name="ProfileBookmarks" component={ProfileBookmarks} />
+                    <Top.Screen name=" " component={ProfileEvents} options={{ title: 'Tab Stack' }}/>
+                    <Top.Screen name="My Tickets" component={ProfileTickets} />
+                    <Top.Screen name="Bookmarks" component={ProfileBookmarks} />
             </Top.Navigator>
         );
     }
@@ -33,37 +44,19 @@ class ProfileEvents extends Component {
     render() {
         console.log('Event is Loaded')
         return (
-            <ScrollView>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text><Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text><Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
-            <Text>This is events</Text>
+            <ScrollView style={{backgroundColor:'#fff'}}>
+                <View style={{
+                        margin:'35%', 
+                        alignSelf: "center", 
+                        justifyContent: "center",}}>
+                    <Text  style={{
+                            alignSelf: "center", 
+                            justifyContent: "center",
+                            color:'#ccc',
+                            fontSize:16,
+                            fontFamily:'RedHatDisplay-Regular' }}>
+                                No event found</Text>
+                </View>
             </ScrollView>
         );
     }
@@ -72,7 +65,20 @@ class ProfileTickets extends Component {
     render() {
         console.log('Ticket is Loaded')
         return (
-            <Text>{'Ticket is Loaded'}</Text>
+            <ScrollView style={{backgroundColor:'#fff'}}>
+            <View style={{
+                margin:'35%', 
+                alignSelf: "center", 
+                justifyContent: "center",}}>
+                <Text  style={{
+                    alignSelf: "center", 
+                    justifyContent: "center",
+                    color:'#ccc',
+                    fontSize:16,
+                    fontFamily:'RedHatDisplay-Regular' }}>
+                        No ticket found</Text>
+            </View>
+        </ScrollView>
         );
     }
 }
@@ -80,14 +86,19 @@ class ProfileBookmarks extends Component {
     render() {
         console.log('Bookmark is Loaded')
         return (
-            <ScrollView>
-            <View style={{ flex: 1, 
-                alignItems: "center", 
-                justifyContent: "center" }}>
-                    <Text style={{ color: "#006600", fontSize: 40 }}>
-                        Images Screen!
-                    </Text>
-            </View>
+            <ScrollView style={{backgroundColor:'#fff'}}>
+                            <View style={{
+                        margin:'35%', 
+                        alignSelf: "center", 
+                        justifyContent: "center",}}>
+                    <Text  style={{
+                            alignSelf: "center", 
+                            justifyContent: "center",
+                            color:'#ccc',
+                            fontSize:16,
+                            fontFamily:'RedHatDisplay-Regular' }}>
+                                No bookmark found</Text>
+                </View>
             </ScrollView>
         );
     }

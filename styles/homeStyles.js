@@ -529,9 +529,10 @@ const homeStyles=StyleSheet.create({
     backgroundColor: '#f5f5f5',
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    marginTop: '1%',
+    marginTop: '1.5%',
     marginLeft: '1%',
     marginRight: '1%',
+    marginBottom: '1.5%',
     borderRadius: 20,
   },
   cardicon:{
