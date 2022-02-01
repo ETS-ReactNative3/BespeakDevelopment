@@ -69,7 +69,7 @@ class ProfileScreen extends Component {
         if(error.code == '[storage/object-not-found]') {
           return;
         }
-        Alert.alert('Error!', error)
+        Alert.alert('Error!', error.message)
       })
 
     await storage.ref(`/users/${uid}/cover`)
@@ -81,7 +81,7 @@ class ProfileScreen extends Component {
         if(error.code == '[storage/object-not-found]') {
           return;
         }
-        Alert.alert('Error!', error)
+        Alert.alert('Error!', error.message)
       })
     
     this.setState({'data': {
@@ -200,7 +200,6 @@ class ProfileScreen extends Component {
               </View>
           </View>
         </ScrollView>
-        
       </SafeAreaView>
       <ProfileContent />
     </>
