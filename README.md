@@ -23,3 +23,4 @@ Development of Bespeak Mobile Application
 Install the following modules:
 - ```expo install @react-navigation/material-top-tabs react-native-tab-view```
 - ```expo install react-native-pager-view```
+- ```expo install react-native-reanimated@2.0.0-rc.0 react-native-input-outline```
