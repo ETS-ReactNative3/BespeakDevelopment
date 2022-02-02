@@ -12,7 +12,6 @@ import Validation from "../styles/Validation"
 
 import { validateName, validateOrgName } from "../helper/TextValidate";
 import Properties from '../values/Properties';
-import Options from '../values/Options';
 
 class SignUpNameFields extends Component {
     //#TODO: Optimized Implementation

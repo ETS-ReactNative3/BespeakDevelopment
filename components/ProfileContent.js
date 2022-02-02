@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  ScrollView, 
   Text, 
   View,
 } from 'react-native';
@@ -26,6 +25,7 @@ class ProfileContent extends Component {
 
 class ProfileEvents extends Component {
     render() {
+        console.log('Event Tab Contents Loaded.')
         return (
             <View style={SystemStyle.TabContainer}>
                 <Text style={SystemStyle.TabEmptyList}> No event found</Text>
@@ -35,6 +35,7 @@ class ProfileEvents extends Component {
 }
 class ProfileTickets extends Component {
     render() {
+        console.log('Ticket Tab Contents Loaded.')
         return (
             <View style={SystemStyle.TabContainer}>
                 <Text style={SystemStyle.TabEmptyList}> No ticket found</Text>
@@ -44,6 +45,7 @@ class ProfileTickets extends Component {
 }
 class ProfileBookmarks extends Component {
     render() {
+        console.log('Bookmarks Tab Contents Loaded.')
         return (
             <View style={SystemStyle.TabContainer}>
                 <Text style={SystemStyle.TabEmptyList}> No bookmark found</Text>
@@ -52,4 +54,4 @@ class ProfileBookmarks extends Component {
     }
 }
 
-export default ProfileContent
+export default React.memo(ProfileContent)
