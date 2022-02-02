@@ -8,8 +8,10 @@ import {
   Image,
   BackHandler,
   Alert,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  SafeAreaView,
 } from 'react-native';
+import OutlineInput from 'react-native-outline-input';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import { auth, db } from '../firebase';
@@ -18,6 +20,9 @@ import SystemStyle from "../styles/SystemStyle";
 import SignUp from "../styles/SignUp";
 import Validation from '../styles/Validation';
 import EmailVerification from "../styles/EmailVerification.js";
+
+import Properties from '../values/Properties';
+
 
 import { 
     validateEmail,
@@ -244,38 +249,45 @@ class SignUpFormScreen extends Component {
                 <KeyboardAvoidingView>
                     <ScrollView>
                         <Text style={SignUp.SUtitleText}>Almost There...</Text>
-                        <Text style={SignUp.SUAltText}>We need additional details to get to know you</Text>
-                        <TextInput style={SignUp.SIinput} placeholder='Email' maxLength={150} 
+                        <Text style={SignUp.SUAltText}>We need additional details to get to know you</Text>  
+                        <SafeAreaView style={SignUp.newdefaultInput}>
+                        <OutlineInput label="Email"
+                            value = {this.state.email.value}
                             onChangeText = {text => this._handleText('email', text)}
-                            returnKeyType="next"
-                            onSubmitEditing={() => { this.txtMobile.focus(); }}
-                            blurOnSubmit={false}/>
+                            maxLength = {150}
+                            {...Properties.defaultTextBox}/>
+                        </SafeAreaView>                        
                         <Text style={Validation.textVal}>
-                            {this.state.email.valid}</Text>   
-                        <TextInput style={SignUp.SIinput} placeholder='(+63)' maxLength={15}
+                            {this.state.email.valid}</Text>
+                        <SafeAreaView style={SignUp.newInput}>
+                        <OutlineInput label="(+63)"
+                            value = {this.state.mobile.value}
                             onChangeText = {text => this._handleText('mobile', text)}
-                            returnKeyType="next"
-                            onSubmitEditing={() => { this.txtPassword.focus(); }}
-                            blurOnSubmit={false}
-                            ref={(input) => { this.txtMobile = input; }}/>
+                            maxLength = {15}
+                            {...Properties.defaultTextBox}/>
+                        </SafeAreaView>
                         <Text style={Validation.textVal}>
                             {this.state.mobile.valid}</Text>  
-                        <TextInput style={SignUp.SIinput} placeholder='Password' secureTextEntry={true}
-                            maxLength = {15}
+                        <SafeAreaView style={SignUp.newInput}>
+                        <OutlineInput label="Password"
+                            value = {this.state.password.value}
                             onChangeText = {text => this._handleText('password', text)}
-                            returnKeyType="next"
-                            onSubmitEditing={() => { this.txtConfirm.focus();}}
-                            blurOnSubmit={false}
-                            ref={(input) => { this.txtPassword = input; }}/>
-                        <Text style={Validation.textVal}>
-                            {this.state.password.valid}</Text>  
-                        <TextInput style={SignUp.SIinput} placeholder='Confirm Password' secureTextEntry={true}
                             maxLength = {15}
+                            secureTextEntry={true}
+                            {...Properties.defaultTextBox}/>
+                        </SafeAreaView>
+                        <Text style={Validation.textVal}>
+                            {this.state.password.valid}</Text>
+                        <SafeAreaView style={SignUp.newInput}>
+                        <OutlineInput label="Confirm Password"
+                            value = {this.state.confirm.value}
                             onChangeText = {text => this._handleText('confirm', text)}
-                            ref={(input) => { this.txtConfirm = input; }}/>
-                            <Text style={Validation.textVal}>
-                                {this.state.confirm.valid}</Text>  
-                        
+                            maxLength = {15}
+                            secureTextEntry={true}
+                            {...Properties.defaultTextBox}/>
+                        </SafeAreaView>
+                        <Text style={Validation.textVal}>
+                            {this.state.confirm.valid}</Text>  
                         <View style={{alignSelf:'center'}}>
                             <Text style={SignUp.altText}>By clicking the button below, you agree to our</Text>
                         </View>
