@@ -3,19 +3,19 @@ import { TextInput,
     View,
     Text,
     TouchableOpacity,
-    SafeAreaView,} from 'react-native';
+    SafeAreaView } from 'react-native';
+import OutlineInput from 'react-native-outline-input';
 
 import SignUp from "../styles/SignUp";
-
-import OutlineInput from 'react-native-outline-input';
 
 import Validation from "../styles/Validation"
 
 import { validateName, validateOrgName } from "../helper/TextValidate";
+import Properties from '../values/Properties';
+import Options from '../values/Options';
 
 class SignUpNameFields extends Component {
     //#TODO: Optimized Implementation
-        //Transfer the Whole form as the component.
     state = {
         l_name: {value: '', valid: ''},
         f_name: {value: '', valid: ''},
@@ -54,52 +54,23 @@ class SignUpNameFields extends Component {
         if(this.props.USER_TYPE == 'INDIV') {
             return (
                 <>
-                <SafeAreaView style={SignUp.newfnameInput}>
-                            <OutlineInput
-                                label="Email"
-                                activeValueColor="#eb9834"
-                                activeBorderColor="#eb9834"
-                                activeLabelColor="#eb9834"
-                                passiveBorderColor="#ccc"
-                                passiveLabelColor="#ccc"
-                                passiveValueColor="#ccc"
-                                fontFamily="RedHatDisplay-Regular"
-                                height={46}
-                                fontSize={18}
-                            type='text'
-                            id='first-name' 
-                            name='firstname' 
-                            maxLength = {26}
+                    <SafeAreaView style={SignUp.newfnameInput}>
+                        <OutlineInput label="First Name"
+                            value = {this.state.f_name.value}
                             onChangeText = {text => this._handleText('f_name', text)}
-                            returnKeyType="next"
-                            onSubmitEditing={() => { this.txtLName.focus();}}
-                            blurOnSubmit={false}
-                            />
-                        </SafeAreaView>
-                        <Text style={Validation.textVal}>
-                        {this.state.f_name.valid}</Text>     
-                        <SafeAreaView style={SignUp.newlnameInput}>
-                            <OutlineInput
-                                label="Last Name"
-                                activeValueColor="#eb9834"
-                                activeBorderColor="#eb9834"
-                                activeLabelColor="#eb9834"
-                                passiveBorderColor="#ccc"
-                                passiveLabelColor="#ccc"
-                                passiveValueColor="#ccc"
-                                fontFamily="RedHatDisplay-Regular"
-                                height={46}
-                                fontSize={18}
-                            type='text'
-                            id='last-name' 
-                            name='lastname'
-                            placeholder='Last Name'
                             maxLength = {26}
+                            {...Properties.defaultTextBox}/>
+                    </SafeAreaView>
+                    <Text style={Validation.textVal}>
+                        {this.state.f_name.valid}</Text>     
+                    <SafeAreaView style={SignUp.newlnameInput}>
+                        <OutlineInput label="Last Name"
+                            value = {this.state.l_name.value}
                             onChangeText = {text => this._handleText('l_name', text)}
-                            ref={(input) => { this.txtLName = input; }}
-                            />
-                        </SafeAreaView>
-                        <Text style={Validation.textVal}>
+                            maxLength = {26}
+                            {...Properties.defaultTextBox}/>
+                    </SafeAreaView>
+                    <Text style={Validation.textVal}>
                         {this.state.l_name.valid}</Text>
                     <TouchableOpacity style={SignUp.continuebtn}
                         onPress={() => this._handleChildSubmit()}>
@@ -110,13 +81,11 @@ class SignUpNameFields extends Component {
         } else {
             return (
                 <>
-                    <TextInput style={SignUp.SIinput}
-                        type='text'
-                        id='org_name' 
-                        name='org_name' 
-                        placeholder='Organization Name'
-                        maxLength = {46}
-                        onChangeText = {text => this._handleText('org_name', text)}/>
+                   <OutlineInput label="Organization Name"
+                        value = {this.state.org_name.value}
+                        onChangeText = {text => this._handleText('org_name', text)}
+                        maxLength = {26}
+                        {...Properties.defaultTextBox}/>
                     <Text style={Validation.textVal}>
                         {this.state.org_name.valid}</Text>     
                     <TouchableOpacity style={SignUp.continuebtn}
