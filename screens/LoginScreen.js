@@ -12,8 +12,6 @@ import {
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-import OutlineInput from 'react-native-outline-input';
-
 import { auth } from '../firebase';
 
 import SystemStyle from "../styles/SystemStyle";
@@ -118,36 +116,7 @@ class LoginScreen extends Component {
                         overlayColor = 'rgba(0, 0, 0, 0.50)'/>
                 }
                 <ScrollView>
-                    <Text style={Index.SItitleText}>Log In</Text>
-                        <SafeAreaView style={Index.newEmailInput}>
-                            <OutlineInput
-                                label="Username"
-                                activeValueColor="#eb9834"
-                                activeBorderColor="#eb9834"
-                                activeLabelColor="#eb9834"
-                                passiveBorderColor="#ccc"
-                                passiveLabelColor="#ccc"
-                                passiveValueColor="#ccc"
-                                fontFamily="RedHatDisplay-Regular"
-                                height={46}
-                                fontSize={18}
-                            />
-                        </SafeAreaView>
-                        <SafeAreaView style={Index.newPasswordInput}>
-                            <OutlineInput
-                                label="Password"
-                                activeValueColor="#eb9834"
-                                activeBorderColor="#eb9834"
-                                activeLabelColor="#eb9834"
-                                passiveBorderColor="#ccc"
-                                passiveLabelColor="#ccc"
-                                passiveValueColor="#ccc"
-                                fontFamily="RedHatDisplay-Regular"
-                                height={46}
-                                fontSize={18}
-                                secureTextEntry={true}
-                            />
-                        </SafeAreaView>   
+                    <Text style={Index.SItitleText}>Log In</Text>   
                     <TextInput style={Index.SIinput} placeholder='Email' maxLength={150} 
                         onChangeText = {text => this._handleText('email', text)}
                         returnKeyType="next"

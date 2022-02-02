@@ -291,14 +291,14 @@ class EditProfileScreen extends Component {
                                 value={this.state.data.f_name}
                                 placeholder={this.state.data.f_name}
                                 onChangeText = {text => this._handleText('f_name', text)}/>
-                            <Text style={Validation.textVal}>
+                            <Text style={Validation.changemargintextVal}>
                                 {this.state.valid.f_name}</Text>
                             <Text style={homeStyles.Info}>Last Name</Text>
                             <TextInput style={homeStyles.Profileinput} maxLength={26}
                                 value={this.state.data.l_name}
                                 placeholder={this.state.data.l_name}
                                 onChangeText = {text => this._handleText('l_name', text)}/>
-                            <Text style={Validation.textVal}>
+                            <Text style={Validation.changemargintextVal}>
                                 {this.state.valid.l_name}</Text>
                         </>
                     ) : (
@@ -327,7 +327,7 @@ class EditProfileScreen extends Component {
                         value={this.state.data.mobile}
                         placeholder={this.state.data.mobile}
                         onChangeText = {text => this._handleText('mobile', text)}/>
-                    <Text style={Validation.textVal}>
+                    <Text style={Validation.changemargintextVal}>
                             {this.state.valid.mobile}</Text>
                     <TouchableOpacity style={homeStyles.changepw}
                         onPress = {() => { this.props.navigation.navigate('ChangePasswordScreen') }}>
@@ -448,7 +448,7 @@ class ChangePasswordScreen extends Component {
                         returnKeyType="next"
                         onSubmitEditing={() => { this.txtNewPassword.focus(); }}
                         blurOnSubmit={false}/>
-                    <Text style={Validation.textVal}>
+                    <Text style={Validation.changemargintextVal}>
                         {this.state.valid.current}</Text>
                     <Text style={ChangePass.SUAltText}>New Password</Text>
                     <TextInput style={ChangePass.SIinput} secureTextEntry={true}
@@ -458,7 +458,7 @@ class ChangePasswordScreen extends Component {
                         onSubmitEditing={() => { this.txtConfirmPassword.focus(); }}
                         blurOnSubmit={false}
                         ref={(input) => { this.txtNewPassword = input; }}/>
-                    <Text style={Validation.textVal}>
+                    <Text style={Validation.changemargintextVal}>
                         {this.state.valid.new}</Text>
                     <Text style={ChangePass.SUAltText}>Confirm Password</Text>
                     <TextInput style={ChangePass.SIinput} secureTextEntry={true}
@@ -467,7 +467,7 @@ class ChangePasswordScreen extends Component {
                         returnKeyType="next"
                         ref={(input) => { this.txtConfirmPassword = input; }}
                         blurOnSubmit={false}/>
-                    <Text style={Validation.textVal}>
+                    <Text style={Validation.changemarginextVal}>
                         {this.state.valid.confirm}</Text>
                 </ScrollView>
                 <View>

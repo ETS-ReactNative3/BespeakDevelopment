@@ -6,7 +6,14 @@ const Validation = StyleSheet.create({
         color:'red', 
         fontFamily:'RedHatDisplay-Regular', 
         fontSize:14,
+    },
+    changemargintextVal: {
+        marginLeft:'5%', 
+        color:'red', 
+        fontFamily:'RedHatDisplay-Regular', 
+        fontSize:14,
     }
 })
+
 
 export default Validation;
