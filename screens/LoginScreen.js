@@ -10,6 +10,7 @@ import {
     Alert,
     SafeAreaView
 } from 'react-native';
+import OutlineInput from 'react-native-outline-input';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import { auth } from '../firebase';
@@ -21,6 +22,7 @@ import Validation from "../styles/Validation"
 import { 
     validateEmail,
 } from '../helper/TextValidate';
+import { borderBottomColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 
 class LoginScreen extends Component {
@@ -116,7 +118,7 @@ class LoginScreen extends Component {
                         overlayColor = 'rgba(0, 0, 0, 0.50)'/>
                 }
                 <ScrollView>
-                    <Text style={Index.SItitleText}>Log In</Text>   
+                    <Text style={Index.SItitleText}>Log In</Text>
                     <TextInput style={Index.SIinput} placeholder='Email' maxLength={150} 
                         onChangeText = {text => this._handleText('email', text)}
                         returnKeyType="next"

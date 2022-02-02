@@ -81,11 +81,13 @@ class SignUpNameFields extends Component {
         } else {
             return (
                 <>
-                   <OutlineInput label="Organization Name"
-                        value = {this.state.org_name.value}
-                        onChangeText = {text => this._handleText('org_name', text)}
-                        maxLength = {26}
-                        {...Properties.defaultTextBox}/>
+                    <SafeAreaView style={SignUp.newdefaultInput}>
+                    <OutlineInput label="Organization Name"
+                            value = {this.state.org_name.value}
+                            onChangeText = {text => this._handleText('org_name', text)}
+                            maxLength = {26}
+                            {...Properties.defaultTextBox}/>
+                    </SafeAreaView>
                     <Text style={Validation.textVal}>
                         {this.state.org_name.valid}</Text>     
                     <TouchableOpacity style={SignUp.continuebtn}

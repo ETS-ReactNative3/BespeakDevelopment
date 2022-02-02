@@ -135,7 +135,17 @@ const homeStyles=StyleSheet.create({
     newlnameInput:{
         marginLeft:'9%',
         marginRight:'9%',
+        marginTop:'2.5%',
+    },
+    newdefaultInput:{
+        marginLeft:'9%',
+        marginRight:'9%',
         marginTop:'4%',
+    },
+    newInput:{
+        marginLeft:'9%',
+        marginRight:'9%',
+        marginTop:'2.5%',
     },
     newPasswordInput:{
         marginLeft:'9%',
