@@ -232,7 +232,6 @@ class SignUpFormScreen extends Component {
         }
     }
     render () {
-        const loading = this.state.is_loading;
         return (
             <View style={SignUp.SUcontainer}>
                 {

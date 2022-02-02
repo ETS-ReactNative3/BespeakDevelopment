@@ -26,6 +26,26 @@ const Options = {
         headerShown: false,
         headerShadowVisible: false,
         borderWidth:0,
+    },
+
+    // Tab Navigator
+    ProfileTabNavigation: {
+        tabBarActiveTintColor: '#2b2b2b',
+        tabBarInactiveTintColor:'#8c8c8c',
+        tabBarPressColor:'#f0c28b',
+        tabBarIndicatorStyle: {
+            borderBottomColor: '#eb9834',
+            borderBottomWidth: 4,
+            borderRadius:10,
+            width: "25%",
+            left: "4.5%"
+            
+        },
+        tabBarLabelStyle: {
+            fontSize: 15,
+            textTransform: 'none',
+            fontWeight: 'bold',
+        }
     }
 }
 
