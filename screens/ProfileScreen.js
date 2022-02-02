@@ -36,7 +36,7 @@ class ProfileScreen extends Component {
   }
   async _loadUserData() {
     var uid = this.state.user.uid;
-    console.log('User ID: ' + uid);
+    console.log('Logged In User ID: ' + uid);
 
     const user_info = db.collection("user_info")
     const query = user_info.doc(uid)
@@ -97,8 +97,6 @@ class ProfileScreen extends Component {
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
       this._loadUserData()
     });
-
-    this._loadUserData()
   }
   componentWillUnmount() {
     this._unsubscribe();
@@ -112,10 +110,11 @@ class ProfileScreen extends Component {
   async onRefresh() {
     console.log("Refreshing...")
     this.setState({'refreshing': true})
-    await this.doRefresh().then(() => this.setState({'refreshing': false}))
-    console.log("Refreshed.")
+    await this.doRefresh().then(() => {
+      this.setState({'refreshing': false})
+      console.log("Refreshed.")
+    })
   }
-
   render() {
     return (
       <>
@@ -198,7 +197,6 @@ class ProfileScreen extends Component {
                   </View>
                 </View>
               </View>
-              
           </View>
         </ScrollView>
       </SafeAreaView>
