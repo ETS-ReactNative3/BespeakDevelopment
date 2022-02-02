@@ -353,9 +353,19 @@ const homeStyles=StyleSheet.create({
         justifyContent: 'center',
         color: '#fff',
         fontFamily: 'RedHatDisplay-Medium',
-    },  
-
-
+    },
+    newEmailInput:{
+        marginLeft:'9%',
+        marginRight:'9%',
+        marginTop:'4%',
+        marginBottom:'2%'
+    },
+    newPasswordInput:{
+        marginLeft:'9%',
+        marginRight:'9%',
+        marginTop:'5%',
+        marginBottom:'2%'
+    },
 })
 
 export default homeStyles;

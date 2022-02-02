@@ -7,7 +7,8 @@ import {
     View,
     BackHandler,
     Image,
-    Alert
+    Alert,
+    SafeAreaView
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -20,6 +21,7 @@ import Validation from "../styles/Validation"
 import { 
     validateEmail,
 } from '../helper/TextValidate';
+
 
 class LoginScreen extends Component {
     state = {
@@ -114,7 +116,7 @@ class LoginScreen extends Component {
                         overlayColor = 'rgba(0, 0, 0, 0.50)'/>
                 }
                 <ScrollView>
-                    <Text style={Index.SItitleText}>Log In</Text>
+                    <Text style={Index.SItitleText}>Log In</Text>   
                     <TextInput style={Index.SIinput} placeholder='Email' maxLength={150} 
                         onChangeText = {text => this._handleText('email', text)}
                         returnKeyType="next"

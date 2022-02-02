@@ -86,7 +86,7 @@ const homeStyles=StyleSheet.create({
         fontFamily: 'RedHatDisplay-Regular',
     },
     LetsGetStartedpicContainer:{
-        marginTop:80,
+        marginTop:'12%',
         alignItems:'center',
         justifyContent:'center',
     },
@@ -118,7 +118,7 @@ const homeStyles=StyleSheet.create({
     },
     AlmostTherepicContainer:{
         flex:1,
-        marginTop:112,
+        marginTop:'50%',
         alignItems:'center',
         justifyContent:'center',
     },
@@ -126,6 +126,21 @@ const homeStyles=StyleSheet.create({
         width: 280,
         height:250,
         justifyContent:'center',
+    },
+    newfnameInput:{
+        marginLeft:'9%',
+        marginRight:'9%',
+        marginTop:'4%',
+    },
+    newlnameInput:{
+        marginLeft:'9%',
+        marginRight:'9%',
+        marginTop:'4%',
+    },
+    newPasswordInput:{
+        marginLeft:'9%',
+        marginRight:'9%',
+        marginTop:'5%',
     },
     
 
