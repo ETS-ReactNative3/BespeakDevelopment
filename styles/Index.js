@@ -366,6 +366,24 @@ const homeStyles=StyleSheet.create({
         marginTop:'5%',
         marginBottom:'2%'
     },
+    defaultInputStandardContainer:{
+        marginLeft:'10%',
+        marginRight:'10%',
+        marginTop:'4%',
+        height:'4%',
+    },
+    defaultNextInputStandardContainer:{
+        marginLeft:'10%',
+        marginRight:'10%',
+        marginTop:'2.5%',
+        height:'4%',
+    },
+    defaultInputOutlineContainer:{
+        marginLeft:'10%',
+        marginRight:'10%',
+        marginTop:'4%',
+        height:'6%',
+    },
 })
 
 export default homeStyles;

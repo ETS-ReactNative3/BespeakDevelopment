@@ -12,6 +12,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import OutlineInput from 'react-native-outline-input';
+import { InputOutline, InputStandard } from 'react-native-input-outline';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import { auth, db } from '../firebase';
@@ -250,41 +251,41 @@ class SignUpFormScreen extends Component {
                     <ScrollView>
                         <Text style={SignUp.SUtitleText}>Almost There...</Text>
                         <Text style={SignUp.SUAltText}>We need additional details to get to know you</Text>  
-                        <SafeAreaView style={SignUp.newdefaultInput}>
-                        <OutlineInput label="Email"
+                        <SafeAreaView style={SignUp.defaultInputOutlineContainer}>
+                        <InputOutline placeholder="Email"
+                            maxLength={150}
                             value = {this.state.email.value}
                             onChangeText = {text => this._handleText('email', text)}
-                            maxLength = {150}
-                            {...Properties.defaultTextBox}/>
-                        </SafeAreaView>                        
+                        {...Properties.defaultInputOutline}/> 
+                        </SafeAreaView>
                         <Text style={Validation.textVal}>
                             {this.state.email.valid}</Text>
-                        <SafeAreaView style={SignUp.newInput}>
-                        <OutlineInput label="(+63)"
+                        <SafeAreaView style={SignUp.defaultNextInputOutlineContainer}>
+                        <InputOutline placeholder="(+63)"
+                            maxLength={15}
                             value = {this.state.mobile.value}
                             onChangeText = {text => this._handleText('mobile', text)}
-                            maxLength = {15}
-                            {...Properties.defaultTextBox}/>
+                        {...Properties.defaultInputOutline}/> 
                         </SafeAreaView>
                         <Text style={Validation.textVal}>
-                            {this.state.mobile.valid}</Text>  
-                        <SafeAreaView style={SignUp.newInput}>
-                        <OutlineInput label="Password"
+                            {this.state.mobile.valid}</Text>
+                        <SafeAreaView style={SignUp.defaultNextInputOutlineContainer}>
+                        <InputOutline placeholder="Password"
+                            maxLength={15}
                             value = {this.state.password.value}
                             onChangeText = {text => this._handleText('password', text)}
-                            maxLength = {15}
                             secureTextEntry={true}
-                            {...Properties.defaultTextBox}/>
-                        </SafeAreaView>
+                        {...Properties.defaultInputOutline}/> 
+                        </SafeAreaView>  
                         <Text style={Validation.textVal}>
                             {this.state.password.valid}</Text>
-                        <SafeAreaView style={SignUp.newInput}>
-                        <OutlineInput label="Confirm Password"
+                        <SafeAreaView style={SignUp.defaultNextInputOutlineContainer}>
+                        <InputOutline placeholder="Confirm Password"
+                            maxLength={15}
                             value = {this.state.confirm.value}
                             onChangeText = {text => this._handleText('confirm', text)}
-                            maxLength = {15}
                             secureTextEntry={true}
-                            {...Properties.defaultTextBox}/>
+                        {...Properties.defaultInputOutline}/> 
                         </SafeAreaView>
                         <Text style={Validation.textVal}>
                             {this.state.confirm.valid}</Text>  

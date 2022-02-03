@@ -1,17 +1,28 @@
 const Properties = {
-    defaultTextBox: {
-        activeValueColor: "#eb9834",
-        activeBorderColor: "#eb9834",
-        activeLabelColor: "#eb9834",
-        passiveBorderColor: "#ccc",
-        passiveLabelColor: "#ccc",
-        passiveValueColor: "#5b5c5a",
-        fontFamily: "RedHatDisplay-Regular",
-        height: 46,
-        duration: 100,
+    defaultInputStandard:{
+        activeColor:"#eb9834",
+        inactiveColor:"#ccc",
+        errorColor:"red",
+        errorFontSize: 14,
+        errorFontFamily: 'RedHatDisplay-Light', 
+        fontSize:18,
+        fontFamily:"RedHatDisplay-Regular",
+        fontColor:"#eb9834",
+        paddingVertical:6,
+        characterCountFontSize: 0 // To Hide Character Count
+    },
+    defaultInputOutline:{
+        activeColor:"#eb9834",
+        inactiveColor:"#ccc",
+        errorColor:"red",
+        errorFontSize: 14,
+        errorFontFamily: 'RedHatDisplay-Light', 
         fontSize: 18,
-        backgroundColor:"#ddd"
-    }
+        fontFamily:"RedHatDisplay-Regular",
+        fontColor:"#eb9834",
+        paddingVertical:8,
+        characterCountFontSize: 0 // To Hide Character Count
+    },
 }
 
 export default Properties;

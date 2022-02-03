@@ -11,6 +11,8 @@ import {
     SafeAreaView
 } from 'react-native';
 import OutlineInput from 'react-native-outline-input';
+import { InputOutline, InputStandard } from 'react-native-input-outline';
+
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import { auth } from '../firebase';
@@ -18,6 +20,8 @@ import { auth } from '../firebase';
 import SystemStyle from "../styles/SystemStyle";
 import Index from "../styles/Index.js";
 import Validation from "../styles/Validation"
+
+import Properties from '../values/Properties';
 
 import { 
     validateEmail,
@@ -119,6 +123,27 @@ class LoginScreen extends Component {
                 }
                 <ScrollView>
                     <Text style={Index.SItitleText}>Log In</Text>
+                    
+                    <SafeAreaView style={Index.defaultInputStandardContainer}>
+                    <InputStandard placeholder="Email"
+                        maxLength={150}
+                        value = {this.state.email.value}
+                        onChangeText = {text => this._handleText('email', text)}
+                    {...Properties.defaultInputStandard}/> 
+                    </SafeAreaView>
+                    <Text style={Validation.textVal}>
+                        {this.state.email.valid}</Text> 
+
+                    <SafeAreaView style={Index.defaultNextInputStandardContainer}>
+                    <InputStandard placeholder="Password"
+                        maxLength={150}
+                        secureTextEntry={true}
+                    {...Properties.defaultInputStandard}/> 
+                    </SafeAreaView>
+                    <Text style={Validation.textVal}>
+                        {this.state.submit_result ? 
+                            this.state.submit_result : this.state.password.valid}</Text>  
+
                     <TextInput style={Index.SIinput} placeholder='Email' maxLength={150} 
                         onChangeText = {text => this._handleText('email', text)}
                         returnKeyType="next"
@@ -126,13 +151,13 @@ class LoginScreen extends Component {
                         blurOnSubmit={false}/>
                     <Text style={Validation.textVal}>
                         {this.state.email.valid}</Text> 
-        
                     <TextInput style={Index.SIinput} placeholder='Password' secureTextEntry={true}
                         maxLength = {15} onChangeText = {text => this._handleText('password', text)}
                         ref={(input) => { this.txtPassword = input; }}/>
                     <Text style={Validation.textVal}>
                         {this.state.submit_result ? 
                             this.state.submit_result : this.state.password.valid}</Text>  
+
                     <TouchableOpacity
                         onPress = {() => this.props.navigation.navigate('ResetFormScreen')}>
                             <Text style={Index.SIforgotpass}>Forgot Password?</Text>

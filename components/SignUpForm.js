@@ -4,7 +4,7 @@ import { TextInput,
     Text,
     TouchableOpacity,
     SafeAreaView } from 'react-native';
-import OutlineInput from 'react-native-outline-input';
+import { InputOutline, InputStandard } from 'react-native-input-outline';
 
 import SignUp from "../styles/SignUp";
 
@@ -12,6 +12,7 @@ import Validation from "../styles/Validation"
 
 import { validateName, validateOrgName } from "../helper/TextValidate";
 import Properties from '../values/Properties';
+
 
 class SignUpNameFields extends Component {
     //#TODO: Optimized Implementation
@@ -53,24 +54,33 @@ class SignUpNameFields extends Component {
         if(this.props.USER_TYPE == 'INDIV') {
             return (
                 <>
-                    <SafeAreaView style={SignUp.newfnameInput}>
-                        <OutlineInput label="First Name"
-                            value = {this.state.f_name.value}
+                    <SafeAreaView style={SignUp.defaultInputOutlineContainer}>
+                        <InputOutline placeholder="First Name"
+                            characterCount = {26}
                             onChangeText = {text => this._handleText('f_name', text)}
-                            maxLength = {26}
-                            {...Properties.defaultTextBox}/>
+                            {...Properties.defaultInputOutline}
+                            returnKeyType="next"
+                            onSubmitEditing={() => { this.txtLname.focus(); }}
+                            blurOnSubmit={false}/> 
                     </SafeAreaView>
-                    <Text style={Validation.textVal}>
-                        {this.state.f_name.valid}</Text>     
-                    <SafeAreaView style={SignUp.newlnameInput}>
-                        <OutlineInput label="Last Name"
-                            value = {this.state.l_name.value}
+                    {this.state.f_name.valid ?
+                        <Text style={Validation.textVal}>
+                            {this.state.f_name.valid}</Text>
+                    : null}
+                    <SafeAreaView style={SignUp.defaultInputOutlineContainer}>
+                        <InputOutline placeholder="Last Name"
+                            characterCount = {26}
                             onChangeText = {text => this._handleText('l_name', text)}
-                            maxLength = {26}
-                            {...Properties.defaultTextBox}/>
+                            {...Properties.defaultInputOutline}
+                            returnKeyType="next"
+                            onSubmitEditing={() => { this._handleChildSubmit(); }}
+                            blurOnSubmit={false}
+                            ref={(input) => { this.txtLname = input; }}/>
                     </SafeAreaView>
-                    <Text style={Validation.textVal}>
-                        {this.state.l_name.valid}</Text>
+                    {this.state.l_name.valid ?
+                        <Text style={Validation.textVal}>
+                            {this.state.l_name.valid}</Text>
+                    : null}
                     <TouchableOpacity style={SignUp.continuebtn}
                         onPress={() => this._handleChildSubmit()}>
                             <Text style={SignUp.continuebtntext}>Continue</Text>
@@ -80,12 +90,12 @@ class SignUpNameFields extends Component {
         } else {
             return (
                 <>
-                    <SafeAreaView style={SignUp.newdefaultInput}>
-                    <OutlineInput label="Organization Name"
-                            value = {this.state.org_name.value}
-                            onChangeText = {text => this._handleText('org_name', text)}
-                            maxLength = {26}
-                            {...Properties.defaultTextBox}/>
+                    <SafeAreaView style={SignUp.defaultInputOutlineContainer}>
+                    <InputOutline placeholder="Organization Name"
+                        maxLength={26}
+                        value = {this.state.org_name.value}
+                        onChangeText = {text => this._handleText('org_name', text)}
+                    {...Properties.defaultInputOutline}/> 
                     </SafeAreaView>
                     <Text style={Validation.textVal}>
                         {this.state.org_name.valid}</Text>     
