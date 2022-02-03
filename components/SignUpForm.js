@@ -67,7 +67,7 @@ class SignUpNameFields extends Component {
                         <Text style={Validation.textVal}>
                             {this.state.f_name.valid}</Text>
                     : null}
-                    <SafeAreaView style={SignUp.defaultInputOutlineContainer}>
+                    <SafeAreaView style={SignUp.defaultNextInputOutlineContainer}>
                         <InputOutline placeholder="Last Name"
                             characterCount = {26}
                             onChangeText = {text => this._handleText('l_name', text)}

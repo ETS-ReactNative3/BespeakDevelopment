@@ -1668,7 +1668,19 @@ const homeStyles=StyleSheet.create({
     alignItems: 'center',
     color: '#808080',
     marginTop: '4%'
-  }
+  },
+  defaultInputStandardContainer:{
+    marginLeft:'10%',
+    marginRight:'10%',
+    marginTop:'4%',
+    height:'4%',
+  },
+  defaultNextInputStandardContainer:{
+    marginLeft:'10%',
+    marginRight:'10%',
+    marginTop:'2.5%',
+    height:'4%',
+  },
 })
 
 export default homeStyles;

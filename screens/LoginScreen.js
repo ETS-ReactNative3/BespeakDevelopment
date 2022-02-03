@@ -131,15 +131,17 @@ class LoginScreen extends Component {
                         onChangeText = {text => this._handleText('email', text)}
                     {...Properties.defaultInputStandard}/> 
                     </SafeAreaView>
-                    <Text style={Validation.textVal}>
-                        {this.state.email.valid}</Text> 
-
+                    {this.state.email.valid ?
+                            <Text style={Validation.textVal}>
+                                {this.state.email.valid}</Text>
+                        : null}   
                     <SafeAreaView style={Index.defaultNextInputStandardContainer}>
                     <InputStandard placeholder="Password"
                         maxLength={150}
                         secureTextEntry={true}
                     {...Properties.defaultInputStandard}/> 
                     </SafeAreaView>
+                    
                     <Text style={Validation.textVal}>
                         {this.state.submit_result ? 
                             this.state.submit_result : this.state.password.valid}</Text>  
@@ -245,12 +247,17 @@ class ResetFormScreen extends Component {
                     <View style={Index.TitleContainer}>
                         <Text style={Index.Titletxt}>Enter Your Email</Text>
                     </View>
-                    <View style={Index.InputContainer}>
-                        <TextInput style={Index.Input} placeholder='Email'
-                            onChangeText = {text => this._handleText(text)}/>
-                        <Text style={Validation.textVal}>
-                            {this.state.email.valid}</Text> 
-                    </View>                  
+                    <SafeAreaView style={Index.defaultInputStandardContainer}>
+                        <InputStandard placeholder="Email"
+                            maxLength={50}
+                            value = {this.state.email.value}
+                            onChangeText = {text => this._handleText('email', text)}
+                        {...Properties.defaultInputStandard}/> 
+                        </SafeAreaView>
+                        {this.state.email.valid ?
+                            <Text style={Validation.textVal}>
+                                {this.state.email.valid}</Text>
+                        : null}
                     <View style={Index.ResetPWContainer}>
                         <TouchableOpacity style={Index.ResetPWbtn}
                             onPress = {() => this._handleSubmit()}>

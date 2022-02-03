@@ -173,7 +173,7 @@ const homeStyles=StyleSheet.create({
         borderColor: '#f5f5f5',
         flexDirection:'row',
         padding:10,
-        marginTop:35,
+        marginTop:'4%',
         marginLeft:35,
         marginRight:35,
     },
@@ -383,6 +383,12 @@ const homeStyles=StyleSheet.create({
         marginRight:'10%',
         marginTop:'4%',
         height:'6%',
+    },
+    defaultInputOutlineContainer:{
+        marginLeft:'10%',
+        marginRight:'10%',
+        marginTop:'4%',
+        height:'8%',
     },
 })
 

@@ -250,7 +250,7 @@ class SignUpFormScreen extends Component {
                 <KeyboardAvoidingView>
                     <ScrollView>
                         <Text style={SignUp.SUtitleText}>Almost There...</Text>
-                        <Text style={SignUp.SUAltText}>We need additional details to get to know you</Text>  
+                        <Text style={SignUp.SUAltText}>We need additional details to get to know you</Text>                        
                         <SafeAreaView style={SignUp.defaultInputOutlineContainer}>
                         <InputOutline placeholder="Email"
                             maxLength={150}
@@ -258,8 +258,10 @@ class SignUpFormScreen extends Component {
                             onChangeText = {text => this._handleText('email', text)}
                         {...Properties.defaultInputOutline}/> 
                         </SafeAreaView>
-                        <Text style={Validation.textVal}>
-                            {this.state.email.valid}</Text>
+                        {this.state.email.valid ?
+                            <Text style={Validation.textVal}>
+                                {this.state.email.valid}</Text>
+                        : null}
                         <SafeAreaView style={SignUp.defaultNextInputOutlineContainer}>
                         <InputOutline placeholder="(+63)"
                             maxLength={15}
@@ -267,8 +269,10 @@ class SignUpFormScreen extends Component {
                             onChangeText = {text => this._handleText('mobile', text)}
                         {...Properties.defaultInputOutline}/> 
                         </SafeAreaView>
-                        <Text style={Validation.textVal}>
-                            {this.state.mobile.valid}</Text>
+                        {this.state.mobile.valid ?
+                            <Text style={Validation.textVal}>
+                                {this.state.mobile.valid}</Text>
+                        : null}
                         <SafeAreaView style={SignUp.defaultNextInputOutlineContainer}>
                         <InputOutline placeholder="Password"
                             maxLength={15}
@@ -277,8 +281,10 @@ class SignUpFormScreen extends Component {
                             secureTextEntry={true}
                         {...Properties.defaultInputOutline}/> 
                         </SafeAreaView>  
-                        <Text style={Validation.textVal}>
-                            {this.state.password.valid}</Text>
+                        {this.state.password.valid ?
+                            <Text style={Validation.textVal}>
+                                {this.state.password.valid}</Text>
+                        : null}
                         <SafeAreaView style={SignUp.defaultNextInputOutlineContainer}>
                         <InputOutline placeholder="Confirm Password"
                             maxLength={15}
@@ -287,8 +293,10 @@ class SignUpFormScreen extends Component {
                             secureTextEntry={true}
                         {...Properties.defaultInputOutline}/> 
                         </SafeAreaView>
-                        <Text style={Validation.textVal}>
-                            {this.state.confirm.valid}</Text>  
+                        {this.state.confirm.valid ?
+                            <Text style={Validation.textVal}>
+                                {this.state.confirm.valid}</Text>
+                        : null}  
                         <View style={{alignSelf:'center'}}>
                             <Text style={SignUp.altText}>By clicking the button below, you agree to our</Text>
                         </View>

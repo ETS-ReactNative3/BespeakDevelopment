@@ -6,12 +6,14 @@ import {
   Text, 
   View,
   Image,
-  Alert
+  Alert,
+  SafeAreaView
 } from 'react-native';
 import { 
   Feather,
 } from '@expo/vector-icons';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { InputOutline, InputStandard } from 'react-native-input-outline';
 import * as ImagePicker from 'react-native-image-crop-picker';
 
 import { auth, db, storage, _auth } from '../firebase';
@@ -20,6 +22,8 @@ import ChangePass from "../styles/ChangePass";
 import SystemStyle from "../styles/SystemStyle";
 import homeStyles from "../styles/homeStyles";
 import Validation from '../styles/Validation';
+
+import Properties from '../values/Properties';
 
 import { 
     validateName, 
@@ -286,13 +290,28 @@ class EditProfileScreen extends Component {
                 <ScrollView>
                     {this.state.data.user_type == 'INDIV' ? (
                         <>
+                        <SafeAreaView style={homeStyles.defaultInputStandardContainer}>
+                            <InputStandard 
+                                maxLength={26}
+                                value={this.state.data.f_name}
+                                placeholder={this.state.data.f_name}
+                                onChangeText = {text => this._handleText('f_name', text)}
+                            {...Properties.defaultInputStandard}/> 
+                            </SafeAreaView>
+
+                            {this.state.valid.f_name ?
+                                <Text style={Validation.changemargintextVal}>
+                                    {this.state.valid.f_name}</Text>
+                            : null}   
                             <Text style={homeStyles.Info}>First Name</Text>
                             <TextInput style={homeStyles.Profileinput} maxLength={26}
                                 value={this.state.data.f_name}
                                 placeholder={this.state.data.f_name}
                                 onChangeText = {text => this._handleText('f_name', text)}/>
+                            
                             <Text style={Validation.changemargintextVal}>
                                 {this.state.valid.f_name}</Text>
+
                             <Text style={homeStyles.Info}>Last Name</Text>
                             <TextInput style={homeStyles.Profileinput} maxLength={26}
                                 value={this.state.data.l_name}

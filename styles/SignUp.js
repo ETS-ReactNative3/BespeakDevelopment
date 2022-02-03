@@ -144,15 +144,13 @@ const homeStyles=StyleSheet.create({
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:'4%',
-        marginBottom:'-1%',
-        height:'7.5%',
+        height:'8%',
     },
     defaultNextInputOutlineContainer:{
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:'2%',
-        marginBottom:'-1%',
-        height:'7.5%',
+        height:'8%',
     },    
 
 
