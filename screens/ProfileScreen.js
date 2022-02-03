@@ -171,7 +171,7 @@ class ProfileScreen extends Component {
                   this.state.data.bio ? (
                     <Text style={homeStyles.ProfileBio}>
                       {
-                        this.state.data.bio
+                        this.state.data.bio.replace(/(\r\n|\n|\r)/gm, " ")
                       }
                     </Text>
                   ) : null

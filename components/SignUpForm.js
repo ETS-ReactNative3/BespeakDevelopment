@@ -67,14 +67,14 @@ class SignUpNameFields extends Component {
                         <Text style={Validation.textVal}>
                             {this.state.f_name.valid}</Text>
                     : null}
-                    <SafeAreaView style={SignUp.defaultInputOutlineContainer}>
+                    <SafeAreaView style={SignUp.defaultNextInputOutlineContainer}>
                         <InputOutline placeholder="Last Name"
                             characterCount = {26}
                             onChangeText = {text => this._handleText('l_name', text)}
                             {...Properties.defaultInputOutline}
-                            returnKeyType="next"
-                            onSubmitEditing={() => { this._handleChildSubmit(); }}
-                            blurOnSubmit={false}
+                            returnKeyType="done"
+                            onSubmitEditing = {() => { this._handleChildSubmit(); }}
+                            blurOnSubmit = {false}
                             ref={(input) => { this.txtLname = input; }}/>
                     </SafeAreaView>
                     {this.state.l_name.valid ?
@@ -91,11 +91,13 @@ class SignUpNameFields extends Component {
             return (
                 <>
                     <SafeAreaView style={SignUp.defaultInputOutlineContainer}>
-                    <InputOutline placeholder="Organization Name"
-                        maxLength={26}
-                        value = {this.state.org_name.value}
-                        onChangeText = {text => this._handleText('org_name', text)}
-                    {...Properties.defaultInputOutline}/> 
+                        <InputOutline placeholder="Organization Name"
+                            characterCount = {46}
+                            onChangeText = {text => this._handleText('org_name', text)}
+                            {...Properties.defaultInputOutline}
+                            returnKeyType = "done"
+                            onSubmitEditing = {() => { this._handleChildSubmit(); }}
+                            blurOnSubmit = {false}/> 
                     </SafeAreaView>
                     <Text style={Validation.textVal}>
                         {this.state.org_name.valid}</Text>     

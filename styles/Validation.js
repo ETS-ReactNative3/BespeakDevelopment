@@ -7,11 +7,10 @@ const Validation = StyleSheet.create({
         fontFamily:'RedHatDisplay-Light', 
         fontSize:14,
     },
-    changemargintextVal: {
-        marginLeft:'5%', 
-        color:'red', 
+    EditProfileTextVal: {
+        color: 'red', 
         fontFamily:'RedHatDisplay-Light', 
-        fontSize:14,
+        fontSize: 14,
     }
 })
 
