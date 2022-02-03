@@ -10,6 +10,7 @@ import SearchScreens from '../screens/SearchScreen'
 import NotificationScreens from '../screens/NotificationScreen';
 import ProfileScreens from '../screens/ProfileScreen'
 import EditProfileScreens from '../screens/EditProfileScreen'
+import ManageEventScreens from "../screens/ManageEventScreen";
 
 const MenuStack = createNativeStackNavigator();
 
@@ -101,6 +102,12 @@ class ProfileNavigator extends Component {
               fontFamily: 'RedHatDisplay-Medium',
               color: '#eb9834',
             }
+          }}/>
+        <MenuStack.Screen name = "CreateEventScreen" component = {ManageEventScreens.CreateEventScreen}
+          options={{
+            title: '',
+            headerShown: true,
+            tabBarShowLabel:false,
           }}/>
       </MenuStack.Navigator>
     );

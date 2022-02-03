@@ -1383,13 +1383,13 @@ const homeStyles=StyleSheet.create({
     opacity:.7
   },
   editcoverimg:{
-    color: '#000', 
+    color: '#d1d1d1', 
     fontSize: 20,
     alignItems:'center',
     position:'absolute',
   },
   editimg:{
-    color: '#000', 
+    color: '#d1d1d1', 
     fontSize: 20,
     position:'absolute',
     marginTop:'35%',

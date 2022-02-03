@@ -45,7 +45,7 @@ const homeStyles=StyleSheet.create({
         margin:20,
     },
     eventCreatetxt:{
-        fontFamily:'RetHatDisplay-Medium',
+        fontFamily:'RedHatDisplay-Medium',
         fontSize:30,
     },
     CreateEventNamecontainer:{
@@ -64,7 +64,7 @@ const homeStyles=StyleSheet.create({
 },
     CreateEventNameField:{
         fontSize:16,
-        fontFamily:'RetHatDisplay-Regular',
+        fontFamily:'RedHatDisplay-Regular',
         marginLeft: 10,
         marginRight: 20,
         flexDirection:'row',
@@ -87,7 +87,7 @@ const homeStyles=StyleSheet.create({
     },
     CreateEventSchedField:{
         fontSize:16,
-        fontFamily:'RetHatDisplay-Regular',
+        fontFamily:'RedHatDisplay-Regular',
         marginLeft: 12,
         marginRight: 20,
         flexDirection:'row',
@@ -110,7 +110,30 @@ const homeStyles=StyleSheet.create({
     },
     CreateEventLocField:{
         fontSize:16,
-        fontFamily:'RetHatDisplay-Regular',
+        fontFamily:'RedHatDisplay-Regular',
+        marginLeft: 10,
+        marginRight: 20,
+        flexDirection:'row',
+        marginTop:-3,
+        padding:10,
+    },
+    CreateEventMaxAttendcontainer:{
+        marginLeft: 20,
+        marginRight: 20,
+        flexDirection:'row',
+        backgroundColor: 'rgba(221, 221, 221, 0.5)',
+        borderRadius:10,
+        marginBottom:15,
+    },
+    CreateEventMaxAttendIcon:{
+        opacity: .5,
+        marginLeft:10,
+        marginTop:10,
+        width: 22,
+    },
+    CreateEventMaxAttendField:{
+        fontSize:16,
+        fontFamily:'RedHatDisplay-Regular',
         marginLeft: 10,
         marginRight: 20,
         flexDirection:'row',
@@ -133,7 +156,7 @@ const homeStyles=StyleSheet.create({
     },
     CreateEventDescField:{
         fontSize:16,
-        fontFamily:'RetHatDisplay-Regular',
+        fontFamily:'RedHatDisplay-Regular',
         marginLeft: 10,
         marginRight: 20,
         flexDirection:'row',
@@ -156,7 +179,7 @@ const homeStyles=StyleSheet.create({
     },
     CreateEventInfoField:{
         fontSize:16,
-        fontFamily:'RetHatDisplay-Regular',
+        fontFamily:'RedHatDisplay-Regular',
         marginLeft: 10,
         marginRight: 20,
         flexDirection:'row',
@@ -182,7 +205,7 @@ const homeStyles=StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         color: '#fff',
-        fontFamily: 'RetHatDisplay-Medium',
+        fontFamily: 'RedHatDisplay-Medium',
     },
     
 })
