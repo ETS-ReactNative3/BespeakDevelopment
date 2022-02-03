@@ -6,10 +6,11 @@ const Properties = {
         errorFontSize: 14,
         errorFontFamily: 'RedHatDisplay-Light', 
         fontSize:18,
+        paddingVertical: 8,
         fontFamily:"RedHatDisplay-Regular",
         fontColor:"#eb9834",
-        paddingVertical:6,
-        characterCountFontSize: 0 // To Hide Character Count
+        assistiveTextFontSize: 18,
+        characterCountFontSize: 0, // To Hide Character Count
     },
     defaultInputOutline:{
         activeColor:"#eb9834",

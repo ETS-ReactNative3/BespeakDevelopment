@@ -1673,14 +1673,20 @@ const homeStyles=StyleSheet.create({
     marginLeft:'10%',
     marginRight:'10%',
     marginTop:'4%',
-    height:'4%',
   },
   defaultNextInputStandardContainer:{
     marginLeft:'10%',
     marginRight:'10%',
     marginTop:'2.5%',
-    height:'4%',
   },
+  EditProfileFormContainer: {
+    marginLeft: '5%',
+    marginRight: '5%',
+    marginTop: '5%'
+  },
+  EditProfileTextInput: {
+    marginTop: '8%'
+  }
 })
 
 export default homeStyles;

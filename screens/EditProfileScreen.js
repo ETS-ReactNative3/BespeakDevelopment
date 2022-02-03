@@ -288,73 +288,79 @@ class EditProfileScreen extends Component {
                     </View>
                 </TouchableOpacity>
                 <ScrollView>
+                    <View style = {homeStyles.EditProfileFormContainer}>
                     {this.state.data.user_type == 'INDIV' ? (
                         <>
-                        <SafeAreaView style={homeStyles.defaultInputStandardContainer}>
-                            <InputStandard 
-                                maxLength={26}
+                            <InputStandard placeholder = 'First Name'
+                                style = {homeStyles.EditProfileTextInput}
+                                characterCount = {26}
                                 value={this.state.data.f_name}
-                                placeholder={this.state.data.f_name}
                                 onChangeText = {text => this._handleText('f_name', text)}
-                            {...Properties.defaultInputStandard}/> 
-                            </SafeAreaView>
-
+                                {...Properties.defaultInputStandard}
+                                autoCorrect = {false}/> 
                             {this.state.valid.f_name ?
-                                <Text style={Validation.changemargintextVal}>
+                                <Text style={Validation.EditProfileTextVal}>
                                     {this.state.valid.f_name}</Text>
-                            : null}   
-                            <Text style={homeStyles.Info}>First Name</Text>
-                            <TextInput style={homeStyles.Profileinput} maxLength={26}
-                                value={this.state.data.f_name}
-                                placeholder={this.state.data.f_name}
-                                onChangeText = {text => this._handleText('f_name', text)}/>
-                            
-                            <Text style={Validation.changemargintextVal}>
-                                {this.state.valid.f_name}</Text>
-
-                            <Text style={homeStyles.Info}>Last Name</Text>
-                            <TextInput style={homeStyles.Profileinput} maxLength={26}
+                            : null}
+                            <InputStandard placeholder = 'Last Name'
+                                style = {homeStyles.EditProfileTextInput}
+                                characterCount = {26}
                                 value={this.state.data.l_name}
-                                placeholder={this.state.data.l_name}
-                                onChangeText = {text => this._handleText('l_name', text)}/>
-                            <Text style={Validation.changemargintextVal}>
-                                {this.state.valid.l_name}</Text>
-                        </>
+                                onChangeText = {text => this._handleText('l_name', text)}
+                                {...Properties.defaultInputStandard}
+                                autoCorrect = {false}/> 
+                            {this.state.valid.l_name ?
+                                <Text style={Validation.EditProfileTextVal}>
+                                    {this.state.valid.l_name}</Text>
+                            : null}
+                        </>  
                     ) : (
                         <>
-                            <Text style={homeStyles.Info}>Organization Name</Text>
-                            <TextInput style={homeStyles.Profileinput} maxLength={46}
+                            <InputStandard placeholder = 'Organization Name'
+                                style = {homeStyles.EditProfileTextInput}
+                                characterCount = {46}
                                 value={this.state.data.org_name}
-                                placeholder={this.state.data.org_name}
-                                onChangeText = {text => this._handleText('org_name', text)}/>
-                            <Text style={Validation.textVal}>
-                                {this.state.valid.org_name}</Text>
+                                onChangeText = {text => this._handleText('org_name', text)}
+                                {...Properties.defaultInputStandard}
+                                autoCorrect = {false}/> 
+                            {this.state.valid.org_name ?
+                                <Text style={Validation.EditProfileTextVal}>
+                                    {this.state.valid.org_name}</Text>
+                            : null}  
                         </>
                     )}
-                    <Text style={homeStyles.Info}>Bio</Text>
-                    <TextInput style={homeStyles.Profileinput} maxLength={300}
+                    <InputStandard placeholder = 'Bio'
+                        style = {homeStyles.EditProfileTextInput}
+                        characterCount = {300}
                         value={this.state.data.bio}
-                        placeholder={this.state.data.bio}
-                        onChangeText = {text => this._handleText('bio', text)}/>
-                    <Text style={homeStyles.Info}>Location</Text>
-                    <TextInput style={homeStyles.Profileinput} maxLength={64}
+                        onChangeText = {text => this._handleText('bio', text)}
+                        {...Properties.defaultInputStandard}
+                        characterCountFontSize = {12}
+                        multiline = {true}
+                        minHeight = {60}
+                        textAlignVertical = 'top'/> 
+                    <InputStandard placeholder = 'Location'
+                        style = {homeStyles.EditProfileTextInput}
+                        characterCount = {64}
                         value={this.state.data.location}
-                        placeholder={this.state.data.location}
-                        onChangeText = {text => this._handleText('location', text)}/>
-                    <Text style={homeStyles.Info}>Phone Number</Text>
-                    <TextInput style={homeStyles.Profileinput} maxLength={15}
+                        onChangeText = {text => this._handleText('location', text)}
+                        {...Properties.defaultInputStandard}/> 
+                    <InputStandard placeholder = 'Phone Number'
+                        style = {homeStyles.EditProfileTextInput}
+                        characterCount = {15}
                         value={this.state.data.mobile}
-                        placeholder={this.state.data.mobile}
-                        onChangeText = {text => this._handleText('mobile', text)}/>
-                    <Text style={Validation.changemargintextVal}>
+                        onChangeText = {text => this._handleText('mobile', text)}
+                        {...Properties.defaultInputStandard}/> 
+                    <Text style={Validation.EditProfileTextVal}>
                             {this.state.valid.mobile}</Text>
+                    </View>
                     <TouchableOpacity style={homeStyles.changepw}
                         onPress = {() => { this.props.navigation.navigate('ChangePasswordScreen') }}>
-                        <Text style={homeStyles.changepwtxt}> Change Password</Text>
+                            <Text style={homeStyles.changepwtxt}> Change Password</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={homeStyles.signout}
                         onPress = {() => { auth.signOut() }}>
-                        <Text style={homeStyles.signouttxt}> Log Out</Text>
+                            <Text style={homeStyles.signouttxt}> Log Out</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </View>
