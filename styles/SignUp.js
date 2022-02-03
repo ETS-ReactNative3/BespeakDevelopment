@@ -118,41 +118,43 @@ const homeStyles=StyleSheet.create({
     },
     AlmostTherepicContainer:{
         flex:1,
-        marginTop:'50%',
+        marginTop:'15%',
         alignItems:'center',
         justifyContent:'center',
+        backgroundColor:'#fff'
     },
     AlmostTherepic: {
         width: 280,
         height:250,
         justifyContent:'center',
     },
-    newfnameInput:{
-        marginLeft:'9%',
-        marginRight:'9%',
+    defaultInputStandardContainer:{
+        marginLeft:'10%',
+        marginRight:'10%',
         marginTop:'4%',
+        height:'4%',
     },
-    newlnameInput:{
-        marginLeft:'9%',
-        marginRight:'9%',
+    defaultNextInputStandardContainer:{
+        marginLeft:'10%',
+        marginRight:'10%',
         marginTop:'2.5%',
+        height:'4%',
     },
-    newdefaultInput:{
-        marginLeft:'9%',
-        marginRight:'9%',
+    defaultInputOutlineContainer:{
+        marginLeft:'10%',
+        marginRight:'10%',
         marginTop:'4%',
+        marginBottom:'-1%',
+        height:'7.5%',
     },
-    newInput:{
-        marginLeft:'9%',
-        marginRight:'9%',
-        marginTop:'2.5%',
-    },
-    newPasswordInput:{
-        marginLeft:'9%',
-        marginRight:'9%',
-        marginTop:'5%',
-    },
-    
+    defaultNextInputOutlineContainer:{
+        marginLeft:'10%',
+        marginRight:'10%',
+        marginTop:'2%',
+        marginBottom:'-1%',
+        height:'7.5%',
+    },    
+
 
 
 })

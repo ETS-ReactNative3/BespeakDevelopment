@@ -1,17 +1,22 @@
 const Properties = {
-    defaultTextBox: {
-        activeValueColor: "#eb9834",
-        activeBorderColor: "#eb9834",
-        activeLabelColor: "#eb9834",
-        passiveBorderColor: "#ccc",
-        passiveLabelColor: "#ccc",
-        passiveValueColor: "#5b5c5a",
-        fontFamily: "RedHatDisplay-Regular",
-        height: 46,
-        duration: 100,
-        fontSize: 18,
-        backgroundColor:"#ddd"
-    }
+    defaultInputStandard:{
+        activeColor:"#eb9834",
+        inactiveColor:"#ccc",
+        errorColor:"red",
+        fontSize:18,
+        fontFamily:"RedHatDisplay-Regular",
+        fontColor:"#eb9834",
+        paddingVertical:6,
+    },
+    defaultInputOutline:{
+        activeColor:"#eb9834",
+        inactiveColor:"#ccc",
+        errorColor:"red",
+        fontSize:18,
+        fontFamily:"RedHatDisplay-Regular",
+        fontColor:"#eb9834",
+        paddingVertical:8,
+    },
 }
 
 export default Properties;
