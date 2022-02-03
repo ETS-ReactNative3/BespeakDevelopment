@@ -29,7 +29,7 @@
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
     "react-native-gesture-bottom-sheet": "^1.1.0",
-    "react-native-gesture-handler": "^2.1.1",
+    "react-native-gesture-handler": "~2.1.0",
     "react-native-image-crop-picker": "^0.37.2",
     "react-native-image-picker": "^4.7.3",
     "react-native-input-outline": "^1.5.2",

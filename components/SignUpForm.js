@@ -4,7 +4,6 @@ import { TextInput,
     Text,
     TouchableOpacity,
     SafeAreaView } from 'react-native';
-import OutlineInput from 'react-native-outline-input';
 import { InputOutline, InputStandard } from 'react-native-input-outline';
 
 import SignUp from "../styles/SignUp";
@@ -56,24 +55,32 @@ class SignUpNameFields extends Component {
             return (
                 <>
                     <SafeAreaView style={SignUp.defaultInputOutlineContainer}>
-                    <InputOutline placeholder="First Name"
-                        maxLength={26}
-                        value = {this.state.f_name.value}
-                        onChangeText = {text => this._handleText('f_name', text)}
-                    {...Properties.defaultInputOutline}/> 
+                        <InputOutline placeholder="First Name"
+                            characterCount = {26}
+                            onChangeText = {text => this._handleText('f_name', text)}
+                            {...Properties.defaultInputOutline}
+                            returnKeyType="next"
+                            onSubmitEditing={() => { this.txtLname.focus(); }}
+                            blurOnSubmit={false}/> 
                     </SafeAreaView>
-                    <Text style={Validation.textVal}>
-                        {this.state.f_name.valid}</Text>
-                    
+                    {this.state.f_name.valid ?
+                        <Text style={Validation.textVal}>
+                            {this.state.f_name.valid}</Text>
+                    : null}
                     <SafeAreaView style={SignUp.defaultInputOutlineContainer}>
-                    <InputOutline placeholder="Last Name"
-                        maxLength={26}
-                        value = {this.state.l_name.value}
-                        onChangeText = {text => this._handleText('l_name', text)}
-                    {...Properties.defaultInputOutline}/> 
+                        <InputOutline placeholder="Last Name"
+                            characterCount = {26}
+                            onChangeText = {text => this._handleText('l_name', text)}
+                            {...Properties.defaultInputOutline}
+                            returnKeyType="next"
+                            onSubmitEditing={() => { this._handleChildSubmit(); }}
+                            blurOnSubmit={false}
+                            ref={(input) => { this.txtLname = input; }}/>
                     </SafeAreaView>
-                    <Text style={Validation.textVal}>
-                        {this.state.l_name.valid}</Text>
+                    {this.state.l_name.valid ?
+                        <Text style={Validation.textVal}>
+                            {this.state.l_name.valid}</Text>
+                    : null}
                     <TouchableOpacity style={SignUp.continuebtn}
                         onPress={() => this._handleChildSubmit()}>
                             <Text style={SignUp.continuebtntext}>Continue</Text>
