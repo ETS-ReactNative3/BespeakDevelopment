@@ -33,15 +33,17 @@ class ProfileEvents extends Component {
     render() {
         console.log('Event Tab Contents Loaded.')
         return (
-            <View style={homeStyles.createcard}>
-                <TextInput style={homeStyles.createCardcontent} placeholder="Create event "></TextInput>
-                <TouchableOpacity 
-                    onPress = {() => {
-                            this.props.navigation.navigate('CreateEventScreen')
-                        }
-                    }>
+            <View style={homeStyles.uHcontainer}>
+                <View style={homeStyles.createcard}>
+                    <TextInput style={homeStyles.createCardcontent} placeholder="Create event "></TextInput>
+                        <TouchableOpacity 
+                            onPress = {() => {
+                                this.props.navigation.navigate('CreateEventScreen')
+                            }
+                        }>
                         <Feather name="plus" size={50} style={homeStyles.cardicon}/>
-                </TouchableOpacity>
+                    </TouchableOpacity>
+                </View>
             </View>
             /*
             <View style={SystemStyle.TabContainer}>

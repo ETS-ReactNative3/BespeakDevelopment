@@ -20,6 +20,10 @@ const LogInScreenStyle=StyleSheet.create({
     InputStandardContainer:{
         marginTop:'3%',
     },
+    PassiveInputColor:{
+        tintColor:'#eb9834',
+        color:'#eb9834',
+    },
     //Forgot Password Text Button
     ForgotPasswordBtn:{
         marginTop: '-1%',

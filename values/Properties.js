@@ -8,7 +8,7 @@ const Properties = {
         fontSize:18,
         paddingVertical: 8,
         fontFamily:"RedHatDisplay-Regular",
-        fontColor:"#eb9834",
+        fontColor:"#5b5c5a",
         assistiveTextFontSize: 18,
         characterCountFontSize: 0, // To Hide Character Count
     },
@@ -20,7 +20,7 @@ const Properties = {
         errorFontFamily: 'RedHatDisplay-Light', 
         fontSize: 18,
         fontFamily:"RedHatDisplay-Regular",
-        fontColor:"#eb9834",
+        fontColor:"#5b5c5a",
         paddingVertical: 8,
         characterCountFontSize: 0 // To Hide Character Count
     },
