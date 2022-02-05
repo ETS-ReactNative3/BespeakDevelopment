@@ -18,10 +18,10 @@ import * as ImagePicker from 'react-native-image-crop-picker';
 
 import { auth, db, storage, _auth } from '../firebase';
 
-import ChangePass from "../styles/ChangePass";
 import SystemStyle from "../styles/SystemStyle";
-import homeStyles from "../styles/homeStyles";
 import Validation from '../styles/Validation';
+
+import EditProfileScreenStyle from '../styles/EditProfileScreenStyle';
 
 import Properties from '../values/Properties';
 
@@ -99,7 +99,7 @@ class EditProfileScreen extends Component {
         this.props.navigation.setOptions({
             headerRight: () => (
                 <TouchableOpacity onPress={() => this._handleSubmit()}>
-                    <Text style={homeStyles.tabSave}>Save</Text>
+                    <Text style={EditProfileScreenStyle.HeaderSave}>Save</Text>
                 </TouchableOpacity>
             ),
         });
@@ -254,7 +254,7 @@ class EditProfileScreen extends Component {
     }
     render() {
         return (
-            <View style={homeStyles.detailsScreencontainer}>
+            <View style={EditProfileScreenStyle.EditProfileContainer}>
                 {
                     this.state.is_loading && 
                         <Spinner visible={true} 
@@ -264,9 +264,9 @@ class EditProfileScreen extends Component {
                         overlayColor = 'rgba(0, 0, 0, 0.50)'/>
                 }
                 <TouchableOpacity onPress = {() => this._selectImage("cover")}>
-                    <View style={homeStyles.editprofilecoverimgContainer}>
-                            <Feather name="plus" size={50} style={homeStyles.editcoverimg}/>
-                            <Image style={homeStyles.editprofilecoverimg}
+                    <View style={EditProfileScreenStyle.EditProfileCoverImgContainer}>
+                            <Feather name="plus" size={50} style={EditProfileScreenStyle.EditCoverImgIcon}/>
+                            <Image style={EditProfileScreenStyle.EditProfileCoverImg}
                                 source={
                                     this.state.cover_photo.uri ?
                                     {uri: this.state.cover_photo.uri}:
@@ -275,10 +275,10 @@ class EditProfileScreen extends Component {
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress = {() => this._selectImage("dp")}>
-                    <View style={homeStyles.firstSection}>
-                        <View style={homeStyles.editprofileimgContainer}>
-                            <Feather name="plus" size={50} style={homeStyles.editimg}/>
-                            <Image style={homeStyles.editprofileimg}
+                    <View style={EditProfileScreenStyle.UpperSection}>
+                        <View style={EditProfileScreenStyle.EditProfileImgContainer}>
+                            <Feather name="plus" size={50} style={EditProfileScreenStyle.EditProfileImgIcon}/>
+                            <Image style={EditProfileScreenStyle.EditProfileImg}
                                 source={
                                     this.state.profile_photo.uri ?
                                     {uri: this.state.profile_photo.uri}:
@@ -288,49 +288,49 @@ class EditProfileScreen extends Component {
                     </View>
                 </TouchableOpacity>
                 <ScrollView>
-                    <View style = {homeStyles.EditProfileFormContainer}>
+                    <View style = {EditProfileScreenStyle.EditProfileFormContainer}>
                     {this.state.data.user_type == 'INDIV' ? (
                         <>
                             <InputStandard placeholder = 'First Name'
-                                style = {homeStyles.EditProfileTextInput}
+                                style = {EditProfileScreenStyle.EditProfileTextInput}
                                 characterCount = {26}
                                 value={this.state.data.f_name}
                                 onChangeText = {text => this._handleText('f_name', text)}
                                 {...Properties.defaultInputStandard}
                                 autoCorrect = {false}/> 
                             {this.state.valid.f_name ?
-                                <Text style={Validation.EditProfileTextVal}>
+                                <Text style={Validation.textVal}>
                                     {this.state.valid.f_name}</Text>
                             : null}
                             <InputStandard placeholder = 'Last Name'
-                                style = {homeStyles.EditProfileTextInput}
+                                style = {EditProfileScreenStyle.EditProfileTextInput}
                                 characterCount = {26}
                                 value={this.state.data.l_name}
                                 onChangeText = {text => this._handleText('l_name', text)}
                                 {...Properties.defaultInputStandard}
                                 autoCorrect = {false}/> 
                             {this.state.valid.l_name ?
-                                <Text style={Validation.EditProfileTextVal}>
+                                <Text style={Validation.textVal}>
                                     {this.state.valid.l_name}</Text>
                             : null}
                         </>  
                     ) : (
                         <>
                             <InputStandard placeholder = 'Organization Name'
-                                style = {homeStyles.EditProfileTextInput}
+                                style = {EditProfileScreenStyle.EditProfileTextInput}
                                 characterCount = {46}
                                 value={this.state.data.org_name}
                                 onChangeText = {text => this._handleText('org_name', text)}
                                 {...Properties.defaultInputStandard}
                                 autoCorrect = {false}/> 
                             {this.state.valid.org_name ?
-                                <Text style={Validation.EditProfileTextVal}>
+                                <Text style={Validation.textVal}>
                                     {this.state.valid.org_name}</Text>
                             : null}  
                         </>
                     )}
                     <InputStandard placeholder = 'Bio'
-                        style = {homeStyles.EditProfileTextInput}
+                        style = {EditProfileScreenStyle.EditProfileTextInput}
                         characterCount = {300}
                         value={this.state.data.bio}
                         onChangeText = {text => this._handleText('bio', text)}
@@ -340,27 +340,27 @@ class EditProfileScreen extends Component {
                         minHeight = {60}
                         textAlignVertical = 'top'/> 
                     <InputStandard placeholder = 'Location'
-                        style = {homeStyles.EditProfileTextInput}
+                        style = {EditProfileScreenStyle.EditProfileTextInput}
                         characterCount = {64}
                         value={this.state.data.location}
                         onChangeText = {text => this._handleText('location', text)}
                         {...Properties.defaultInputStandard}/> 
                     <InputStandard placeholder = 'Phone Number'
-                        style = {homeStyles.EditProfileTextInput}
+                        style = {EditProfileScreenStyle.EditProfileTextInput}
                         characterCount = {15}
                         value={this.state.data.mobile}
                         onChangeText = {text => this._handleText('mobile', text)}
                         {...Properties.defaultInputStandard}/> 
-                    <Text style={Validation.EditProfileTextVal}>
+                    <Text style={Validation.textVal}>
                             {this.state.valid.mobile}</Text>
                     </View>
-                    <TouchableOpacity style={homeStyles.changepw}
+                    <TouchableOpacity style={EditProfileScreenStyle.ChangePassBtn}
                         onPress = {() => { this.props.navigation.navigate('ChangePasswordScreen') }}>
-                            <Text style={homeStyles.changepwtxt}> Change Password</Text>
+                            <Text style={EditProfileScreenStyle.ChangePassTextBtn}> Change Password</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={homeStyles.signout}
+                    <TouchableOpacity style={EditProfileScreenStyle.LogOutBtn}
                         onPress = {() => { auth.signOut() }}>
-                            <Text style={homeStyles.signouttxt}> Log Out</Text>
+                            <Text style={EditProfileScreenStyle.LogOutTextBtn}> Log Out</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </View>
@@ -456,7 +456,7 @@ class ChangePasswordScreen extends Component {
     }
     render() {
         return (
-            <View style={ChangePass.SIcontainer}>
+            <View style={EditProfileScreenStyle.Container}>
                 {
                     this.state.is_loading && 
                         <Spinner visible={true} textContent = {'Updating your password now...'}
@@ -466,39 +466,39 @@ class ChangePasswordScreen extends Component {
                             overlayColor = 'rgba(0, 0, 0, 0.50)'/>
                 }
                 <ScrollView>
-                    <Text style={ChangePass.SUAltText}>Current Password</Text>
-                    <TextInput style={ChangePass.SIinput} secureTextEntry={true}
+                    <Text style={EditProfileScreenStyle.OptionGuide}>Current Password</Text>
+                    <TextInput style={EditProfileScreenStyle.ChangePassInput} secureTextEntry={true}
                         maxLength = {15}
                         onChangeText = {(text) => this._handleText('current', text)}
                         returnKeyType="next"
                         onSubmitEditing={() => { this.txtNewPassword.focus(); }}
                         blurOnSubmit={false}/>
-                    <Text style={Validation.EditProfileTextVal}>
+                    <Text style={Validation.textVal}>
                         {this.state.valid.current}</Text>
-                    <Text style={ChangePass.SUAltText}>New Password</Text>
-                    <TextInput style={ChangePass.SIinput} secureTextEntry={true}
+                    <Text style={EditProfileScreenStyle.OptionGuide}>New Password</Text>
+                    <TextInput style={EditProfileScreenStyle.ChangePassInput} secureTextEntry={true}
                         maxLength = {15}
                         onChangeText = {(text) => this._handleText('new', text)}
                         returnKeyType="next"
                         onSubmitEditing={() => { this.txtConfirmPassword.focus(); }}
                         blurOnSubmit={false}
                         ref={(input) => { this.txtNewPassword = input; }}/>
-                    <Text style={Validation.EditProfileTextVal}>
+                    <Text style={Validation.textVal}>
                         {this.state.valid.new}</Text>
-                    <Text style={ChangePass.SUAltText}>Confirm Password</Text>
-                    <TextInput style={ChangePass.SIinput} secureTextEntry={true}
+                    <Text style={EditProfileScreenStyle.OptionGuide}>Confirm Password</Text>
+                    <TextInput style={EditProfileScreenStyle.ChangePassInput} secureTextEntry={true}
                         maxLength = {15}
                         onChangeText = {(text) => this._handleText('confirm', text)}
                         returnKeyType="next"
                         ref={(input) => { this.txtConfirmPassword = input; }}
                         blurOnSubmit={false}/>
-                    <Text style={Validation.EditProfileTextVal}>
+                    <Text style={Validation.textVal}>
                         {this.state.valid.confirm}</Text>
                 </ScrollView>
                 <View>
-                    <TouchableOpacity style={ChangePass.continuebtn}
+                    <TouchableOpacity style={EditProfileScreenStyle.SaveBtn}
                         onPress = {() => { this._handleSubmit() }}>
-                            <Text style={ChangePass.continuebtntext}>Save</Text>
+                            <Text style={EditProfileScreenStyle.SaveTextBtn}>Save</Text>
                     </TouchableOpacity>
                 </View>
             </View>  

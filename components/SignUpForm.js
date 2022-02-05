@@ -6,7 +6,7 @@ import { TextInput,
     SafeAreaView } from 'react-native';
 import { InputOutline, InputStandard } from 'react-native-input-outline';
 
-import SignUp from "../styles/SignUp";
+import SignUpStyle from "../styles/SignUpStyle";
 
 import Validation from "../styles/Validation"
 
@@ -54,7 +54,7 @@ class SignUpNameFields extends Component {
         if(this.props.USER_TYPE == 'INDIV') {
             return (
                 <>
-                    <SafeAreaView style={SignUp.defaultInputOutlineContainer}>
+                    <SafeAreaView style={SignUpStyle.InputOutlineContainer}>
                         <InputOutline placeholder="First Name"
                             characterCount = {26}
                             onChangeText = {text => this._handleText('f_name', text)}
@@ -67,7 +67,7 @@ class SignUpNameFields extends Component {
                         <Text style={Validation.textVal}>
                             {this.state.f_name.valid}</Text>
                     : null}
-                    <SafeAreaView style={SignUp.defaultNextInputOutlineContainer}>
+                    <SafeAreaView style={SignUpStyle.InputOutlineContainer}>
                         <InputOutline placeholder="Last Name"
                             characterCount = {26}
                             onChangeText = {text => this._handleText('l_name', text)}
@@ -81,16 +81,16 @@ class SignUpNameFields extends Component {
                         <Text style={Validation.textVal}>
                             {this.state.l_name.valid}</Text>
                     : null}
-                    <TouchableOpacity style={SignUp.continuebtn}
+                    <TouchableOpacity style={SignUpStyle.ContinueBtn}
                         onPress={() => this._handleChildSubmit()}>
-                            <Text style={SignUp.continuebtntext}>Continue</Text>
+                            <Text style={SignUpStyle.ContinueTextBtn}>Continue</Text>
                     </TouchableOpacity>                 
                 </>
             );
         } else {
             return (
                 <>
-                    <SafeAreaView style={SignUp.defaultInputOutlineContainer}>
+                    <SafeAreaView style={SignUpStyle.InputOutlineContainer}>
                         <InputOutline placeholder="Organization Name"
                             characterCount = {46}
                             onChangeText = {text => this._handleText('org_name', text)}
@@ -101,9 +101,9 @@ class SignUpNameFields extends Component {
                     </SafeAreaView>
                     <Text style={Validation.textVal}>
                         {this.state.org_name.valid}</Text>     
-                    <TouchableOpacity style={SignUp.continuebtn}
+                    <TouchableOpacity style={SignUpStyle.ContinueBtn}
                         onPress={() => this._handleChildSubmit()}>
-                            <Text style={SignUp.continuebtntext}>Continue</Text>
+                            <Text style={SignUpStyle.ContinueTextBtn}>Continue</Text>
                     </TouchableOpacity>
                 </>
             );

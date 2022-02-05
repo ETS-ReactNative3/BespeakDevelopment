@@ -1,30 +1,30 @@
 import {StyleSheet} from 'react-native'
 
-const homeStyles=StyleSheet.create({
-    uHcontainer: {
+const SearchScreenStyle=StyleSheet.create({
+    Container: {
         flex: 1,
         backgroundColor: '#fff',
     },
-    cardsearchheader:{
+    CardSearchInHeader:{
         padding:10,
-        margin:10,
+        margin:'4%',
         backgroundColor: '#fff',
         borderRadius: 25,
         flexDirection:'row',
         marginTop: 40,
-        borderColor:'#000',
+        borderColor:'#ccc',
         opacity:.5,
         borderWidth:1,
-        marginLeft:20,
-        marginRight:20,
+        marginLeft:'5%',
+        marginRight:'5%',
     },
-    searchbarIcon:{
+    SearchBarIcon:{
         fontFamily: 'RedHatDisplay-Regular',
         color: '#000',
         marginLeft:5,
         color:'#eb9834',
     },
-    searchBar:{
+    SearchBar:{
         flexDirection: 'row',
         fontFamily: 'RedHatDisplay-Regular',
         color: '#000',
@@ -93,7 +93,24 @@ const homeStyles=StyleSheet.create({
         marginBottom:10,
         marginRight: 10,
     },
-
+    //For Search Footer Trademark
+    Footer:{
+        backgroundColor: '#ebebeb',
+        padding: '12%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'stretch',
+        marginLeft:'-15%',
+        marginRight:'-15%',
+    },
+    BespeakLogo:{
+        color: '#eb9834',
+        fontFamily: 'RedHatDisplay-Medium',
+        fontSize: 30,
+      },
+    FooterText:{
+        fontFamily: 'RedHatDisplay-Regular',
+    },
     
 
       
@@ -102,4 +119,4 @@ const homeStyles=StyleSheet.create({
 
 })
 
-export default homeStyles;
+export default SearchScreenStyle;

@@ -19,7 +19,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { auth, db, storage } from '../firebase';
 
 import SystemStyle from "../styles/SystemStyle";
-import homeStyles from "../styles/homeStyles";
+import ProfileScreenStyle from "../styles/ProfileScreenStyle";
 
 import ProfileContent from "../components/ProfileContent";
   
@@ -125,7 +125,7 @@ class ProfileScreen extends Component {
                 refreshing={this.state.refreshing}
                 onRefresh={this.onRefresh}/>
             }>
-              <View style={homeStyles.uHcontainer}>
+              <View style={ProfileScreenStyle.Container}>
               {
                 this.state.is_loading && 
                   <Spinner visible={true} 
@@ -134,9 +134,9 @@ class ProfileScreen extends Component {
                     animation = 'fade'
                     overlayColor = 'rgba(0, 0, 0, 0.50)'/>
               }
-              <View style={homeStyles.Profileheader}/>
-              <View style={homeStyles.profilecoverimgContainer}>
-                <Image style={homeStyles.profilecoverimg}
+              <View style={ProfileScreenStyle.ProfileHeader}/>
+              <View style={ProfileScreenStyle.ProfileCoverImgContainer}>
+                <Image style={ProfileScreenStyle.ProfileCoverImg}
                   key = {this.state.data.cover_photo}
                   source={
                     this.state.data.cover_photo ?
@@ -144,9 +144,9 @@ class ProfileScreen extends Component {
                     require('../assets/img/blank-cover.png')
                   }/>
               </View>
-              <View style={homeStyles.firstSection}>
-                <View style={homeStyles.profileimgContainer}>
-                  <Image style={homeStyles.profileimg}
+              <View style={ProfileScreenStyle.FirstSection}>
+                <View style={ProfileScreenStyle.ProfileImgContainer}>
+                  <Image style={ProfileScreenStyle.ProfileImg}
                     key = {this.state.data.profile_photo}
                     source={
                       this.state.data.profile_photo ?
@@ -155,21 +155,21 @@ class ProfileScreen extends Component {
                     }/>
                 </View>
                 <View>
-                  <TouchableOpacity style={homeStyles.EditProfile}
+                  <TouchableOpacity style={ProfileScreenStyle.EditProfileBtn}
                     onPress={() => this.props.navigation.navigate('EditProfileScreen')}>
-                      <Text style={homeStyles.EditProfileText}>Edit Profile</Text>
+                      <Text style={ProfileScreenStyle.EditProfileText}>Edit Profile</Text>
                   </TouchableOpacity>
                 </View>
               </View>
-              <View style={homeStyles.secondSection}>
-                <Text style={homeStyles.ProfileName}>
+              <View style={ProfileScreenStyle.SecondSection}>
+                <Text style={ProfileScreenStyle.ProfileName}>
                   {
                     this.state.data.profile_name
                   }
                 </Text>
                 {
                   this.state.data.bio ? (
-                    <Text style={homeStyles.ProfileBio}>
+                    <Text style={ProfileScreenStyle.ProfileBio}>
                       {
                         this.state.data.bio.replace(/(\r\n|\n|\r)/gm, " ")
                       }
@@ -177,23 +177,23 @@ class ProfileScreen extends Component {
                   ) : null
                 }
                 { this.state.data.location ? (
-                  <View style={homeStyles.LocationContainer}>
+                  <View style={ProfileScreenStyle.LocationContainer}>
                     <SimpleLineIcons name="location-pin" size={13} color="#808080" />
-                    <Text style={homeStyles.ProfileLocation}>
+                    <Text style={ProfileScreenStyle.ProfileLocation}>
                       {
                         this.state.data.location
                       }
                     </Text>
                   </View>
                 ) : null}
-                <View style={homeStyles.dashboard}>
-                  <View style={homeStyles.counter}>            
-                    <Text style={homeStyles.counterint}>814</Text>
-                    <Text style={homeStyles.boardtextOne}>Followers</Text>
+                <View style={ProfileScreenStyle.Dashboard}>
+                  <View style={ProfileScreenStyle.Counter}>            
+                    <Text style={ProfileScreenStyle.CounterNumber}>814</Text>
+                    <Text style={ProfileScreenStyle.BoardTextOne}>Followers</Text>
                   </View>
-                  <View style={homeStyles.counter}>            
-                    <Text style={homeStyles.counterint}>26</Text>
-                    <Text style={homeStyles.boardtextTwo}>Following</Text>
+                  <View style={ProfileScreenStyle.Counter}>            
+                    <Text style={ProfileScreenStyle.CounterNumber}>26</Text>
+                    <Text style={ProfileScreenStyle.BoardTextTwo}>Following</Text>
                   </View>
                 </View>
               </View>

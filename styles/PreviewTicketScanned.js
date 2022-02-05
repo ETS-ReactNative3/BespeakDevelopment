@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native'
 
-const homeStyles=StyleSheet.create({
+const PreviewTicketScannedStyle=StyleSheet.create({
     TicketContainer: {
         flex: 1,
         backgroundColor: '#fff',
@@ -116,4 +116,4 @@ const homeStyles=StyleSheet.create({
 
 })
 
-export default homeStyles;
+export default PreviewTicketScannedStyle;

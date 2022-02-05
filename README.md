@@ -24,3 +24,6 @@ Install the following modules:
 - ```expo install @react-navigation/material-top-tabs react-native-tab-view```
 - ```expo install react-native-pager-view```
 - ```expo install react-native-reanimated@2.0.0-rc.0 react-native-input-outline```
+
+# Bespeak DEV Client Version 1.5
+- ```expo install react-native-modal-datetime-picker @react-native-community/datetimepicker```
