@@ -18,9 +18,8 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { auth, db } from '../firebase';
 
 import SystemStyle from "../styles/SystemStyle";
-import SignUp from "../styles/SignUp";
+import SignUpStyle from "../styles/SignUpStyle";
 import Validation from '../styles/Validation';
-import EmailVerification from "../styles/EmailVerification.js";
 
 import Properties from '../values/Properties';
 
@@ -70,15 +69,15 @@ class SignUpNameScreen extends Component {
     
     render () {
         return (
-            <View style={SignUp.SIcontainer}>
+            <View style={SignUpStyle.Container}>
                 <ScrollView>
-                    <Text style={SignUp.SItitleText}>Let's Get Started!</Text>
-                    <Text style={SignUp.SUAltText}>Share & see what's happening near you</Text>
+                    <Text style={SignUpStyle.PageGuide}>Let's Get Started!</Text>
+                    <Text style={SignUpStyle.GuideText}>Share & see what's happening near you</Text>
                     <SignUpNameForm USER_TYPE = {this.user_type} 
                         handleTextValue={this._handleTextValue}
                         handleParentSubmit={this._handleSubmit}/> 
-                    <View style={SignUp.LetsGetStartedpicContainer}>
-                        <Image style={SignUp.loginpic}
+                    <View style={SignUpStyle.LetsGetStartedImgContainer}>
+                        <Image style={SignUpStyle.LetsGetStartedImg}
                             source={require('../assets/img/LetsGetStarted.png')}/>
                     </View>
                 </ScrollView>
@@ -239,7 +238,7 @@ class SignUpFormScreen extends Component {
     }
     render () {
         return (
-            <View style={SignUp.SUcontainer}>
+            <View style={SignUpStyle.Container}>
                 {
                     this.state.is_loading && 
                     <Spinner visible={true} textContent={'We\'re setting your account now.'}
@@ -249,9 +248,9 @@ class SignUpFormScreen extends Component {
                 }
                 <KeyboardAvoidingView>
                     <ScrollView>
-                        <Text style={SignUp.SUtitleText}>Almost There...</Text>
-                        <Text style={SignUp.SUAltText}>We need additional details to get to know you</Text>                        
-                        <SafeAreaView style={SignUp.defaultInputOutlineContainer}>
+                        <Text style={SignUpStyle.PageGuide}>Almost There...</Text>
+                        <Text style={SignUpStyle.GuideText}>We need additional details to get to know you</Text>                        
+                        <SafeAreaView style={SignUpStyle.InputOutlineContainer}>
                         <InputOutline placeholder="Email"
                             maxLength={150}
                             value = {this.state.email.value}
@@ -262,7 +261,7 @@ class SignUpFormScreen extends Component {
                             <Text style={Validation.textVal}>
                                 {this.state.email.valid}</Text>
                         : null}
-                        <SafeAreaView style={SignUp.defaultNextInputOutlineContainer}>
+                        <SafeAreaView style={SignUpStyle.InputOutlineContainer}>
                         <InputOutline placeholder="(+63)"
                             maxLength={15}
                             value = {this.state.mobile.value}
@@ -273,7 +272,7 @@ class SignUpFormScreen extends Component {
                             <Text style={Validation.textVal}>
                                 {this.state.mobile.valid}</Text>
                         : null}
-                        <SafeAreaView style={SignUp.defaultNextInputOutlineContainer}>
+                        <SafeAreaView style={SignUpStyle.InputOutlineContainer}>
                         <InputOutline placeholder="Password"
                             maxLength={15}
                             value = {this.state.password.value}
@@ -285,7 +284,7 @@ class SignUpFormScreen extends Component {
                             <Text style={Validation.textVal}>
                                 {this.state.password.valid}</Text>
                         : null}
-                        <SafeAreaView style={SignUp.defaultNextInputOutlineContainer}>
+                        <SafeAreaView style={SignUpStyle.InputOutlineContainer}>
                         <InputOutline placeholder="Confirm Password"
                             maxLength={15}
                             value = {this.state.confirm.value}
@@ -297,29 +296,29 @@ class SignUpFormScreen extends Component {
                             <Text style={Validation.textVal}>
                                 {this.state.confirm.valid}</Text>
                         : null}  
-                        <View style={{alignSelf:'center'}}>
-                            <Text style={SignUp.altText}>By clicking the button below, you agree to our</Text>
+                        <View style={SignUpStyle.Container}>
+                            <Text style={SignUpStyle.GreyText}>By clicking the button below, you agree to our</Text>
                         </View>
                         <View style={{flexDirection:'row', justifyContent:'center'}}>
                             <TouchableOpacity 
                                 onPress = {() => Alert.alert("Terms of Service", Messages.terms)}>
-                                    <Text style={SignUp.btnText}>Terms</Text>
+                                    <Text style={SignUpStyle.TextBtn}>Terms</Text>
                             </TouchableOpacity>
-                            <Text style={SignUp.andText}> and </Text>
+                            <Text style={SignUpStyle.GreyText}> and </Text>
                             <TouchableOpacity
                                 onPress = {() => Alert.alert("Data Policy", Messages.policy)}>
-                                    <Text style={SignUp.btnText}>Data Policy</Text>
+                                    <Text style={SignUpStyle.TextBtn}>Data Policy</Text>
                             </TouchableOpacity>
-                            <Text style={SignUp.andText}>.</Text>
+                            <Text style={SignUpStyle.GreyText}>.</Text>
                         </View>
                         
-                        <TouchableOpacity style={SignUp.continuebtn}
+                        <TouchableOpacity style={SignUpStyle.ContinueBtn}
                             onPress={() => this._handleSubmit()}>
-                                <Text style={SignUp.continuebtntext}>I'm done!</Text>
+                                <Text style={SignUpStyle.ContinueTextBtn}>I'm done!</Text>
                         </TouchableOpacity>
                     </ScrollView>
-                    <View style={SignUp.AlmostTherepicContainer}>
-                        <Image style={SignUp.AlmostTherepic}
+                    <View style={SignUpStyle.AlmostThereImgContainer}>
+                        <Image style={SignUpStyle.AlmostThereImg}
                             source={require('../assets/img/AlmostThere.png')}/>
                     </View>
                 </KeyboardAvoidingView>
@@ -340,28 +339,28 @@ class EmailVerificationScreen extends Component {
     }
     render() {
         return (
-            <View style={EmailVerification.SIcontainer}>
-                <View style={EmailVerification.TicketContent}>
-                    <View style={EmailVerification.YourTicket}>
-                        <View style={EmailVerification.SampleQRpicContainer}>
-                            <Image style={EmailVerification.SampleQRpic}
+            <View style={SignUpStyle.Container}>
+                <View style={SignUpStyle.TicketContainer}>
+                    <View style={SignUpStyle.Content}>
+                        <View style={SignUpStyle.VerifyEmailImgContainer}>
+                            <Image style={SignUpStyle.VerifyEmailImg}
                                 source={require('../assets/img/VerifyEmail.png')}/>
                         </View>
-                        <View  style={EmailVerification.YourTicketContent}>
-                            <Text style={EmailVerification.NameOnTicketWhite}>Verify by Email</Text>
-                            <Text style={EmailVerification.DateRegisteredWhite}>Please check your email {this.props.route.params.email} and follow the instructions
+                        <View  style={SignUpStyle.MessageContent}>
+                            <Text style={SignUpStyle.ContentTitle}>Verify by Email</Text>
+                            <Text style={SignUpStyle.ContentInfo}>Please check your email {this.props.route.params.email} and follow the instructions
                             to verify your account. If you did not receive an email or if it expired, you can resend one.</Text>
                         </View>
                     </View>
-                    <View style={EmailVerification.doneContainer}>
-                        <TouchableOpacity style={EmailVerification.donebtn}
+                    <View style={SignUpStyle.LowerContainer}>
+                        <TouchableOpacity style={SignUpStyle.DoneBtn}
                             onPress={() => {
                                     auth.signOut(); // #TODO: Error Message Shown 'No User Currently Signed In'
                                     this.props.navigation.navigate('TitleScreen')
                                 }}>
-                            <Text style={EmailVerification.donebtntext}>Done</Text>
+                            <Text style={SignUpStyle.DoneTextBtn}>Done</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={EmailVerification.changebtn}
+                        <TouchableOpacity style={SignUpStyle.ResendBtn}
                             onPress={() => {
                                 auth.currentUser.sendEmailVerification()
                                         .catch(error => {
@@ -373,7 +372,7 @@ class EmailVerificationScreen extends Component {
                                         })
                                 return
                                     }}>
-                            <Text style={EmailVerification.changebtntext}>Resend my Verification Email</Text>
+                            <Text style={SignUpStyle.ResendTextBtn}>Resend my Verification Email</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

@@ -1,7 +1,7 @@
 
 import {StyleSheet} from 'react-native'
 
-const homeStyles=StyleSheet.create({
+const CreateEventStyle=StyleSheet.create({
     container: {
         flex: 2,
         alignItems: 'center',
@@ -187,4 +187,4 @@ const homeStyles=StyleSheet.create({
     
 })
 
-export default homeStyles;
+export default CreateEventStyle;

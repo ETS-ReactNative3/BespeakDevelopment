@@ -10,25 +10,27 @@ import {
   Ionicons,
 } from '@expo/vector-icons';
 
-import Index from "../styles/Index.js";
+import StartScreenStyle from "../styles/StartScreenStyle.js";
+import SystemStyle from "../styles/SystemStyle.js";
+
 
 class TitleScreen extends Component {
   render () {
     return (
-      <View style={Index.container}>
+      <View style={StartScreenStyle.Container}>
         <ScrollView>
             
         </ScrollView>
-        <Image style={Index.frontpic}
+        <Image style={StartScreenStyle.FrontPic}
           source={require('../assets/img/TitlePage.png')}/>      
-        <View style={Index.footer}>
-          <TouchableOpacity style={Index.button}
+        <View style={StartScreenStyle.Footer}>
+          <TouchableOpacity style={StartScreenStyle.LogIn}
             onPress={() => this.props.navigation.navigate('LoginScreen')}>
-              <Text style={Index.buttonText}>Log In</Text>
+              <Text style={StartScreenStyle.LogInText}>Log In</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={Index.button2}
+          <TouchableOpacity style={StartScreenStyle.SignUp}
             onPress={() => this.props.navigation.navigate('ContinueScreen')}>
-              <Text style={Index.buttonText2}>Sign Up</Text>
+              <Text style={StartScreenStyle.SignUpText}>Sign Up</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -39,41 +41,41 @@ class TitleScreen extends Component {
 class ContinueScreen extends Component {
   render () {
     return (
-      <View style={Index.SUcontainer}>
+      <View style={StartScreenStyle.SigningUpContainer}>
         <ScrollView>
-          <Text style={Index.SUtitleText}>Sign up as...</Text>
-          <TouchableOpacity style={Index.ContinueAsbtncontainer}
+          <Text style={StartScreenStyle.PageGuide}>Sign up as...</Text>
+          <TouchableOpacity style={StartScreenStyle.SignUpAsContainer}
             onPress={() => this.props.navigation.navigate('SignUpNameScreen', { USER_TYPE: 'INDIV' })}>
-              <Ionicons name="md-person" size={23} style={Index.IndivIcon}/>
-              <View style={Index.IndivCard}>
-                <Text style={Index.IndivTitle}>Individual</Text>
-                <Text style={Index.IndivText}>For freelancers, Individuals who requires a quick</Text>
-                <Text style={Index.IndivText}>social gathering, and users who wish to attend</Text>
-                <Text style={Index.IndivText}>events</Text>
+              <Ionicons name="md-person" size={23} style={StartScreenStyle.IndivIcon}/>
+              <View style={StartScreenStyle.Card}>
+                <Text style={StartScreenStyle.OptionTitle}>Individual</Text>
+                <Text style={StartScreenStyle.OptionText}>For freelancers, Individuals who requires a quick</Text>
+                <Text style={StartScreenStyle.OptionText}>social gathering, and users who wish to attend</Text>
+                <Text style={StartScreenStyle.OptionText}>events</Text>
               </View>
           </TouchableOpacity>
-          <TouchableOpacity style={Index.ContinueAsbtncontainerNotActive}
+          <TouchableOpacity style={StartScreenStyle.SignUpAsContainerNotActive}
             onPress={() => this.props.navigation.navigate('SignUpNameScreen', { USER_TYPE: 'ORG' })}>
-              <View style={Index.OrgIconContainer}>
-                <Image style={Index.OrgIcon} source={require('../assets/img/Peopleorg.png')}/>
+              <View style={StartScreenStyle.OrgIconContainer}>
+                <Image style={StartScreenStyle.OrgIcon} source={require('../assets/img/Peopleorg.png')}/>
               </View>
-              <View style={Index.IndivCard}>
-                <Text style={Index.IndivTitle}>Organization</Text>
-                <Text style={Index.IndivText}>For mid-small organization, small communities,</Text>
-                <Text style={Index.IndivText}>groups, social networks</Text>
+              <View style={StartScreenStyle.Card}>
+                <Text style={StartScreenStyle.OptionTitle}>Organization</Text>
+                <Text style={StartScreenStyle.OptionText}>For mid-small organization, small communities,</Text>
+                <Text style={StartScreenStyle.OptionText}>groups, social networks</Text>
               </View>
           </TouchableOpacity>    
         </ScrollView>
-        <View style={Index.capicContainer}>
-          <Image style={Index.capic} source={require('../assets/img/ContinueAs.png')}/>      
+        <View style={StartScreenStyle.SignUpImgContainer}>
+          <Image style={StartScreenStyle.SignUpImg} source={require('../assets/img/ContinueAs.png')}/>      
         </View>
-        <View style={Index.SUfooter}>
-          <Text style={Index.signin}>Already have an account?</Text>
+        <View style={StartScreenStyle.LogInFooter}>
+          <Text style={StartScreenStyle.LogInFooterText}>Already have an account?</Text>
           <TouchableOpacity 
             onPress={() => {
               this.props.navigation.replace('LoginScreen');
             }}>
-              <Text style={Index.signupbtn}> Sign In</Text>
+              <Text style={StartScreenStyle.LogInFooterBtn}> Sign In</Text>
           </TouchableOpacity>
           <Text>.</Text>
         </View>

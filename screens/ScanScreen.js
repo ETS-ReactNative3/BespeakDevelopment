@@ -13,7 +13,7 @@ import React, {
     Image,
      Alert, Modal,Pressable, StyleSheet
   } from 'react-native';
-  import homeStyles from "../styles/homeStyles";
+  import ScanScreenStyle from "../styles/ScanScreenStyle";
   import { 
     Feather,
     Ionicons,
@@ -26,10 +26,10 @@ import React, {
 
 export default function ScanScreen({ navigation }) {
     return (
-      <View style={homeStyles.scancontainer}>
+      <View style={ScanScreenStyle.Container}>
       <ScrollView>
-        <Text style={homeStyles.scanText}>Scan an bespeak QR code</Text>
-        <Ionicons name="scan-outline" size={440} color="#bbb" />
+        <Text style={ScanScreenStyle.ScanText}>Scan an bespeak QR code</Text>
+        <Ionicons name="scan-outline" size={440} color="#ccc" />
   
       </ScrollView>
       </View>
