@@ -473,7 +473,7 @@ class ChangePasswordScreen extends Component {
                         returnKeyType="next"
                         onSubmitEditing={() => { this.txtNewPassword.focus(); }}
                         blurOnSubmit={false}/>
-                    <Text style={Validation.changemargintextVal}>
+                    <Text style={Validation.EditProfileTextVal}>
                         {this.state.valid.current}</Text>
                     <Text style={ChangePass.SUAltText}>New Password</Text>
                     <TextInput style={ChangePass.SIinput} secureTextEntry={true}
@@ -483,7 +483,7 @@ class ChangePasswordScreen extends Component {
                         onSubmitEditing={() => { this.txtConfirmPassword.focus(); }}
                         blurOnSubmit={false}
                         ref={(input) => { this.txtNewPassword = input; }}/>
-                    <Text style={Validation.changemargintextVal}>
+                    <Text style={Validation.EditProfileTextVal}>
                         {this.state.valid.new}</Text>
                     <Text style={ChangePass.SUAltText}>Confirm Password</Text>
                     <TextInput style={ChangePass.SIinput} secureTextEntry={true}
@@ -492,7 +492,7 @@ class ChangePasswordScreen extends Component {
                         returnKeyType="next"
                         ref={(input) => { this.txtConfirmPassword = input; }}
                         blurOnSubmit={false}/>
-                    <Text style={Validation.changemarginextVal}>
+                    <Text style={Validation.EditProfileTextVal}>
                         {this.state.valid.confirm}</Text>
                 </ScrollView>
                 <View>

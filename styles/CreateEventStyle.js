@@ -2,38 +2,37 @@
 import {StyleSheet} from 'react-native'
 
 const homeStyles=StyleSheet.create({
-    container: {
+    ScreenContainer: {
         flex: 2,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#fff',
     },
-    createEventheader:{
+    FormContainer: {
+        marginTop: '3%',
+        marginLeft: '3%',
+        marginRight: '3%',
+    },
+    CreateEventFormHeader: {
         paddingTop: 40,
         alignSelf: 'stretch',
         paddingBottom:10,
         borderBottomColor:'#f5f5f5',
         borderBottomWidth:1,
+        fontFamily:'RedHatDisplay-Medium',
+        fontSize:30,
     },
-    goBack:{
-        marginLeft:20,
-        width:15,
-        height:15,
-    },
-    addbannercoverimgContainer: {
+    AddBannerContainer: {
         alignItems:'center',
         justifyContent:'center',
-        marginTop:10,
-        marginLeft:20,
-        marginRight:20,
     },
-    addbannerimg:{
+    AddImageIcon: {
         color: '#000', 
         fontSize: 20,
         alignItems:'center',
         position:'absolute',
     },
-    addbannercoverimg: {
+    AddBannerImg: {
         marginBottom:10,
         width: 368,
         height:150,
@@ -41,12 +40,11 @@ const homeStyles=StyleSheet.create({
         backgroundColor: 'rgba(221, 221, 221, 0.5)',
         borderRadius: 10,
     },
+    FormField: {
+        marginTop: '3%'
+    },
     createeventcontainer:{
         margin:20,
-    },
-    eventCreatetxt:{
-        fontFamily:'RedHatDisplay-Medium',
-        fontSize:30,
     },
     CreateEventNamecontainer:{
         marginLeft: 20,
@@ -56,12 +54,10 @@ const homeStyles=StyleSheet.create({
         borderRadius:10,
         marginBottom:15,
     },
-    CreateEventNameIcon:{
+    CreateEventIcon:{
         color:'#000',
-        opacity: .5,
-        marginLeft:10,
-        marginTop:10
-},
+        opacity: .5
+    },
     CreateEventNameField:{
         fontSize:16,
         fontFamily:'RedHatDisplay-Regular',
@@ -79,12 +75,7 @@ const homeStyles=StyleSheet.create({
         borderRadius:10,
         marginBottom:15,
     },
-    CreateEventSchedIcon:{
-        color:'#000',
-        opacity: .5,
-        marginLeft:10,
-        marginTop:10,
-    },
+
     CreateEventSchedField:{
         fontSize:16,
         fontFamily:'RedHatDisplay-Regular',

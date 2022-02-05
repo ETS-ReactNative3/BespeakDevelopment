@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/bespeak-icon-test.png",
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/bespeak-splash-test.png",
       "resizeMode": "contain",
