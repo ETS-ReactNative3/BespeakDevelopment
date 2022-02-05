@@ -18,7 +18,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { auth } from '../firebase';
 
 import SystemStyle from "../styles/SystemStyle";
-import Index from "../styles/Index.js";
+import LogInScreenStyle from "../styles/LogInScreenStyle.js";
 import Validation from "../styles/Validation"
 
 import Properties from '../values/Properties';
@@ -113,7 +113,7 @@ class LoginScreen extends Component {
     }
     render() {
         return (
-            <View style={Index.SIcontainer}>
+            <View style={LogInScreenStyle.Container}>
                 {
                     this.state.is_loading && 
                     <Spinner visible={true} textContent={'Please wait'}
@@ -122,9 +122,9 @@ class LoginScreen extends Component {
                         overlayColor = 'rgba(0, 0, 0, 0.50)'/>
                 }
                 <ScrollView>
-                    <Text style={Index.SItitleText}>Log In</Text>
+                    <Text style={LogInScreenStyle.PageGuide}>Log In</Text>
                     
-                    <SafeAreaView style={Index.defaultInputStandardContainer}>
+                    <SafeAreaView style={LogInScreenStyle.defaultInputStandardContainer}>
                         <InputStandard placeholder="Email"
                             autoCorrect = {false}
                             characterCount = {150}
@@ -138,7 +138,7 @@ class LoginScreen extends Component {
                         <Text style={Validation.textVal}>
                             {this.state.email.valid}</Text>
                     : null}   
-                    <SafeAreaView style={Index.defaultNextInputStandardContainer}>
+                    <SafeAreaView style={LogInScreenStyle.InputStandardContainer}>
                         <InputStandard placeholder="Password"
                             characterCount = {15}
                             secureTextEntry = {true}
@@ -152,23 +152,23 @@ class LoginScreen extends Component {
                             this.state.submit_result : this.state.password.valid}</Text>  
                     <TouchableOpacity
                         onPress = {() => this.props.navigation.navigate('ResetFormScreen')}>
-                            <Text style={Index.SIforgotpass}>Forgot Password?</Text>
+                            <Text style={LogInScreenStyle.ForgotPasswordBtn}>Forgot Password?</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={Index.SIbutton} 
+                    <TouchableOpacity style={LogInScreenStyle.LogInBtn} 
                         onPress={() => { this._handleSubmit() }}>
-                            <Text style={Index.SIbuttonText}> Log In</Text>
+                            <Text style={LogInScreenStyle.LogInTextBtn}> Log In</Text>
                     </TouchableOpacity>
         
-                    <View style={Index.loginpicContainer}>
-                        <Image style={Index.loginpic}
+                    <View style={LogInScreenStyle.LogInImgContainer}>
+                        <Image style={LogInScreenStyle.LogInImg}
                             source={require('../assets/img/LogIN.png')}/>
                     </View>
                 </ScrollView>
-                <View style={Index.SIfooter}>
-                    <Text style={Index.signup}>Don't have an account?</Text>
+                <View style={LogInScreenStyle.SignUpFooter}>
+                    <Text style={LogInScreenStyle.SignUpFooterText}>Don't have an account?</Text>
                     <TouchableOpacity
                         onPress = {() => this.props.navigation.replace('ContinueScreen')}>
-                        <Text style={Index.signupbtn}> Sign Up</Text>
+                        <Text style={LogInScreenStyle.SignUpFooterBtn}> Sign Up</Text>
                     </TouchableOpacity>
                     <Text>.</Text>
                 </View>
@@ -226,7 +226,7 @@ class ResetFormScreen extends Component {
 
     render() {
         return (
-            <View style={Index.SIcontainer}>
+            <View style={LogInScreenStyle.Container}>
                 {
                     this.state.is_loading && 
                     <Spinner visible={true} textContent={'We\'re sending you an email now.'}
@@ -234,11 +234,11 @@ class ResetFormScreen extends Component {
                         animation = 'fade'
                         overlayColor = 'rgba(0, 0, 0, 0.50)'/>
                 }
-                <View style={Index.ResetPWContent}>
-                    <View style={Index.TitleContainer}>
-                        <Text style={Index.Titletxt}>Enter Your Email</Text>
+                <View style={LogInScreenStyle.ResetPWContent}>
+                    <View style={LogInScreenStyle.TitleContainer}>
+                        <Text style={LogInScreenStyle.TitleTxt}>Enter Your Email</Text>
                     </View>
-                    <SafeAreaView style={Index.defaultInputStandardContainer}>
+                    <SafeAreaView style={LogInScreenStyle.defaultInputStandardContainer}>
                         <InputStandard placeholder="Email"
                             autoCorrect = {false}
                             characterCount = {150}
@@ -250,10 +250,10 @@ class ResetFormScreen extends Component {
                             <Text style={Validation.textVal}>
                                 {this.state.email.valid}</Text>
                         : null}
-                    <View style={Index.ResetPWContainer}>
-                        <TouchableOpacity style={Index.ResetPWbtn}
+                    <View style={LogInScreenStyle.ResetPWContainer}>
+                        <TouchableOpacity style={LogInScreenStyle.ResetPassBtn}
                             onPress = {() => this._handleSubmit()}>
-                            <Text style={Index.ResetPWbtntext}>Reset My Password</Text>
+                            <Text style={LogInScreenStyle.ResetPassTextBtn}>Reset My Password</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -274,29 +274,29 @@ class ResetPasswordScreen extends Component {
     }
     render() {
         return (
-            <View style={Index.Content}>
+            <View style={LogInScreenStyle.ResetPassScreenContent}>
                 <ScrollView>
-                    <View style={Index.PhonepicContainer}>
+                    <View style={LogInScreenStyle.PhoneImgContainer}>
                         <Image
-                            style={Index.Phonepic}
+                            style={LogInScreenStyle.PhoneImg}
                                 source={require('../assets/img/ResendResetPWpic.png')}
                         />
                     </View>
-                    <View  style={Index.TitleContainer}>
-                        <Text style={Index.Titletxt}>Reset Password</Text>
+                    <View  style={LogInScreenStyle.TitleContainer}>
+                        <Text style={LogInScreenStyle.TitleTxt}>Reset Password</Text>
                     </View>
-                    <View  style={Index.ResetInfoContainer}>
-                        <Text style={Index.ResetInfotxt}>Please check your email and follow the instructions</Text>
-                        <Text style={Index.ResetInfotxt}>to reset your password. If you did not receive an</Text>
-                        <Text style={Index.ResetInfotxt}>email or if it expired, you can resend one.</Text>
+                    <View  style={LogInScreenStyle.ResetInfoContainer}>
+                        <Text style={LogInScreenStyle.ResetInfoTxt}>Please check your email and follow the instructions</Text>
+                        <Text style={LogInScreenStyle.ResetInfoTxt}>to reset your password. If you did not receive an</Text>
+                        <Text style={LogInScreenStyle.ResetInfoTxt}>email or if it expired, you can resend one.</Text>
                     </View>
                 </ScrollView>
-            <View style={Index.IndexContainer}>
-                <TouchableOpacity style={Index.ResetPWbtn}
+            <View style={LogInScreenStyle.Container}>
+                <TouchableOpacity style={LogInScreenStyle.ResetPassBtn}
                     onPress = {() => this.props.navigation.navigate('TitleScreen')}>
-                        <Text style={Index.ResetPWbtntext}>Done</Text>
+                        <Text style={LogInScreenStyle.ResetPassTextBtn}>Done</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={Index.ResendPWEmailbtn}
+                <TouchableOpacity style={LogInScreenStyle.ResendPassEmailBtn}
                     onPress = {() => {
                             let email = this.props.route.params.email;
 
@@ -310,7 +310,7 @@ class ResetPasswordScreen extends Component {
                                     Alert.alert("Error!", error.message)
                                 })
                         }}>
-                        <Text style={Index.ResendPWEmailbtntext}>Resend password reset email</Text>
+                        <Text style={LogInScreenStyle.ResendPassEmailTextBtn}>Resend password reset email</Text>
                 </TouchableOpacity>
             </View>
         </View>

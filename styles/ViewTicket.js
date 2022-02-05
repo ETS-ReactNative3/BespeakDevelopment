@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native'
 
-const homeStyles=StyleSheet.create({
+const ViewTicketStyle=StyleSheet.create({
     SIcontainer: {
         flex: 1,
         backgroundColor: '#fff',
@@ -140,4 +140,4 @@ const homeStyles=StyleSheet.create({
 
 })
 
-export default homeStyles;
+export default ViewTicketStyle;
