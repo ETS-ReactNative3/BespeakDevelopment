@@ -1,11 +1,17 @@
 import React, { Component } from "react";
 import {
-  Text, 
+  Text,
+  TextInput,
   View,
+  TouchableOpacity
 } from 'react-native';
+import { 
+    Feather,
+} from '@expo/vector-icons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import SystemStyle from "../styles/SystemStyle";
+import homeStyles from "../styles/homeStyles";
 
 import Options from '../values/Options'
 
@@ -27,9 +33,20 @@ class ProfileEvents extends Component {
     render() {
         console.log('Event Tab Contents Loaded.')
         return (
+            <View style={homeStyles.createcard}>
+                <TextInput style={homeStyles.createCardcontent} placeholder="Create event "></TextInput>
+                <TouchableOpacity 
+                    onPress = {() => {
+                            this.props.navigation.navigate('CreateEventScreen')
+                        }
+                    }>
+                        <Feather name="plus" size={50} style={homeStyles.cardicon}/>
+                </TouchableOpacity>
+            </View>
+            /*
             <View style={SystemStyle.TabContainer}>
                 <Text style={SystemStyle.TabEmptyList}> No event found</Text>
-            </View>
+            </View>*/
         );
     }
 }

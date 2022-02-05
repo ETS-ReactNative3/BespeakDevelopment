@@ -2,38 +2,37 @@
 import {StyleSheet} from 'react-native'
 
 const CreateEventStyle=StyleSheet.create({
-    container: {
+    ScreenContainer: {
         flex: 2,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#fff',
     },
-    createEventheader:{
-        paddingTop: 40,
+    FormContainer: {
+        marginTop: '3%',
+        marginLeft: '3%',
+        marginRight: '3%',
+    },
+    CreateEventFormHeader: {
+        paddingTop: 20,
         alignSelf: 'stretch',
         paddingBottom:10,
         borderBottomColor:'#f5f5f5',
         borderBottomWidth:1,
+        fontFamily:'RedHatDisplay-Medium',
+        fontSize:30,
     },
-    goBack:{
-        marginLeft:20,
-        width:15,
-        height:15,
-    },
-    addbannercoverimgContainer: {
+    AddBannerContainer: {
         alignItems:'center',
         justifyContent:'center',
-        marginTop:10,
-        marginLeft:20,
-        marginRight:20,
     },
-    addbannerimg:{
+    AddImageIcon: {
         color: '#000', 
         fontSize: 20,
         alignItems:'center',
         position:'absolute',
     },
-    addbannercoverimg: {
+    AddBannerImg: {
         marginBottom:10,
         width: 368,
         height:150,
@@ -41,12 +40,11 @@ const CreateEventStyle=StyleSheet.create({
         backgroundColor: 'rgba(221, 221, 221, 0.5)',
         borderRadius: 10,
     },
+    FormField: {
+        marginTop: '3%'
+    },
     createeventcontainer:{
         margin:20,
-    },
-    eventCreatetxt:{
-        fontFamily:'RetHatDisplay-Medium',
-        fontSize:30,
     },
     CreateEventNamecontainer:{
         marginLeft: 20,
@@ -56,15 +54,13 @@ const CreateEventStyle=StyleSheet.create({
         borderRadius:10,
         marginBottom:15,
     },
-    CreateEventNameIcon:{
+    CreateEventIcon:{
         color:'#000',
-        opacity: .5,
-        marginLeft:10,
-        marginTop:10
-},
+        opacity: .5
+    },
     CreateEventNameField:{
         fontSize:16,
-        fontFamily:'RetHatDisplay-Regular',
+        fontFamily:'RedHatDisplay-Regular',
         marginLeft: 10,
         marginRight: 20,
         flexDirection:'row',
@@ -79,15 +75,10 @@ const CreateEventStyle=StyleSheet.create({
         borderRadius:10,
         marginBottom:15,
     },
-    CreateEventSchedIcon:{
-        color:'#000',
-        opacity: .5,
-        marginLeft:10,
-        marginTop:10,
-    },
+
     CreateEventSchedField:{
         fontSize:16,
-        fontFamily:'RetHatDisplay-Regular',
+        fontFamily:'RedHatDisplay-Regular',
         marginLeft: 12,
         marginRight: 20,
         flexDirection:'row',
@@ -110,7 +101,30 @@ const CreateEventStyle=StyleSheet.create({
     },
     CreateEventLocField:{
         fontSize:16,
-        fontFamily:'RetHatDisplay-Regular',
+        fontFamily:'RedHatDisplay-Regular',
+        marginLeft: 10,
+        marginRight: 20,
+        flexDirection:'row',
+        marginTop:-3,
+        padding:10,
+    },
+    CreateEventMaxAttendcontainer:{
+        marginLeft: 20,
+        marginRight: 20,
+        flexDirection:'row',
+        backgroundColor: 'rgba(221, 221, 221, 0.5)',
+        borderRadius:10,
+        marginBottom:15,
+    },
+    CreateEventMaxAttendIcon:{
+        opacity: .5,
+        marginLeft:10,
+        marginTop:10,
+        width: 22,
+    },
+    CreateEventMaxAttendField:{
+        fontSize:16,
+        fontFamily:'RedHatDisplay-Regular',
         marginLeft: 10,
         marginRight: 20,
         flexDirection:'row',
@@ -133,7 +147,7 @@ const CreateEventStyle=StyleSheet.create({
     },
     CreateEventDescField:{
         fontSize:16,
-        fontFamily:'RetHatDisplay-Regular',
+        fontFamily:'RedHatDisplay-Regular',
         marginLeft: 10,
         marginRight: 20,
         flexDirection:'row',
@@ -156,7 +170,7 @@ const CreateEventStyle=StyleSheet.create({
     },
     CreateEventInfoField:{
         fontSize:16,
-        fontFamily:'RetHatDisplay-Regular',
+        fontFamily:'RedHatDisplay-Regular',
         marginLeft: 10,
         marginRight: 20,
         flexDirection:'row',
@@ -182,7 +196,7 @@ const CreateEventStyle=StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         color: '#fff',
-        fontFamily: 'RetHatDisplay-Medium',
+        fontFamily: 'RedHatDisplay-Medium',
     },
     
 })

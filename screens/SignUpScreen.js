@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  TextInput,
   ScrollView, 
   TouchableOpacity, 
   Text, 
@@ -11,7 +10,6 @@ import {
   KeyboardAvoidingView,
   SafeAreaView,
 } from 'react-native';
-import OutlineInput from 'react-native-outline-input';
 import { InputOutline, InputStandard } from 'react-native-input-outline';
 import Spinner from 'react-native-loading-spinner-overlay';
 

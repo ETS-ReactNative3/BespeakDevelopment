@@ -9,6 +9,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "4.0.0",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-firebase/app": "^14.3.0",
     "@react-native-firebase/auth": "^14.2.3",
@@ -25,6 +26,8 @@
     "expo-splash-screen": "~0.14.1",
     "expo-status-bar": "~1.2.0",
     "firebase": "^9.6.4",
+    "intl": "^1.2.5",
+    "luxon": "^2.3.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
@@ -34,6 +37,7 @@
     "react-native-image-picker": "^4.7.3",
     "react-native-input-outline": "^1.5.2",
     "react-native-loading-spinner-overlay": "^3.0.0",
+    "react-native-modal-datetime-picker": "^13.0.1",
     "react-native-outline-input": "^1.0.8",
     "react-native-pager-view": "5.4.9",
     "react-native-reanimated": "~2.3.1",
