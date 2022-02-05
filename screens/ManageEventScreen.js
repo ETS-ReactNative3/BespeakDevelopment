@@ -21,9 +21,11 @@ import fetch_date_time from '../api/GlobalTime'
 import CreateEventStyle from "../styles/CreateEventStyle.js";
 
 import Properties from "../values/Properties"
+import dateFormat from "../helper/DateFormat"
   
 class CreateEventScreen extends Component {
     state = {
+        data: {},
         is_date_select: false,
         _server: {
             date_time: false,
@@ -48,9 +50,12 @@ class CreateEventScreen extends Component {
                     <DateTimePickerModal
                         isVisible={this.state.is_date_select}
                         mode="datetime"
-                        minimumDate = {this.state._server.epoch ? this.state._server.date_time : new Date()}
+                        minimumDate = {this.state._server.date_time ? this.state._server.date_time : new Date()}
                         onConfirm={(value) => {
                             console.log('Date selected: ', value)
+                            let current = this.state.data;
+                            current.schedule = Date.parse(value);
+                            this.setState({'data': current})
                             this._handleDateSelection(false) 
                         }}
                         onCancel={() => this._handleDateSelection(false) }/>
@@ -76,8 +81,11 @@ class CreateEventScreen extends Component {
                             onPress={() => this._handleDateSelection(true)}>
                                 <View pointerEvents="none">
                                     <InputOutline placeholder="Schedule"
+                                        value = {this.state.data.schedule 
+                                            ? dateFormat(new Date(this.state.data.schedule), "EEEE, MMMM d, yyyy - h:mm aaa")
+                                            : ''}
                                         style = {CreateEventStyle.FormField}
-                                        characterCount = {30}
+                                        characterCount = {50}
                                         trailingIcon = {() => {
                                             return <Feather name="calendar" size={22} style={CreateEventStyle.CreateEventIcon} />
                                         }}
@@ -87,11 +95,6 @@ class CreateEventScreen extends Component {
                                         {...Properties.defaultInputOutline}/> 
                                 </View>
                         </Pressable>
-                        <View style={CreateEventStyle.CreateEventSchedcontainer}>
-                            <Feather name="calendar" size={22} style={CreateEventStyle.CreateEventSchedIcon} />
-                            <TextInput style={CreateEventStyle.CreateEventSchedField} placeholder='Schedule '
-                                onFocus = {() => this._handleDateSelection(true)}></TextInput>
-                        </View>
                     { /*
                         <View style={CreateEvent.CreateEventNamecontainer}>
                             <AntDesign name="book" size={24} style={CreateEvent.CreateEventNameIcon} />
