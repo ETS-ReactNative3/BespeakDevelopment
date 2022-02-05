@@ -124,8 +124,8 @@ class LoginScreen extends Component {
                 <ScrollView>
                     <Text style={LogInScreenStyle.PageGuide}>Log In</Text>
                     
-                    <SafeAreaView style={LogInScreenStyle.defaultInputStandardContainer}>
-                        <InputStandard placeholder="Email"
+                    <SafeAreaView style={LogInScreenStyle.InputStandardContainer}>
+                        <InputStandard placeholder="Email" style={LogInScreenStyle.PassiveInputColor}
                             autoCorrect = {false}
                             characterCount = {150}
                             onChangeText = {text => this._handleText('email', text)}
@@ -139,7 +139,7 @@ class LoginScreen extends Component {
                             {this.state.email.valid}</Text>
                     : null}   
                     <SafeAreaView style={LogInScreenStyle.InputStandardContainer}>
-                        <InputStandard placeholder="Password"
+                        <InputStandard placeholder="Password" style={LogInScreenStyle.PassiveInputColor}
                             characterCount = {15}
                             secureTextEntry = {true}
                             returnKeyType="done"
@@ -238,7 +238,7 @@ class ResetFormScreen extends Component {
                     <View style={LogInScreenStyle.TitleContainer}>
                         <Text style={LogInScreenStyle.TitleTxt}>Enter Your Email</Text>
                     </View>
-                    <SafeAreaView style={LogInScreenStyle.defaultInputStandardContainer}>
+                    <SafeAreaView style={LogInScreenStyle.InputStandardContainer}>
                         <InputStandard placeholder="Email"
                             autoCorrect = {false}
                             characterCount = {150}
