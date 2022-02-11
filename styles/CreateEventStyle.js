@@ -41,7 +41,13 @@ const CreateEventStyle=StyleSheet.create({
         borderRadius: 10,
     },
     FormField: {
-        marginTop: '3%'
+        marginTop: '3%',
+        paddingRight: '5%'
+    },
+    FormFieldAssisted: {
+        marginTop: '3%',
+        marginBottom: '3%',
+        paddingRight: '5%'
     },
     createeventcontainer:{
         margin:20,
@@ -108,21 +114,20 @@ const CreateEventStyle=StyleSheet.create({
         marginTop:-3,
         padding:10,
     },
-    CreateEventMaxAttendcontainer:{
-        marginLeft: 20,
-        marginRight: 20,
+    EventFieldContainer:{
+        marginTop: '3%',
         flexDirection:'row',
         backgroundColor: 'rgba(221, 221, 221, 0.5)',
         borderRadius:10,
-        marginBottom:15,
     },
-    CreateEventMaxAttendIcon:{
+    EventFieldIcon:{
         opacity: .5,
         marginLeft:10,
         marginTop:10,
         width: 22,
     },
-    CreateEventMaxAttendField:{
+    FormEventField:{
+        color:"#5b5c5a",
         fontSize:16,
         fontFamily:'RedHatDisplay-Regular',
         marginLeft: 10,
@@ -177,7 +182,7 @@ const CreateEventStyle=StyleSheet.create({
         marginTop:-3,
         padding:10,
     },
-    createeventbtn: {
+    FormButton: {
         alignItems: 'center',
         alignSelf: 'stretch',
         backgroundColor: '#eb9834',
@@ -186,12 +191,13 @@ const CreateEventStyle=StyleSheet.create({
         marginLeft:20,
         marginRight:20,
         marginBottom: 20,
+        marginTop: '5%',
         borderWidth: 1,
         borderColor: '#fff',
         borderRadius: 25,
         color: '#fff',
     },
-    createeventtxt:{
+    FormButtonText: {
         fontSize: 20,
         alignItems: 'center',
         justifyContent: 'center',

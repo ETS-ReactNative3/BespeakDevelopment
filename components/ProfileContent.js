@@ -30,17 +30,25 @@ class ProfileContent extends Component {
 }
 
 class ProfileEvents extends Component {
+    state = {
+        event_post: ''
+    }
     render() {
         console.log('Event Tab Contents Loaded.')
         return (
             <View style={homeStyles.uHcontainer}>
                 <View style={homeStyles.createcard}>
-                    <TextInput style={homeStyles.createCardcontent} placeholder="Create event "></TextInput>
+                    <TextInput style={homeStyles.createCardcontent} 
+                        maxLength ={50}
+                        placeholder="Create event "
+                        onChangeText = {(text) => this.setState({'event_post': text})}></TextInput>
+
+
                         <TouchableOpacity 
                             onPress = {() => {
-                                this.props.navigation.navigate('CreateEventScreen')
-                            }
-                        }>
+                                this.props.navigation.navigate('CreateEventScreen', {
+                                    event_name: this.state.event_post})
+                            }}>
                         <Feather name="plus" size={50} style={homeStyles.cardicon}/>
                     </TouchableOpacity>
                 </View>
