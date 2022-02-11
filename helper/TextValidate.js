@@ -39,3 +39,7 @@ export function validatePassword(value) {
     }
     return true;
 }
+
+export function validateText(value) {
+    return validateOrgName(value)
+}

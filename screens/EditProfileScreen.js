@@ -54,6 +54,7 @@ class EditProfileScreen extends Component {
           return;
         } 
         var raw_data = snapshot.data()
+        raw_data.bio = raw_data.bio?.replace(/(\r\n|\n|\r)/gm, " ")
         this.setState({'data': raw_data})
 
         let profile_image = null

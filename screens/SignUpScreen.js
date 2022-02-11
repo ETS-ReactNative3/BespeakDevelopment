@@ -21,7 +21,6 @@ import Validation from '../styles/Validation';
 
 import Properties from '../values/Properties';
 
-
 import { 
     validateEmail,
     validateMobile,
