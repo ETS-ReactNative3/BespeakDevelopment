@@ -13,7 +13,7 @@ class SearchContent extends Component {
     render() {
         return (
             <Top.Navigator screenOptions={{
-                    ...Options.TopTabNavigation,
+                    ...Options.SearchScreenNavigation,
                     ...Options.SearchTabNavigation
                 }}>
                 <Top.Screen name="Events" component={SearchEvent} />
