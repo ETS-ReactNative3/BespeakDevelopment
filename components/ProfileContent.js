@@ -20,7 +20,10 @@ const Top = createMaterialTopTabNavigator();
 class ProfileContent extends Component {
     render() {
         return (
-            <Top.Navigator screenOptions={Options.ProfileTabNavigation}>
+            <Top.Navigator screenOptions={{
+                    ...Options.TopTabNavigation,
+                    ...Options.ProfileTabNavigation
+                }}>
                 <Top.Screen name="My Events" component={ProfileEvents} />
                 <Top.Screen name="My Tickets" component={ProfileTickets} />
                 <Top.Screen name="Bookmarks" component={ProfileBookmarks} />
