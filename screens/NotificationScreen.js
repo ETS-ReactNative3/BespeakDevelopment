@@ -14,6 +14,7 @@ import React, {
      Alert, Modal,Pressable, StyleSheet
   } from 'react-native';
   import NotificationScreenStyle from "../styles/NotificationScreenStyle";
+  import SystemStyle from "../styles/SystemStyle";
   import { 
     Feather,
     Ionicons,
@@ -68,128 +69,128 @@ import React, {
     const [modalAttendingVisible, setModalAttendingVisible] = useState(false);
     return (
   <ScrollView>
-      <View style={NotificationScreenStyle.EventContainer}>
-        <View style={NotificationScreenStyle.ImgContainer}>
+      <View style={SystemStyle.EventContainer}>
+        <View style={SystemStyle.ImgContainer}>
           <Image
-            style={NotificationScreenStyle.ImgContainer}
+            style={SystemStyle.ImgContainer}
             source={require('../assets/img/B.jpg')}
             />
         </View>
-        <View style={NotificationScreenStyle.EventContainer}>
-        <Text style={NotificationScreenStyle.EventTitle}>Sunday Worship Service</Text>
-        <View style={NotificationScreenStyle.OrganizerTab}>
-          <TouchableOpacity style={NotificationScreenStyle.OrganizerInfo}
+        <View style={SystemStyle.EventContainer}>
+        <Text style={SystemStyle.EventTitle}>Sunday Worship Service</Text>
+        <View style={SystemStyle.OrganizerTab}>
+          <TouchableOpacity style={SystemStyle.OrganizerInfo}
             onPress={() => navigation.navigate('NotificationDetailScreen')}>
-          <View style={NotificationScreenStyle.OrganizerImgContainer}>
+          <View style={SystemStyle.OrganizerImgContainer}>
           <Image
-          style={NotificationScreenStyle.OrganizerImg}
+          style={SystemStyle.OrganizerImg}
           source={require('../assets/img/EveryNation.png')}
           />
         </View>
-            <View style={NotificationScreenStyle.NotifCard}>
-              <Text style={NotificationScreenStyle.OrganizerName}>Every Nation Campus</Text>
+            <View style={SystemStyle.NotifCard}>
+              <Text style={SystemStyle.OrganizerName}>Every Nation Campus</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={NotificationScreenStyle.FollowOrgBtn}
+          <TouchableOpacity style={SystemStyle.FollowOrgBtn}
             onPress={() => navigation.navigate('')}>
-            <Text style={NotificationScreenStyle.FollowOrgTextBtn}>Followed</Text>
+            <Text style={SystemStyle.FollowOrgTextBtn}>Followed</Text>
           </TouchableOpacity>
         </View>
         <View>
-          <View style={NotificationScreenStyle.LowerSection}>
+          <View style={SystemStyle.LowerSection}>
             <Feather name="calendar" size={24} color="black" />
-            <Text style={NotificationScreenStyle.EventSchedule}>Sunday, November 14 ∘ Starts at 12:00PM</Text>
+            <Text style={SystemStyle.EventSchedule}>Sunday, November 14 ∘ Starts at 12:00PM</Text>
           </View>
-          <View style={NotificationScreenStyle.LowerSection}>
+          <View style={SystemStyle.LowerSection}>
             <SimpleLineIcons name="location-pin" size={24} color="black" />
-            <Text style={NotificationScreenStyle.EventPlace}>L3 Robinsons MetroEast Barangay, Pasig, 1800, Metro Manila, Philippines</Text>
+            <Text style={SystemStyle.EventPlace}>L3 Robinsons MetroEast Barangay, Pasig, 1800, Metro Manila, Philippines</Text>
           </View>
         </View>
       </View>
       </View>
       <View>
-        <Text style={NotificationScreenStyle.LineBreak}></Text>
+        <Text style={SystemStyle.LineBreak}></Text>
       </View>
-      <View style={NotificationScreenStyle.Container}>
-        <Text style={NotificationScreenStyle.EventAboutTitle}>About</Text>
-        <Text style={NotificationScreenStyle.EventTextInfo}>
+      <View style={SystemStyle.Container}>
+        <Text style={SystemStyle.EventAboutTitle}>About</Text>
+        <Text style={SystemStyle.EventTextInfo}>
           As much as we are all excited to regather, ENC is also
           commited in ensuring a safe worry-free Worship
           experience for you
         </Text>
-        <Text style={NotificationScreenStyle.EventTextInfo}>
+        <Text style={SystemStyle.EventTextInfo}>
           ENC adheres to the safety protocols and guidelines issued by
           the Government during pandemic. In compliance to this,
           membres who wish to worship onsite must be FULLY
           VACCINATED
         </Text>
-        <Text style={NotificationScreenStyle.EventTextInfo}>
+        <Text style={SystemStyle.EventTextInfo}>
           If fully vaccinated, please proceed to our online registration to
           secure a seat.
         </Text>
-        <Text style={NotificationScreenStyle.EventReminderTitle}>
+        <Text style={SystemStyle.EventReminderTitle}>
           Reminder</Text>
-        <Text style={NotificationScreenStyle.EventTextInfo}>
+        <Text style={SystemStyle.EventTextInfo}>
           1. As much as we are all excited to regather, ENC is also
           commited in ensuring a safe worry-free Worship
           experience for you
         </Text>
-        <Text style={NotificationScreenStyle.EventTextInfo}>
+        <Text style={SystemStyle.EventTextInfo}>
           2. As much as we are all excited to regather, ENC is also
           commited in ensuring a safe worry-free Worship
           experience for you
         </Text>
-        <Text style={NotificationScreenStyle.EventTextInfo}>
+        <Text style={SystemStyle.EventTextInfo}>
           3. As much as we are all excited to regather, ENC is also
           commited in ensuring a safe worry-free Worship
           experience for you
         </Text>
-        <View style={NotificationScreenStyle.BreakLineContainer}>
-          <Text style={NotificationScreenStyle.BreakLine}></Text>
-          <Text style={NotificationScreenStyle.BreakLineComment}>Comment</Text>
+        <View style={SystemStyle.BreakLineContainer}>
+          <Text style={SystemStyle.BreakLine}></Text>
+          <Text style={SystemStyle.BreakLineComment}>Comment</Text>
         </View>
 
-        <View style={NotificationScreenStyle.BespeakerCommentContainer}>
-          <View style={NotificationScreenStyle.BespeakerImgContainer}>
+        <View style={SystemStyle.BespeakerCommentContainer}>
+          <View style={SystemStyle.BespeakerImgContainer}>
             <Image
-              style={NotificationScreenStyle.BespeakerImg}
+              style={SystemStyle.BespeakerImg}
               source={require('../assets/img/EveryNation.png')}
             />
           </View>
-            <View style={NotificationScreenStyle.BespeakerContainer}>
-              <Text style={NotificationScreenStyle.BespeakerName}>Aegon Targaryen</Text>
-              <Text style={NotificationScreenStyle.BespeakerComment}>I guess it would be good to go here after finding out
+            <View style={SystemStyle.BespeakerContainer}>
+              <Text style={SystemStyle.BespeakerName}>Aegon Targaryen</Text>
+              <Text style={SystemStyle.BespeakerComment}>I guess it would be good to go here after finding out
                 something about myself.</Text>
             </View>
             <TouchableOpacity onPress={() => setModalVisible(true)}>
-              <SimpleLineIcons name="options" size={24} color="black" style={NotificationScreenStyle.CommentInfo}/>
+              <SimpleLineIcons name="options" size={24} color="black" style={SystemStyle.CommentInfo}/>
             </TouchableOpacity>
           </View>          
 
-        <View style={NotificationScreenStyle.BespeakerCommentContainer}>
-          <View style={NotificationScreenStyle.BespeakerImgContainer}>
+        <View style={SystemStyle.BespeakerCommentContainer}>
+          <View style={SystemStyle.BespeakerImgContainer}>
             <Image
-              style={NotificationScreenStyle.BespeakerImg}
+              style={SystemStyle.BespeakerImg}
               source={require('../assets/img/EveryNation.png')}
             />
           </View>
-            <View style={NotificationScreenStyle.BespeakerContainer}>
-              <Text style={NotificationScreenStyle.BespeakerName}>Sansa Stark</Text>
-              <View style={NotificationScreenStyle.BespeakerInput}>
-              <TextInput style={NotificationScreenStyle.MyCommentInput} placeholder=' Write a comment..'>
+            <View style={SystemStyle.BespeakerContainer}>
+              <Text style={SystemStyle.BespeakerName}>Sansa Stark</Text>
+              <View style={SystemStyle.BespeakerInput}>
+              <TextInput style={SystemStyle.MyCommentInput} placeholder=' Write a comment..'>
               </TextInput>
               <TouchableOpacity>
-                <Ionicons name="send" size={24} color="black" style={NotificationScreenStyle.SendComment}/>
+                <Ionicons name="send" size={24} color="black" style={SystemStyle.SendComment}/>
               </TouchableOpacity>
               </View>
             </View>
           </View>          
         </View>
 
-        <View style={NotificationScreenStyle.AttendingContainer}>
-          <TouchableOpacity style={NotificationScreenStyle.AttendingBtn}
+        <View style={SystemStyle.AttendingContainer}>
+          <TouchableOpacity style={SystemStyle.AttendingBtn}
             onPress={() => setModalAttendingVisible(true)}>
-            <Text style={NotificationScreenStyle.AttendingTextBtn}>I'm attending!</Text>
+            <Text style={SystemStyle.AttendingTextBtn}>I'm attending!</Text>
           </TouchableOpacity>
         </View>
 
@@ -199,19 +200,19 @@ import React, {
         visible={modalAttendingVisible}
         onRequestClose={() => {
           setModalAttendingVisible(!modalAttendingVisible);}}>
-        <View style={NotificationScreenStyle.YoureSetView}>
-          <View style={NotificationScreenStyle.YoureSetModalView}>
+        <View style={SystemStyle.YoureSetView}>
+          <View style={SystemStyle.YoureSetModalView}>
           <View>
-            <Text style={NotificationScreenStyle.ModalText}>Youre all set!</Text>
+            <Text style={SystemStyle.ModalText}>Youre all set!</Text>
           </View>
           <View>
           <Feather name="check-circle" size={55} color="black" />
           </View>
-          <View style={NotificationScreenStyle.commentdateinfo}>
-            <TouchableOpacity style={NotificationScreenStyle.ViewBtn}
+          <View style={SystemStyle.commentdateinfo}>
+            <TouchableOpacity style={SystemStyle.ViewBtn}
               //onPress={() => navigation.navigate('')}
               >
-            <Text style={NotificationScreenStyle.ViewTextBtn}>View ticket</Text>
+            <Text style={SystemStyle.ViewTextBtn}>View ticket</Text>
             </TouchableOpacity>
           </View>
           </View>
@@ -223,17 +224,17 @@ import React, {
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);}}>
-        <View style={NotificationScreenStyle.CommentInfoView}>
-          <View style={NotificationScreenStyle.DeleteModalView}>
-              <TouchableOpacity style={NotificationScreenStyle.Icon}
+        <View style={SystemStyle.CommentInfoView}>
+          <View style={SystemStyle.DeleteModalView}>
+              <TouchableOpacity style={SystemStyle.Icon}
                 onPress={() => ('')}
                 >
                 <MaterialIcons name="delete-outline" size={24} color="black" />
-                <Text style={NotificationScreenStyle.DeleteTextBtn}>Delete</Text>
+                <Text style={SystemStyle.DeleteTextBtn}>Delete</Text>
               </TouchableOpacity>
-              <View style={NotificationScreenStyle.CommentDateInfo}>
-                <FontAwesome5 name="clock" size={24} color="black" style={NotificationScreenStyle.Icon}/>
-                <Text style={NotificationScreenStyle.CommentDate}>Sunday, November 9  12:00PM</Text>
+              <View style={SystemStyle.CommentDateInfo}>
+                <FontAwesome5 name="clock" size={24} color="black" style={SystemStyle.Icon}/>
+                <Text style={SystemStyle.CommentDate}>Sunday, November 9  12:00PM</Text>
               </View>
           </View>
         </View>

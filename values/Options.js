@@ -50,13 +50,24 @@ const Options = {
         },
     },
 
+
+    // Search Screen Tab Navigator
+    SearchScreenNavigation: {
+        tabBarActiveTintColor: '#eb9834',
+        tabBarInactiveTintColor:'#8c8c8c',
+        tabBarPressColor:'#f0c28b',
+        tabBarLabelStyle: {
+            fontSize: 18,
+            textTransform: 'none',
+            fontWeight: 'bold',
+        }
+    },
     SearchTabNavigation: {
         tabBarIndicatorStyle: {
             borderBottomColor: '#eb9834',
-            borderBottomWidth: 4,
+            borderBottomWidth: 3,
             borderRadius:10,
-            width: "35%",
-            left: "7%"  
+            width: "50%",
         },
     }
 }

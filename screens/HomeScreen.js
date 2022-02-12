@@ -15,7 +15,10 @@ import React, {
   } from 'react-native';
   import BottomSheet from 'react-native-gesture-bottom-sheet';
   
-  import homeStyles from "../styles/homeStyles";
+  import HomeScreenStyle from "../styles/HomeScreenStyle";
+  import SystemStyle from "../styles/SystemStyle";
+
+  
   import { 
     Feather,
     Ionicons,
@@ -29,53 +32,27 @@ import React, {
   function HomeScreen({ navigation }) {
     const bottomSheet = useRef();
     return (
-      <View style={homeStyles.container}>
-        <View style={homeStyles.Homeheader}>
-          <Text style={homeStyles.bespeaklogo}>bespeak</Text>
+      <View style={HomeScreenStyle.Container}>
+        <View style={HomeScreenStyle.HomeHeader}>
+          <Text style={HomeScreenStyle.BespeakLogo}>bespeak</Text>
         </View>
-      <ScrollView style={homeStyles.homecontent}>
-  
-        <TouchableOpacity style={homeStyles.feed}>
-          <Image
-          style={homeStyles.firstpic}
-          source={require('../assets/img/A.jpg')}
-          />
-          <View style={homeStyles.eventInfoTab}>
-            <Text style={homeStyles.eventTitlecontent}>Not Bad Sunday</Text>
-            <Text style={homeStyles.eventDTRcontent}>Sunday, November 14 ∘ 12:00PM</Text>
-            <Text style={homeStyles.eventLOCcontent}>Every Nation Campus</Text>
-            <View style={homeStyles.GeoLocTabcontent}>
+        <ScrollView>  
+          <TouchableOpacity style={SystemStyle.Card}
+            onPress={() => bottomSheet.current.show()}>
+           <Image
+            style={SystemStyle.CardImage}
+            source={require('../assets/img/B.jpg')}
+            />
+          <View style={SystemStyle.CardContainer}>
+            <Text style={SystemStyle.CardTitle}>Sunday Worship Service</Text>
+            <Text style={SystemStyle.CardSched}>Sunday, November 14 ∘ 10:00AM</Text>
+            <Text style={SystemStyle.CardOrg}>Every Nation Campus</Text>
+            <View style={SystemStyle.CardLocationContainer}>
               <SimpleLineIcons name="location-pin" size={16} color="black"/>
-              <Text style={homeStyles.feedcontent}>Bulacan, Bulacan</Text>
+              <Text style={SystemStyle.CardLocation}>Metro East, Pasig</Text>
             </View>
           </View>
-          <View style={homeStyles.eventOptionTabcontent}>
-            <TouchableOpacity>
-            <Ionicons name="share-social-outline" size={22} color="black" />
-            </TouchableOpacity>
-            <TouchableOpacity>
-            <Feather name="bookmark" size={22} color="black" />
-            </TouchableOpacity>
-          </View>     
-        </TouchableOpacity>
-  
-        <SafeAreaView style={styles.container}>
-        <TouchableOpacity style={homeStyles.feed}
-          onPress={() => bottomSheet.current.show()}>
-          <Image
-          style={homeStyles.secondpic}
-          source={require('../assets/img/B.jpg')}
-          />
-          <View style={homeStyles.eventInfoTab}>
-            <Text style={homeStyles.eventTitlecontent}>Sunday Worship Service</Text>
-            <Text style={homeStyles.eventDTRcontent}>Sunday, November 14 ∘ 10:00AM</Text>
-            <Text style={homeStyles.eventLOCcontent}>Every Nation Campus</Text>
-            <View style={homeStyles.GeoLocTabcontent}>
-              <SimpleLineIcons name="location-pin" size={16} color="black"/>
-              <Text style={homeStyles.feedcontent}>Metro East, Pasig</Text>
-            </View>
-          </View>
-          <View style={homeStyles.eventOptionTabcontent}>
+          <View style={SystemStyle.CardOption}>
             <TouchableOpacity>
             <Ionicons name="share-social-outline" size={22} color="black" />
             </TouchableOpacity>
@@ -89,75 +66,59 @@ import React, {
           ref={bottomSheet}
           height={480}
           radius={35}>
-        <View style={homeStyles.centeredView}>
-          <View style={homeStyles.modalView}>
+        <View style={SystemStyle.BottomSheetModal}>
+          <View style={SystemStyle.BottomSheetModalContainer}>
             <Image
-              style={homeStyles.firstpiconmodal}
+              style={SystemStyle.BottomSheetImage}
               source={require('../assets/img/B.jpg')}
             />
-          <View style={homeStyles.eventInfoOnmodal}>
-            <Text style={homeStyles.eventTitlecontentOnmodal}>Sunday Wordship Service</Text>
-            <Text style={homeStyles.eventDesccontentOnmodal}>"Gago kaba?"</Text>
-            <Text style={homeStyles.eventDesccontentOnmodal}>Content 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kuno</Text>
-            <Text style={homeStyles.eventDescTagcontentOnmodal}>Bring your friends and classmates now!</Text>
-            <TouchableOpacity style={homeStyles.eventTabOnmodal}
-              onPress={() => navigation.navigate('NotificationDetailScreen')}>
-              <Ionicons name="md-person" size={30} style={homeStyles.eventOrgIconOnmodal}/>
-              <View style={homeStyles.notifCard}>
-                <Text style={homeStyles.eventOrgOnmodal}>Dikta Studio</Text>
-              </View>
-            </TouchableOpacity>
-            <Text style={homeStyles.eventDesccontentOnmodal}>Posted November 14, 2021</Text>
-            <Text style={homeStyles.eventDesccontentOnmodal}>For All</Text>
-            <View style={homeStyles.joinTabOnmodal}>
-              <TouchableOpacity style={homeStyles.othersInOnmodal}
+          <View style={SystemStyle.BottomSheetContainer}>
+            <Text style={SystemStyle.DragableModalTitle}>Sunday Wordship Service</Text>
+            <Text style={SystemStyle.DraggableModalDescription}>"Gago kaba?"</Text>
+            <Text style={SystemStyle.DraggableModalDescription}>Content 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kuno</Text>
+            <Text style={SystemStyle.DraggableModalDescription}>Bring your friends and classmates now!</Text>
+            <View style={SystemStyle.OrganizerTab}>
+          <TouchableOpacity style={SystemStyle.OrganizerInfo}
+            onPress={() => navigation.navigate('NotificationDetailScreen')}>
+          <View style={SystemStyle.OrganizerImgContainer}>
+          <Image
+          style={SystemStyle.OrganizerImg}
+          source={require('../assets/img/EveryNation.png')}
+          />
+        </View>
+            <View style={SystemStyle.OrgCard}>
+              <Text style={SystemStyle.OrganizerName}>Every Nation Campus</Text>
+            </View>
+          </TouchableOpacity>
+          </View>
+            <Text style={SystemStyle.DraggableModalDescription}>Posted November 14, 2021</Text>
+            <Text style={SystemStyle.DraggableModalDescription}>For All</Text>
+            <View style={SystemStyle.InterestedParticipantsContainer}>
+              <TouchableOpacity style={SystemStyle.InterestedParticipantsBtn}
                 onPress={() => navigation.navigate('')}> 
-                <View style={homeStyles.rowimgOnmodal}>
-                  <SimpleLineIcons name="location-pin" size={18} color="black" style={{marginTop:-4}}/>
-                  <SimpleLineIcons name="location-pin" size={18} color="black" style={{marginTop:-4}}/>
-                  <SimpleLineIcons name="location-pin" size={18} color="black" style={{marginTop:-4}}/>
-                  <SimpleLineIcons name="location-pin" size={18} color="black" style={{marginTop:-4}}/>
-                  <SimpleLineIcons name="location-pin" size={18} color="black" style={{marginTop:-4}}/>
+                <View style={SystemStyle.RowImg}>
+                <Image
+                  style={SystemStyle.InterestedIndividuals}
+                  source={require('../assets/img/EveryNation.png')}
+                  />
+                  <Image
+                  style={SystemStyle.InterestedIndividuals}
+                  source={require('../assets/img/EveryNation.png')}
+                  />
                 </View>
-                <Text style={homeStyles.othersInTextOnmodal}>Name, Name and Other's are interested</Text>
+                <Text style={SystemStyle.InterestedIndividualsText}>Name, Name and Other's are interested</Text>
               </TouchableOpacity>  
-              <TouchableOpacity style={homeStyles.imInOnmodal}
+              <TouchableOpacity style={SystemStyle.InterestedBtn}
                 onPress={() => navigation.navigate('HomeDetailScreen')}
                 >
-                <Text style={homeStyles.imInTextOnmodal}>I'm Interested</Text>
+                <Text style={SystemStyle.InterestedTextBtn}>I'm Interested</Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
       </View>
         </BottomSheet>
-      </SafeAreaView>
-  
-        <TouchableOpacity style={homeStyles.feed}
-          onPress={() => navigation.navigate('HomeDetailScreen')}>
-          <Image
-          style={homeStyles.thirdpic}
-          source={require('../assets/img/C.jpg')}
-          />
-          <View style={homeStyles.eventInfoTab}>
-            <Text style={homeStyles.eventTitlecontent}>TITLE</Text>
-            <Text style={homeStyles.eventDTRcontent}>Date n' Time∘</Text>
-            <Text style={homeStyles.eventLOCcontent}>Event Organizer</Text>
-            <View style={homeStyles.GeoLocTabcontent}>
-              <SimpleLineIcons name="location-pin" size={16} color="black"/>
-              <Text style={homeStyles.feedcontent}>Location</Text>
-            </View>
-          </View>
-          <View style={homeStyles.eventOptionTabcontent}>
-            <TouchableOpacity>
-            <Ionicons name="share-social-outline" size={22} color="black" />
-            </TouchableOpacity>
-            <TouchableOpacity>
-            <Feather name="bookmark" size={22} color="black" />
-            </TouchableOpacity>
-          </View>     
-        </TouchableOpacity>
-  </ScrollView>
+    </ScrollView>
   </View>
     );
   }
@@ -167,173 +128,179 @@ import React, {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalAttendingVisible, setModalAttendingVisible] = useState(false);
     return (
-      <ScrollView>
-      <View style={homeStyles.homeDetailsContainer}>
-        <View style={homeStyles.picContainerOncontent}>
+    <ScrollView>
+      <View style={SystemStyle.EventContainer}>
+        <View style={SystemStyle.ImgContainer}>
           <Image
-            style={homeStyles.picOncontent}
+            style={SystemStyle.ImgContainer}
             source={require('../assets/img/B.jpg')}
             />
         </View>
-        <View style={homeStyles.homeDetailscontent}>
-        <Text style={homeStyles.homeDetailscontentTitle}>Sunday Worship Service</Text>
-        <View style={homeStyles.eventOrgOnContainerContent}>
-          <TouchableOpacity style={homeStyles.eventTabOnmodal}
+        <View style={SystemStyle.EventContainer}>
+        <Text style={SystemStyle.EventTitle}>Sunday Worship Service</Text>
+        <View style={SystemStyle.OrganizerTab}>
+          <TouchableOpacity style={SystemStyle.OrganizerInfo}
             onPress={() => navigation.navigate('NotificationDetailScreen')}>
-          <Ionicons name="md-person" size={34} style={homeStyles.eventOrgIconOnmodal}/>
-            <View style={homeStyles.notifCard}>
-              <Text style={homeStyles.eventOrgName}>Every Nation Campus</Text>
+          <View style={SystemStyle.OrganizerImgContainer}>
+          <Image
+          style={SystemStyle.OrganizerImg}
+          source={require('../assets/img/EveryNation.png')}
+          />
+        </View>
+            <View style={SystemStyle.NotifCard}>
+              <Text style={SystemStyle.OrganizerName}>Every Nation Campus</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={homeStyles.FollowOrg}
+          <TouchableOpacity style={SystemStyle.FollowOrgBtn}
             onPress={() => navigation.navigate('')}>
-            <Text style={homeStyles.FollowOrgText}>Follow</Text>
+            <Text style={SystemStyle.FollowOrgTextBtn}>Follow</Text>
           </TouchableOpacity>
         </View>
         <View>
-          <View style={{flexDirection:'row'}}>
+          <View style={SystemStyle.LowerSection}>
             <Feather name="calendar" size={24} color="black" />
-            <Text style={homeStyles.homeDetailscontentOnTime}>Sunday, November 14 ∘ Starts at 12:00PM</Text>
+            <Text style={SystemStyle.EventSchedule}>Sunday, November 14 ∘ Starts at 12:00PM</Text>
           </View>
-          <View style={{flexDirection:'row'}}>
+          <View style={SystemStyle.LowerSection}>
             <SimpleLineIcons name="location-pin" size={24} color="black" />
-            <Text style={homeStyles.homeDetailscontentOnLocation}>L3 Robinsons MetroEast Barangay, Pasig, 1800, Metro Manila, Philippines</Text>
+            <Text style={SystemStyle.EventPlace}>L3 Robinsons MetroEast Barangay, Pasig, 1800, Metro Manila, Philippines</Text>
           </View>
         </View>
       </View>
       </View>
       <View>
-        <Text style={{borderTopWidth: 1, borderColor:'#000', opacity:0.1,marginTop:-20,}}></Text>
+        <Text style={SystemStyle.LineBreak}></Text>
       </View>
-      <View>
-      <View style={homeStyles.homeDetailsabtcontent}>
-        <Text style={homeStyles.homeDetailsAbout}>
-          About</Text>
-        <Text style={homeStyles.homeDetailscontentAbout}>
+      <View style={SystemStyle.Container}>
+        <Text style={SystemStyle.EventAboutTitle}>About</Text>
+        <Text style={SystemStyle.EventTextInfo}>
           As much as we are all excited to regather, ENC is also
           commited in ensuring a safe worry-free Worship
           experience for you
         </Text>
-        <Text style={homeStyles.homeDetailscontentAbout}>
-          As much as we are all excited to regather, ENC is also
-          commited in ensuring a safe worry-free Worship
-          experience for you
+        <Text style={SystemStyle.EventTextInfo}>
+          ENC adheres to the safety protocols and guidelines issued by
+          the Government during pandemic. In compliance to this,
+          membres who wish to worship onsite must be FULLY
+          VACCINATED
         </Text>
-        <Text style={homeStyles.homeDetailscontentAbout}>
-          As much as we are all excited to regather, ENC is also
-          commited in ensuring a safe worry-free Worship
-          experience for you
+        <Text style={SystemStyle.EventTextInfo}>
+          If fully vaccinated, please proceed to our online registration to
+          secure a seat.
         </Text>
-        <Text style={homeStyles.homeDetailsReminder}>
+        <Text style={SystemStyle.EventReminderTitle}>
           Reminder</Text>
-        <Text style={homeStyles.homeDetailscontentReminder}>
+        <Text style={SystemStyle.EventTextInfo}>
           1. As much as we are all excited to regather, ENC is also
           commited in ensuring a safe worry-free Worship
           experience for you
         </Text>
-        <Text style={homeStyles.homeDetailscontentReminder}>
+        <Text style={SystemStyle.EventTextInfo}>
           2. As much as we are all excited to regather, ENC is also
           commited in ensuring a safe worry-free Worship
           experience for you
         </Text>
-        <Text style={homeStyles.homeDetailscontentReminder}>
+        <Text style={SystemStyle.EventTextInfo}>
           3. As much as we are all excited to regather, ENC is also
           commited in ensuring a safe worry-free Worship
           experience for you
         </Text>
-        <View style={homeStyles.hrtextcontainer}>
-          <Text style={homeStyles.hrline}></Text>
-          <Text style={homeStyles.hrtext}>Comment</Text>
+        <View style={SystemStyle.BreakLineContainer}>
+          <Text style={SystemStyle.BreakLine}></Text>
+          <Text style={SystemStyle.BreakLineComment}>Comment</Text>
         </View>
-        <View style={homeStyles.commentBlock}>
-          <MaterialCommunityIcons name="face-profile" size={40} color="black" />
-            <View style={homeStyles.commentTab}>
-              <Text style={homeStyles.commentName}>Aegon Targaryen</Text>
-              <Text style={homeStyles.commentsays}>I guess it would be good to go here after finding out
+
+        <View style={SystemStyle.BespeakerCommentContainer}>
+          <View style={SystemStyle.BespeakerImgContainer}>
+            <Image
+              style={SystemStyle.BespeakerImg}
+              source={require('../assets/img/EveryNation.png')}
+            />
+          </View>
+            <View style={SystemStyle.BespeakerContainer}>
+              <Text style={SystemStyle.BespeakerName}>Aegon Targaryen</Text>
+              <Text style={SystemStyle.BespeakerComment}>I guess it would be good to go here after finding out
                 something about myself.</Text>
             </View>
-          <SimpleLineIcons name="options" size={24} color="black" style={homeStyles.commentInfo}/>
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
+              <SimpleLineIcons name="options" size={24} color="black" style={SystemStyle.CommentInfo}/>
+            </TouchableOpacity>
+          </View>          
+
+        <View style={SystemStyle.BespeakerCommentContainer}>
+          <View style={SystemStyle.BespeakerImgContainer}>
+            <Image
+              style={SystemStyle.BespeakerImg}
+              source={require('../assets/img/EveryNation.png')}
+            />
           </View>
-          <View style={homeStyles.commentBlock}>
-          <MaterialCommunityIcons name="face-profile" size={40} color="black" />
-            <View style={homeStyles.commentTab}>
-              <Text style={homeStyles.commentName}>Daenarys</Text>
-              <Text style={homeStyles.commentsays}>Feld bad might burn
-                a city later, idk.</Text>
-            </View>
-          <TouchableOpacity 
-          onPress={() => bottomSheet.current.show()}>
-          <SimpleLineIcons name="options" size={24} color="black" style={homeStyles.commentInfo}/>
-          </TouchableOpacity>
-          </View>
-          <View style={homeStyles.MYcommentBlock}>
-          <MaterialCommunityIcons name="face-profile" size={40} color="black" />
-            <View style={homeStyles.commentTab}>
-              <Text style={homeStyles.commentName}>Sansa Stark</Text>
-              <View style={{flexDirection:'row'}}>
-              <TextInput style={homeStyles.MYcommentsays} placeholder='Write a comment'></TextInput>
-              <TouchableOpacity onPress={() => setModalVisible(true)}>
-              <Ionicons name="send" size={24} color="black" style={homeStyles.commentInfo}/>
+            <View style={SystemStyle.BespeakerContainer}>
+              <Text style={SystemStyle.BespeakerName}>Sansa Stark</Text>
+              <View style={SystemStyle.BespeakerInput}>
+              <TextInput style={SystemStyle.MyCommentInput} placeholder=' Write a comment..'>
+              </TextInput>
+              <TouchableOpacity>
+                <Ionicons name="send" size={24} color="black" style={SystemStyle.SendComment}/>
               </TouchableOpacity>
               </View>
             </View>
-          </View>
+          </View>          
         </View>
-        <View style={homeStyles.attendingtab}>
-          <TouchableOpacity style={homeStyles.attendingbutton}
+
+        <View style={SystemStyle.AttendingContainer}>
+          <TouchableOpacity style={SystemStyle.AttendingBtn}
             onPress={() => setModalAttendingVisible(true)}>
-            <Text style={homeStyles.attendingtext}>I'm attending!</Text>
+            <Text style={SystemStyle.AttendingTextBtn}>I'm attending!</Text>
           </TouchableOpacity>
         </View>
-      </View>
+
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalAttendingVisible}
         onRequestClose={() => {
           setModalAttendingVisible(!modalAttendingVisible);}}>
-        <View style={homeStyles.youresetView}>
-          <View style={homeStyles.youresetmodalView}>
+        <View style={SystemStyle.YoureSetView}>
+          <View style={SystemStyle.YoureSetModalView}>
           <View>
-            <Text style={homeStyles.modaltxt}>Youre all set!</Text>
+            <Text style={SystemStyle.ModalText}>Youre all set!</Text>
           </View>
           <View>
           <Feather name="check-circle" size={55} color="black" />
           </View>
-          <View style={homeStyles.commentdateinfo}>
-            <TouchableOpacity style={homeStyles.okaybtn}
+          <View style={SystemStyle.commentdateinfo}>
+            <TouchableOpacity style={SystemStyle.ViewBtn}
               //onPress={() => navigation.navigate('')}
               >
-            <Text style={homeStyles.okaybtntext}>View ticket</Text>
+            <Text style={SystemStyle.ViewTextBtn}>View ticket</Text>
             </TouchableOpacity>
           </View>
           </View>
         </View>
       </Modal>
-  
-      <BottomSheet
-          hasDraggableIcon
-          ref={bottomSheet}
-          height={115}
-          radius={35}>
-        <View style={homeStyles.centeredView}>
-          <View style={homeStyles.deletemodalView}>
-              <TouchableOpacity style={homeStyles.deletebutton}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);}}>
+        <View style={SystemStyle.CommentInfoView}>
+          <View style={SystemStyle.DeleteModalView}>
+              <TouchableOpacity style={SystemStyle.Icon}
                 onPress={() => ('')}
                 >
                 <MaterialIcons name="delete-outline" size={24} color="black" />
-                <Text style={homeStyles.deleteText}>Delete</Text>
+                <Text style={SystemStyle.DeleteTextBtn}>Delete</Text>
               </TouchableOpacity>
-              <View style={homeStyles.commentdateinfo}>
-                <FontAwesome5 name="clock" size={24} color="black" style={homeStyles.deletebutton}/>
-                <Text style={homeStyles.commentdate}>Sunday, November 9  12:00PM</Text>
+              <View style={SystemStyle.CommentDateInfo}>
+                <FontAwesome5 name="clock" size={24} color="black" style={SystemStyle.Icon}/>
+                <Text style={SystemStyle.CommentDate}>Sunday, November 9  12:00PM</Text>
               </View>
           </View>
         </View>
-      </BottomSheet>
-  
+      </Modal>
       </ScrollView>
-      
+       
     );
   }
 
