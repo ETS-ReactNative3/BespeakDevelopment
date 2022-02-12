@@ -24,15 +24,15 @@ import ProfileScreenStyle from "../styles/ProfileScreenStyle";
 import ProfileContent from "../components/ProfileContent";
   
 class ProfileScreen extends Component {
-  state = {
-    user: auth.currentUser,
-    data: {},
-    is_loading: true,
-    refreshing: false
-  }
   constructor() {
     super()
     this.onRefresh = this.onRefresh.bind(this)
+    this.state = {
+      user: auth.currentUser,
+      data: {},
+      is_loading: true,
+      refreshing: false
+    }
   }
   async _loadUserData() {
     var uid = this.state.user.uid;
@@ -200,7 +200,7 @@ class ProfileScreen extends Component {
           </View>
         </ScrollView>
       </SafeAreaView>
-      <ProfileContent />
+      <ProfileContent refreshing = {this.state.refreshing}/>
     </>
     );
   }
