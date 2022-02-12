@@ -10,6 +10,8 @@ import {
 } from '@expo/vector-icons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
+import EventList from "./EventList"
+
 import SystemStyle from "../styles/SystemStyle";
 import homeStyles from "../styles/homeStyles";
 
@@ -55,6 +57,7 @@ class ProfileEvents extends Component {
                         <Feather name="plus" size={50} style={homeStyles.cardicon}/>
                     </TouchableOpacity>
                 </View>
+                <EventList/>
             </View>
             /*
             <View style={SystemStyle.TabContainer}>

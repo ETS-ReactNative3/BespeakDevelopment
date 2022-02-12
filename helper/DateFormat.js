@@ -19,7 +19,7 @@ export default function formatDate(date, patternStr){
         minute = date.getMinutes(),
         second = date.getSeconds(),
         miliseconds = date.getMilliseconds(),
-        h = hour % 12,
+        h = (hour % 12) == 0 ? 12 : hour % 12,
         hh = twoDigitPad(h),
         HH = twoDigitPad(hour),
         mm = twoDigitPad(minute),

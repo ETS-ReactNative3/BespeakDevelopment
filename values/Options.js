@@ -50,7 +50,6 @@ const Options = {
         },
     },
 
-
     // Search Screen Tab Navigator
     SearchScreenNavigation: {
         tabBarActiveTintColor: '#eb9834',

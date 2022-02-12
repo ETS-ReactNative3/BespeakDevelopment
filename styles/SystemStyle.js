@@ -32,6 +32,10 @@ const SystemStyle = StyleSheet.create({
     backgroundColor: '#fff',
     padding: '4%',
     },
+  EventListContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   //For Event Card
   Card:{
     backgroundColor: '#f5f5f5',
@@ -39,6 +43,8 @@ const SystemStyle = StyleSheet.create({
     justifyContent: 'flex-start',
     marginTop: '1%',
     marginBottom: '1.5%',
+    marginLeft: '3%',
+    marginRight: '3%',
     borderRadius: 20,
   },
   //Card Image
@@ -89,8 +95,8 @@ const SystemStyle = StyleSheet.create({
     flexDirection:'row',
     alignContent:'center',
     justifyContent:'flex-end',
-    marginBottom:'6%',
-    marginRight:'6%',
+    marginBottom:'4%',
+    marginRight:'4%',
   },
   //Draggable Modal Bottom Sheet
   BottomSheetModal: {

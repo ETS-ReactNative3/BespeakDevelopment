@@ -116,6 +116,9 @@ class CreateEventScreen extends Component {
     }
     async _processSubmit() {
         var event_data = this.state.data
+
+        //Add Server Time
+        event_data.server_time = (await fetch_date_time()).epoch;
         event_data.owner = auth.currentUser.uid
 
         await db
@@ -124,6 +127,7 @@ class CreateEventScreen extends Component {
                 ...event_data
             })
             .catch(error => {
+                this.setState({'is_loading': false})
                 Alert.alert('Error!', error.message)
                 return
             }) 
@@ -131,10 +135,9 @@ class CreateEventScreen extends Component {
                 if(this.state.banner_photo.uri) {
                     await this._uploadToStorage(this.state.banner_photo.uri, `/event/${doc.id}/banner`)
                 }
-                
+                this.setState({'is_loading': false})
                 this.props.navigation.goBack()
             });
-        this.setState({'is_loading': false})
     }
     // #TODO: Move to Helper
     _uploadToStorage(path, imageName) {
