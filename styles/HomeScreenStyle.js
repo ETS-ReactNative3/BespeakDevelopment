@@ -4,14 +4,12 @@ const HomeScreenStyle = StyleSheet.create({
     // Home Screen Style
     Container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
         backgroundColor: '#fff',
-        paddingLeft:'4%',
-        paddingRight:'4%',
     },
     //For Logo Header
     HomeHeader:{
+        paddingLeft:'4%',
+        paddingRight:'4%',
         marginTop: '10%',
         marginBottom:'4%',
         alignSelf: 'stretch',
