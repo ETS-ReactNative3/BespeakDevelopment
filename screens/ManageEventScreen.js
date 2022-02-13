@@ -207,7 +207,7 @@ class CreateEventScreen extends Component {
                         <Pressable onPress = {() => this.txtName.focus() } >
                             <View style={CreateEventStyle.EventFieldContainer}>
                                 <AntDesign name="book" size={24} style={CreateEventStyle.EventFieldIcon}/>
-                                <TextInput style={CreateEventStyle.FormEventField} placeholder="Event Name"
+                                <TextInput style={CreateEventStyle.FormEventField} placeholder="Event Name "
                                     maxLength={50} 
                                     value = {this.state.data.name}
                                     onChangeText = {text => this._handleText('name', text)}
@@ -224,7 +224,7 @@ class CreateEventScreen extends Component {
                         <Pressable onPress = {() => this._handleDateSelection(true) } >
                             <View style={CreateEventStyle.EventFieldContainer}>
                                 <Feather name="calendar"  size={22} style={CreateEventStyle.EventFieldIcon}/>
-                                <TextInput style={CreateEventStyle.FormEventField} placeholder="Schedule"
+                                <TextInput style={CreateEventStyle.FormEventField} placeholder="Schedule "
                                     value = {this.state.data.schedule 
                                         ? dateFormat(new Date(this.state.data.schedule), "EEEE, MMMM d, yyyy - h:mm aaa")
                                         : ''}
@@ -243,7 +243,7 @@ class CreateEventScreen extends Component {
                         <Pressable onPress = {() => this.txtLocation.focus() } >
                             <View style={CreateEventStyle.EventFieldContainer}>
                                 <SimpleLineIcons name="location-pin" size={24} style={CreateEventStyle.EventFieldIcon}/>
-                                <TextInput style={CreateEventStyle.FormEventField} placeholder="Location"
+                                <TextInput style={CreateEventStyle.FormEventField} placeholder="Location "
                                     maxLength={30} 
 
                                     onChangeText = {text => this._handleText('location', text)}
