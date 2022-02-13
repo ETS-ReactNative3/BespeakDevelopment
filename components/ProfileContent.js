@@ -9,6 +9,7 @@ import {
     Feather,
 } from '@expo/vector-icons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { auth } from '../firebase'
 
 import EventList from "./EventList"
 
@@ -21,12 +22,13 @@ const Top = createMaterialTopTabNavigator();
 
 class ProfileContent extends Component {
     render() {
+        console.log('Profile Contents Loading....')
         return (
             <Top.Navigator screenOptions={{
                     ...Options.TopTabNavigation,
                     ...Options.ProfileTabNavigation
                 }}>
-                <Top.Screen name="My Events" component={ProfileEvents} />
+                <Top.Screen name="My Events" component={React.memo(ProfileEvents)} />
                 <Top.Screen name="My Tickets" component={ProfileTickets} />
                 <Top.Screen name="Bookmarks" component={ProfileBookmarks} />
             </Top.Navigator>
@@ -57,7 +59,7 @@ class ProfileEvents extends Component {
                         <Feather name="plus" size={50} style={homeStyles.cardicon}/>
                     </TouchableOpacity>
                 </View>
-                <EventList/>
+                <EventList for_profile = {true} user_id = {auth.currentUser.uid}/>
             </View>
             /*
             <View style={SystemStyle.TabContainer}>

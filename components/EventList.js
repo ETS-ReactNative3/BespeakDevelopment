@@ -45,7 +45,15 @@ class EventList extends Component {
         })
         console.log('Loading Events...')
 
-        let get_events_query = await db.collection('event')
+        let get_events_query = await db.collection('event');
+
+        if(this.props.for_profile && this.props.user_id) {
+            console.log("Getting all events for USER ID: ", this.props.user_id)
+            get_events_query = get_events_query
+                .where("owner", "==", this.props.user_id)
+        }   
+
+        get_events_query = get_events_query
             .orderBy('server_time', 'desc')
             .limit(this.state.limit);
         
@@ -86,7 +94,7 @@ class EventList extends Component {
             item.event_image = await this._getEventImage(item.id);
 
             let raw_sched = parseInt(item.schedule);
-            let sched = await dateFormat(new Date(raw_sched), "EEEE, MMMM d, yyyy - h:mm aaa");
+            let sched = await dateFormat(new Date(raw_sched), "EEEE, MMMM d, yyyy ∘ h:mm aaa");
             
             item.sched = sched;
 
@@ -197,6 +205,11 @@ class EventList extends Component {
                         <ActivityIndicator size="large" color="orange"/> 
                     </View>
                 }
+                {this.state.data.length == 0 &&
+                    <View style={SystemStyle.TabContainer}>
+                        <Text style={SystemStyle.TabEmptyList}> No events found. </Text>
+                    </View>
+                }
                 <FlatList
                     data={Object.values(this.state.data)}
                     renderItem={({ item }) => (
@@ -228,11 +241,6 @@ class EventList extends Component {
                     ListFooterComponent={this._renderFooter()}
                 /*    onEndReached={this._extendLoadEvents()}*/
                     onEndReachedThreshold={0}
-                    ListEmptyComponent={
-                        <View style={SystemStyle.TabContainer}>
-                            <Text style={SystemStyle.TabEmptyList}> No event found</Text>
-                        </View>
-                    }
                     refreshing={this.state.refreshing}>
                 </FlatList>
             </View>
