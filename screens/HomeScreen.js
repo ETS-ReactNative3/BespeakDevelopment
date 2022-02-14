@@ -37,7 +37,7 @@ class HomeScreen extends Component {
           <View style={HomeScreenStyle.HomeHeader}>
             <Text style={HomeScreenStyle.BespeakLogo}>bespeak</Text>
           </View>
-          <EventList/>
+          <EventList for_home = {true}/>
         </View>
         
       </>

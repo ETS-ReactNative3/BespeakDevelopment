@@ -104,7 +104,7 @@ class ProfileScreen extends Component {
   doRefresh() {
     return new Promise((resolve) => {
       this._loadUserData()
-      setTimeout(resolve, 1000)
+      setTimeout(resolve, 2000)
     });
   }
   async onRefresh() {
@@ -122,25 +122,26 @@ class ProfileScreen extends Component {
           <ScrollView
             refreshControl={
               <RefreshControl
-                refreshing={this.state.refreshing}
-                onRefresh={this.onRefresh}/>
+                refreshing={this.state.refreshing || this.state.is_loading}
+                onRefresh={this.onRefresh}
+                colors={["gray", "orange"]}/>
             }>
               <View style={ProfileScreenStyle.Container}>
-              {
+              {/*
                 this.state.is_loading && 
                   <Spinner visible={true} 
                     textStyle={SystemStyle.whiteLoader}
                     color = '#eb9834'
                     animation = 'fade'
                     overlayColor = 'rgba(0, 0, 0, 0.50)'/>
-              }
+              */}
               <View style={ProfileScreenStyle.ProfileHeader}/>
               <View style={ProfileScreenStyle.ProfileCoverImgContainer}>
                 <Image style={ProfileScreenStyle.ProfileCoverImg}
                   key = {this.state.data.cover_photo}
                   source={
                     this.state.data.cover_photo ?
-                    {uri: this.state.data.cover_photo}:
+                    {uri: this.state.data.cover_photo} :
                     require('../assets/img/blank-cover.png')
                   }/>
               </View>
@@ -150,7 +151,7 @@ class ProfileScreen extends Component {
                     key = {this.state.data.profile_photo}
                     source={
                       this.state.data.profile_photo ?
-                      {uri: this.state.data.profile_photo}:
+                      {uri: this.state.data.profile_photo} :
                       require('../assets/img/blank-profile.png')
                     }/>
                 </View>

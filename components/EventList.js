@@ -5,7 +5,7 @@ import { ActivityIndicator,
     Text,
     TouchableOpacity,
     Image,
-    View } from 'react-native';
+    View, RefreshControl } from 'react-native';
 import { 
     Feather,
     Ionicons,
@@ -17,34 +17,36 @@ import dateFormat from '../helper/DateFormat';
 
 import HomeScreenStyle from "../styles/HomeScreenStyle";
 import SystemStyle from "../styles/SystemStyle";
+import { get } from "react-native/Libraries/Utilities/PixelRatio";
 
 class EventList extends Component {
     constructor() {
         super();
 
         this.state = {
-            data: {},
-            limit: 9,
+            data: [],
+            limit: 4,
             last_data: null,
             loading: true,
-            refreshing: false
+            refreshing: false,
+            user_refresh: false, // Manual Refreshing
+            can_extend: true,
         }
+        this.onRefresh = this.onRefresh.bind(this)
     }
 
     componentDidMount() {
         try {
+            this.setState({
+                loading: true
+            })
             this._loadEvents();
         } catch(error) {
             console.log(error);
         }
     }
 
-    async _loadEvents() {
-        this.setState({
-            loading: true
-        })
-        console.log('Loading Events...')
-
+    async _retrieveEvents(type_extend = false) {
         let get_events_query = await db.collection('event');
 
         if(this.props.for_profile && this.props.user_id) {
@@ -55,41 +57,49 @@ class EventList extends Component {
 
         get_events_query = get_events_query
             .orderBy('server_time', 'desc')
-            .limit(this.state.limit);
+
+        if(type_extend) {
+            get_events_query = get_events_query
+                .startAfter(this.state.last_data)
+        }
         
-        let documentSnapshots = await get_events_query.get();
+        let documentSnapshots = await get_events_query
+            .limit(this.state.limit)
+            .get();
         let doc_data = [];
 
         documentSnapshots.forEach((doc) => {
             doc_data.push({id: doc.id, ...doc.data()})
         })
         
-        console.log("Loaded Data: ", doc_data)
+        //console.log("Loaded Data: ", doc_data)
 
         doc_data = await this._arrangeData(doc_data);
         console.log("Arranged Data: ", doc_data)
 
-        let last_value = doc_data[doc_data.length - 1]?.id;
+        let last_value = documentSnapshots.docs[documentSnapshots.docs.length-1]; //doc_data[doc_data.length - 1]?.id;
+
+        return {'data': doc_data, 'last': last_value}
+    }
+
+    async _loadEvents() {
+        console.log('Loading Events...')
+
+       let query_res = await this._retrieveEvents();
 
         this.setState({
-            data: doc_data,
-            last_data: last_value,
+            data: query_res.data,
+            last_data: query_res.last,
             loading: false
         });
     }
     async _arrangeData(events_data) {
-        console.log('Arranging: ', events_data)
+        //console.log('Arranging: ', events_data)
         let arranged_data = [];
-        /*await events_data.forEach(async (item) => {
-            console.log('Arranging: ', item)
-            item.owner_name = await this._getOrganizerName(item.owner);
-            item.event_image = await this._getEventImage(item.id);
-            console.log('Arranged: ', item)
-            arranged_data.push(item)
-        })*/
+
         for(var i = 0; i < events_data.length; i++) {
             let item = events_data[i]
-            console.log('Arranging: ', item)
+            //console.log('Arranging: ', item)
             item.owner_name = await this._getOrganizerName(item.owner);
             item.event_image = await this._getEventImage(item.id);
 
@@ -105,25 +115,20 @@ class EventList extends Component {
     // #TODO: Optimize, Minimalize
     async _extendLoadEvents() {
         this.setState({
-            refreshing: true
+            refreshing: true,
+            can_extend: false
         });
         console.log('Retrieving Other Events...')
 
-        let get_events_query = await db.collection('event')
-            .orderBy('server_time', 'desc')
-            .startAfter(this.state.last_data)
-            .limit(this.state.limit)
+        let query_res = await this._retrieveEvents(true);
 
-        let documentSnapshots = await get_events_query.get();
+        let has_data = query_res.data.length > 0;
 
-        let documentData = documentSnapshots.docs.map(document => document.data())
-
-        let last_value = documentData[documentData.length - 1]?.id; 
-
-        this.state({
-            data: [...this.state.data, ... documentData],
-            last_data: last_value,
-            refreshing: false
+        this.setState({
+            data: [... this.state.data, ... query_res.data],
+            last_data: query_res.last,
+            refreshing: false,
+            can_extend: has_data
         });
     }
 
@@ -187,10 +192,30 @@ class EventList extends Component {
         var raw_data = snapshot.data()
         return raw_data.location;
     }
+    doRefresh() {
+        return new Promise((resolve) => {
+          this._loadEvents() 
+          setTimeout(resolve, 5000)
+        });
+    }
+    async onRefresh() {
+        console.log("Refreshing...")
+        this.setState({'user_refresh': true})
+        await this.doRefresh().then(() => {
+            this.setState({
+                'user_refresh': false,
+                'can_extend': true
+            })
+            console.log("Refreshed.")
+        })
+    }
     _renderFooter() {
-        if(this.state.loading) {
+        if(this.state.refreshing) {
             return (
-                <ActivityIndicator/>
+                <>
+                    <ActivityIndicator color="orange"/> 
+                    <Text style={SystemStyle.TabEmptyList}> Please wait. </Text>
+                </>
             )
         } else {
             return null;
@@ -202,7 +227,10 @@ class EventList extends Component {
             <View style = {SystemStyle.EventListContainer}>
                 {this.state.loading && 
                     <View style={SystemStyle.TabContainer}>
-                        <ActivityIndicator size="large" color="orange"/> 
+                        <ActivityIndicator size={
+                                this.props.for_profile ? 
+                                'large' : 50
+                            } color="orange"/> 
                     </View>
                 }
                 {this.state.data.length == 0 &&
@@ -211,36 +239,47 @@ class EventList extends Component {
                     </View>
                 }
                 <FlatList
+                    refreshControl={
+                        this.props.for_home &&
+                        <RefreshControl
+                          refreshing={this.state.user_refresh}
+                          onRefresh={this.onRefresh}
+                          colors={["gray", "orange"]}/>
+                    }
                     data={Object.values(this.state.data)}
                     renderItem={({ item }) => (
                         <TouchableOpacity style={SystemStyle.Card}>
-                                <Image style={SystemStyle.CardImage}
-                                    source={ item.event_image }/>
-                                <View style={SystemStyle.CardContainer}>
-                                    <Text style={SystemStyle.CardTitle}>{item.name}</Text>
-                                    <Text style={SystemStyle.CardSched}>{item.sched}</Text>
-                                    <Text style={SystemStyle.CardOrg}>
-                                        { item.owner_name }
-                                    </Text>
-                                    <View style={SystemStyle.CardLocationContainer}>
-                                        <SimpleLineIcons name="location-pin" size={16} color="black"/>
-                                        <Text style={SystemStyle.CardLocation}>{ item.location }</Text>
-                                    </View>
+                            <Image style={SystemStyle.CardImage}
+                                source={ item.event_image }/>
+                            <View style={SystemStyle.CardContainer}>
+                                <Text style={SystemStyle.CardTitle}>{item.name}</Text>
+                                <Text style={SystemStyle.CardSched}>{item.sched}</Text>
+                                <Text style={SystemStyle.CardOrg}>
+                                    { item.owner_name }
+                                </Text>
+                                <View style={SystemStyle.CardLocationContainer}>
+                                    <SimpleLineIcons name="location-pin" size={16} color="black"/>
+                                    <Text style={SystemStyle.CardLocation}>{ item.location }</Text>
                                 </View>
-                                <View style={SystemStyle.CardOption}>
-                                    <TouchableOpacity>
-                                        <Ionicons name="share-social-outline" size={22} color="black" />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity>
-                                        <Feather name="bookmark" size={22} color="black" />
-                                    </TouchableOpacity>
-                                </View>     
+                            </View>
+                            <View style={SystemStyle.CardOption}>
+                                <TouchableOpacity>
+                                    <Ionicons name="share-social-outline" size={22} color="black" />
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Feather name="bookmark" size={22} color="black" />
+                                </TouchableOpacity>
+                            </View>     
                         </TouchableOpacity>
                     )}
                     keyExtractor={(item, index) => index.toString()}
                     ListFooterComponent={this._renderFooter()}
-                /*    onEndReached={this._extendLoadEvents()}*/
-                    onEndReachedThreshold={0}
+                    onEndReached={() => { 
+                            console.log("Can Extend: ", this.state.can_extend)
+                            if(this.state.can_extend) this._extendLoadEvents()
+                        }
+                    }
+                    onEndReachedThreshold={0.5}
                     refreshing={this.state.refreshing}>
                 </FlatList>
             </View>
