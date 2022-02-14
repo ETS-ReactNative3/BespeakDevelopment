@@ -43,13 +43,13 @@ const SystemStyle = StyleSheet.create({
     justifyContent: 'flex-start',
     marginTop: '1%',
     marginBottom: '1.5%',
-    marginLeft: '3%',
-    marginRight: '3%',
+    marginLeft: '3.5%',
+    marginRight: '3.5%',
     borderRadius: 20,
   },
   //Card Image
   CardImage:{
-    width: 370,
+    width: '100%',
     height: 130,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -107,7 +107,7 @@ const SystemStyle = StyleSheet.create({
   },
   BottomSheetModalContainer: {
     backgroundColor: "#fff",
-    width: 412,
+    width: '100%',
     height: 480,
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
@@ -115,7 +115,7 @@ const SystemStyle = StyleSheet.create({
   },
   //Draggable Modal Image Container
   BottomSheetImage:{
-    width: 412,
+    width: '100%',
     height: 150,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -228,15 +228,15 @@ const SystemStyle = StyleSheet.create({
     fontFamily: 'RedHatDisplay-Medium',
   },
   //Detailed Screen
-      //For Event Notification Detail Screen
-      EventContainer:{
-        flex:1,
-        backgroundColor:'#fff',
-        padding:'2%',
+    //For Event Notification Detail Screen
+    EventContainer:{
+      flex:1,
+      backgroundColor:'#fff',
+      padding:'2%',
     },
     ImgContainer:{
         margin:'-1%',
-        width: 412,
+        width: '102%',
         height: 180,
     },
     //Event Info
