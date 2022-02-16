@@ -3,20 +3,16 @@ import { ActivityIndicator,
     Alert,
     FlatList,
     Text,
-    TouchableOpacity,
-    Image,
     View, RefreshControl } from 'react-native';
-import { 
-    Feather,
-    Ionicons,
-    SimpleLineIcons,
-} from '@expo/vector-icons';
+
 import { auth, db, storage } from '../firebase';
+
+import { EventCard, EventModal } from "./EventCard";
 
 import dateFormat from '../helper/DateFormat';
 
-import HomeScreenStyle from "../styles/HomeScreenStyle";
 import SystemStyle from "../styles/SystemStyle";
+
 import { get } from "react-native/Libraries/Utilities/PixelRatio";
 
 class EventList extends Component {
@@ -31,8 +27,12 @@ class EventList extends Component {
             refreshing: false,
             user_refresh: false, // Manual Refreshing
             can_extend: true,
+            modal_data: false
         }
         this.onRefresh = this.onRefresh.bind(this)
+        this._viewModal = this._viewModal.bind(this)
+
+        this.event_modal = React.createRef();
     }
 
     componentDidMount() {
@@ -46,6 +46,10 @@ class EventList extends Component {
         }
     }
 
+    _viewModal(data) {
+        this.setState({modal_data: data});
+        this.event_modal.current.show();
+    }
     async _retrieveEvents(type_extend = false) {
         let get_events_query = await db.collection('event');
 
@@ -104,9 +108,13 @@ class EventList extends Component {
             item.event_image = await this._getEventImage(item.id);
 
             let raw_sched = parseInt(item.schedule);
+            let raw_posted = parseInt(item.server_time);
+
             let sched = await dateFormat(new Date(raw_sched), "EEEE, MMMM d, yyyy ∘ h:mm aaa");
+            let posted = await dateFormat(new Date(raw_posted), "MMMM d, yyyy");
             
             item.sched = sched;
+            item.date_posted = posted;
 
             arranged_data.push(item)
         }
@@ -225,6 +233,7 @@ class EventList extends Component {
     render() {
         return (
             <View style = {SystemStyle.EventListContainer}>
+                <EventModal modal_ref = {this.event_modal} data = {this.state.modal_data}/>
                 {this.state.loading && 
                     <View style={SystemStyle.TabContainer}>
                         <ActivityIndicator size={
@@ -248,29 +257,7 @@ class EventList extends Component {
                     }
                     data={Object.values(this.state.data)}
                     renderItem={({ item }) => (
-                        <TouchableOpacity style={SystemStyle.Card}>
-                            <Image style={SystemStyle.CardImage}
-                                source={ item.event_image }/>
-                            <View style={SystemStyle.CardContainer}>
-                                <Text style={SystemStyle.CardTitle}>{item.name}</Text>
-                                <Text style={SystemStyle.CardSched}>{item.sched}</Text>
-                                <Text style={SystemStyle.CardOrg}>
-                                    { item.owner_name }
-                                </Text>
-                                <View style={SystemStyle.CardLocationContainer}>
-                                    <SimpleLineIcons name="location-pin" size={16} color="black"/>
-                                    <Text style={SystemStyle.CardLocation}>{ item.location }</Text>
-                                </View>
-                            </View>
-                            <View style={SystemStyle.CardOption}>
-                                <TouchableOpacity>
-                                    <Ionicons name="share-social-outline" size={22} color="black" />
-                                </TouchableOpacity>
-                                <TouchableOpacity>
-                                    <Feather name="bookmark" size={22} color="black" />
-                                </TouchableOpacity>
-                            </View>     
-                        </TouchableOpacity>
+                        <EventCard data = {item} modal_view = {this._viewModal}/>
                     )}
                     keyExtractor={(item, index) => index.toString()}
                     ListFooterComponent={this._renderFooter()}
