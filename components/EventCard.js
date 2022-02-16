@@ -60,10 +60,10 @@ class EventModal extends Component {
                 ref={this.props.modal_ref}
                 height={480}
                 radius={35}>
+                    <Image style={SystemStyle.BottomSheetImage}
+                        source={ item.event_image }/>
                     <View style={SystemStyle.BottomSheetModal}>
                         <View style={SystemStyle.BottomSheetModalContainer}>
-                            <Image style={SystemStyle.BottomSheetImage}
-                                source={require('../assets/img/EveryNation.png')}/>
                             <View style={SystemStyle.BottomSheetContainer}>
                                 <Text style={SystemStyle.DragableModalTitle}>{item.name}</Text>
                                 <Text style={SystemStyle.DraggableModalDescription}>{item.desc}</Text>

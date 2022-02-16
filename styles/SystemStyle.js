@@ -106,25 +106,29 @@ const SystemStyle = StyleSheet.create({
     backgroundColor:'rgba(0,0,0,.5)',
   },
   BottomSheetModalContainer: {
-    backgroundColor: "#fff",
+    flex: 1,
     width: '100%',
-    height: 480,
-    borderTopRightRadius: 40,
-    borderTopLeftRadius: 40,
+    height: '100%',
+    backgroundColor:'#fff',
     alignItems: "center",
   },
   //Draggable Modal Image Container
   BottomSheetImage:{
     width: '100%',
-    height: 150,
+    height: '35%',
+    marginTop:'-4%',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
   //Draggable Modal Container
   BottomSheetContainer:{
-    padding: '2.5%',
-    marginLeft: '3%',
-    marginRight: '3%',
+    flex: 1,
+    backgroundColor:'#fff',
+    width:'100%',
+    marginTop:'3.5%',
+    marginBottom:'3.5%',
+    paddingLeft: '8%',
+    paddingRight: '8%',
   },
   //Draggable Modal Text Content
   DragableModalTitle:{
