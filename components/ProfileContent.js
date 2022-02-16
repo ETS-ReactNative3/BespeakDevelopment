@@ -59,7 +59,9 @@ class ProfileEvents extends Component {
                         <Feather name="plus" size={50} style={homeStyles.cardicon}/>
                     </TouchableOpacity>
                 </View>
-                <EventList for_profile = {true} user_id = {auth.currentUser.uid}/>
+                <EventList for_profile = {true} 
+                    user_id = {auth.currentUser.uid} 
+                    navigation = {this.props.navigation}/>
             </View>
             /*
             <View style={SystemStyle.TabContainer}>

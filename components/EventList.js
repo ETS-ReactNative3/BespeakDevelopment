@@ -7,9 +7,9 @@ import { ActivityIndicator,
 
 import { auth, db, storage } from '../firebase';
 
-import { EventCard, EventModal } from "./EventCard";
+import { _arrangeData } from "../helper/EventLoad";
 
-import dateFormat from '../helper/DateFormat';
+import { EventCard, EventModal } from "./EventCard";
 
 import SystemStyle from "../styles/SystemStyle";
 
@@ -76,7 +76,7 @@ class EventList extends Component {
         
         //console.log("Loaded Data: ", doc_data)
 
-        doc_data = await this._arrangeData(doc_data);
+        doc_data = await _arrangeData(doc_data);
         console.log("Arranged Data: ", doc_data)
 
         let last_value = documentSnapshots.docs[documentSnapshots.docs.length-1]; //doc_data[doc_data.length - 1]?.id;
@@ -95,37 +95,6 @@ class EventList extends Component {
             loading: false
         });
     }
-    async _arrangeData(events_data) {
-        //console.log('Arranging: ', events_data)
-        let arranged_data = [];
-
-        for(var i = 0; i < events_data.length; i++) {
-            let item = events_data[i]
-            //console.log('Arranging: ', item)
-
-            // Check if own event.
-            item.is_owned = item.owner == auth.currentUser.uid
-
-            if(!item.is_owned) {
-                item.owner_image = await this._getOrganizerImage(item.owner)
-            }
-
-            item.owner_name = await this._getOrganizerName(item.owner);
-            item.event_image = await this._getEventImage(item.id);
-
-            let raw_sched = parseInt(item.schedule);
-            let raw_posted = parseInt(item.server_time);
-
-            let sched = await dateFormat(new Date(raw_sched), "EEEE, MMMM d, yyyy ∘ h:mm aaa");
-            let posted = await dateFormat(new Date(raw_posted), "MMMM d, yyyy");
-            
-            item.sched = sched;
-            item.date_posted = posted;
-
-            arranged_data.push(item)
-        }
-        return arranged_data;
-    } 
     // #TODO: Optimize, Minimalize
     async _extendLoadEvents() {
         this.setState({
@@ -146,86 +115,6 @@ class EventList extends Component {
         });
     }
 
-    async _getOrganizerImage(user_id) {
-        let user_image = false;
-        await storage.ref(`/users/${user_id}/profile`)
-            .getDownloadURL()
-            .then((url) => { 
-                user_image = url
-                //console.log("Loaded Event Image for ", user_image, ": ", url)
-            }).catch((error) => {
-                if(error.code != 'storage/object-not-found') {
-                    console.log("Error occured: ", error.message)
-                    Alert.alert('Error!', error.message)
-                }
-            })
-
-        if(user_image) {
-            return {uri: user_image};
-        }
-        return require('../assets/img/blank-profile.png');
-    }
-
-    async _getEventImage(event_id) {
-        let event_image = false;
-        await storage.ref(`/event/${event_id}/banner`)
-            .getDownloadURL()
-            .then((url) => { 
-                event_image = url
-                console.log("Loaded Event Image for ", event_id, ": ", url)
-            }).catch((error) => {
-                if(error.code != 'storage/object-not-found') {
-                console.log("Error occured: ", error.message)
-                Alert.alert('Error!', error.message)
-                }
-            })
-
-        if(event_image) {
-            return {uri: event_image};
-        }
-        return require('../assets/img/blank-cover.png');
-    }
-    // #TODO: OPTIMIZE
-    async _getOrganizerName(uid) {
-        console.log('Getting Organizer Name for ID: ' + uid);
-
-        const user_info = db.collection("user_info")
-        const query = user_info.doc(uid)
-        const snapshot = await query.get()
-
-        if(snapshot.empty) {
-            console.log('No data found for user: ', uid);
-            return "Bespeak User";
-        } 
-
-        var raw_data = snapshot.data()
-        var organizer_name = ''
-
-        if(raw_data.user_type == "INDIV") {
-            organizer_name = raw_data.f_name 
-                + ' ' + raw_data.l_name;
-        } else {
-            organizer_name = raw_data.org_name
-        }
-
-        return organizer_name;
-    }
-
-    async _getOrganizerLocation(uid) {
-        console.log('Getting Organizer Loc for ID: ' + uid);
-
-        const user_info = db.collection("user_info")
-        const query = user_info.doc(uid)
-        const snapshot = await query.get()
-
-        if(snapshot.empty) {
-            console.log('No data found for user: ', uid);
-            return;
-        } 
-
-        var raw_data = snapshot.data()
-        return raw_data.location;
-    }
     doRefresh() {
         return new Promise((resolve) => {
           this._loadEvents() 
@@ -259,7 +148,6 @@ class EventList extends Component {
     render() {
         return (
             <View style = {SystemStyle.EventListContainer}>
-                <EventModal modal_ref = {this.event_modal} data = {this.state.modal_data}/>
                 {this.state.loading && 
                     <View style={SystemStyle.TabContainer}>
                         <ActivityIndicator size={
@@ -283,7 +171,9 @@ class EventList extends Component {
                     }
                     data={Object.values(this.state.data)}
                     renderItem={({ item }) => (
-                        <EventCard data = {item} modal_view = {this._viewModal}/>
+                        <EventCard data = {item} 
+                            modal_view = {this._viewModal}
+                            navigation = {this.props.navigation}/>
                     )}
                     keyExtractor={(item, index) => index.toString()}
                     ListFooterComponent={this._renderFooter()}
@@ -295,6 +185,10 @@ class EventList extends Component {
                     onEndReachedThreshold={0.5}
                     refreshing={this.state.refreshing}>
                 </FlatList>
+
+                <EventModal modal_ref = {this.event_modal} 
+                    data = {this.state.modal_data}
+                    navigation = {this.props.navigation}/>
             </View>
         );
     }
