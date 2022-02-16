@@ -3,7 +3,9 @@ import {
     Text,
     TouchableOpacity,
     Image,
-    View } from 'react-native';
+    View,
+    Alert
+} from 'react-native';
 import { 
     Feather,
     Ionicons,
@@ -23,7 +25,11 @@ class EventCard extends Component {
         return (
             <TouchableOpacity style={SystemStyle.Card}
                 onPress = {() => {
-                        this.props.modal_view(item)
+                        if(item.is_owned) {
+                            Alert.alert("This is your event!")
+                        } else {
+                            this.props.modal_view(item)
+                        }
                     }
                 }>
                     <Image style={SystemStyle.CardImage}
@@ -73,7 +79,7 @@ class EventModal extends Component {
                                         onPress={() => navigation.navigate('NotificationDetailScreen')}>
                                             <View style={SystemStyle.OrganizerImgContainer}>
                                                 <Image style={SystemStyle.OrganizerImg}
-                                                    source={require('../assets/img/EveryNation.png')}/>
+                                                    source={item.owner_image}/>
                                             </View>
                                             <View style={SystemStyle.OrgCard}>
                                                 <Text style={SystemStyle.OrganizerName}>{item.owner_name}</Text>
