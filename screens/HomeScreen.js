@@ -29,104 +29,14 @@ import HomeScreenStyle from "../styles/HomeScreenStyle";
 import SystemStyle from "../styles/SystemStyle";
 
 class HomeScreen extends Component {
-  //const bottomSheet = useRef();
   render() {
     return (
-      <>
-        <View style={HomeScreenStyle.Container}>
-          <View style={HomeScreenStyle.HomeHeader}>
-            <Text style={HomeScreenStyle.BespeakLogo}>bespeak</Text>
-          </View>
-          <EventList for_home = {true}/>
+      <View style={HomeScreenStyle.Container}>
+        <View style={HomeScreenStyle.HomeHeader}>
+          <Text style={HomeScreenStyle.BespeakLogo}>bespeak</Text>
         </View>
-        
-      </>
-
-        /*
-        <ScrollView>  
-          <TouchableOpacity style={SystemStyle.Card}
-            onPress={() => bottomSheet.current.show()}>
-            <Image
-            style={SystemStyle.CardImage}
-            source={require('../assets/img/B.jpg')}
-            />
-          <View style={SystemStyle.CardContainer}>
-            <Text style={SystemStyle.CardTitle}>Sunday Worship Service</Text>
-            <Text style={SystemStyle.CardSched}>Sunday, November 14 ∘ 10:00AM</Text>
-            <Text style={SystemStyle.CardOrg}>Every Nation Campus</Text>
-            <View style={SystemStyle.CardLocationContainer}>
-              <SimpleLineIcons name="location-pin" size={16} color="black"/>
-              <Text style={SystemStyle.CardLocation}>Metro East, Pasig</Text>
-            </View>
-          </View>
-          <View style={SystemStyle.CardOption}>
-            <TouchableOpacity>
-            <Ionicons name="share-social-outline" size={22} color="black" />
-            </TouchableOpacity>
-            <TouchableOpacity>
-            <Feather name="bookmark" size={22} color="black" />
-            </TouchableOpacity>
-          </View>     
-        </TouchableOpacity>
-        <BottomSheet
-          hasDraggableIcon
-          ref={bottomSheet}
-          height={480}
-          radius={35}>
-        <View style={SystemStyle.BottomSheetModal}>
-          <View style={SystemStyle.BottomSheetModalContainer}>
-            <Image
-              style={SystemStyle.BottomSheetImage}
-              source={require('../assets/img/B.jpg')}
-            />
-          <View style={SystemStyle.BottomSheetContainer}>
-            <Text style={SystemStyle.DragableModalTitle}>Sunday Wordship Service</Text>
-            <Text style={SystemStyle.DraggableModalDescription}>"Gago kaba?"</Text>
-            <Text style={SystemStyle.DraggableModalDescription}>Content 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kunoContent 4 lines kuno</Text>
-            <Text style={SystemStyle.DraggableModalDescription}>Bring your friends and classmates now!</Text>
-            <View style={SystemStyle.OrganizerTab}>
-          <TouchableOpacity style={SystemStyle.OrganizerInfo}
-            onPress={() => navigation.navigate('NotificationDetailScreen')}>
-          <View style={SystemStyle.OrganizerImgContainer}>
-          <Image
-          style={SystemStyle.OrganizerImg}
-          source={require('../assets/img/EveryNation.png')}
-          />
-        </View>
-            <View style={SystemStyle.OrgCard}>
-              <Text style={SystemStyle.OrganizerName}>Every Nation Campus</Text>
-            </View>
-          </TouchableOpacity>
-          </View>
-            <Text style={SystemStyle.DraggableModalDescription}>Posted November 14, 2021</Text>
-            <Text style={SystemStyle.DraggableModalDescription}>For All</Text>
-            <View style={SystemStyle.InterestedParticipantsContainer}>
-              <TouchableOpacity style={SystemStyle.InterestedParticipantsBtn}
-                onPress={() => navigation.navigate('')}> 
-                <View style={SystemStyle.RowImg}>
-                <Image
-                  style={SystemStyle.InterestedIndividuals}
-                  source={require('../assets/img/EveryNation.png')}
-                  />
-                  <Image
-                  style={SystemStyle.InterestedIndividuals}
-                  source={require('../assets/img/EveryNation.png')}
-                  />
-                </View>
-                <Text style={SystemStyle.InterestedIndividualsText}>Name, Name and Other's are interested</Text>
-              </TouchableOpacity>  
-              <TouchableOpacity style={SystemStyle.InterestedBtn}
-                onPress={() => navigation.navigate('HomeDetailScreen')}
-                >
-                <Text style={SystemStyle.InterestedTextBtn}>I'm Interested</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
+        <EventList for_home = {true}/>
       </View>
-        </BottomSheet>
-    </ScrollView>
-  </View>*/
     );
   }
 }
