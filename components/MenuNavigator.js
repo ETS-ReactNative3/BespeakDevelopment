@@ -25,6 +25,10 @@ class HomeNavigator extends Component {
               options={{
                 title: ' ',
               }}/>
+            <MenuStack.Screen name="EventScreen" component={EventScreens.EventScreen}
+              options={{
+                title: ' ',
+              }}/>
           </MenuStack.Navigator>
         );
     }
@@ -105,6 +109,10 @@ class ProfileNavigator extends Component {
             title: '',
             headerShown: true,
             tabBarShowLabel:false,
+          }}/>
+        <MenuStack.Screen name="EventScreen" component={EventScreens.EventScreen}
+          options={{
+            title: ' ',
           }}/>
       </MenuStack.Navigator>
     );

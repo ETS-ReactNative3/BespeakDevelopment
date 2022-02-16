@@ -40,8 +40,8 @@ export default function formatDate(date, patternStr){
         .replace('hh', hh).replace('h', h)
         .replace('HH', HH).replace('H', hour)
         .replace('mm', mm).replace('m', minute)
-        .replace('ss', ss).replace('s', second)
-        .replace('S', miliseconds)
+        .replace('ii', ss).replace('i', second)
+        .replace('i', miliseconds)
         .replace('dd', dd).replace('d', day)
         
         .replace('EEEE', EEEE).replace('EEE', EEE)

@@ -11,6 +11,7 @@ import {
     Ionicons,
     SimpleLineIcons,
 } from '@expo/vector-icons';
+
 import BottomSheet from "react-native-gesture-bottom-sheet";
 
 import SystemStyle from "../styles/SystemStyle";
@@ -26,8 +27,9 @@ class EventCard extends Component {
             <TouchableOpacity style={SystemStyle.Card}
                 onPress = {() => {
                         if(item.is_owned) {
-                            Alert.alert("This is your event!")
+                            this.props.navigation.navigate('EventScreen', {event_id: item.id})
                         } else {
+                            console.log("Opening Event Modal...");
                             this.props.modal_view(item)
                         }
                     }
@@ -61,6 +63,8 @@ class EventCard extends Component {
 class EventModal extends Component {
     render() {
         let item = this.props.data
+        console.log("Opened Event Modal: ", item.id)
+
         return(
             <BottomSheet hasDraggableIcon
                 ref={this.props.modal_ref}
@@ -103,7 +107,10 @@ class EventModal extends Component {
                                             <Text style={SystemStyle.InterestedIndividualsText}>Name, Name and Other's are interested</Text>
                                     </TouchableOpacity>  
                                     <TouchableOpacity style={SystemStyle.InterestedBtn}
-                                        onPress={() => navigation.navigate('HomeDetailScreen')}>
+                                        onPress={() => {
+                                            this.props.modal_ref.current.close()
+                                            this.props.navigation.navigate('EventScreen', {event_id: item.id})
+                                        }}>
                                             <Text style={SystemStyle.InterestedTextBtn}>I'm Interested</Text>
                                     </TouchableOpacity>
                                 </View>
