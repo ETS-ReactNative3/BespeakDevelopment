@@ -6,6 +6,7 @@ import SearchScreens from '../screens/SearchScreen'
 import NotificationScreens from '../screens/NotificationScreen';
 import ProfileScreens from '../screens/ProfileScreen'
 import EditProfileScreens from '../screens/EditProfileScreen'
+import EventScreens from "../screens/EventScreen";
 import ManageEventScreens from "../screens/ManageEventScreen";
 
 const MenuStack = createNativeStackNavigator();

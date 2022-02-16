@@ -13,8 +13,6 @@ import dateFormat from '../helper/DateFormat';
 
 import SystemStyle from "../styles/SystemStyle";
 
-import { get } from "react-native/Libraries/Utilities/PixelRatio";
-
 class EventList extends Component {
     constructor() {
         super();
@@ -104,6 +102,14 @@ class EventList extends Component {
         for(var i = 0; i < events_data.length; i++) {
             let item = events_data[i]
             //console.log('Arranging: ', item)
+
+            // Check if own event.
+            item.is_owned = item.owner == auth.currentUser.uid
+
+            if(!item.is_owned) {
+                item.owner_image = await this._getOrganizerImage(item.owner)
+            }
+
             item.owner_name = await this._getOrganizerName(item.owner);
             item.event_image = await this._getEventImage(item.id);
 
@@ -138,6 +144,26 @@ class EventList extends Component {
             refreshing: false,
             can_extend: has_data
         });
+    }
+
+    async _getOrganizerImage(user_id) {
+        let user_image = false;
+        await storage.ref(`/users/${user_id}/profile`)
+            .getDownloadURL()
+            .then((url) => { 
+                user_image = url
+                //console.log("Loaded Event Image for ", user_image, ": ", url)
+            }).catch((error) => {
+                if(error.code != 'storage/object-not-found') {
+                    console.log("Error occured: ", error.message)
+                    Alert.alert('Error!', error.message)
+                }
+            })
+
+        if(user_image) {
+            return {uri: user_image};
+        }
+        return require('../assets/img/blank-profile.png');
     }
 
     async _getEventImage(event_id) {
