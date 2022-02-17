@@ -5383,7 +5383,7 @@ react-native-input-outline@^1.5.2:
   resolved "https://registry.yarnpkg.com/react-native-input-outline/-/react-native-input-outline-1.5.2.tgz#5874e0c19ae3d2e4724d703873abdc667c887103"
   integrity sha512-WgcZZxgGCfFbQ2qEdktv6zirz3OG1t++aVwmZDJlS9FQEXJRQUQnCk8VgUaXB40o22RJdQUMCEb8UXFtGOSNLw==
 
-react-native-iphone-x-helper@^1.3.0:
+react-native-iphone-x-helper@^1.3.0, react-native-iphone-x-helper@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
@@ -5422,6 +5422,13 @@ react-native-reanimated@~2.3.1:
     mockdate "^3.0.2"
     react-native-screens "^3.4.0"
     string-hash-64 "^1.0.3"
+
+react-native-responsive-fontsize@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/react-native-responsive-fontsize/-/react-native-responsive-fontsize-0.5.1.tgz#c39fa2212ecced2bac879211a7b25106534f72d2"
+  integrity sha512-G77iPzrf3BHxMxVm6G3Mw3vPImIdq+jLLXhYoOjWei6i9J3/jzUNUhNdRWvp49Csb5prhbVBLPM+pYZz+b3ESQ==
+  dependencies:
+    react-native-iphone-x-helper "^1.3.1"
 
 react-native-safe-area-context@^3.3.2:
   version "3.3.2"

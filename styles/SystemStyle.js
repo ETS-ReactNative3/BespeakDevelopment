@@ -123,12 +123,14 @@ const SystemStyle = StyleSheet.create({
   //Draggable Modal Container
   BottomSheetContainer:{
     flex: 1,
+    justifyContent:'center',
+    alignContent:'center',
     backgroundColor:'#fff',
     width:'100%',
     marginTop:'3.5%',
     marginBottom:'3.5%',
-    paddingLeft: '8%',
-    paddingRight: '8%',
+    paddingLeft: '6%',
+    paddingRight: '6%',
   },
   //Draggable Modal Text Content
   DragableModalTitle:{
@@ -144,6 +146,14 @@ const SystemStyle = StyleSheet.create({
     fontSize: 17,
     fontFamily: 'RedHatDisplay-Regular',
   },
+  //To View Organizer Info in Modal
+  OrganizerTabModal:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    marginTop:'3%',
+    marginLeft:'-4%',
+    marginBottom:'3%',
+  },
   //Organizer Button Profile
   OrganizerButton:{
     flexDirection:'row',
@@ -154,7 +164,6 @@ const SystemStyle = StyleSheet.create({
     flexDirection:'row',
     justifyContent:'space-between',
     marginTop:'3%',
-    marginLeft:'-4%',
     marginBottom:'3%',
   },
   OrganizerInfo:{
@@ -174,7 +183,15 @@ const SystemStyle = StyleSheet.create({
     justifyContent:'center',
     alignSelf:'center',
     marginLeft:'4%',
-},
+  },
+  OrgCardContainer:{
+    fontSize: 15,
+    fontFamily:'RedHatDisplay-Light',
+    color: '#000',
+    justifyContent:'center',
+    alignSelf:'center',
+    marginLeft:10,
+  },
   OrganizerName:{
     fontSize: 17,
     fontFamily:'RedHatDisplay-Medium',
@@ -217,6 +234,7 @@ const SystemStyle = StyleSheet.create({
   // For Interested Button
   InterestedBtn: {
     alignItems: 'center',
+    justifyContent:'center',
     backgroundColor: '#eb9834',
     height: 46,
     width: 150,
@@ -255,6 +273,7 @@ const SystemStyle = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-between',
         marginBottom:'4%',
+        marginTop:'4%',
     },
     OrganizerInfo:{
         flexDirection:'row',
@@ -279,6 +298,7 @@ const SystemStyle = StyleSheet.create({
     //For Follow Organizer Button
     FollowOrgBtn: {
         alignItems: 'center',
+        justifyContent:'center',
         backgroundColor: '#eb9834',
         height: 36,
         width: 120,
@@ -390,11 +410,12 @@ const SystemStyle = StyleSheet.create({
     },
     //Write a comment
     MyCommentInput:{
-        fontSize:15,
-        width:280,
-        borderRadius:25,
-        height:35,
-        backgroundColor:'#f5f5f5',
+      fontSize:15,
+      width:280,
+      borderRadius:25,
+      height:35,
+      backgroundColor:'#f5f5f5',
+      paddingLeft:'3%',
     },
     BespeakerInput:{
         flexDirection:'row'
@@ -421,11 +442,11 @@ const SystemStyle = StyleSheet.create({
     AttendingBtn: {
         marginTop:-2,
         alignItems: 'center',
+        alignContent:'center',
+        justifyContent:'center',
         backgroundColor: '#eb9834',
         height: 40,
-        padding: 10,
         borderRadius: 25,
-        justifyContent:'center',
     },
     AttendingTextBtn:{
         marginTop: -2,
