@@ -78,7 +78,7 @@ class EventModal extends Component {
                                 <Text style={SystemStyle.DragableModalTitle}>{item.name}</Text>
                                 <Text style={SystemStyle.DraggableModalDescription}>{item.desc}</Text>
                                 
-                                <View style={SystemStyle.OrganizerTab}>
+                                <View style={SystemStyle.OrganizerTabModal}>
                                     <TouchableOpacity style={SystemStyle.OrganizerInfo}
                                         onPress={() => navigation.navigate('NotificationDetailScreen')}>
                                             <View style={SystemStyle.OrganizerImgContainer}>

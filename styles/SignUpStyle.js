@@ -32,10 +32,10 @@ const SignUpStyle=StyleSheet.create({
     //Continue Buttons for SignUpForm
     ContinueBtn:{
         alignItems: 'center',
+        justifyContent:'center',
         alignSelf: 'stretch',
         backgroundColor: '#eb9834',
         height: 48,
-        padding: 10,
         borderWidth: 2,
         borderColor: '#fff',
         borderRadius: 15,
@@ -110,7 +110,7 @@ const SignUpStyle=StyleSheet.create({
         justifyContent:'center',
     },
     //Email Verification Text
-    MessageContentContent:{
+    MessageContent:{
         alignItems:'center',
         justifyContent:'center',
     },

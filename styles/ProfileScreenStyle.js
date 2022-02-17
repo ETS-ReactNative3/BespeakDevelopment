@@ -17,7 +17,7 @@ const ProfileScreenStyle=StyleSheet.create({
   },
   ProfileCoverImg: {
     marginBottom:10,
-    width: 412,
+    width: '100%',
     height:150,
     justifyContent:'center',
   },

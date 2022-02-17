@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native'
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const StartScreenStyle=StyleSheet.create({
     //StartScreen
@@ -23,10 +24,10 @@ const StartScreenStyle=StyleSheet.create({
     //Log In Button
     LogIn: {
         alignItems: 'center',
+        justifyContent:'center',
         alignSelf: 'stretch',
         backgroundColor: '#fff',
         height: 46,
-        padding: 10,
         borderWidth: 1,
         borderColor: '#fff',
         borderRadius: 5,
@@ -34,7 +35,9 @@ const StartScreenStyle=StyleSheet.create({
         marginBottom:27,
     },
     LogInText:{
-        fontSize: 20,
+        //fontSize: 20, default pixel
+        //fontSize: RFPercentage(3),
+        fontSize: RFValue(20),
         alignItems: 'center',
         justifyContent: 'center',
         color: '#eb9834',
@@ -43,10 +46,10 @@ const StartScreenStyle=StyleSheet.create({
     //Sign Up Button
     SignUp: {
         alignItems: 'center',
+        justifyContent:'center',
         alignSelf: 'stretch',
         backgroundColor: '#eb9834',
         height: 46,
-        padding: 10,
         borderWidth: 2,
         borderColor: '#fff',
         borderRadius: 5,

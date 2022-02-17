@@ -34,8 +34,9 @@ const LogInScreenStyle=StyleSheet.create({
     //Log In Button
     LogInBtn: {
         alignSelf: 'stretch',
+        alignItems: 'center',
+        justifyContent:'center',
         height: 46,
-        padding: 10,
         borderWidth: 1,
         borderRadius: 10,
         borderColor: '#fff',
@@ -43,7 +44,6 @@ const LogInScreenStyle=StyleSheet.create({
         backgroundColor: '#eb9834',
         marginTop:'13%',
         marginBottom:'20%',
-        alignItems: 'center',
     },
     LogInTextBtn:{
         alignItems: 'center',

@@ -66,7 +66,7 @@ function HomeDetailsScreen() {
         source={require('../assets/img/EveryNation.png')}
         />
       </View>
-          <View style={SystemStyle.NotifCard}>
+          <View style={SystemStyle.OrgCardContainer}>
             <Text style={SystemStyle.OrganizerName}>Every Nation Campus</Text>
           </View>
         </TouchableOpacity>
