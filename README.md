@@ -27,3 +27,8 @@ Install the following modules:
 
 # Bespeak DEV Client Version 1.5
 - ```expo install react-native-modal-datetime-picker @react-native-community/datetimepicker```
+
+UPDATE
+Install this module:
+- ```npm i react-native-responsive-fontsize```
+https://www.npmjs.com/package/react-native-responsive-fontsize
