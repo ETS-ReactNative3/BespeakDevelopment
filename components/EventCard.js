@@ -19,43 +19,37 @@ import BottomSheet from "react-native-gesture-bottom-sheet";
 
 import SystemStyle from "../styles/SystemStyle";
 
-class EventCardComponent extends Component {
+class EventCard extends Component {
     constructor() {
         super();
         this.event_modal = null
-        this.state = {
-            is_bookmarked: false
-        }
-    }
-    componentDidMount() {
-        this.setState({is_bookmarked: this.props.data.is_bookmarked })
     }
     async _bookmarkEvent() {
         let uid = auth.currentUser.uid
         let item_id = this.props.data.id;
 
+        let is_bookmarked = this.props.data.is_bookmarked;
+
         let user_doc = db.collection("user_info").doc(uid);
         let _query = _db.FieldValue.arrayUnion(item_id);
         
-        if(this.state.is_bookmarked) {
+        if(is_bookmarked) {
             _query = _db.FieldValue.arrayRemove(item_id)
         }
 
-        console.log("Bookmark Event: ", this.state.is_bookmarked)
+        console.log("Bookmark Event: ", is_bookmarked)
         await user_doc.update({
             bookmarked: _query
         }).catch((err) => {
             Alert.alert("Error!", err.message);
             console.log("Error: ", error)
         }).then(() => {
-            if(this.state.is_bookmarked) {
-                this.props.remove(this.props.data.pos)
-            }
-            this.setState({is_bookmarked: !this.state.is_bookmarked})
+            //# TODO: Rename to proper function name
+            this.props.remove(this.props.data)
         });
         
     }
-    render() {
+    render() { 
         let item = this.props.data;
         return (
             <TouchableOpacity style={SystemStyle.Card}
@@ -86,7 +80,7 @@ class EventCardComponent extends Component {
                             <Ionicons name="share-social-outline" size={22} color="black" />
                         </TouchableOpacity>
                         <TouchableOpacity onPress = {() => this._bookmarkEvent()}>
-                            {this.state.is_bookmarked ? (
+                            {this.props.data.is_bookmarked ? (
                                 <FontAwesome name="bookmark" size={22} color="black" />
                             ) : (
                                 <Feather name="bookmark" size={22} color="black" />
@@ -101,8 +95,9 @@ class EventCardComponent extends Component {
 class EventModal extends Component {
     render() {
         let item = this.props.data
-        console.log("Opened Event Modal: ", item.id)
-
+        if(item.id) {
+            console.log("Opened Event Modal: ", item.id)
+        }
         return(
             <BottomSheet hasDraggableIcon
                 ref={this.props.modal_ref}
@@ -160,7 +155,6 @@ class EventModal extends Component {
     }
 }
 
-const EventCard = React.memo(EventCardComponent)
 export {
     EventCard,
     EventModal

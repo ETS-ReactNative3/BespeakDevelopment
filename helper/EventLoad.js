@@ -32,7 +32,7 @@ async function _arrangeData(events_data, mod = false) {
         item.sched = sched;
         item.date_posted = posted;
 
-        item.is_bookmarked = saved_events.includes(item.id);
+        item.is_bookmarked = saved_events?.includes(item.id);
 
         arranged_data.push(item)
     }

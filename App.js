@@ -13,7 +13,6 @@ import UserTabNavigate from './components/MenuTabNavigator'
 
 import useFonts from './hooks/useFonts';
 import Options from './values/Options';
-import { Alert } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
