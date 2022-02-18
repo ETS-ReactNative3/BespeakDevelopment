@@ -93,14 +93,17 @@ class ProfileScreen extends Component {
     console.log('Profile Name: ', this.state.data.profile_name)
     this.setState({'is_loading': false})
   }
+  
   componentDidMount() {
+    this.onRefresh()
+    /*
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
       this.onRefresh()
-    });
-  }
+    });*/
+  } /*
   componentWillUnmount() {
     this._unsubscribe();
-  }
+  }*/
   doRefresh() {
     return new Promise((resolve) => {
       this._loadUserData()
@@ -157,7 +160,7 @@ class ProfileScreen extends Component {
                 </View>
                 <View>
                   <TouchableOpacity style={ProfileScreenStyle.EditProfileBtn}
-                    onPress={() => this.props.navigation.navigate('EditProfileScreen')}>
+                    onPress={() => this.props.navigation.navigate('EditProfileScreen', {_done: this.onRefresh})}>
                       <Text style={ProfileScreenStyle.EditProfileText}>Edit Profile</Text>
                   </TouchableOpacity>
                 </View>
@@ -201,12 +204,12 @@ class ProfileScreen extends Component {
           </View>
         </ScrollView>
       </SafeAreaView>
-      <ProfileContent refreshing = {this.state.refreshing}/>
+      <ProfileContent refreshing = {this.state.refreshing} _on_done = {this.onRefresh}/>
     </>
     );
   }
 }
   
 export default {
-    ProfileScreen,
+  ProfileScreen,
 }

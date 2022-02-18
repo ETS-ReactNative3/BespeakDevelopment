@@ -29,7 +29,7 @@ class ProfileContent extends Component {
                     ...Options.TopTabNavigation,
                     ...Options.ProfileTabNavigation
                 }}>
-                <Top.Screen name="My Events" component={React.memo(ProfileEvents)} />
+                <Top.Screen name="My Events" component={React.memo(ProfileEvents)} initialParams = {{_done: this.props._on_done}}/>
                 <Top.Screen name="My Tickets" component={ProfileTickets} />
                 <Top.Screen name="Bookmarks" component={React.memo(ProfileBookmarks)} />
             </Top.Navigator>
@@ -55,7 +55,8 @@ class ProfileEvents extends Component {
                         <TouchableOpacity 
                             onPress = {() => {
                                 this.props.navigation.navigate('CreateEventScreen', {
-                                    event_name: this.state.event_post})
+                                    event_name: this.state.event_post, 
+                                    _done: this.props.route.params._done})
                             }}>
                         <Feather name="plus" size={50} style={homeStyles.cardicon}/>
                     </TouchableOpacity>
