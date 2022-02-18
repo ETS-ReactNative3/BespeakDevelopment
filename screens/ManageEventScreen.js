@@ -136,6 +136,8 @@ class CreateEventScreen extends Component {
                     await this._uploadToStorage(this.state.banner_photo.uri, `/event/${doc.id}/banner`)
                 }
                 this.setState({'is_loading': false})
+                
+                this.props.route.params._done();
                 this.props.navigation.goBack()
             });
     }

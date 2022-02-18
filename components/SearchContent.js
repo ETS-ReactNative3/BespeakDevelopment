@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import {
   Text,
 } from 'react-native';
-
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+import EventList from "./EventList";
 
 import Options from '../values/Options'
 
