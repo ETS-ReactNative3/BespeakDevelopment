@@ -28,10 +28,13 @@ if (firebase.apps.length === 0) {
   app = firebase.app()
 }
 
-const db = app.firestore()
 const storage = app.storage()
+
 const auth = firebase.auth()
 const _auth = firebase.auth
+
+const db = app.firestore()
+const _db = firebase.firestore
 //const analytics = getAnalytics(app);
 
-export { auth, db, storage, _auth};
+export { auth, db, storage, _auth, _db};

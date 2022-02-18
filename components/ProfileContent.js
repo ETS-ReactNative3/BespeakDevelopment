@@ -25,12 +25,13 @@ class ProfileContent extends Component {
         console.log('Profile Contents Loading....')
         return (
             <Top.Navigator screenOptions={{
+                    lazy: true,
                     ...Options.TopTabNavigation,
                     ...Options.ProfileTabNavigation
                 }}>
                 <Top.Screen name="My Events" component={React.memo(ProfileEvents)} />
                 <Top.Screen name="My Tickets" component={ProfileTickets} />
-                <Top.Screen name="Bookmarks" component={ProfileBookmarks} />
+                <Top.Screen name="Bookmarks" component={React.memo(ProfileBookmarks)} />
             </Top.Navigator>
         );
     }
@@ -84,9 +85,14 @@ class ProfileBookmarks extends Component {
     render() {
         console.log('Bookmarks Tab Contents Loaded.')
         return (
+            <View style={homeStyles.uHcontainer}>
+                <EventList for_saved = {true} for_profile = {true} 
+                    navigation = {this.props.navigation}/>
+            </View>
+            /*
             <View style={SystemStyle.TabContainer}>
                 <Text style={SystemStyle.TabEmptyList}> No bookmark found</Text>
-            </View>
+            </View>*/
         );
     }
 }
