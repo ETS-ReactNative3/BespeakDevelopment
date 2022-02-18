@@ -2,6 +2,9 @@ import { auth, db, storage } from '../firebase'
 import dateFormat from '../helper/DateFormat';
 
 async function _arrangeData(events_data, mod = false) {
+    let saved_events = await _getUserData("bookmarked");
+    console.log("Bookmarked Events: ", saved_events)
+
     //console.log('Arranging: ', events_data)
     let arranged_data = [];
 
@@ -11,6 +14,8 @@ async function _arrangeData(events_data, mod = false) {
 
         // Check if own event.
         item.is_owned = item.owner == auth.currentUser.uid
+
+        item.pos = i;
 
         item.owner_image = await _getOrganizerImage(item.owner)
 
@@ -26,6 +31,8 @@ async function _arrangeData(events_data, mod = false) {
         
         item.sched = sched;
         item.date_posted = posted;
+
+        item.is_bookmarked = saved_events.includes(item.id);
 
         arranged_data.push(item)
     }
@@ -97,9 +104,7 @@ async function _getOrganizerName(uid) {
     return organizer_name;
 }
 
-async function _getOrganizerLocation(uid) {
-    console.log('Getting Organizer Loc for ID: ' + uid);
-
+async function _getUserData(metadata, uid = auth.currentUser.uid) {
     const user_info = db.collection("user_info")
     const query = user_info.doc(uid)
     const snapshot = await query.get()
@@ -110,9 +115,10 @@ async function _getOrganizerLocation(uid) {
     } 
 
     var raw_data = snapshot.data()
-    return raw_data.location;
+    return raw_data[metadata];
 }
 
 export {
+    _getUserData,
     _arrangeData,
 }

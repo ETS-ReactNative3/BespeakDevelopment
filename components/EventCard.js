@@ -10,16 +10,50 @@ import {
     Feather,
     Ionicons,
     SimpleLineIcons,
+    FontAwesome
 } from '@expo/vector-icons';
+
+import { auth, db, _db } from '../firebase';
 
 import BottomSheet from "react-native-gesture-bottom-sheet";
 
 import SystemStyle from "../styles/SystemStyle";
 
-class EventCard extends Component {
+class EventCardComponent extends Component {
     constructor() {
         super();
         this.event_modal = null
+        this.state = {
+            is_bookmarked: false
+        }
+    }
+    componentDidMount() {
+        this.setState({is_bookmarked: this.props.data.is_bookmarked })
+    }
+    async _bookmarkEvent() {
+        let uid = auth.currentUser.uid
+        let item_id = this.props.data.id;
+
+        let user_doc = db.collection("user_info").doc(uid);
+        let _query = _db.FieldValue.arrayUnion(item_id);
+        
+        if(this.state.is_bookmarked) {
+            _query = _db.FieldValue.arrayRemove(item_id)
+        }
+
+        console.log("Bookmark Event: ", this.state.is_bookmarked)
+        await user_doc.update({
+            bookmarked: _query
+        }).catch((err) => {
+            Alert.alert("Error!", err.message);
+            console.log("Error: ", error)
+        }).then(() => {
+            if(this.state.is_bookmarked) {
+                this.props.remove(this.props.data.pos)
+            }
+            this.setState({is_bookmarked: !this.state.is_bookmarked})
+        });
+        
     }
     render() {
         let item = this.props.data;
@@ -51,8 +85,12 @@ class EventCard extends Component {
                         <TouchableOpacity>
                             <Ionicons name="share-social-outline" size={22} color="black" />
                         </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Feather name="bookmark" size={22} color="black" />
+                        <TouchableOpacity onPress = {() => this._bookmarkEvent()}>
+                            {this.state.is_bookmarked ? (
+                                <FontAwesome name="bookmark" size={22} color="black" />
+                            ) : (
+                                <Feather name="bookmark" size={22} color="black" />
+                            )}
                         </TouchableOpacity>
                     </View>     
             </TouchableOpacity>
@@ -122,6 +160,7 @@ class EventModal extends Component {
     }
 }
 
+const EventCard = React.memo(EventCardComponent)
 export {
     EventCard,
     EventModal

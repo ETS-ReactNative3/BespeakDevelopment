@@ -5,9 +5,9 @@ import { ActivityIndicator,
     Text,
     View, RefreshControl } from 'react-native';
 
-import { auth, db, storage } from '../firebase';
+import { db, _db } from '../firebase';
 
-import { _arrangeData } from "../helper/EventLoad";
+import { _arrangeData, _getUserData } from "../helper/EventLoad";
 
 import { EventCard, EventModal } from "./EventCard";
 
@@ -29,6 +29,7 @@ class EventList extends Component {
         }
         this.onRefresh = this.onRefresh.bind(this)
         this._viewModal = this._viewModal.bind(this)
+        this._removeItem = this._removeItem.bind(this)
 
         this.event_modal = React.createRef();
     }
@@ -43,7 +44,13 @@ class EventList extends Component {
             console.log(error);
         }
     }
-
+    _removeItem(index) {
+        if(this.props.for_saved) {
+            let events = this.state.data;
+            events.splice(index, 1)
+            this.setState({data: events});
+        }
+    }
     _viewModal(data) {
         this.setState({modal_data: data});
         this.event_modal.current.show();
@@ -55,10 +62,22 @@ class EventList extends Component {
             console.log("Getting all events for USER ID: ", this.props.user_id)
             get_events_query = get_events_query
                 .where("owner", "==", this.props.user_id)
-        }   
+        } else if(this.props.for_saved) {
+            let saved_events = await _getUserData("bookmarked")
+            console.log("Getting all bookmarked events for USER ID: ", this.props.user_id)
 
-        get_events_query = get_events_query
-            .orderBy('server_time', 'desc')
+            if(saved_events.length == 0) {
+                return {'data': [], 'last': null}
+            }
+
+            get_events_query = get_events_query
+                .where(_db.FieldPath.documentId(), "in", saved_events)
+        }
+
+        if(!this.props.for_saved) {
+            get_events_query = get_events_query
+                .orderBy('server_time', 'desc')
+        }
 
         if(type_extend) {
             get_events_query = get_events_query
@@ -172,7 +191,9 @@ class EventList extends Component {
                     data={Object.values(this.state.data)}
                     renderItem={({ item }) => (
                         <EventCard data = {item} 
+                        refreshing={this.state.refreshing}
                             modal_view = {this._viewModal}
+                            remove = {this._removeItem}
                             navigation = {this.props.navigation}/>
                     )}
                     keyExtractor={(item, index) => index.toString()}
