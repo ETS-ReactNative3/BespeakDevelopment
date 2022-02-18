@@ -45,11 +45,22 @@ class EventList extends Component {
         }
     }
     _removeItem(index) {
+        this.setState({ refreshing: true });
+
+        let events = this.state.data;
+        
+        index = events.indexOf(index)
+        console.log("Processing Bookmark ID: ", index)
         if(this.props.for_saved) {
-            let events = this.state.data;
             events.splice(index, 1)
             this.setState({data: events});
+            console.log(this.state.data)
+        } else {
+            events[index].is_bookmarked = !events[index].is_bookmarked;
+            this.setState({data: events});
         }
+
+        this.setState({ refreshing: false });
     }
     _viewModal(data) {
         this.setState({modal_data: data});
