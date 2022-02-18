@@ -30,5 +30,5 @@ Install the following modules:
 
 UPDATE
 Install this module:
-- ```npm i react-native-responsive-fontsize```
+- ```expo install react-native-responsive-fontsize```
 https://www.npmjs.com/package/react-native-responsive-fontsize
