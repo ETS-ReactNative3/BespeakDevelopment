@@ -6,7 +6,7 @@ import {
     View,
     Image,
     Pressable,
-    TextInput
+    TextInput,
 } from 'react-native';
 import { 
     Feather,
@@ -14,6 +14,7 @@ import {
     SimpleLineIcons,
     MaterialCommunityIcons
 } from '@expo/vector-icons';
+import ToggleSwitch from 'toggle-switch-react-native'
 import { InputOutline } from 'react-native-input-outline';
 import * as ImagePicker from 'react-native-image-crop-picker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -24,6 +25,7 @@ import { auth, db, storage } from '../firebase'
 import fetch_date_time from '../api/GlobalTime'
 
 import CreateEventStyle from "../styles/CreateEventStyle.js";
+import EditEventStyle from "../styles/EditEventStyle.js";
 import Validation from '../styles/Validation';
 import SystemStyle from "../styles/SystemStyle";
 
@@ -331,9 +333,78 @@ class CreateEventScreen extends Component {
 class EditEventScreen extends Component {
     render() {
         return(
-            <Text>
-                Add Edit Event Here.
-            </Text>
+            //Please Refer to EditProfileScreen for tabSave Line:98
+            <View style={EditEventStyle.Container}>
+                    <TouchableOpacity>
+                        <Text style={EditEventStyle.tabSave}>Save</Text>
+                    </TouchableOpacity>      
+                <ScrollView>
+                    <View style={EditEventStyle.addbannercoverimgContainer}>
+                        <Feather name="plus" size={50} style={EditEventStyle.addbannerimg}/>
+                        <Image style={EditEventStyle.addbannercoverimg}
+                            //source={require('../assets/img/SecondPages.png')}
+                            />
+                    </View>
+                <View style={EditEventStyle.createeventcontainer}>
+                    <Text style={EditEventStyle.eventCreatetxt}>Create Event</Text>
+                </View>
+                <View style={EditEventStyle.LockEventcontainer}>
+                    <Text style={EditEventStyle.LockEventtxt}>Lock Event</Text>
+                    <ToggleSwitch
+                        isOn={false}
+                        onColor="#eb9834"
+                        offColor="#ccc"
+                        size="medium"
+                        style={EditEventStyle.LockEventToggle}
+                        />
+                </View>
+                <View style={EditEventStyle.EditEventNamecontainer}>
+                    <TextInput style={EditEventStyle.EditEventNameField} placeholder='Event Name '></TextInput>
+                </View>
+                <View style={EditEventStyle.EditEventSchedcontainer}>
+                    <TextInput style={EditEventStyle.EditEventSchedField} placeholder='Schedule '></TextInput>
+                </View>
+                <View style={EditEventStyle.EditEventLoccontainer}>
+                    <TextInput style={EditEventStyle.EditEventLocField} placeholder='Location ' maxLength={100}></TextInput>
+                </View>
+                <View style={EditEventStyle.EditEventMaxAttendcontainer}>
+                    <TextInput style={EditEventStyle.EditEventMaxAttendField} placeholder='Max Attendees ' maxLength={100}></TextInput>
+                </View>
+                <View style={CreateEventStyle.FormContainer}>
+                    <InputOutline placeholder="Describe your event"
+                        style = {CreateEventStyle.FormFieldAssisted}
+                            characterCount = {100}
+                            trailingIcon = {() => {
+                                    return <Feather name="edit-2" size={20} style={CreateEventStyle.CreateEventIcon} />
+                                }
+                            }
+                            onChangeText = {text => this._handleText('desc', text)}
+                            {...Properties.defaultInputOutline}
+                            characterCountFontSize = {12}
+                            multiline = {true}
+                            minHeight = {40}
+                            textAlignVertical = 'top'/>
+
+                    <InputOutline placeholder="Additional Information"
+                        style = {CreateEventStyle.FormFieldAssisted}
+                            characterCount = {300}
+                            trailingIcon = {() => {
+                                    return <Feather name="plus" size={22} style={CreateEventStyle.CreateEventIcon} />
+                                }
+                            }
+                            onChangeText = {text => this._handleText('info', text)}
+                            {...Properties.defaultInputOutline}
+                            characterCountFontSize = {12}
+                            multiline = {true}
+                            minHeight = {80}
+                            textAlignVertical = 'top'/>
+                </View>
+            </ScrollView>
+        <TouchableOpacity style={EditEventStyle.createeventbtn}
+          onPress={() => navigation.navigate('')}>
+        <Text style={EditEventStyle.createeventtxt}>Delete Event</Text>
+        </TouchableOpacity>
+    </View>
         );
     }
 }
