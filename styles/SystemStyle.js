@@ -191,6 +191,7 @@ const SystemStyle = StyleSheet.create({
     justifyContent:'center',
     alignSelf:'center',
     marginLeft:10,
+    width:'55%',
   },
   OrganizerName:{
     fontSize: 17,

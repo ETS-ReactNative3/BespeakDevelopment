@@ -120,7 +120,13 @@ class ProfileNavigator extends Component {
           }}/>
         <MenuStack.Screen name="EditEventScreen" component={ManageEventScreens.EditEventScreen}
           options={{
-            title: ' ',
+            title: 'Edit Event',
+            headerShown: true,
+            tabBarShowLabel:false,
+            headerTitleStyle: {
+              fontFamily: 'RedHatDisplay-Medium',
+              color: '#eb9834',
+            }
           }}/>
       </MenuStack.Navigator>
     );
