@@ -83,9 +83,15 @@ class EventList extends Component {
 
             get_events_query = get_events_query
                 .where(_db.FieldPath.documentId(), "in", saved_events)
+        } else if(this.props.for_search && this.props.search_key) {
+            let key = this.props.search_key;
+            get_events_query = get_events_query
+                .orderBy('name')
+                .where('name', '>=', key)
+                .where('name', '<', key + `z`)
         }
 
-        if(!this.props.for_saved) {
+        if(!this.props.for_saved && !this.props.search_key) {
             get_events_query = get_events_query
                 .orderBy('server_time', 'desc')
         }
@@ -193,7 +199,7 @@ class EventList extends Component {
                 }
                 <FlatList
                     refreshControl={
-                        this.props.for_home &&
+                        (this.props.for_home || this.props.for_search) &&
                         <RefreshControl
                           refreshing={this.state.user_refresh}
                           onRefresh={this.onRefresh}
