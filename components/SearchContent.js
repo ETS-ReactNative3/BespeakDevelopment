@@ -17,8 +17,11 @@ class SearchContent extends Component {
                     ...Options.SearchScreenNavigation,
                     ...Options.SearchTabNavigation
                 }}>
-                <Top.Screen name="Events" component={SearchEvent} />
-                <Top.Screen name="Organizers" component={SearchOrganizer} />
+                <Top.Screen name="Events" children={() => 
+                    <SearchEventContent search_key = {this.props.search_key}
+                        refreshing = {this.props.refreshing}
+                        navigation = {this.props.navigation}/>} />
+                <Top.Screen name="Organizers" component={SearchOrganizer}/>
             </Top.Navigator>
         );
     }
@@ -26,8 +29,15 @@ class SearchContent extends Component {
 
 class SearchEvent extends Component {
     render() {
+        console.log("Searching for: ", this.props.search_key)
         return (
-            <Text>Add Event Search Here.</Text>
+            <>
+                { !this.props.refreshing &&
+                    <EventList for_search = {true} 
+                        search_key = {this.props.search_key}
+                        navigation = {this.props.navigation}/>
+                }
+            </>
         );
     }
 }
@@ -39,5 +49,8 @@ class SearchOrganizer extends Component {
         );
     }
 }
+
+const SearchEventContent = React.memo(SearchEvent)
+const SearchOrganizerContent = React.memo(SearchOrganizer)
 
 export default React.memo(SearchContent)

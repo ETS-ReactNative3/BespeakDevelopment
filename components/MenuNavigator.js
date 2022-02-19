@@ -44,13 +44,17 @@ class SearchNavigator extends Component {
       <MenuStack.Navigator>
         <MenuStack.Screen name="SearchScreen" component={SearchScreens.SearchScreen}
           options={{
-              title: ' ',
-              headerShown: false,
-              tabBarShowLabel:false
+            title: ' ',
+            headerShown: false,
+            tabBarShowLabel:false
           }}/>
-        <MenuStack.Screen name="SearchDetailScreen" component={SearchScreens.SearchDetailsScreen} 
+        <MenuStack.Screen name="EventScreen" component={EventScreens.EventScreen}
           options={{
-            title: 'AWB'
+            title: ' ',
+          }}/>
+        <MenuStack.Screen name="EditEventScreen" component={ManageEventScreens.EditEventScreen}
+          options={{
+            title: ' ',
           }}/>
       </MenuStack.Navigator>
     );
