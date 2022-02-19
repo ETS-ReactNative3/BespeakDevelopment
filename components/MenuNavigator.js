@@ -29,6 +29,10 @@ class HomeNavigator extends Component {
               options={{
                 title: ' ',
               }}/>
+            <MenuStack.Screen name="EditEventScreen" component={ManageEventScreens.EditEventScreen}
+              options={{
+                title: ' ',
+              }}/>
           </MenuStack.Navigator>
         );
     }
@@ -111,6 +115,10 @@ class ProfileNavigator extends Component {
             tabBarShowLabel:false,
           }}/>
         <MenuStack.Screen name="EventScreen" component={EventScreens.EventScreen}
+          options={{
+            title: ' ',
+          }}/>
+        <MenuStack.Screen name="EditEventScreen" component={ManageEventScreens.EditEventScreen}
           options={{
             title: ' ',
           }}/>
