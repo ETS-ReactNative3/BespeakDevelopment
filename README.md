@@ -32,3 +32,6 @@ UPDATE
 Install this module:
 - ```expo install react-native-responsive-fontsize```
 https://www.npmjs.com/package/react-native-responsive-fontsize
+
+- ```expo install toggle-switch-react-native```
+https://www.npmjs.com/package/toggle-switch-react-native
