@@ -14,7 +14,7 @@ import { auth } from '../firebase'
 import EventList from "./EventList"
 
 import SystemStyle from "../styles/SystemStyle";
-import homeStyles from "../styles/homeStyles";
+import ProfileContentStyle from "../styles/ProfileContentStyle";
 
 import Options from '../values/Options'
 
@@ -44,9 +44,9 @@ class ProfileEvents extends Component {
     render() {
         console.log('Event Tab Contents Loaded.')
         return (
-            <View style={homeStyles.uHcontainer}>
-                <View style={homeStyles.createcard}>
-                    <TextInput style={homeStyles.createCardcontent} 
+            <View style={ProfileContentStyle.CardContainer}>
+                <View style={ProfileContentStyle.CreateCard}>
+                    <TextInput style={ProfileContentStyle.CreateCardContent} 
                         maxLength ={50}
                         placeholder="Create event "
                         onChangeText = {(text) => this.setState({'event_post': text})}></TextInput>
@@ -58,7 +58,7 @@ class ProfileEvents extends Component {
                                     event_name: this.state.event_post, 
                                     _done: this.props.route.params._done})
                             }}>
-                        <Feather name="plus" size={50} style={homeStyles.cardicon}/>
+                        <Feather name="plus" size={50} style={ProfileContentStyle.CardIcon}/>
                     </TouchableOpacity>
                 </View>
                 <EventList for_profile = {true} 
@@ -86,7 +86,7 @@ class ProfileBookmarks extends Component {
     render() {
         console.log('Bookmarks Tab Contents Loaded.')
         return (
-            <View style={homeStyles.uHcontainer}>
+            <View style={ProfileContentStyle.CardContainer}>
                 <EventList for_saved = {true} for_profile = {true} 
                     navigation = {this.props.navigation}/>
             </View>
