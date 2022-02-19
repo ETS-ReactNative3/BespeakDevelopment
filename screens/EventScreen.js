@@ -38,7 +38,7 @@ class EventScreen extends Component {
         super();
         this.state = {
             data: null,
-            loading: true
+            loading: true,
         }
     }
     componentDidMount() {
@@ -102,10 +102,19 @@ class EventScreen extends Component {
                                         <Text style={SystemStyle.OrganizerName}>{ item.owner_name }</Text>
                                     </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style={SystemStyle.FollowOrgBtn}
-                                onPress={() => navigation.navigate('')}>
-                                    <Text style={SystemStyle.FollowOrgTextBtn}>Followed</Text>
-                            </TouchableOpacity>
+
+                            {item.owner == auth.currentUser.uid ? (
+                                <TouchableOpacity style={SystemStyle.FollowOrgBtn}
+                                    onPress={() => this.props.navigation.navigate('EditEventScreen')}>
+                                        <Text style={SystemStyle.FollowOrgTextBtn}>Edit Event</Text>
+                                </TouchableOpacity>
+                            ) : (
+                                <TouchableOpacity style={SystemStyle.FollowOrgBtn}
+                                    onPress={() => navigation.navigate('')}>
+                                        <Text style={SystemStyle.FollowOrgTextBtn}>Followed</Text>
+                                </TouchableOpacity>
+                            )}
+                            
                         </View>
                         <View style={SystemStyle.LowerSection}>
                             <Feather name="calendar" size={24} color="black" />

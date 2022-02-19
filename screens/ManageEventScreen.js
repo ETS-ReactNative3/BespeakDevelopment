@@ -328,5 +328,18 @@ class CreateEventScreen extends Component {
     }
 }
 
-export default { CreateEventScreen };
+class EditEventScreen extends Component {
+    render() {
+        return(
+            <Text>
+                Add Edit Event Here.
+            </Text>
+        );
+    }
+}
+
+export default { 
+    CreateEventScreen,
+    EditEventScreen
+};
   
