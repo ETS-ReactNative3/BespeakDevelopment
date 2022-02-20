@@ -29,7 +29,7 @@ import EventList from "../components/EventList";
 import HomeScreenStyle from "../styles/HomeScreenStyle";
 import SystemStyle from "../styles/SystemStyle";
 
-/*class HomeScreen extends Component {
+class HomeScreen extends Component {
   render() {
     return (
       <View style={HomeScreenStyle.Container}>
@@ -41,53 +41,8 @@ import SystemStyle from "../styles/SystemStyle";
       </View>
     );
   }
-}*/
-
-//For Organizer Card
-class HomeScreen extends Component {
-  render() {
-    return (
-      <View style={HomeScreenStyle.Container}>
-        <View style={HomeScreenStyle.HomeHeader}>
-          <Text style={HomeScreenStyle.BespeakLogo}>bespeak</Text>
-          <TouchableOpacity style={SystemStyle.Card}>
-            <Image style={SystemStyle.CardImage}
-              source={require('../assets/img/EveryNation.png')}/>
-            <View style={SystemStyle.CardContainer}>
-              <View style={SystemStyle.OrganizerSectionTab}>
-                <TouchableOpacity style={SystemStyle.OrganizerInfo}
-                  onPress={() => navigation.navigate('NotificationDetailScreen')}>
-                <View style={SystemStyle.OrganizerImgContainer}>
-                  <Image
-                    style={SystemStyle.OrganizerImg}
-                    source={require('../assets/img/EveryNation.png')}
-                    />
-                </View>
-                <View style={SystemStyle.OrganizerCardContainer}>
-                  <Text style={SystemStyle.OrganizerName}>Every Nation Campus</Text>
-                </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={SystemStyle.FollowOrgBtn}
-                  onPress={() => navigation.navigate('')}>
-                  <Text style={SystemStyle.FollowOrgTextBtn}>Follow</Text>
-                </TouchableOpacity>
-              </View>
-              <Text style={SystemStyle.OrgCardInfo}>We are the source of low-riced ununsed, as well as previously-owned, books and bargain publications from....</Text>
-            </View>
-          <View style={SystemStyle.CardOption}>
-              <TouchableOpacity>
-                  <Ionicons name="share-social-outline" size={22} color="black" />
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <FontAwesome name="bookmark" size={22} color="black" />
-              </TouchableOpacity>
-          </View>     
-  </TouchableOpacity>
-  </View>
-  </View>
-    );
-  }
 }
+
 
 function HomeDetailsScreen() {
   const bottomSheet = useRef();

@@ -1,8 +1,16 @@
 import React, { Component } from "react";
 import {
   Text,
-  View
+  View,
+  ScrollView,
+  Image,
+  TouchableOpacity
 } from 'react-native';
+import { 
+    Feather,
+    FontAwesome,
+    Ionicons
+  } from '@expo/vector-icons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import SearchScreenStyle from "../styles/SearchScreenStyle";
@@ -49,7 +57,40 @@ class SearchEvent extends Component {
 class SearchOrganizer extends Component {
     render() {
         return (
-            <Text>Add Organizer Search Here.</Text>
+            <View style={SystemStyle.EventListContainer}> 
+                <TouchableOpacity style={SystemStyle.Card}>
+                    <Image style={SystemStyle.CardImage}
+                        source={require('../assets/img/EveryNation.png')}/>
+                    <View style={SystemStyle.CardContainer}>
+                        <View style={SystemStyle.OrganizerSectionTab}>
+                            <TouchableOpacity style={SystemStyle.OrganizerInfo}
+                                onPress={() => navigation.navigate('NotificationDetailScreen')}>
+                            <View style={SystemStyle.OrganizerImgContainer}>
+                                <Image style={SystemStyle.OrganizerImg}
+                                    source={require('../assets/img/EveryNation.png')}
+                                    />
+                            </View>
+                            <View style={SystemStyle.OrganizerCardContainer}>
+                                <Text style={SystemStyle.OrganizerName}>Every Nation Campus</Text>
+                            </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={SystemStyle.FollowOrgBtn}
+                                onPress={() => navigation.navigate('')}>
+                                <Text style={SystemStyle.FollowOrgTextBtn}>Follow</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <Text style={SystemStyle.OrgCardInfo}>We are the source of low-riced ununsed, as well as previously-owned, books and bargain publications from....</Text>
+                    </View>
+                    <View style={SystemStyle.CardOption}>
+                        <TouchableOpacity>
+                            <Ionicons name="share-social-outline" size={22} color="black" />
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <FontAwesome name="bookmark" size={22} color="black" />
+                        </TouchableOpacity>
+                    </View>     
+                </TouchableOpacity>
+            </View>
         );
     }
 }
