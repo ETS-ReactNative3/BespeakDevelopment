@@ -18,6 +18,7 @@ import {
   Ionicons,
   MaterialCommunityIcons,
   SimpleLineIcons,
+  FontAwesome,
   FontAwesome5,
   MaterialIcons,
 } from '@expo/vector-icons';
@@ -41,6 +42,7 @@ class HomeScreen extends Component {
     );
   }
 }
+
 
 function HomeDetailsScreen() {
   const bottomSheet = useRef();

@@ -556,6 +556,27 @@ const SystemStyle = StyleSheet.create({
   FooterText:{
     fontFamily: 'RedHatDisplay-Regular',
   },
+  //For Organizer Card
+  OrganizerCardContainer:{
+    justifyContent:'center',
+    alignSelf:'center',
+    marginLeft:10,
+    width:'50%',
+  },
+  //To view organizer tab
+  OrganizerSectionTab:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    marginTop:'3%',
+    marginBottom:'3%',
+    marginLeft:'-2%',
+    width:'100%',
+  },
+  // Organizer Info
+  OrgCardInfo:{
+    fontSize: 15,
+    fontFamily:'RedHatDisplay-Light',
+  }
 
 
     
