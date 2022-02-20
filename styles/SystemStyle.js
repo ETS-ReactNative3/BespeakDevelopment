@@ -538,7 +538,7 @@ const SystemStyle = StyleSheet.create({
         fontSize:20,
         fontFamily:'RedHatDisplay-Regular'
     },
-  //Search Screen Footer
+  //Screen Footer
   Footer:{
     backgroundColor: '#ebebeb',
     padding: '12%',

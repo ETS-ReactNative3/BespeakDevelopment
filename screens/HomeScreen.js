@@ -34,7 +34,9 @@ class HomeScreen extends Component {
     return (
       <View style={HomeScreenStyle.Container}>
         <View style={HomeScreenStyle.HomeHeader}>
-          <Text style={HomeScreenStyle.BespeakLogo}>bespeak</Text>
+          <TouchableOpacity>
+            <Text style={HomeScreenStyle.BespeakLogo}>bespeak</Text>
+          </TouchableOpacity>
         </View>
         <EventList for_home = {true}
           navigation = {this.props.navigation}/>

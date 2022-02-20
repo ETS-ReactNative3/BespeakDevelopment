@@ -633,13 +633,12 @@ class EditEventScreen extends Component {
                                 {this.state.valid.info} </Text>
                             : null
                         }
-
-                        <TouchableOpacity style={EditEventStyle.createeventbtn}
-                            onPress={() => /*navigation.navigate('')*/ Alert.alert('Wala', 'wala pa.')}>
-                                <Text style={EditEventStyle.createeventtxt}>Delete Event</Text>
-                        </TouchableOpacity>
                     </View>
                 </ScrollView>
+                    <TouchableOpacity style={EditEventStyle.DeleteBtn}
+                        onPress={() => /*navigation.navigate('')*/ Alert.alert('Wala', 'wala pa.')}>
+                            <Text style={EditEventStyle.DeleteTextBtn}>Delete Event</Text>
+                    </TouchableOpacity>
             </View>
         );
     }

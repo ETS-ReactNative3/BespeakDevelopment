@@ -30,9 +30,15 @@ class HomeNavigator extends Component {
                 title: ' ',
               }}/>
             <MenuStack.Screen name="EditEventScreen" component={ManageEventScreens.EditEventScreen}
-              options={{
-                title: ' ',
-              }}/>
+             options={{
+              title: 'Edit Event',
+              headerShown: true,
+              tabBarShowLabel:false,
+              headerTitleStyle: {
+                fontFamily: 'RedHatDisplay-Medium',
+                color: '#eb9834',
+              }
+            }}/>
           </MenuStack.Navigator>
         );
     }

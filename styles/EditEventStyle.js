@@ -56,6 +56,7 @@ const EditEventStyle=StyleSheet.create({
         flexDirection:'row',
         marginTop:-3,
         padding:10,
+        color:'#5b5c5a'
     },
     EditEventSchedcontainer:{
         marginLeft: '3%',
@@ -79,6 +80,7 @@ const EditEventStyle=StyleSheet.create({
         flexDirection:'row',
         marginTop:-3,
         padding:10,
+        color:'#5b5c5a'
     },
     EditEventLoccontainer:{
         marginLeft: '3%',
@@ -102,6 +104,7 @@ const EditEventStyle=StyleSheet.create({
         flexDirection:'row',
         marginTop:-3,
         padding:10,
+        color:'#5b5c5a'
     },
     EditEventMaxAttendcontainer:{
         marginLeft: '3%',
@@ -126,22 +129,21 @@ const EditEventStyle=StyleSheet.create({
         flexDirection:'row',
         marginTop:-3,
         padding:10,
+        color:'#5b5c5a'
     },
-    createeventbtn: {
+    DeleteBtn: {
         alignItems: 'center',
         alignSelf: 'stretch',
+        justifyContent:'center',
         backgroundColor: '#eb9834',
         height: 46,
-        padding: 10,
-        marginLeft: '3%',
-        marginRight: '3%',
-        marginBottom: 20,
+        margin: '3%',
         borderWidth: 1,
         borderColor: '#fff',
         borderRadius: 25,
         color: '#fff',
     },
-    createeventtxt:{
+    DeleteTextBtn:{
         fontSize: 20,
         alignItems: 'center',
         justifyContent: 'center',
