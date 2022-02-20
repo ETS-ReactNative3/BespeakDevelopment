@@ -5,6 +5,11 @@ const SearchScreenStyle=StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
+    TabContainer:{
+        flex: 1,
+        backgroundColor: 'red',
+        paddingTop:'3%',
+    },
     CardSearchInHeader:{
         padding:10,
         margin:'4%',
@@ -93,30 +98,6 @@ const SearchScreenStyle=StyleSheet.create({
         marginBottom:10,
         marginRight: 10,
     },
-    //For Search Footer Trademark
-    Footer:{
-        backgroundColor: '#ebebeb',
-        padding: '12%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        alignSelf: 'stretch',
-        marginLeft:'-15%',
-        marginRight:'-15%',
-    },
-    BespeakLogo:{
-        color: '#eb9834',
-        fontFamily: 'RedHatDisplay-Medium',
-        fontSize: 30,
-      },
-    FooterText:{
-        fontFamily: 'RedHatDisplay-Regular',
-    },
-    
-
-      
-    
-    
-
 })
 
 export default SearchScreenStyle;

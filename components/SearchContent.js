@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import {
   Text,
+  View
 } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+import SearchScreenStyle from "../styles/SearchScreenStyle";
+import SystemStyle from "../styles/SystemStyle";
 
 import EventList from "./EventList";
 
