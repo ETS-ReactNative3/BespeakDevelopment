@@ -24,7 +24,8 @@ const SystemStyle = StyleSheet.create({
     justifyContent: "center",
     color:'#ccc',
     fontSize:16,
-    fontFamily:'RedHatDisplay-Regular' 
+    fontFamily:'RedHatDisplay-Regular',
+    backgroundColor: '#fff',
   },
   //Containers Screen
   Container: {
@@ -35,6 +36,7 @@ const SystemStyle = StyleSheet.create({
   EventListContainer: {
     flex: 1,
     backgroundColor: '#fff',
+    paddingTop:'3%'
   },
   //For Event Card
   Card:{
@@ -383,11 +385,12 @@ const SystemStyle = StyleSheet.create({
     //Comment Section
     BespeakerCommentContainer:{
         flexDirection:'row',
-        justifyContent:'space-between',
         marginBottom:'5%',
+        width:'90%'
     },
     BespeakerContainer:{
         paddingLeft:'3%',
+        width:'90%',
     },
     BespeakerName:{
         paddingBottom:'1%',
@@ -396,7 +399,6 @@ const SystemStyle = StyleSheet.create({
     },
     BespeakerComment:{
         fontSize: 15,
-        width: 280,
     },
     //Comment Section Image
     BespeakerImgContainer: {
@@ -412,18 +414,19 @@ const SystemStyle = StyleSheet.create({
     //Write a comment
     MyCommentInput:{
       fontSize:15,
-      width:280,
       borderRadius:25,
       height:35,
       backgroundColor:'#f5f5f5',
-      paddingLeft:'3%',
+      paddingLeft:'2%',
+      width:'90%'
     },
     BespeakerInput:{
-        flexDirection:'row'
+      flexDirection:'row',
+      marginLeft:'-1%'
     },
     //For Comment Info
     CommentInfo:{
-        marginRight:'2%',
+        marginLeft:'2%',
     },
     //Send Comment
     SendComment:{
@@ -535,6 +538,24 @@ const SystemStyle = StyleSheet.create({
         fontSize:20,
         fontFamily:'RedHatDisplay-Regular'
     },
+  //Search Screen Footer
+  Footer:{
+    backgroundColor: '#ebebeb',
+    padding: '12%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    marginLeft:'-15%',
+    marginRight:'-15%',
+  },
+  BespeakLogo:{
+    color: '#eb9834',
+    fontFamily: 'RedHatDisplay-Medium',
+    fontSize: 30,
+  },
+  FooterText:{
+    fontFamily: 'RedHatDisplay-Regular',
+  },
 
 
     
