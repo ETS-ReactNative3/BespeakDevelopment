@@ -4,7 +4,10 @@ import {
   Text, 
   View
 } from 'react-native';
+
 import SearchScreenStyle from "../styles/SearchScreenStyle";
+import SystemStyle from "../styles/SystemStyle";
+
 import { 
   Feather,
 } from '@expo/vector-icons';
@@ -37,9 +40,9 @@ class SearchScreen extends Component {
           search_key = {this.state._search_key}
           navigation = {this.props.navigation}/>
         
-        <View style={SearchScreenStyle.Footer}>
-          <Text style={SearchScreenStyle.BespeakLogo}>bespeak</Text>
-          <Text style={SearchScreenStyle.FooterText}>© Sandbox Technologies.</Text>
+        <View style={SystemStyle.Footer}>
+          <Text style={SystemStyle.BespeakLogo}>bespeak</Text>
+          <Text style={SystemStyle.FooterText}>© Sandbox Technologies.</Text>
         </View>
       </View> 
     );
