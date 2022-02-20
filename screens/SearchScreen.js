@@ -39,11 +39,7 @@ class SearchScreen extends Component {
         <SearchContent refreshing = {this.state.refreshing} 
           search_key = {this.state._search_key}
           navigation = {this.props.navigation}/>
-        
-        <View style={SystemStyle.Footer}>
-          <Text style={SystemStyle.BespeakLogo}>bespeak</Text>
-          <Text style={SystemStyle.FooterText}>© Sandbox Technologies.</Text>
-        </View>
+
       </View> 
     );
   }

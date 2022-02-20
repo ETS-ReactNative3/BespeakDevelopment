@@ -171,8 +171,8 @@ const EditEventStyle=StyleSheet.create({
         color: '#eb9834',
         fontFamily: 'RedHatDisplay-Medium',
         fontSize: 16,
-        marginLeft: 210,
-        },
+        marginRight:'6%',
+    },
     
     
 
