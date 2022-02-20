@@ -8,31 +8,30 @@ import {
     Pressable,
     RefreshControl,
     TextInput,
-    ActivityIndicator
+    ActivityIndicator,
+    Modal,
+    Alert
 } from 'react-native';
 import { 
     Feather,
-    AntDesign,
     SimpleLineIcons,
-    MaterialCommunityIcons,
+    MaterialIcons,
+    FontAwesome5,
     Ionicons
 } from '@expo/vector-icons';
-import { InputOutline } from 'react-native-input-outline';
-import * as ImagePicker from 'react-native-image-crop-picker';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import Spinner from 'react-native-loading-spinner-overlay';
 
-import { auth, db, storage } from '../firebase'
+import { auth, db } from '../firebase'
 
 import fetch_date_time from '../api/GlobalTime'
 
-import CreateEventStyle from "../styles/CreateEventStyle.js";
-import Validation from '../styles/Validation';
 import SystemStyle from "../styles/SystemStyle";
 
-import Properties from "../values/Properties"
 import dateFormat from "../helper/DateFormat"
-import { _arrangeData } from "../helper/EventLoad"
+import { 
+    _arrangeData,
+    _getProfileImage,
+    _getProfileName
+} from "../helper/EventLoad"
 
 class EventScreen extends Component {
     constructor() {
@@ -40,6 +39,12 @@ class EventScreen extends Component {
         this.state = {
             data: null,
             loading: true,
+            user_data: null,
+            
+            raw_comment: null,
+            comment_data: {},
+            active_comment: false,
+            is_active: false
         }
         this.onRefresh = this.onRefresh.bind(this)
     }
@@ -49,12 +54,17 @@ class EventScreen extends Component {
     _startLoad() {
         let event_id = this.props.route.params.event_id
         if(event_id) {
-            this._retrieveEvent(event_id)
+            this._retrieveData(event_id)
         } else {
             this.props.navigation.goBack();
         }
     }
-    async _retrieveEvent(event_id) {
+    async _retrieveData(event_id) {
+        let uid = auth.currentUser.uid;
+
+        let user_profile_name = await _getProfileName(uid);
+        let user_image = await _getProfileImage(uid);
+
         let get_event_query = await db
             .collection('event')
             .doc(event_id)
@@ -71,9 +81,104 @@ class EventScreen extends Component {
 
         console.log("Opened Event Data: ", _data)
 
+        await this._loadComments();
+
         this.setState({
             loading: false,
-            data: _data[0]
+            data: _data[0],
+            user_data: {
+                name: user_profile_name,
+                profile_image: user_image
+            }
+        });
+    }
+
+    async _loadComments() {
+        let event_id = this.props.route.params.event_id
+
+        let get_comment_query = await db
+            .collection('comment')
+            .where('event_id', '==', event_id)
+            .orderBy('server_time', 'desc')
+            .get();
+            
+        if(get_comment_query.empty) {
+            console.log('No comments found for event: ', event_id);
+            return;
+        }
+        
+        let _data = [];
+        let _cleaned_data = [];
+
+        get_comment_query.forEach((doc) => {
+            _data.push({id: doc.id, ...doc.data()})
+        })
+
+
+        for(var i = 0; i < _data.length; i++) {
+            let comment = _data[i]
+
+            comment.owner_name = await _getProfileName(comment.owner)
+            comment.owner_image = await _getProfileImage(comment.owner);
+
+            comment.is_owned = comment.owner == auth.currentUser.uid;
+            comment.server_time = await dateFormat(new Date(comment.server_time), "EEEE, MMMM d, yyyy h:mm aaa")
+
+            _cleaned_data.push(comment);
+        }
+
+        this.setState({
+            comment_data: {..._cleaned_data}
+        })
+
+    }
+
+    async _handleDelete(comment_data) {
+        if(comment_data.owner == auth.currentUser.uid) {
+            await db
+                .collection('comment')
+                .doc(comment_data.id)
+                .delete()
+                .catch(error => {
+                    Alert.alert('Error!', error.message)
+                    return
+                }) 
+                .then(async (doc) => {
+                    this.reloadComments();
+                });
+            this.setState({ active_comment: false, is_active: false})
+        }
+    }
+    
+    async _handleSubmit() {
+        if(this.state.raw_comment) {
+            let comment_data = {
+                owner: auth.currentUser.uid,
+                event_id: this.state.data.id,
+                content: this.state.raw_comment,
+                server_time: await (await fetch_date_time()).epoch
+            }
+
+            await db
+                .collection('comment')
+                .add({
+                    ...comment_data
+                })
+                .catch(error => {
+                    Alert.alert('Error!', error.message)
+                    return
+                }) 
+                .then(async (doc) => {
+                    this.setState({raw_comment: null})
+                    this.reloadComments();
+                });
+        }
+    }
+
+    reloadComments() {
+        return new Promise((resolve) => {
+            this._loadComments();
+            setTimeout(resolve, 100)
         });
     }
     doRefresh() {
@@ -92,9 +197,10 @@ class EventScreen extends Component {
             console.log("Refreshed.")
         })
     }
-
     render() {
-        let item = this.state.data
+        let item = this.state.data;
+        let comment_content = Object.values(this.state.comment_data);
+        let active_comment = this.state.active_comment;
 
         if(this.state.loading) 
             return (
@@ -175,33 +281,51 @@ class EventScreen extends Component {
                         <Text style={SystemStyle.BreakLine}></Text>
                         <Text style={SystemStyle.BreakLineComment}>Comment</Text>
                     </View>
+                    
+                    { comment_content.length == 0 ? (
+                            <Text> No comments found. </Text>
+                        ) : (
+                            comment_content.map((item)=> 
+                                <View key = {item.id} style={SystemStyle.BespeakerCommentContainer}>
+                                    <View style={SystemStyle.BespeakerImgContainer}>
+                                        <Image style={SystemStyle.BespeakerImg}
+                                            source={ item.owner_image }/>
+                                        </View>
+                                    <View style={SystemStyle.BespeakerContainer}>
+                                        <Text style={SystemStyle.BespeakerName}>{ item.owner_name }</Text>
+                                        <Text style={SystemStyle.BespeakerComment}> 
+                                            { item.content } </Text>
+                                    </View>
+                                    
+                                    <TouchableOpacity onPress={() => this.setState({ active_comment: item, is_active: true })}>
+                                        <SimpleLineIcons name="options" size={24} color="black" style={SystemStyle.CommentInfo}/>
+                                    </TouchableOpacity>
+                                </View>   
+                            )
+                        )
+                    }
 
                     <View style={SystemStyle.BespeakerCommentContainer}>
                         <View style={SystemStyle.BespeakerImgContainer}>
-                        <Image style={SystemStyle.BespeakerImg}
-                            source={require('../assets/img/EveryNation.png')}/>
-                        </View>
-                        <View style={SystemStyle.BespeakerContainer}>
-                            <Text style={SystemStyle.BespeakerName}>Aegon Targaryen</Text>
-                            <Text style={SystemStyle.BespeakerComment}>I guess it would be good to go here after finding out
-                                something about myself.</Text>
-                        </View>
-                        
-                        <TouchableOpacity onPress={() => setModalVisible(true)}>
-                            <SimpleLineIcons name="options" size={24} color="black" style={SystemStyle.CommentInfo}/>
-                        </TouchableOpacity>
-                    </View>          
-                    <View style={SystemStyle.BespeakerCommentContainer}>
-                        <View style={SystemStyle.BespeakerImgContainer}>
                             <Image style={SystemStyle.BespeakerImg}
-                                source={require('../assets/img/EveryNation.png')}/>
+                                source={ this.state.user_data.profile_image }/>
                         </View>
                         <View style={SystemStyle.BespeakerContainer}>
-                            <Text style={SystemStyle.BespeakerName}>Sansa Stark</Text>
+                            <Text style={SystemStyle.BespeakerName}> { this.state.user_data.name } </Text>
                             <View style={SystemStyle.BespeakerInput}>
-                                <TextInput style={SystemStyle.MyCommentInput} placeholder=' Write a comment..' />
-                                <TouchableOpacity>
-                                    <Ionicons name="send" size={24} color="black" style={SystemStyle.SendComment}/>
+                                <TextInput style={SystemStyle.MyCommentInput} 
+                                    value = {this.state.raw_comment}
+                                    placeholder=' Write a comment..'
+                                    maxLength={50}
+                                    onChangeText={text => {
+                                        this.setState({raw_comment: text});
+                                    }}/>
+
+                                <TouchableOpacity
+                                    onPress = {() => this._handleSubmit()}>
+                                    <Ionicons name="send" size={24} 
+                                        color={ this.state.raw_comment ? "black" : "grey"}
+                                        style={SystemStyle.SendComment}/>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -209,10 +333,31 @@ class EventScreen extends Component {
                 </View>
                 <View style={SystemStyle.AttendingContainer}>
                     <TouchableOpacity style={SystemStyle.AttendingBtn}
-                        onPress={() => setModalAttendingVisible(true)}>
+                        onPress={() => Alert.alert("La pa", "Lapa Lapa.")}>
                             <Text style={SystemStyle.AttendingTextBtn}>I'm attending!</Text>
                     </TouchableOpacity>
                 </View>
+
+                <Modal animationType="slide"
+                    transparent={true}
+                    visible={this.state.is_active}
+                    onRequestClose={() => this.setState({ active_comment: false, is_active: false })}>
+                        <View style={SystemStyle.CommentInfoView}>
+                            <View style={SystemStyle.DeleteModalView}>
+                                {active_comment.is_owned &&
+                                    <TouchableOpacity style={SystemStyle.Icon}
+                                        onPress={() => this._handleDelete(active_comment) }>
+                                            <MaterialIcons name="delete-outline" size={24} color="black" />
+                                            <Text style={SystemStyle.DeleteTextBtn}>Delete</Text>
+                                    </TouchableOpacity>
+                                }
+                                <View style={SystemStyle.CommentDateInfo}>
+                                    <FontAwesome5 name="clock" size={24} color="black" style={SystemStyle.Icon}/>
+                                    <Text style={SystemStyle.CommentDate}>{ active_comment.server_time }</Text>
+                                </View>
+                        </View>
+                    </View>
+                    </Modal>
             </ScrollView>
         );
     }

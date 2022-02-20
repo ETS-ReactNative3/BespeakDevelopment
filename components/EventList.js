@@ -38,6 +38,9 @@ class EventList extends Component {
 
     componentDidMount() {
         try {
+            this._unsubscribe = this.props.navigation.addListener('focus', () => {
+                this.doRefresh() // Switch to onRefresh() to show animation
+            });
             this.setState({
                 loading: true
             })
@@ -45,6 +48,9 @@ class EventList extends Component {
         } catch(error) {
             console.log(error);
         }
+    }
+    componentWillUnmount() {
+        this._unsubscribe();
     }
     _removeItem(index) {
         this.setState({ refreshing: true });

@@ -15,9 +15,9 @@ async function _arrangeData(events_data, mod = false) {
         // Check if own event.
         item.is_owned = item.owner == auth.currentUser.uid
 
-        item.owner_image = await _getOrganizerImage(item.owner)
+        item.owner_image = await _getProfileImage(item.owner)
 
-        item.owner_name = await _getOrganizerName(item.owner);
+        item.owner_name = await _getProfileName(item.owner);
         item.event_image = await _getEventImage(item.id);
 
         let raw_sched = parseInt(item.schedule);
@@ -37,7 +37,7 @@ async function _arrangeData(events_data, mod = false) {
     return arranged_data;
 }
 
-async function _getOrganizerImage(user_id) {
+async function _getProfileImage(user_id) {
     let user_image = false;
     await storage.ref(`/users/${user_id}/profile`)
         .getDownloadURL()
@@ -77,8 +77,7 @@ async function _getEventImage(event_id) {
     return require('../assets/img/blank-cover.png');
 }
 // #TODO: OPTIMIZE
-async function _getOrganizerName(uid) {
-    console.log('Getting Organizer Name for ID: ' + uid);
+async function _getProfileName(uid) {
 
     const user_info = db.collection("user_info")
     const query = user_info.doc(uid)
@@ -119,4 +118,6 @@ async function _getUserData(metadata, uid = auth.currentUser.uid) {
 export {
     _getUserData,
     _arrangeData,
+    _getProfileImage,
+    _getProfileName
 }
