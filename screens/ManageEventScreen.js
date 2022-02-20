@@ -6,6 +6,7 @@ import {
     View,
     Image,
     Pressable,
+    Alert,
     TextInput,
 } from 'react-native';
 import { 
@@ -31,6 +32,8 @@ import SystemStyle from "../styles/SystemStyle";
 
 import Properties from "../values/Properties"
 import dateFormat from "../helper/DateFormat"
+import { _uploadToStorage } from "../helper/EventHelper"
+import { _arrangeData } from '../helper/EventLoad';
 
 class CreateEventScreen extends Component {
     state = {
@@ -93,7 +96,6 @@ class CreateEventScreen extends Component {
         this.setState({'data': current_data});
         this.setState({'valid': current_valid});
 
-        console.log('State Value: ', this.state.data)
     }
     async _handleSubmit() {
         let is_valid = await this._processValidate()
@@ -121,7 +123,8 @@ class CreateEventScreen extends Component {
 
         //Add Server Time
         event_data.server_time = (await fetch_date_time()).epoch;
-        event_data.owner = auth.currentUser.uid
+        event_data.owner = auth.currentUser.uid;
+        event_data.is_open = true;
 
         await db
             .collection('event')
@@ -135,25 +138,13 @@ class CreateEventScreen extends Component {
             }) 
             .then(async (doc) => {
                 if(this.state.banner_photo.uri) {
-                    await this._uploadToStorage(this.state.banner_photo.uri, `/event/${doc.id}/banner`)
+                    await _uploadToStorage(this.state.banner_photo.uri, `/event/${doc.id}/banner`)
                 }
                 this.setState({'is_loading': false})
                 
                 this.props.route.params._done();
                 this.props.navigation.goBack()
             });
-    }
-    // #TODO: Move to Helper
-    _uploadToStorage(path, imageName) {
-        let reference = storage.ref(imageName);         
-        let task = reference.putFile(path);            
-
-        return task.then(() => {                                 
-            console.log('Photo Uploaded to Storage', path);
-        }).catch((e) => {
-            Alert.alert('Error!', e)
-            console.log('Uploading Image Error: ', e)
-        });
     }
     _selectImage() {
         //#TODO: Add Support for IOS, Optimize, Seperate to Option File
@@ -331,80 +322,325 @@ class CreateEventScreen extends Component {
 }
 
 class EditEventScreen extends Component {
+    state = {
+        data: {},
+        banner_photo: false,
+        banner_has_change: false,
+        valid: {},
+        is_date_select: false,
+        _server: {
+            date_time: false,
+            epoch: false
+        },
+        is_loading: true
+    }
+    _handleText(key, value) {
+        var current_data = this.state.data;
+        var current_valid = this.state.valid
+        var editable_val = value
+
+        current_valid[key] = '';
+        
+        if(key == 'max') {
+            editable_val = value.toString()?.replace(/[^0-9]/g, '')
+
+            if(editable_val) {
+                editable_val = parseInt(editable_val)
+            }
+
+            if(editable_val == 0) {
+                current_valid[key] = 'This cannot be zero.'
+            }
+        }
+
+        if(value == '' || value == null) {
+            current_valid[key] = 'This field is required.'
+        } 
+
+        current_data[key] = editable_val;
+
+        this.setState({'data': current_data});
+        this.setState({'valid': current_valid});
+
+        console.log('State Value: ', this.state.data)
+    }
+    _selectImage() {
+        //#TODO: Add Support for IOS, Optimize, Seperate to Option File
+        ImagePicker.openPicker({
+            multiple: false,
+            cropping: true,
+            mediaType: 'photo'
+        }).then(images => {
+            console.log('Attached Image: ', images.path);
+            this.setState({'banner_photo': {
+                'uri': images.path},
+                'banner_has_change': true
+            })
+        }).catch(error => {
+            console.log("Error/Warning: ", error)
+        });
+    };
+    async _retrieveData(event_id) {
+        let get_event_query = await db
+            .collection('event')
+            .doc(event_id)
+            .get();
+        
+        if(get_event_query.empty) {
+            console.log('No data found for user: ', uid);
+            return;
+        }
+
+        let _data = get_event_query.data();
+        _data.id = get_event_query.id;
+        _data = await _arrangeData([_data], true); 
+
+        console.log("Opened Event Data: ", _data)
+
+        let data = _data[0];
+
+        this.setState({
+            _server: {... await fetch_date_time()},
+            is_loading: false,
+            data: {
+                name: data.name,
+                location: data.location,
+                max: data.max,
+                schedule: data.schedule,
+                desc: data.desc,
+                info: data.info,
+                is_open: data.is_open
+            },
+            banner_photo: data.event_image
+        });
+    }
+    componentDidMount() {
+        this.props.navigation.setOptions({
+            headerRight: () => (
+                <TouchableOpacity onPress={() => this._handleSubmit()}>
+                    <Text style={EditEventStyle.tabSave}>Save</Text>
+                </TouchableOpacity>
+            ),
+        });
+        this._retrieveData(this.props.route.params.event_id)
+    }
+    _handleDateSelection(status) {
+        console.log('Opening/Closing Date & Time Selection...')
+        this.setState({'is_date_select': status})
+    }
+    async _handleSubmit() {
+        let is_valid = await this._processValidate()
+        if(is_valid) {
+            this.setState({'is_loading': true})
+            console.log("Create Event Validated...")
+            this._processSubmit();
+        }
+    }
+    async _processValidate() {
+        let is_valid = true;
+        for(var key in this.state.data) {
+            if(key == 'is_open') continue;
+            await this._handleText(key, this.state.data[key])
+        }
+        for(var key in this.state.valid) {
+            if(this.state.valid[key] != '') {
+                is_valid = false;
+            }
+            is_valid = is_valid && true;
+        }
+        return is_valid
+    }
+    async _processSubmit() {
+        var event_data = this.state.data
+
+        let event_id = this.props.route.params.event_id;
+
+        await db
+            .collection('event')
+            .doc(event_id)
+            .update({
+                ...event_data
+            })
+            .catch(error => {
+                this.setState({'is_loading': false})
+                Alert.alert('Error!', error.message)
+                return
+            }) 
+            .then(async () => {
+                if(this.state.banner_photo.uri && this.state.banner_has_change) {
+                    await _uploadToStorage(this.state.banner_photo.uri, `/event/${event_id}/banner`)
+                }
+                this.setState({'is_loading': false})
+                
+                this.props.route.params._done();
+                this.props.navigation.goBack()
+            });
+    }
     render() {
         return(
-            //Please Refer to EditProfileScreen for tabSave Line:98
             <View style={EditEventStyle.Container}>
-                    <TouchableOpacity>
-                        <Text style={EditEventStyle.tabSave}>Save</Text>
-                    </TouchableOpacity>      
+                {
+                    this.state.is_loading && 
+                    <Spinner visible={true} textStyle={SystemStyle.defaultLoader}
+                        animation = 'fade'
+                        overlayColor = 'rgba(0, 0, 0, 0.50)'/>
+                }
                 <ScrollView>
-                    <View style={EditEventStyle.addbannercoverimgContainer}>
-                        <Feather name="plus" size={50} style={EditEventStyle.addbannerimg}/>
-                        <Image style={EditEventStyle.addbannercoverimg}
-                            //source={require('../assets/img/SecondPages.png')}
-                            />
-                    </View>
-                <View style={EditEventStyle.createeventcontainer}>
-                    <Text style={EditEventStyle.eventCreatetxt}>Create Event</Text>
-                </View>
-                <View style={EditEventStyle.LockEventcontainer}>
-                    <Text style={EditEventStyle.LockEventtxt}>Lock Event</Text>
-                    <ToggleSwitch
-                        isOn={false}
-                        onColor="#eb9834"
-                        offColor="#ccc"
-                        size="medium"
-                        style={EditEventStyle.LockEventToggle}
-                        />
-                </View>
-                <View style={EditEventStyle.EditEventNamecontainer}>
-                    <TextInput style={EditEventStyle.EditEventNameField} placeholder='Event Name '></TextInput>
-                </View>
-                <View style={EditEventStyle.EditEventSchedcontainer}>
-                    <TextInput style={EditEventStyle.EditEventSchedField} placeholder='Schedule '></TextInput>
-                </View>
-                <View style={EditEventStyle.EditEventLoccontainer}>
-                    <TextInput style={EditEventStyle.EditEventLocField} placeholder='Location ' maxLength={100}></TextInput>
-                </View>
-                <View style={EditEventStyle.EditEventMaxAttendcontainer}>
-                    <TextInput style={EditEventStyle.EditEventMaxAttendField} placeholder='Max Attendees ' maxLength={100}></TextInput>
-                </View>
-                <View style={CreateEventStyle.FormContainer}>
-                    <InputOutline placeholder="Describe your event"
-                        style = {CreateEventStyle.FormFieldAssisted}
-                            characterCount = {100}
-                            trailingIcon = {() => {
-                                    return <Feather name="edit-2" size={20} style={CreateEventStyle.CreateEventIcon} />
-                                }
-                            }
-                            onChangeText = {text => this._handleText('desc', text)}
-                            {...Properties.defaultInputOutline}
-                            characterCountFontSize = {12}
-                            multiline = {true}
-                            minHeight = {40}
-                            textAlignVertical = 'top'/>
+                    <DateTimePickerModal
+                        isVisible={this.state.is_date_select}
+                        mode="datetime"
+                        minimumDate = {this.state._server.date_time ? this.state._server.date_time : new Date()}
+                        onConfirm={(value) => {
+                            console.log('Date selected: ', value)
+                            let current = this.state.data;
+                            current.schedule = Date.parse(value);
+                            this.setState({'data': current})
+                            this._handleDateSelection(false) 
+                        }}
+                        onCancel={() => this._handleDateSelection(false) }/>
 
-                    <InputOutline placeholder="Additional Information"
-                        style = {CreateEventStyle.FormFieldAssisted}
-                            characterCount = {300}
-                            trailingIcon = {() => {
-                                    return <Feather name="plus" size={22} style={CreateEventStyle.CreateEventIcon} />
+                    <TouchableOpacity onPress = {() => this._selectImage()}>
+                        <View style={EditEventStyle.addbannercoverimgContainer}>
+                            <Feather name="plus" size={50} style={EditEventStyle.addbannerimg}/>
+                            <Image style={EditEventStyle.addbannercoverimg}
+                                source={
+                                    this.state.banner_photo ?
+                                    this.state.banner_photo:
+                                    require('../assets/img/blank-cover.png')
+                                }/>
+                        </View>
+                    </TouchableOpacity>
+
+                    <View style={EditEventStyle.createeventcontainer}>
+                        <Text style={EditEventStyle.eventCreatetxt}>Edit Event</Text>
+                    </View>
+                    <View style={EditEventStyle.LockEventcontainer}>
+                        <Text style={EditEventStyle.LockEventtxt}>Show Event</Text>
+                        <ToggleSwitch isOn={this.state.data.is_open}
+                            onColor="#eb9834"
+                            offColor="#ccc"
+                            size="medium"
+                            style={EditEventStyle.LockEventToggle}
+                            onToggle={isOn => this.setState({data: {...this.state.data, is_open: isOn,}})}/>
+                    </View>
+                    <Pressable onPress = {() => this.txtName.focus() }>
+                        <View style={EditEventStyle.EditEventNamecontainer}>
+                            <TextInput style={EditEventStyle.EditEventNameField} placeholder='Event Name '
+                                maxLength={50} 
+                                value = {this.state.data.name}
+                                onChangeText = {text => this._handleText('name', text)}
+                                ref={(input) => { this.txtName = input; }}/>
+                        </View>
+                    </Pressable>
+
+                    { this.state.valid.name ?
+                        <Text style={Validation.textVal}>
+                            {this.state.valid.name} </Text>
+                        : null
+                    }
+
+                    <Pressable onPress = {() => this._handleDateSelection(true) } >
+                        <View style={EditEventStyle.EditEventSchedcontainer}>
+                            <TextInput style={EditEventStyle.EditEventSchedField} placeholder="Schedule "
+                                value = {this.state.data.schedule 
+                                    ? dateFormat(new Date(this.state.data.schedule), "EEEE, MMMM d, yyyy - h:mm aaa")
+                                    : ''}
+                                maxLength={50} 
+                                editable = {false}
+                                ref={(input) => { this.txtSchedule = input; }}/>
+                        </View>
+                    </Pressable>
+                    
+                    { this.state.valid.schedule ?
+                        <Text style={Validation.textVal}>
+                            {this.state.valid.schedule} </Text>
+                        : null
+                    }
+
+                    <Pressable onPress = {() => this.txtLocation.focus() } >
+                        <View style={EditEventStyle.EditEventLoccontainer}>
+                            <TextInput style={EditEventStyle.EditEventLocField} placeholder="Location "
+                                maxLength={30} 
+                                value = {this.state.data.location}
+
+                                onChangeText = {text => this._handleText('location', text)}
+                                ref={(input) => { this.txtLocation = input; }}/>
+                        </View>
+                    </Pressable>
+
+                    { this.state.valid.location ?
+                        <Text style={Validation.textVal}>
+                            {this.state.valid.location} </Text>
+                        : null
+                    }
+
+                    <Pressable onPress = {() => this.txtMaxAttend.focus() } >
+                        <View style={EditEventStyle.EditEventMaxAttendcontainer}>
+                            <TextInput style={EditEventStyle.EditEventMaxAttendField} placeholder='Max Attendees '
+                                maxLength={4} 
+                                value = {this.state.data.max?.toString()}
+                                keyboardType = 'numeric'
+                                onChangeText = {text => this._handleText('max', text)}
+                                ref={(input) => { this.txtMaxAttend = input; }}/>
+                        </View>
+                    </Pressable>
+
+                    { this.state.valid.max ?
+                        <Text style={Validation.textVal}>
+                            {this.state.valid.max}</Text>
+                        : null
+                    }   
+
+                    <View style={CreateEventStyle.FormContainer}>
+                        <InputOutline placeholder="Describe your event"
+                            style = {CreateEventStyle.FormFieldAssisted}
+                                characterCount = {100}
+                                value = {this.state.data.desc}
+                                trailingIcon = {() => {
+                                        return <Feather name="edit-2" size={20} style={CreateEventStyle.CreateEventIcon} />
+                                    }
                                 }
-                            }
-                            onChangeText = {text => this._handleText('info', text)}
-                            {...Properties.defaultInputOutline}
-                            characterCountFontSize = {12}
-                            multiline = {true}
-                            minHeight = {80}
-                            textAlignVertical = 'top'/>
-                </View>
-            </ScrollView>
-        <TouchableOpacity style={EditEventStyle.createeventbtn}
-          onPress={() => navigation.navigate('')}>
-        <Text style={EditEventStyle.createeventtxt}>Delete Event</Text>
-        </TouchableOpacity>
-    </View>
+                                onChangeText = {text => this._handleText('desc', text)}
+                                {...Properties.defaultInputOutline}
+                                characterCountFontSize = {12}
+                                multiline = {true}
+                                minHeight = {40}
+                                textAlignVertical = 'top'/>
+
+                        { this.state.valid.desc ?
+                            <Text style={Validation.textVal}>
+                                {this.state.valid.desc} </Text>
+                            : null
+                        }
+
+                        <InputOutline placeholder="Additional Information"
+                            style = {CreateEventStyle.FormFieldAssisted}
+                                characterCount = {300}
+                                value = {this.state.data.info}
+                                trailingIcon = {() => {
+                                        return <Feather name="plus" size={22} style={CreateEventStyle.CreateEventIcon} />
+                                    }
+                                }
+                                onChangeText = {text => this._handleText('info', text)}
+                                {...Properties.defaultInputOutline}
+                                characterCountFontSize = {12}
+                                multiline = {true}
+                                minHeight = {80}
+                                textAlignVertical = 'top'/>
+
+                        { this.state.valid.info ?
+                            <Text style={Validation.textVal}>
+                                {this.state.valid.info} </Text>
+                            : null
+                        }
+
+                        <TouchableOpacity style={EditEventStyle.createeventbtn}
+                            onPress={() => /*navigation.navigate('')*/ Alert.alert('Wala', 'wala pa.')}>
+                                <Text style={EditEventStyle.createeventtxt}>Delete Event</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+            </View>
         );
     }
 }

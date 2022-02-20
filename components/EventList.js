@@ -3,7 +3,9 @@ import { ActivityIndicator,
     Alert,
     FlatList,
     Text,
-    View, RefreshControl } from 'react-native';
+    View, 
+    RefreshControl,
+    ScrollView } from 'react-native';
 
 import { db, _db } from '../firebase';
 
@@ -67,9 +69,17 @@ class EventList extends Component {
         this.event_modal.current.show();
     }
     async _retrieveEvents(type_extend = false) {
+        let for_profile = this.props.for_profile && this.props.user_id;
+
         let get_events_query = await db.collection('event');
 
-        if(this.props.for_profile && this.props.user_id) {
+        if(!for_profile) {
+            get_events_query = get_events_query
+                .where('is_open', '==', true);
+        }
+
+
+        if(for_profile) {
             console.log("Getting all events for USER ID: ", this.props.user_id)
             get_events_query = get_events_query
                 .where("owner", "==", this.props.user_id)
@@ -177,7 +187,12 @@ class EventList extends Component {
                 </>
             )
         } else {
-            return null;
+            return (
+                <View style={SystemStyle.Footer}>
+                    <Text style={SystemStyle.BespeakLogo}>bespeak</Text>
+                    <Text style={SystemStyle.FooterText}>© Sandbox Technologies.</Text>
+                </View>
+            );
         }
     }
 

@@ -15,8 +15,6 @@ async function _arrangeData(events_data, mod = false) {
         // Check if own event.
         item.is_owned = item.owner == auth.currentUser.uid
 
-        item.pos = i;
-
         item.owner_image = await _getOrganizerImage(item.owner)
 
         item.owner_name = await _getOrganizerName(item.owner);

@@ -6,6 +6,7 @@ import {
     View,
     Image,
     Pressable,
+    RefreshControl,
     TextInput,
     ActivityIndicator
 } from 'react-native';
@@ -40,8 +41,12 @@ class EventScreen extends Component {
             data: null,
             loading: true,
         }
+        this.onRefresh = this.onRefresh.bind(this)
     }
     componentDidMount() {
+        this._startLoad()
+    }
+    _startLoad() {
         let event_id = this.props.route.params.event_id
         if(event_id) {
             this._retrieveEvent(event_id)
@@ -71,6 +76,23 @@ class EventScreen extends Component {
             data: _data[0]
         });
     }
+    doRefresh() {
+        return new Promise((resolve) => {
+          this._startLoad()
+          setTimeout(resolve, 3000)
+        });
+    }
+    async onRefresh() {
+        console.log("Refreshing...")
+        this.setState({'refreshing': true})
+        await this.doRefresh().then(() => {
+            this.setState({
+                'refreshing': false
+            })
+            console.log("Refreshed.")
+        })
+    }
+
     render() {
         let item = this.state.data
 
@@ -82,7 +104,13 @@ class EventScreen extends Component {
             )
 
         return (
-            <ScrollView>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.refreshing}
+                        onRefresh={this.onRefresh}
+                        colors={["gray", "orange"]}/>
+                }>
                 <View style={SystemStyle.EventContainer}>
                     <View style={SystemStyle.ImgContainer}>
                         <Image style={SystemStyle.ImgContainer}
@@ -105,8 +133,10 @@ class EventScreen extends Component {
 
                             {item.owner == auth.currentUser.uid ? (
                                 <TouchableOpacity style={SystemStyle.FollowOrgBtn}
-                                    onPress={() => this.props.navigation.navigate('EditEventScreen')}>
-                                        <Text style={SystemStyle.FollowOrgTextBtn}>Edit Event</Text>
+                                    onPress={() => this.props.navigation.navigate('EditEventScreen', 
+                                        {event_id: item.id, 
+                                        _done: this.onRefresh})}>
+                                            <Text style={SystemStyle.FollowOrgTextBtn}>Edit Event</Text>
                                 </TouchableOpacity>
                             ) : (
                                 <TouchableOpacity style={SystemStyle.FollowOrgBtn}
