@@ -344,8 +344,9 @@ class EventScreen extends Component {
                 
                 <BottomSheet hasDraggableIcon
                     ref={this.comment_modal}
-                    height={150}
+                    height={90}
                     radius={35}>
+
                         <View style={SystemStyle.CommentInfoView}>
                             <View style={SystemStyle.DeleteModalView}>
                                 { active_comment.is_owned &&
@@ -359,7 +360,6 @@ class EventScreen extends Component {
                                     <FontAwesome5 name="clock" size={24} color="black" style={SystemStyle.Icon}/>
                                     <Text style={SystemStyle.CommentDate}>{ active_comment.server_time }</Text>
                                 </View>
-                            </View>
                         </View>
                 </BottomSheet>
 

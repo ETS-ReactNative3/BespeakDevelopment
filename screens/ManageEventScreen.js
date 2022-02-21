@@ -516,11 +516,11 @@ class EditEventScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <View style={EditEventStyle.createeventcontainer}>
-                        <Text style={EditEventStyle.eventCreatetxt}>Edit Event</Text>
+                    <View style={EditEventStyle.EditEventContainer}>
+                        <Text style={EditEventStyle.TitleScreen}>Edit Event</Text>
                     </View>
-                    <View style={EditEventStyle.LockEventcontainer}>
-                        <Text style={EditEventStyle.LockEventtxt}>Show Event</Text>
+                    <View style={EditEventStyle.LockEventContainer}>
+                        <Text style={EditEventStyle.LockEventText}>Show Event</Text>
                         <ToggleSwitch isOn={this.state.data.is_open}
                             onColor="#eb9834"
                             offColor="#ccc"
@@ -539,7 +539,7 @@ class EditEventScreen extends Component {
                     </Pressable>
 
                     { this.state.valid.name ?
-                        <Text style={Validation.textVal}>
+                        <Text style={Validation.EditedTextVal}>
                             {this.state.valid.name} </Text>
                         : null
                     }
@@ -557,7 +557,7 @@ class EditEventScreen extends Component {
                     </Pressable>
                     
                     { this.state.valid.schedule ?
-                        <Text style={Validation.textVal}>
+                        <Text style={Validation.EditedTextVal}>
                             {this.state.valid.schedule} </Text>
                         : null
                     }
@@ -574,7 +574,7 @@ class EditEventScreen extends Component {
                     </Pressable>
 
                     { this.state.valid.location ?
-                        <Text style={Validation.textVal}>
+                        <Text style={Validation.EditedTextVal}>
                             {this.state.valid.location} </Text>
                         : null
                     }
@@ -591,7 +591,7 @@ class EditEventScreen extends Component {
                     </Pressable>
 
                     { this.state.valid.max ?
-                        <Text style={Validation.textVal}>
+                        <Text style={Validation.EditedTextVal}>
                             {this.state.valid.max}</Text>
                         : null
                     }   
