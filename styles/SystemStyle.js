@@ -346,7 +346,8 @@ const SystemStyle = StyleSheet.create({
         marginTop:'-8%'
     },
     BreakLineContainer:{
-        padding:'4%',
+        paddingTop:'3%',
+        padding:'1%'
     },
     BreakLine:{
         borderBottomWidth:1,
@@ -382,6 +383,13 @@ const SystemStyle = StyleSheet.create({
         marginTop:'4%',
         marginBottom:'4%',
     },
+    //No Comment Found
+    EmptyComment:{
+      alignSelf:'center',
+      justifyContent:'center',
+      padding:'5%',
+      paddingBottom:'8%',
+    },
     //Comment Section
     BespeakerCommentContainer:{
         flexDirection:'row',
@@ -396,9 +404,11 @@ const SystemStyle = StyleSheet.create({
         paddingBottom:'1%',
         fontFamily:'RedHatDisplay-Medium',
         fontSize:18,
+        color:'#5b5c5a'
     },
     BespeakerComment:{
         fontSize: 15,
+        color:'#5b5c5a'
     },
     //Comment Section Image
     BespeakerImgContainer: {
@@ -436,12 +446,10 @@ const SystemStyle = StyleSheet.create({
     },
     //I'm Attending Container
     AttendingContainer:{
-        paddingTop:80,
+        paddingTop:'17%',
         backgroundColor:'#fff',
         justifyContent:'center',
-        marginBottom:5,
-        paddingLeft:20,
-        paddingRight:20,
+        padding:'3%'
     },
     AttendingBtn: {
         marginTop:-2,
