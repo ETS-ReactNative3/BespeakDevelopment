@@ -48,6 +48,8 @@ class EventScreen extends Component {
             is_active: false
         }
         this.onRefresh = this.onRefresh.bind(this)
+
+        this.comment_modal = React.createRef();
     }
     componentDidMount() {
         this._startLoad()
@@ -298,7 +300,10 @@ class EventScreen extends Component {
                                             { item.content } </Text>
                                     </View>
                                     
-                                    <TouchableOpacity onPress={() => this.setState({ active_comment: item, is_active: true })}>
+                                    <TouchableOpacity onPress={() => {
+                                        this.setState({ active_comment: item, is_active: true })
+                                        this.comment_modal.current.show();
+                                    }}>
                                         <SimpleLineIcons name="options" size={24} color="#5b5c5a" style={SystemStyle.CommentInfo}/>
                                     </TouchableOpacity>
                                 </View>   
@@ -338,42 +343,11 @@ class EventScreen extends Component {
                             <Text style={SystemStyle.AttendingTextBtn}>I'm attending!</Text>
                     </TouchableOpacity>
                 </View>
-
-                <Modal animationType="slide"
-                    transparent={true}
-                    visible={this.state.is_active}
-                    onRequestClose={() => this.setState({ active_comment: false, is_active: false })}>
-                        <View style={SystemStyle.CommentInfoView}>
-                            <View style={SystemStyle.DeleteModalView}>
-                                {active_comment.is_owned &&
-                                    <TouchableOpacity style={SystemStyle.Icon}
-                                        onPress={() => this._handleDelete(active_comment) }>
-                                            <MaterialIcons name="delete-outline" size={24} color="black" />
-                                            <Text style={SystemStyle.DeleteTextBtn}>Delete</Text>
-                                    </TouchableOpacity>
-                                }
-                                <View style={SystemStyle.CommentDateInfo}>
-                                    <FontAwesome5 name="clock" size={24} color="black" style={SystemStyle.Icon}/>
-                                    <Text style={SystemStyle.CommentDate}>{ active_comment.server_time }</Text>
-                                </View>
-                        </View>
-                    </View>
-                    </Modal>
-
-            </ScrollView>
-
-        );
-    }
-}
-
-export default { EventScreen };
-
-
-/* For Comment Info --- New Modal
-                    <BottomSheet hasDraggableIcon
-                        ref={this.props.modal_ref}
-                        height={150}
-                        radius={35}>
+                
+                <BottomSheet hasDraggableIcon
+                    ref={this.comment_modal}
+                    height={150}
+                    radius={35}>
                         <View style={SystemStyle.CommentInfoView}>
                             <View style={SystemStyle.DeleteModalView}>
                                 <TouchableOpacity style={SystemStyle.Icon}
@@ -387,5 +361,12 @@ export default { EventScreen };
                                 </View>
                             </View>
                         </View>
-                    </BottomSheet>
-*/
+                </BottomSheet>
+
+            </ScrollView>
+
+        );
+    }
+}
+
+export default { EventScreen };
