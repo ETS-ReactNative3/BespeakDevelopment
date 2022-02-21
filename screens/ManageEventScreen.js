@@ -119,12 +119,17 @@ class CreateEventScreen extends Component {
         return is_valid
     }
     async _processSubmit() {
-        var event_data = this.state.data
+        var event_data = this.state.data;
+        let has_upload = this.state.banner_photo.uri;
 
         //Add Server Time
         event_data.server_time = (await fetch_date_time()).epoch;
         event_data.owner = auth.currentUser.uid;
         event_data.is_open = true;
+
+        if(!has_upload) {
+            event_data.random_banner = Math.floor(Math.random() * (8 - 1 + 1)) + 1;
+        }
 
         await db
             .collection('event')
@@ -137,7 +142,7 @@ class CreateEventScreen extends Component {
                 return
             }) 
             .then(async (doc) => {
-                if(this.state.banner_photo.uri) {
+                if(has_upload) {
                     await _uploadToStorage(this.state.banner_photo.uri, `/event/${doc.id}/banner`)
                 }
                 this.setState({'is_loading': false})
