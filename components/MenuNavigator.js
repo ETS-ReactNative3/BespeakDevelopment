@@ -8,6 +8,8 @@ import ProfileScreens from '../screens/ProfileScreen'
 import EditProfileScreens from '../screens/EditProfileScreen'
 import EventScreens from "../screens/EventScreen";
 import ManageEventScreens from "../screens/ManageEventScreen";
+import ParticipantListScreens from "../screens/ParticipantListScreen";
+import FollowListScreens from "../screens/FollowListScreen";
 
 const MenuStack = createNativeStackNavigator();
 
@@ -21,23 +23,25 @@ class HomeNavigator extends Component {
                 headerShown: false,
                 tabBarShowLabel:false
               }}/>
-            <MenuStack.Screen name="HomeDetailScreen" component={HomeScreens.HomeDetailsScreen}
-              options={{
-                title: ' ',
-              }}/>
             <MenuStack.Screen name="EventScreen" component={EventScreens.EventScreen}
               options={{
                 title: ' ',
               }}/>
             <MenuStack.Screen name="EditEventScreen" component={ManageEventScreens.EditEventScreen}
-             options={{
-              title: 'Edit Event',
-              headerShown: true,
-              tabBarShowLabel:false,
-              headerTitleStyle: {
-                fontFamily: 'RedHatDisplay-Medium',
-                color: '#eb9834',
-              }
+              options={{
+                title: 'Edit Event',
+                headerShown: true,
+                tabBarShowLabel:false,
+                headerTitleStyle: {
+                  fontFamily: 'RedHatDisplay-Medium',
+                  color: '#eb9834',
+                }
+            }}/>
+            <MenuStack.Screen name="ParticipantListScreen" component={ParticipantListScreens}
+              options={{
+                title: ' ',
+                headerShown: true,
+                tabBarShowLabel:false,
             }}/>
           </MenuStack.Navigator>
         );
@@ -62,6 +66,12 @@ class SearchNavigator extends Component {
           options={{
             title: ' ',
           }}/>
+        <MenuStack.Screen name="ParticipantListScreen" component={ParticipantListScreens}
+          options={{
+            title: ' ',
+            headerShown: true,
+            tabBarShowLabel:false,
+        }}/>
       </MenuStack.Navigator>
     );
   }
@@ -137,7 +147,34 @@ class ProfileNavigator extends Component {
               fontFamily: 'RedHatDisplay-Medium',
               color: '#eb9834',
             }
-          }}/>
+        }}/>
+        <MenuStack.Screen name="ParticipantListScreen" component={ParticipantListScreens}
+          options={{
+            title: ' ',
+            headerShown: true,
+            tabBarShowLabel:false,
+        }}/>
+        <MenuStack.Screen name="FollowingScreen" component={FollowListScreens.FollowingScreen}
+          options={{
+            title: 'Following',
+            headerShown: true,
+            tabBarShowLabel:false,
+            headerTitleStyle: {
+              fontFamily: 'RedHatDisplay-Medium',
+              color: '#eb9834',
+            }
+        }}/>
+        <MenuStack.Screen name="FollowerScreen" component={FollowListScreens.FollowerScreen}
+          options={{
+            title: 'Followers',
+            headerShown: true,
+            tabBarShowLabel:false,
+            headerTitleStyle: {
+              fontFamily: 'RedHatDisplay-Medium',
+              color: '#eb9834',
+            }
+        }}/>
+
       </MenuStack.Navigator>
     );
   }

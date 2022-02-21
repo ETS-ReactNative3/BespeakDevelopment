@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import  Apploading  from 'expo-app-loading';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { LogBox } from 'react-native';
 
 import { auth } from './firebase';
 
@@ -21,6 +22,10 @@ export default function App() {
   const [user, setUser] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
   const [dummy, setDummy] = useState(true);
+
+  LogBox.ignoreLogs([
+    'Warning: Can\'t perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.',
+    'Non-serializable values were found in the navigation state']);
 
   const getFonts = async () => {
     await useFonts();
