@@ -33,8 +33,8 @@ const SearchScreenStyle=StyleSheet.create({
         flexDirection: 'row',
         fontFamily: 'RedHatDisplay-Regular',
         color: '#000',
-        fontSize: 16,
-        marginLeft:10,
+        fontSize: 20,
+        marginLeft: '3%',
         width:'100%',
     },
     eventTitlecontentOnmodal:{

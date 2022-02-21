@@ -113,6 +113,7 @@ const SystemStyle = StyleSheet.create({
     height: '100%',
     backgroundColor:'#fff',
     alignItems: "center",
+    padding:'3%'
   },
   //Draggable Modal Image Container
   BottomSheetImage:{
@@ -129,10 +130,6 @@ const SystemStyle = StyleSheet.create({
     alignContent:'center',
     backgroundColor:'#fff',
     width:'100%',
-    marginTop:'3.5%',
-    marginBottom:'3.5%',
-    paddingLeft: '6%',
-    paddingRight: '6%',
   },
   //Draggable Modal Text Content
   DragableModalTitle:{
@@ -153,8 +150,8 @@ const SystemStyle = StyleSheet.create({
     flexDirection:'row',
     justifyContent:'space-between',
     marginTop:'3%',
-    marginLeft:'-4%',
     marginBottom:'3%',
+    //marginLeft:'-4%',
   },
   //Organizer Button Profile
   OrganizerButton:{
@@ -394,7 +391,7 @@ const SystemStyle = StyleSheet.create({
     BespeakerCommentContainer:{
         flexDirection:'row',
         marginBottom:'5%',
-        width:'90%'
+        width:'88%'
     },
     BespeakerContainer:{
         paddingLeft:'3%',
@@ -408,7 +405,8 @@ const SystemStyle = StyleSheet.create({
     },
     BespeakerComment:{
         fontSize: 15,
-        color:'#5b5c5a'
+        color:'#5b5c5a',
+        fontFamily: 'RedHatDisplay-Regular',
     },
     //Comment Section Image
     BespeakerImgContainer: {
@@ -428,7 +426,8 @@ const SystemStyle = StyleSheet.create({
       height:35,
       backgroundColor:'#f5f5f5',
       paddingLeft:'2%',
-      width:'90%'
+      width:'96%',
+      fontFamily: 'RedHatDisplay-Regular',
     },
     BespeakerInput:{
       flexDirection:'row',
@@ -509,42 +508,30 @@ const SystemStyle = StyleSheet.create({
         fontFamily: 'RedHatDisplay-Medium',
     },
     //Comment Info Delete Modal
-    CommentInfoView: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        alignSelf:'baseline',
-        backgroundColor:'rgba(0,0,0,.5)',
-    },
-    DeleteModalView: {
-        paddingTop:33,
-        paddingLeft:10,
-        backgroundColor: "#fff",
-        width: 412,
-        height: 120,
-        borderTopRightRadius: 40,
-        borderTopLeftRadius: 40,
+    CommentInfoContainer: {
+      flex: 1,
     },
     Icon:{
-        fontSize:20,
-        paddingLeft:10,
-        flexDirection:'row',
+      fontSize: 20,
+      paddingLeft:'5%',
+      flexDirection:'row',
     },
     DeleteTextBtn:{
-        paddingLeft:10,
-        color:'#000',
-        fontSize:20,
-        fontFamily:'RedHatDisplay-Regular'
+      paddingLeft: '3%',
+      color: '#000',
+      fontSize: 20,
+      fontFamily:'RedHatDisplay-Regular'
     },
     CommentDateInfo:{
-        marginTop:10,
-        flexDirection:'row',
-        marginLeft:3,
+      marginTop: '3%',
+      flexDirection: 'row',
+      marginLeft: '.9%',
     },
     CommentDate:{
-        paddingLeft:10,
-        color:'#000',
-        fontSize:20,
-        fontFamily:'RedHatDisplay-Regular'
+      paddingLeft: '3%',
+      color: '#000',
+      fontSize: 20,
+      fontFamily:'RedHatDisplay-Regular'
     },
   //Screen Footer
   Footer:{
@@ -584,7 +571,14 @@ const SystemStyle = StyleSheet.create({
   OrgCardInfo:{
     fontSize: 15,
     fontFamily:'RedHatDisplay-Light',
-  }
+  },
+  // For MenuTabNavigator
+  TabTitle:{
+    color: '#eb9834',
+    fontFamily: 'RedHatDisplay-Medium',
+    fontSize: 25,
+    marginLeft: '-35%',
+  },
 
 
     
