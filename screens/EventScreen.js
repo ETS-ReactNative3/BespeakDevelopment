@@ -336,24 +336,37 @@ class EventScreen extends Component {
                     </View>          
                 </View>
                 <View style={SystemStyle.AttendingContainer}>
-                    <TouchableOpacity style={SystemStyle.AttendingBtn}
-                        onPress={() => Alert.alert("La pa", "Lapa Lapa.")}>
-                            <Text style={SystemStyle.AttendingTextBtn}>I'm attending!</Text>
-                    </TouchableOpacity>
+                    {item.owner == auth.currentUser.uid ? (
+                        // DIBA DAPAT KULAY ITIM 'TO?!?!?
+                        <>
+                            <TouchableOpacity style={SystemStyle.AttendingBtn}
+                                onPress={() => this.props.navigation.navigate('ParticipantListScreen') }>
+                                    <Text style={SystemStyle.AttendingTextBtn}>View Attendees</Text> 
+                            </TouchableOpacity>
+                        </>
+                    ) : (
+                        <>
+                            <TouchableOpacity style={SystemStyle.AttendingBtn}
+                                onPress={() => Alert.alert("La pa", "Lapa Lapa.")}>
+                                    <Text style={SystemStyle.AttendingTextBtn}>I'm attending!</Text>
+                            </TouchableOpacity>
+                        </>
+                    )}
                 </View>
                 
                 <BottomSheet hasDraggableIcon
                     ref={this.comment_modal}
                     height={90}
                     radius={35}>
-                        <View style={SystemStyle.CommentInfoContainer}>
-                            { active_comment.is_owned &&
-                                <TouchableOpacity style={SystemStyle.Icon}
-                                    onPress={() => this._handleDelete(active_comment) }>
-                                        <MaterialIcons name="delete-outline" size={24} color="black" />
-                                        <Text style={SystemStyle.DeleteTextBtn}>Delete</Text>
-                                </TouchableOpacity>
-                            }
+                        <View style={SystemStyle.CommentInfoView}>
+                            <View style={SystemStyle.DeleteModalView}>
+                                { active_comment.is_owned &&
+                                    <TouchableOpacity style={SystemStyle.Icon}
+                                        onPress={() => this._handleDelete(active_comment) }>
+                                            <MaterialIcons name="delete-outline" size={24} color="black" />
+                                            <Text style={SystemStyle.DeleteTextBtn}>Delete</Text>
+                                    </TouchableOpacity>
+                                }
                                 <View style={SystemStyle.CommentDateInfo}>
                                     <FontAwesome5 name="clock" size={24} color="black" style={SystemStyle.Icon}/>
                                     <Text style={SystemStyle.CommentDate}>{ active_comment.server_time }</Text>

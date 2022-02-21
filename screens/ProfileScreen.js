@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  TextInput, 
   ScrollView, 
   TouchableOpacity,
   Text, 
@@ -10,15 +9,10 @@ import {
   SafeAreaView, RefreshControl
 } from 'react-native';
 import { 
-  Feather,
-  Ionicons,
   SimpleLineIcons,
-  MaterialIcons,
 } from '@expo/vector-icons';
-import Spinner from 'react-native-loading-spinner-overlay';
 import { auth, db, storage } from '../firebase';
 
-import SystemStyle from "../styles/SystemStyle";
 import ProfileScreenStyle from "../styles/ProfileScreenStyle";
 
 import ProfileContent from "../components/ProfileContent";
@@ -191,14 +185,18 @@ class ProfileScreen extends Component {
                   </View>
                 ) : null}
                 <View style={ProfileScreenStyle.Dashboard}>
-                  <View style={ProfileScreenStyle.Counter}>            
-                    <Text style={ProfileScreenStyle.CounterNumber}>814</Text>
-                    <Text style={ProfileScreenStyle.BoardTextOne}>Followers</Text>
-                  </View>
-                  <View style={ProfileScreenStyle.Counter}>            
-                    <Text style={ProfileScreenStyle.CounterNumber}>26</Text>
-                    <Text style={ProfileScreenStyle.BoardTextTwo}>Following</Text>
-                  </View>
+                  <TouchableOpacity onPress = {() => this.props.navigation.navigate('FollowerScreen')}>
+                    <View style={ProfileScreenStyle.Counter}>            
+                      <Text style={ProfileScreenStyle.CounterNumber}>814</Text>
+                      <Text style={ProfileScreenStyle.BoardTextOne}>Followers</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress = {() => this.props.navigation.navigate('FollowingScreen')}>
+                    <View style={ProfileScreenStyle.Counter}>            
+                      <Text style={ProfileScreenStyle.CounterNumber}>26</Text>
+                      <Text style={ProfileScreenStyle.BoardTextTwo}>Following</Text>
+                    </View>
+                  </TouchableOpacity>
                 </View>
               </View>
           </View>

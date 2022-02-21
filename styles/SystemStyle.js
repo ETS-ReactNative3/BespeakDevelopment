@@ -358,6 +358,7 @@ const SystemStyle = StyleSheet.create({
       color:'#000',
       alignSelf:'center',
       fontSize:14,
+      fontFamily:'RedHatDisplay-Light',
     },
     //Event Guide
     EventAboutTitle:{
