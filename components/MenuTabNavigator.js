@@ -10,7 +10,7 @@ import {
 import Menu from './MenuNavigator'
 import ScanScreen from '../screens/ScanScreen' //#TODO: Migrate Soon
 
-import homeStyles from "../styles/homeStyles";
+import SystemStyle from "../styles/SystemStyle";
 
 const Tab = createBottomTabNavigator();
 
@@ -53,7 +53,7 @@ export default class UserTabNavigate extends Component {
                     }}/>
                 <Tab.Screen name="NotificationTab" component={Menu.NotificationNavigator}
                     options={{
-                        title: <Text style={homeStyles.tabTitle}>Notifications</Text>,
+                        title: <Text style={SystemStyle.TabTitle}>Notifications</Text>,
                         tabBarShowLabel:false,
                         tabBarLabel: 'Updates',
                         tabBarIcon: ({ color, size }) => (

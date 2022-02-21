@@ -27,10 +27,11 @@ const EditEventStyle=StyleSheet.create({
         backgroundColor: 'rgba(221, 221, 221, 0.5)',
         borderRadius: 10,
     },
-    createeventcontainer:{
-        margin:20,
+    //Edit Event Screen
+    EditEventContainer:{
+        margin:'3%',
     },
-    eventCreatetxt:{
+    TitleScreen:{
         fontFamily:'RedHatDisplay-Medium',
         fontSize:30,
     },
@@ -150,20 +151,21 @@ const EditEventStyle=StyleSheet.create({
         color: '#fff',
         fontFamily: 'RedHatDisplay-Medium',
     },
-    LockEventcontainer:{
+    LockEventContainer:{
         height: 50,
         flexDirection:'row',
         backgroundColor: 'rgba(221, 221, 221, 0.3)',
-        marginBottom:15,
+        marginBottom: '3%',
         justifyContent:'space-between'
         
     },
-    LockEventtxt:{
-        marginLeft:40,
+    LockEventText:{
+        marginLeft: '10%',
         fontFamily:'RedHatDisplay-Regular',
         fontSize:16,
         alignSelf:'center'
     },
+    //Toggle Switch
     LockEventToggle:{
         marginRight: 30,
         alignSelf:'center'

@@ -28,15 +28,15 @@ const Options = {
         borderWidth:0,
     },
 
-    // Tab Navigator
+    // Profile Screen Tab Navigator for Events,Ticket,Bookmark
     TopTabNavigation: {
         tabBarActiveTintColor: '#2b2b2b',
         tabBarInactiveTintColor:'#8c8c8c',
         tabBarPressColor:'#f0c28b',
         tabBarLabelStyle: {
-            fontSize: 15,
+            fontSize: 17,
             textTransform: 'none',
-            fontWeight: 'bold',
+            fontFamily:'RedHatDisplay-Medium',
         }
     },
 
@@ -53,12 +53,12 @@ const Options = {
     // Search Screen Tab Navigator
     SearchScreenNavigation: {
         tabBarActiveTintColor: '#eb9834',
-        tabBarInactiveTintColor:'#8c8c8c',
+        tabBarInactiveTintColor:'#5b5c5a',
         tabBarPressColor:'#f0c28b',
         tabBarLabelStyle: {
             fontSize: 18,
             textTransform: 'none',
-            fontWeight: 'bold',
+            fontFamily: 'RedHatDisplay-Medium',
         }
     },
     SearchTabNavigation: {

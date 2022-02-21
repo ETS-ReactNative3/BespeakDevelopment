@@ -5,7 +5,7 @@ const ProfileContentStyle=StyleSheet.create({
     CardContainer: {
         flex: 1,
         backgroundColor: '#fff',
-        paddingTop:'2%'
+        paddingTop:'2.5%'
     },
     CreateCard:{
         backgroundColor: '#fff',
@@ -15,10 +15,8 @@ const ProfileContentStyle=StyleSheet.create({
         flexDirection: 'row',
         alignSelf:'stretch',
         justifyContent: 'space-between',
-        padding: 2,
-        margin: 10,
-        marginLeft:20,
-        marginRight:20,
+        marginLeft: '3%',
+        marginRight: '3%',
         borderRadius: 35,
         flexDirection:'row',
     },
