@@ -268,33 +268,6 @@ const SystemStyle = StyleSheet.create({
         color: '#000',
         marginBottom:'4%',
     },
-    //To View Organizer Info
-    OrganizerTab:{
-        flexDirection:'row',
-        justifyContent:'space-between',
-        marginBottom:'4%',
-        marginTop:'4%',
-    },
-    OrganizerInfo:{
-        flexDirection:'row',
-    },
-    OrganizerImgContainer: {
-        alignItems:'center',
-        justifyContent:'center',
-    },
-    OrganizerImg:{
-        borderRadius:25,
-        width: 40,
-        height:40,
-        justifyContent:'center',
-    },
-    OrganizerName:{
-        fontSize: 20,
-        fontFamily:'RedHatDisplay-Medium',
-        color: '#000',
-        marginLeft:'1.4%',
-        marginTop:'-1%',
-    },
     //For Follow Organizer Button
     FollowOrgBtn: {
         alignItems: 'center',
@@ -595,9 +568,42 @@ const SystemStyle = StyleSheet.create({
     fontSize: 25,
     marginLeft: '-35%',
   },
-
-
-    
+  // Follow Screen Styles
+  FollowOrganizerTab:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    marginBottom:'2%',
+    marginTop:'2%',
+  },
+  FollowOrganizerImg:{
+    borderRadius:25,
+    width: 40,
+    height: 40,
+    justifyContent:'center',
+  },
+  FollowCardContainer:{
+    justifyContent:'center',
+    alignSelf:'center',
+    marginLeft: '3%',
+    width:'55%',
+  },
+  FollowOrganizer:{
+    fontSize: 17,
+    fontFamily:'RedHatDisplay-Medium',
+    color: '#5b5c5a',
+    marginLeft:'1.4%',
+    marginTop:'-1.5%',
+  },
+  //Gray Button Follow
+  ToFollowOrgBtn: {
+    alignItems: 'center',
+    justifyContent:'center',
+    backgroundColor: '#5b5c5a',
+    height: 36,
+    width: 120,
+    borderRadius: 25,
+    justifyContent:'center',
+  },  
 });
 
 export default SystemStyle
