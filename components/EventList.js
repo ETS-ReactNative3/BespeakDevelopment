@@ -39,7 +39,8 @@ class EventList extends Component {
     componentDidMount() {
         try {
             this._unsubscribe = this.props.navigation.addListener('focus', () => {
-                this.doRefresh() // Switch to onRefresh() to show animation
+                //this.doRefresh() // Switch to onRefresh() to show animation
+                this._loadEvents() // Update Events
             });
             this.setState({
                 loading: true

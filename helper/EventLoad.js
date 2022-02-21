@@ -1,6 +1,8 @@
 import { auth, db, storage } from '../firebase'
 import dateFormat from '../helper/DateFormat';
 
+import Banners from '../values/Banners'
+
 async function _arrangeData(events_data, mod = false) {
     let saved_events = await _getUserData("bookmarked");
     console.log("Bookmarked Events: ", saved_events)
@@ -18,7 +20,7 @@ async function _arrangeData(events_data, mod = false) {
         item.owner_image = await _getProfileImage(item.owner)
 
         item.owner_name = await _getProfileName(item.owner);
-        item.event_image = await _getEventImage(item.id);
+        item.event_image = await _getEventImage(item.id, item.random_banner);
 
         let raw_sched = parseInt(item.schedule);
         let raw_posted = parseInt(item.server_time);
@@ -57,7 +59,7 @@ async function _getProfileImage(user_id) {
     return require('../assets/img/blank-profile.png');
 }
 
-async function _getEventImage(event_id) {
+async function _getEventImage(event_id, random_banner) {
     let event_image = false;
     await storage.ref(`/event/${event_id}/banner`)
         .getDownloadURL()
@@ -73,8 +75,24 @@ async function _getEventImage(event_id) {
 
     if(event_image) {
         return {uri: event_image};
+    } 
+    
+    
+    if (random_banner) {
+        random_banner--;
     }
-    return require('../assets/img/blank-cover.png');
+
+    let _banner = false;
+    
+    try {
+        _banner = Banners[random_banner];
+    } catch(e) {}
+
+    if(!_banner) {
+        _banner = Banners[8];
+    }
+    
+    return _banner ? _banner : require('../assets/img/blank-cover.png');
 }
 // #TODO: OPTIMIZE
 async function _getProfileName(uid) {

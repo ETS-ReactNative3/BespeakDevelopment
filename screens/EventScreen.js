@@ -84,7 +84,7 @@ class EventScreen extends Component {
 
         console.log("Opened Event Data: ", _data)
 
-        await this._loadComments();
+        this._loadComments();
 
         this.setState({
             loading: false,
@@ -285,9 +285,7 @@ class EventScreen extends Component {
                         <Text style={SystemStyle.BreakLineComment}>Comment</Text>
                     </View>
                     
-                    { comment_content.length == 0 ? (
-                            <Text style={SystemStyle.EmptyComment}> No comments found. </Text>
-                        ) : (
+                    { comment_content.length > 0 && (
                             comment_content.map((item)=> 
                                 <View key = {item.id} style={SystemStyle.BespeakerCommentContainer}>
                                     <View style={SystemStyle.BespeakerImgContainer}>
@@ -350,11 +348,13 @@ class EventScreen extends Component {
                     radius={35}>
                         <View style={SystemStyle.CommentInfoView}>
                             <View style={SystemStyle.DeleteModalView}>
-                                <TouchableOpacity style={SystemStyle.Icon}
-                                    onPress={() => this._handleDelete(active_comment) }>
-                                        <MaterialIcons name="delete-outline" size={24} color="black" />
-                                        <Text style={SystemStyle.DeleteTextBtn}>Delete</Text>
-                                </TouchableOpacity>
+                                { active_comment.is_owned &&
+                                    <TouchableOpacity style={SystemStyle.Icon}
+                                        onPress={() => this._handleDelete(active_comment) }>
+                                            <MaterialIcons name="delete-outline" size={24} color="black" />
+                                            <Text style={SystemStyle.DeleteTextBtn}>Delete</Text>
+                                    </TouchableOpacity>
+                                }
                                 <View style={SystemStyle.CommentDateInfo}>
                                     <FontAwesome5 name="clock" size={24} color="black" style={SystemStyle.Icon}/>
                                     <Text style={SystemStyle.CommentDate}>{ active_comment.server_time }</Text>
