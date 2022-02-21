@@ -113,7 +113,7 @@ const SystemStyle = StyleSheet.create({
     height: '100%',
     backgroundColor:'#fff',
     alignItems: "center",
-    padding:'3%'
+    padding:'4%'
   },
   //Draggable Modal Image Container
   BottomSheetImage:{
@@ -340,12 +340,11 @@ const SystemStyle = StyleSheet.create({
         borderBottomWidth: 1, 
         borderColor:'#000', 
         opacity:0.1,
-        marginTop:'-8%'
+        marginTop:'-10%'
     },
     BreakLineContainer:{
-        paddingTop:'3%',
-        padding:'1%'
-    },
+      paddingTop:'4%',
+      padding:'1%',    },
     BreakLine:{
         borderBottomWidth:1,
         borderBottomColor: '#000',
@@ -353,12 +352,12 @@ const SystemStyle = StyleSheet.create({
         opacity: .3,
     },
     BreakLineComment:{
-        marginTop: '-7.5%',
-        padding: '5%',
-        backgroundColor:'#fff',
-        color:'#000',
-        alignSelf:'center',
-        fontSize:14,
+      marginTop: '-5.5%',
+      padding: '3%',
+      backgroundColor:'#fff',
+      color:'#000',
+      alignSelf:'center',
+      fontSize:14,
     },
     //Event Guide
     EventAboutTitle:{
@@ -390,7 +389,7 @@ const SystemStyle = StyleSheet.create({
     //Comment Section
     BespeakerCommentContainer:{
         flexDirection:'row',
-        marginBottom:'5%',
+        marginBottom:'3%',
         width:'88%'
     },
     BespeakerContainer:{
