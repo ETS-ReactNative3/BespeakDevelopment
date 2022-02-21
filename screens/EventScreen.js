@@ -337,11 +337,10 @@ class EventScreen extends Component {
                 </View>
                 <View style={SystemStyle.AttendingContainer}>
                     {item.owner == auth.currentUser.uid ? (
-                        // DIBA DAPAT KULAY ITIM 'TO?!?!?
                         <>
-                            <TouchableOpacity style={SystemStyle.AttendingBtn}
+                            <TouchableOpacity style={SystemStyle.ViewAttendeeBtn}
                                 onPress={() => this.props.navigation.navigate('ParticipantListScreen') }>
-                                    <Text style={SystemStyle.AttendingTextBtn}>View Attendees</Text> 
+                                    <Text style={SystemStyle.ViewAttendeeTextBtn}>View Attendees</Text> 
                             </TouchableOpacity>
                         </>
                     ) : (
