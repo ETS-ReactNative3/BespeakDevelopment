@@ -634,11 +634,11 @@ class EditEventScreen extends Component {
                             : null
                         }
                     </View>
-                </ScrollView>
                     <TouchableOpacity style={EditEventStyle.DeleteBtn}
                         onPress={() => /*navigation.navigate('')*/ Alert.alert('Wala', 'wala pa.')}>
                             <Text style={EditEventStyle.DeleteTextBtn}>Delete Event</Text>
                     </TouchableOpacity>
+                </ScrollView>
             </View>
         );
     }

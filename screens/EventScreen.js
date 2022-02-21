@@ -19,6 +19,7 @@ import {
     FontAwesome5,
     Ionicons
 } from '@expo/vector-icons';
+import BottomSheet from "react-native-gesture-bottom-sheet";
 
 import { auth, db } from '../firebase'
 
@@ -283,7 +284,7 @@ class EventScreen extends Component {
                     </View>
                     
                     { comment_content.length == 0 ? (
-                            <Text> No comments found. </Text>
+                            <Text style={SystemStyle.EmptyComment}> No comments found. </Text>
                         ) : (
                             comment_content.map((item)=> 
                                 <View key = {item.id} style={SystemStyle.BespeakerCommentContainer}>
@@ -298,7 +299,7 @@ class EventScreen extends Component {
                                     </View>
                                     
                                     <TouchableOpacity onPress={() => this.setState({ active_comment: item, is_active: true })}>
-                                        <SimpleLineIcons name="options" size={24} color="black" style={SystemStyle.CommentInfo}/>
+                                        <SimpleLineIcons name="options" size={24} color="#5b5c5a" style={SystemStyle.CommentInfo}/>
                                     </TouchableOpacity>
                                 </View>   
                             )
@@ -324,7 +325,7 @@ class EventScreen extends Component {
                                 <TouchableOpacity
                                     onPress = {() => this._handleSubmit()}>
                                     <Ionicons name="send" size={24} 
-                                        color={ this.state.raw_comment ? "black" : "grey"}
+                                        color={ this.state.raw_comment ? "black" : "#5b5c5a"}
                                         style={SystemStyle.SendComment}/>
                                 </TouchableOpacity>
                             </View>
@@ -358,9 +359,33 @@ class EventScreen extends Component {
                         </View>
                     </View>
                     </Modal>
+
             </ScrollView>
+
         );
     }
 }
 
 export default { EventScreen };
+
+
+/* For Comment Info --- New Modal
+                    <BottomSheet hasDraggableIcon
+                        ref={this.props.modal_ref}
+                        height={150}
+                        radius={35}>
+                        <View style={SystemStyle.CommentInfoView}>
+                            <View style={SystemStyle.DeleteModalView}>
+                                <TouchableOpacity style={SystemStyle.Icon}
+                                    onPress={() => this._handleDelete(active_comment) }>
+                                        <MaterialIcons name="delete-outline" size={24} color="black" />
+                                        <Text style={SystemStyle.DeleteTextBtn}>Delete</Text>
+                                </TouchableOpacity>
+                                <View style={SystemStyle.CommentDateInfo}>
+                                    <FontAwesome5 name="clock" size={24} color="black" style={SystemStyle.Icon}/>
+                                    <Text style={SystemStyle.CommentDate}>{ active_comment.server_time }</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </BottomSheet>
+*/
