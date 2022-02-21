@@ -282,7 +282,7 @@ class EventScreen extends Component {
                     </Text>
                     <View style={SystemStyle.BreakLineContainer}>
                         <Text style={SystemStyle.BreakLine}></Text>
-                        <Text style={SystemStyle.BreakLineComment}>Comment</Text>
+                        <Text style={SystemStyle.BreakLineComment}>Comments</Text>
                     </View>
                     
                     { comment_content.length > 0 && (
@@ -346,16 +346,14 @@ class EventScreen extends Component {
                     ref={this.comment_modal}
                     height={90}
                     radius={35}>
-
-                        <View style={SystemStyle.CommentInfoView}>
-                            <View style={SystemStyle.DeleteModalView}>
-                                { active_comment.is_owned &&
-                                    <TouchableOpacity style={SystemStyle.Icon}
-                                        onPress={() => this._handleDelete(active_comment) }>
-                                            <MaterialIcons name="delete-outline" size={24} color="black" />
-                                            <Text style={SystemStyle.DeleteTextBtn}>Delete</Text>
-                                    </TouchableOpacity>
-                                }
+                        <View style={SystemStyle.CommentInfoContainer}>
+                            { active_comment.is_owned &&
+                                <TouchableOpacity style={SystemStyle.Icon}
+                                    onPress={() => this._handleDelete(active_comment) }>
+                                        <MaterialIcons name="delete-outline" size={24} color="black" />
+                                        <Text style={SystemStyle.DeleteTextBtn}>Delete</Text>
+                                </TouchableOpacity>
+                            }
                                 <View style={SystemStyle.CommentDateInfo}>
                                     <FontAwesome5 name="clock" size={24} color="black" style={SystemStyle.Icon}/>
                                     <Text style={SystemStyle.CommentDate}>{ active_comment.server_time }</Text>

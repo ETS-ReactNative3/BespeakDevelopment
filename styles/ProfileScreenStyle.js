@@ -69,7 +69,7 @@ const ProfileScreenStyle=StyleSheet.create({
     fontSize:23,
   },
   ProfileBio:{
-    fontFamily:'RedHatDisplay-Regular',
+    fontFamily:'RedHatDisplay-Light',
     fontSize:16,
     marginBottom: '1%',
     marginTop: '1%',
