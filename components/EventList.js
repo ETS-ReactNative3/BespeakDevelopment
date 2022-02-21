@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { ActivityIndicator,
-    Alert,
     FlatList,
     Text,
     View, 
-    RefreshControl,
-    ScrollView } from 'react-native';
+    RefreshControl
+} from 'react-native';
 
 import { db, _db } from '../firebase';
 
@@ -38,9 +37,9 @@ class EventList extends Component {
 
     componentDidMount() {
         try {
+            //# TODO: Optimize
             this._unsubscribe = this.props.navigation.addListener('focus', () => {
-                //this.doRefresh() // Switch to onRefresh() to show animation
-                this._loadEvents() // Update Events
+                this._loadEvents();
             });
             this.setState({
                 loading: true
