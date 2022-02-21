@@ -68,7 +68,28 @@ const Options = {
             borderRadius:10,
             width: "50%",
         },
+    },
+
+    // Attendees Screen Tab Navigator
+    AttendeesScreenNavigation: {
+        tabBarActiveTintColor: '#eb9834',
+        tabBarInactiveTintColor:'#5b5c5a',
+        tabBarPressColor:'#f0c28b',
+        tabBarLabelStyle: {
+            fontSize: 18,
+            textTransform: 'none',
+            fontFamily: 'RedHatDisplay-Medium',
+        }
+    },
+    AttendeesTabNavigation: {
+        tabBarIndicatorStyle: {
+            borderBottomColor: '#eb9834',
+            borderBottomWidth: 3,
+            borderRadius:10,
+            width: "50%",
+        },
     }
+
 }
 
 export default Options;
