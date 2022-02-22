@@ -1,8 +1,12 @@
 import React, { Component } from "react";
+import { View, Text } from "react-native";
+
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import EventList from "./EventList";
 import OrganizerList from "./OrganizerList"
+
+import SearchScreenStyle from '../styles/SearchScreenStyle';
 
 import Options from '../values/Options'
 
@@ -33,7 +37,12 @@ class SearchEvent extends Component {
     render() {
         return (
             <View style={SearchScreenStyle.Container}>
-                <Text style={SearchScreenStyle.TopSearch}>Top Search</Text>
+                { this.props.search_key ? (
+                    <Text style={SearchScreenStyle.TopSearch}>Search results for "{this.props.search_key}"</Text>
+                ) : (
+                    <Text style={SearchScreenStyle.TopSearch}>Top Search</Text>
+                )}
+                
                 { !this.props.refreshing &&
                     <EventList for_search = {true} 
                         search_key = {this.props.search_key}
@@ -48,7 +57,11 @@ class SearchOrganizer extends Component {
     render() {
         return (
             <View style={SearchScreenStyle.Container}>
-                <Text style={SearchScreenStyle.TopSearch}>Top Search</Text>
+                { this.props.search_key ? (
+                    <Text style={SearchScreenStyle.TopSearch}>Search results for "{this.props.search_key}"</Text>
+                ) : (
+                    <Text style={SearchScreenStyle.TopSearch}>Top Search</Text>
+                )}
                 { !this.props.refreshing &&
                     <OrganizerList for_search = {true} 
                         search_key = {this.props.search_key}
