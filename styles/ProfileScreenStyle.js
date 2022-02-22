@@ -52,7 +52,7 @@ const ProfileScreenStyle=StyleSheet.create({
   },
   EditProfileText:{
     marginTop: -2,
-    fontSize: 15,
+    fontSize: 17,
     alignItems: 'center',
     justifyContent: 'center',
     color: '#fff',
