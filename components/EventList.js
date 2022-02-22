@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { ActivityIndicator,
     FlatList,
     Text,
-    View, 
+    View,
+    Image,
     RefreshControl
 } from 'react-native';
 
@@ -219,19 +220,35 @@ class EventList extends Component {
                 }
                 {this.state.data.length == 0 && (
                         this.props.for_profile && this.props.user_id ? (
-                            // Dito yung ipapacreate mo siya ng ibint
                             <View style={SystemStyle.TabContainer}>
-                                <Text style={SystemStyle.TabEmptyList}> No events found. Create one. </Text>
+                                <View style={SystemStyle.TabContainer}>
+                                    <View style={SystemStyle.CreateEventImgContainer}>
+                                        <Image style={SystemStyle.CreateEventImg} source={require('../assets/img/CreateEvent.png')}/>      
+                                    </View>
+
+                                        <Text style={SystemStyle.EmptyTitle}> Create your event </Text>
+                                        <Text style={SystemStyle.EmptyTitleAdditionalInfo}> When you create an event, they will appear here</Text>
+                                        <View style={SystemStyle.Center}>
+                                        <Text style={SystemStyle.EmptyTitleAdditionalInfo}> on your profile. </Text>
+                                    </View>
+                                </View>
                             </View>
                         ) : this.props.for_saved ? (
-                            // Dito yung ipapa browse mo siya ng ibint para mag bookmark cya
                             <View style={SystemStyle.TabContainer}>
-                                <Text style={SystemStyle.TabEmptyList}> No events found. Bookmark an event. </Text>
+                                <View style={SystemStyle.LookEventImgContainer}>
+                                    <Image style={SystemStyle.LookEventImg} source={require('../assets/img/LookEvent.png')}/>      
+                                </View>
+                                    <Text style={SystemStyle.EmptyTitle}> Look for an event </Text>
+                                    <Text style={SystemStyle.EmptyTitleAdditionalInfo}> All the events you have saved will show up here. </Text>
                             </View>
                         ) : (
                             // Dito yung ipapa browse mo siya ng organizer para magka laman newspid niya
                             <View style={SystemStyle.TabContainer}>
-                                <Text style={SystemStyle.TabEmptyList}> No events found. Follow an organizer. </Text>
+                                <View style={SystemStyle.WelcomeToBespeakImgContainer}>
+                                    <Image style={SystemStyle.WelcomeToBespeakImg} source={require('../assets/img/WelcomeToBespeak.png')}/>      
+                                </View>
+                                    <Text style={SystemStyle.EmptyTitle}> Welcome to Bespeak </Text>
+                                    <Text style={SystemStyle.AdditionalInfo}> Follow organizers to start seeing their upcoming events. </Text>
                             </View>
                         )
                     ) 

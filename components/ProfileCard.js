@@ -47,7 +47,7 @@ class ProfileCard extends Component {
                                         source={ item.profile_image }/>
                                 </View>
                                 <View style={SystemStyle.OrganizerCardContainer}>
-                                    <Text style={SystemStyle.OrganizerName}>{ item._name }</Text>
+                                    <Text style={SystemStyle.OrganizerNameButBlack}>{ item._name }</Text>
                                 </View>
                         </TouchableOpacity>
                         <TouchableOpacity style={
@@ -65,6 +65,9 @@ class ProfileCard extends Component {
                 <View style={SystemStyle.CardOption}>
                     <TouchableOpacity>
                         <Ionicons name="share-social-outline" size={22} color="black" />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Feather name="bookmark" size={22} color="black" />
                     </TouchableOpacity>
                     <TouchableOpacity>
                         <FontAwesome name="bookmark" size={22} color="black" />
