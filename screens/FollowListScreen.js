@@ -23,10 +23,11 @@ class FollowingScreen extends Component {
                             />
                         </View>
                         <View style={SystemStyle.FollowCardContainer}>
-                            <Text style={SystemStyle.FollowOrganizer}>Every Nation Campus</Text>
+                            <Text style={SystemStyle.FollowListOrganizerName}>Every Nation Campus</Text>
+                            <Text style={SystemStyle.FollowListOrganizerBio}>Bio sabi mo eto para sayo hakhak.Bio sabi mo eto para sayo hakhak</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={SystemStyle.FollowOrgBtn}
+                    <TouchableOpacity style={SystemStyle.ToFollowingOrgBtn}
                         //onPress={() => navigation.navigate('')}
                     >
                         <Text style={SystemStyle.FollowOrgTextBtn}>Following</Text>
@@ -43,10 +44,11 @@ class FollowingScreen extends Component {
                             />
                         </View>
                         <View style={SystemStyle.FollowCardContainer}>
-                            <Text style={SystemStyle.FollowOrganizer}>Every Nation Campus</Text>
+                            <Text style={SystemStyle.FollowListOrganizerName}>Every Nation Campus</Text>
+                            <Text style={SystemStyle.FollowListOrganizerBio}>Bio sabi mo eto para sayo hakhak.Bio sabi mo eto para sayo hakhak</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={SystemStyle.FollowOrgBtn}
+                    <TouchableOpacity style={SystemStyle.ToFollowingOrgBtn}
                         //onPress={() => navigation.navigate('')}
                     >
                         <Text style={SystemStyle.FollowOrgTextBtn}>Following</Text>
@@ -72,7 +74,8 @@ class FollowerScreen extends Component {
                             />
                         </View>
                         <View style={SystemStyle.FollowCardContainer}>
-                            <Text style={SystemStyle.FollowOrganizer}>Every Nation Campus</Text>
+                            <Text style={SystemStyle.FollowListOrganizerName}>Every Nation Campus</Text>
+                            <Text style={SystemStyle.FollowListOrganizerBio}>Bio sabi mo eto para sayo hakhak.Bio sabi mo eto para sayo hakhak</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={SystemStyle.ToFollowOrgBtn}
@@ -92,7 +95,8 @@ class FollowerScreen extends Component {
                             />
                         </View>
                         <View style={SystemStyle.FollowCardContainer}>
-                            <Text style={SystemStyle.FollowOrganizer}>Every Nation Campus</Text>
+                            <Text style={SystemStyle.FollowListOrganizerName}>Every Nation Campus</Text>
+                            <Text style={SystemStyle.FollowListOrganizerBio}>Bio sabi mo eto para sayo hakhak.Bio sabi mo eto para sayo hakhak</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={SystemStyle.ToFollowOrgBtn}
