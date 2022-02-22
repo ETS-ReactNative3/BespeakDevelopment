@@ -29,6 +29,7 @@ class OrganizerList extends Component {
         }
 
         this.onRefresh = this.onRefresh.bind(this)
+        this._updateRelation = this._updateRelation.bind(this)
     }
     componentDidMount() {
         try {
@@ -39,6 +40,19 @@ class OrganizerList extends Component {
         } catch(error) {
             console.log(error);
         }
+    }
+    _updateRelation(index) {
+        this.setState({ refreshing: true });
+
+        let organizer = this.state.data;
+        
+        index = organizer.indexOf(index)
+        console.log("Processing Relation ID: ", index)
+       
+        organizer[index].is_following = !organizer[index].is_following;
+         this.setState({data: organizer});
+    
+        this.setState({ refreshing: false });
     }
     async _retrieveOrganizers(type_extend = false) {
 
@@ -164,7 +178,8 @@ class OrganizerList extends Component {
                     renderItem={({ item }) => (
                         <ProfileCard data = {item} 
                             refreshing={this.state.refreshing}
-                            navigation = {this.props.navigation}/>
+                            navigation = {this.props.navigation}
+                            update_relation = {this._updateRelation}/>
                     )}
                     keyExtractor={(item, index) => index.toString()}
                     ListFooterComponent={this._renderFooter()}
