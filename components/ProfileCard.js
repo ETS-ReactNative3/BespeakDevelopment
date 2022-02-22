@@ -7,7 +7,8 @@ import {
 } from 'react-native';
 import { 
     Ionicons,
-    FontAwesome
+    FontAwesome,
+    Feather
 } from '@expo/vector-icons';
 
 import { _setFollowConnection } from "../helper/ProfileHelper";

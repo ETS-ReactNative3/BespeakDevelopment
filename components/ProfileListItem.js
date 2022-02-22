@@ -40,7 +40,8 @@ class ProfileListItem extends Component {
                                 source={ item.profile_image } />
                         </View>
                         <View style={SystemStyle.FollowCardContainer}>
-                            <Text style={SystemStyle.FollowOrganizer}>{ item._name }</Text>
+                            <Text style={SystemStyle.FollowListOrganizerName}>{ item._name }</Text>
+                            <Text style={SystemStyle.FollowListOrganizerBio}>{ item.bio }</Text>
                         </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={

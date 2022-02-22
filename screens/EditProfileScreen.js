@@ -99,12 +99,12 @@ class EditProfileScreen extends Component {
             console.log('Attached Image: ', images.path);
             if(upload_type == "dp") {
                 this.setState({'profile_photo': {
-                    'uri': images.path,
+                    'uri': {uri: images.path},
                     'hasChange': true
                 }})
             } else {
                 this.setState({'cover_photo': {
-                    'uri': images.path,
+                    'uri': {uri: images.path},
                     'hasChange': true
                 }})
             }
@@ -136,10 +136,10 @@ class EditProfileScreen extends Component {
             }) 
             .then(async () => {
                 if (this.state.profile_photo.hasChange) {
-                    await this._uploadToStorage(this.state.profile_photo.uri, `/users/${this.state.user.uid}/profile`)
+                    await this._uploadToStorage(this.state.profile_photo.uri.uri, `/users/${this.state.user.uid}/profile`)
                 }
                 if (this.state.cover_photo.hasChange) {
-                    await this._uploadToStorage(this.state.cover_photo.uri, `/users/${this.state.user.uid}/cover`)
+                    await this._uploadToStorage(this.state.cover_photo.uri.uri, `/users/${this.state.user.uid}/cover`)
                 }
 
                 this.setState({'is_loading': false})
