@@ -69,7 +69,6 @@ class SearchOrganizer extends Component {
                 }
             </View>
         );
-
     }
 }
 

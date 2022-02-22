@@ -583,6 +583,7 @@ const SystemStyle = StyleSheet.create({
     justifyContent:'space-between',
     marginBottom:'2%',
     marginTop:'2%',
+    marginRight:'2%',
   },
   FollowOrganizerImg:{
     borderRadius:25,
@@ -591,28 +592,113 @@ const SystemStyle = StyleSheet.create({
     justifyContent:'center',
   },
   FollowCardContainer:{
+    flexDirection:'column',
     justifyContent:'center',
     alignSelf:'center',
     marginLeft: '3%',
-    width:'55%',
+    width:'65%',
   },
-  FollowOrganizer:{
+  FollowListOrganizerName:{
     fontSize: 17,
     fontFamily:'RedHatDisplay-Medium',
     color: '#5b5c5a',
     marginLeft:'1.4%',
     marginTop:'-1.5%',
   },
-  //Gray Button Follow
+  FollowListOrganizerBio:{
+    fontSize: 13,
+    fontFamily:'RedHatDisplay-Light',
+    color: '#5b5c5a',
+    marginLeft:'1.4%',
+    marginTop:'-1.5%',
+  },
+  //Gray Button To Follow
   ToFollowOrgBtn: {
     alignItems: 'center',
     justifyContent:'center',
     backgroundColor: '#5b5c5a',
-    height: 36,
-    width: 120,
+    height: 30,
+    width: 90,
     borderRadius: 25,
     justifyContent:'center',
   },  
+  //Orange Button Following
+  ToFollowingOrgBtn: {
+    alignItems: 'center',
+    justifyContent:'center',
+    backgroundColor: '#eb9834',
+    height: 30,
+    width: 90,
+    borderRadius: 25,
+    justifyContent:'center',
+  },
+  //For Empty Screens
+  Center:{
+    alignItems:'center',
+    justifyContent:'center',
+  },
+  EmptyTitle:{
+    color:'#000',
+    fontSize: 30,
+    fontFamily:'RedHatDisplay-Medium',
+    alignSelf:'center',
+    justifyContent:'center',
+    marginBottom:'2%',
+  },
+  EmptyTitleAdditionalInfo:{
+    color:'#5b5c5a',
+    fontSize:17,
+    fontFamily:'RedHatDisplay-Regular',
+    alignItems:'center',
+    justifyContent:'center',
+    marginLeft:'13%',
+    marginRight:'13%'
+  },
+  //
+  AdditionalInfo:{
+    color:'#5b5c5a',
+    fontSize:17,
+    fontFamily:'RedHatDisplay-Regular',
+    alignItems:'center',
+    justifyContent:'center',
+    marginLeft:'8%',
+    marginRight:'8%'
+  },
+  //Empty Screen Images
+  LookEventImgContainer: {
+    alignItems:'center',
+    justifyContent:'center',
+    marginBottom:'-5%'
+  },
+  LookEventImg: {
+    marginBottom:'1.5%',
+    width: '30%',
+    height: '55%',
+    justifyContent:'center',
+  },
+  CreateEventImgContainer: {
+    alignItems:'center',
+    justifyContent:'center',
+    marginBottom:'-5%'
+  },
+  CreateEventImg: {
+    marginBottom:'1.5%',
+    width: '33%',
+    height: '60%',
+    justifyContent:'center',
+  },
+  WelcomeToBespeakImgContainer: {
+    alignItems:'center',
+    justifyContent:'center',
+    marginTop:'-50%',
+    marginBottom:'-25%',
+  },
+  WelcomeToBespeakImg: {
+    marginBottom:'1.5%',
+    width: '58%',
+    height: '40%',
+    justifyContent:'center',
+  },
 });
 
 export default SystemStyle
