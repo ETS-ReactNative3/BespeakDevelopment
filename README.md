@@ -35,3 +35,9 @@ https://www.npmjs.com/package/react-native-responsive-fontsize
 
 - ```expo install toggle-switch-react-native```
 https://www.npmjs.com/package/toggle-switch-react-native
+
+
+UPDATE AS OF 12:05PM | FEBRUARY 22, 2022
+Install this module:
+- ```install react-native-popup-confirm-toast```
+https://www.npmjs.com/package/react-native-popup-confirm-toast
