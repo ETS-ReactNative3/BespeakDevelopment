@@ -177,7 +177,28 @@ const EditEventStyle=StyleSheet.create({
         fontSize: 16,
         marginRight:'6%',
     },
-    
+    //Own Event Perspective Screen
+    EventContainer:{
+        flex:1,
+        backgroundColor:'#fff',
+        padding:'2%',
+    },
+    ImgContainer:{
+        margin:'-1%',
+        width: '102%',
+        height: 180,
+    },
+    EventTitle:{
+        fontSize: 30,
+        fontFamily: 'RedHatDisplay-Medium',
+        color: '#000',
+        marginBottom:'4%',
+        width:'65%',
+    },
+    TitleAndButtonRow:{
+        flexDirection:'row',
+        justifyContent:"space-between"
+    }
     
 
     

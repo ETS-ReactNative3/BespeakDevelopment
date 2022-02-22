@@ -26,6 +26,7 @@ import { auth, db } from '../firebase'
 import fetch_date_time from '../api/GlobalTime'
 
 import SystemStyle from "../styles/SystemStyle";
+import EditEventStyle from "../styles/EditEventStyle";
 
 import dateFormat from "../helper/DateFormat"
 import { 
@@ -220,14 +221,21 @@ class EventScreen extends Component {
                         onRefresh={this.onRefresh}
                         colors={["gray", "orange"]}/>
                 }>
-                <View style={SystemStyle.EventContainer}>
-                    <View style={SystemStyle.ImgContainer}>
-                        <Image style={SystemStyle.ImgContainer}
+                <View style={EditEventStyle.EventContainer}>
+                    <View style={EditEventStyle.ImgContainer}>
+                        <Image style={EditEventStyle.ImgContainer}
                             source={ item.event_image }/>
                     </View>
-                    <View style={SystemStyle.EventContainer}>
-                        <Text style={SystemStyle.EventTitle}>{ item.name }</Text>
-
+                    <View style={EditEventStyle.EventContainer}>
+                        <View style={EditEventStyle.TitleAndButtonRow}>
+                        <Text style={EditEventStyle.EventTitle}>{ item.name }</Text>
+                            <TouchableOpacity style={SystemStyle.FollowOrgBtn}
+                                onPress={() => this.props.navigation.navigate('EditEventScreen', 
+                                {event_id: item.id, 
+                                _done: this.onRefresh})}>
+                                <Text style={SystemStyle.FollowOrgTextBtn}>Edit Event</Text>
+                            </TouchableOpacity>
+                        </View>
                         <View style={SystemStyle.OrganizerTab}>
                             <TouchableOpacity style={SystemStyle.OrganizerInfo}
                                 onPress={() => navigation.navigate('NotificationDetailScreen')}>
@@ -236,7 +244,7 @@ class EventScreen extends Component {
                                             source={ item.owner_image }/>
                                     </View>
                                     <View style={SystemStyle.OrgCardContainer}>
-                                        <Text style={SystemStyle.OwnEventName}>{ item.owner_name }</Text>
+                                        <Text style={SystemStyle.OrganizerNameButBlack}>{ item.owner_name }</Text>
                                     </View>
                             </TouchableOpacity>
 

@@ -98,6 +98,14 @@ const SearchScreenStyle=StyleSheet.create({
         marginBottom:10,
         marginRight: 10,
     },
+    //For Top Search 
+    TopSearch:{
+        fontSize: 20,
+        fontFamily: 'RedHatDisplay-Medium',
+        color: '#000',
+        marginTop:'3%',
+        marginLeft:'4%',
+    },
 })
 
 export default SearchScreenStyle;
