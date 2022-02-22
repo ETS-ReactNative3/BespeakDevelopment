@@ -1,17 +1,14 @@
 import { auth, db, storage } from '../firebase'
 
-async function _arrangeProfileData(events_data, mod = false) {
+async function _arrangeProfileData(user_data, mod = false) {
     //console.log('Arranging: ', events_data)
     let arranged_data = [];
     let following = await _getFollowing(undefined, true);
     console.log("Following: ", following)
 
-    for(var i = 0; i < events_data.length; i++) {
-        let item = events_data[i]
+    for(var i = 0; i < user_data.length; i++) {
+        let item = user_data[i]
         //console.log('Arranging: ', item)
-
-        // Check if own profile.
-        item.is_owned = item.owner == auth.currentUser.uid
 
         item.profile_image = await _getProfileImage(item.id, 'profile')
         item.cover_image = await _getProfileImage(item.id, 'cover')
@@ -68,7 +65,44 @@ async function _getFollowing(user_id = auth.currentUser.uid, ids_only = true) {
     return _data;
 }
 
+async function _getFollowersId(user_id = auth.currentUser.uid) {
+    let get_relation_query = db.collection("_relation")
+        .doc(user_id)
+        
+    let snapshot = await get_relation_query.get();
+
+    if(snapshot.empty) {
+        return false;
+    } 
+
+    let _data = snapshot.data();
+    return _data.follower;
+}
+async function _isFollowing(_follower, _following) {
+    if(_follower == _following) return false;
+
+    let _data = await _getFollowersId(_following)
+    
+    if(_data.length == 0) {
+        return false;
+    } 
+
+    console.log("Checking ", _follower, " and ", _following);
+    return _data?.includes(_follower);
+}
+
+async function _countProfileRelation(user_id = auth.currentUser.uid) {
+    const followers = await _getFollowersId(user_id);
+    const following = await _getFollowing(user_id);
+
+    return {
+        total_followers: followers.length,
+        total_following: following.length
+    }
+}
 
 export {
-    _arrangeProfileData
+    _arrangeProfileData,
+    _isFollowing,
+    _countProfileRelation
 }

@@ -10,6 +10,7 @@ import EventScreens from "../screens/EventScreen";
 import ManageEventScreens from "../screens/ManageEventScreen";
 import ParticipantListScreens from "../screens/ParticipantListScreen";
 import FollowListScreens from "../screens/FollowListScreen";
+import UserProfileScreens from "../screens/UserProfileScreen";
 
 const MenuStack = createNativeStackNavigator();
 
@@ -43,6 +44,12 @@ class HomeNavigator extends Component {
                 headerShown: true,
                 tabBarShowLabel:false,
             }}/>
+            <MenuStack.Screen name="UserProfileScreen" component={UserProfileScreens.UserProfileScreen}
+              options={{
+                title: ' ',
+                headerShown: true,
+                tabBarShowLabel:false,
+            }}/>
           </MenuStack.Navigator>
         );
     }
@@ -67,6 +74,12 @@ class SearchNavigator extends Component {
             title: ' ',
           }}/>
         <MenuStack.Screen name="ParticipantListScreen" component={ParticipantListScreens}
+          options={{
+            title: ' ',
+            headerShown: true,
+            tabBarShowLabel:false,
+        }}/>
+        <MenuStack.Screen name="UserProfileScreen" component={UserProfileScreens.UserProfileScreen}
           options={{
             title: ' ',
             headerShown: true,
@@ -174,7 +187,12 @@ class ProfileNavigator extends Component {
               color: '#eb9834',
             }
         }}/>
-
+        <MenuStack.Screen name="UserProfileScreen" component={UserProfileScreens.UserProfileScreen}
+          options={{
+            title: ' ',
+            headerShown: true,
+            tabBarShowLabel:false,
+        }}/>
       </MenuStack.Navigator>
     );
   }
