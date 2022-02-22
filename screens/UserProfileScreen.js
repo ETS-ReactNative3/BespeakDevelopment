@@ -26,163 +26,160 @@ import {
 import { _setFollowConnection } from "../helper/ProfileHelper";
 
 class UserProfileScreen extends Component {
-  constructor() {
-    super()
-    this.onRefresh = this.onRefresh.bind(this)
-    this.state = {
-      data: {},
-      is_loading: true,
-      refreshing: false
+    constructor() {
+        super()
+        this.onRefresh = this.onRefresh.bind(this)
+        this.state = {
+        data: {},
+        is_loading: true,
+        refreshing: false
+        }
     }
-  }
-  async _loadUserData() {
-    var uid = this.props.route.params.user_id;
-    console.log('Viewing Profile of User with ID: ' + uid);
+    async _loadUserData() {
+        var uid = this.props.route.params.user_id;
+        console.log('Viewing Profile of User with ID: ' + uid);
 
-    const user_info = db.collection("user_info")
-    const query = user_info.doc(uid)
-    const snapshot = await query.get()
+        const user_info = db.collection("user_info")
+        const query = user_info.doc(uid)
+        const snapshot = await query.get()
 
-    if(snapshot.empty) {
-      console.log('No data found for user: ', uid);
-      return;
+        if(snapshot.empty) {
+            console.log('No data found for user: ', uid);
+            return;
+        } 
+
+        var raw_data = snapshot.data()
+        raw_data.id = snapshot.id;
+        raw_data = await _arrangeProfileData([raw_data]);
+        let _data = raw_data[0];
+
+        let count = await _countProfileRelation(uid);
+
+        this.setState({'data': {
+                'profile_name': _data._name,
+                'profile_photo': _data.profile_image,
+                'cover_photo': _data.cover_image,
+                ...count,
+                ..._data
+            },
+            'is_loading': false
+        })
+
+        console.log('Profile Name: ', this.state.data.profile_name)
+    }
+    componentDidMount() {
+        this.onRefresh()
     } 
-
-    var raw_data = snapshot.data()
-    raw_data.id = snapshot.id;
-    raw_data = await _arrangeProfileData([raw_data]);
-    let _data = raw_data[0];
-
-    let count = await _countProfileRelation(uid);
-
-    this.setState({'data': {
-        'profile_name': _data._name,
-        'profile_photo': _data.profile_image,
-        'cover_photo': _data.cover_image,
-        ...count,
-        ..._data
-    }})
-    console.log('Profile Name: ', this.state.data.profile_name)
-    this.setState({'is_loading': false})
-  }
-  
-  componentDidMount() {
-    this.onRefresh()
-  } 
-  doRefresh() {
-    return new Promise((resolve) => {
-      this._loadUserData()
-      setTimeout(resolve, 2000)
-    });
-  }
-  async onRefresh() {
-    console.log("Refreshing...")
-    this.setState({'refreshing': true})
-    await this.doRefresh().then(() => {
-      this.setState({'refreshing': false})
-      console.log("Refreshed.")
-    })
-  }
-  async _handleFollow(uid) {
-    let item = this.state.data;
-
-    let result = await _setFollowConnection(undefined, uid,
-        item.is_following ? 'unfollow' : 'follow');
-
-    if(result) {
-        this.setState({data: {
-            ...item,
-            is_following: !item.is_following
-        }})
+    doRefresh() {
+        return new Promise((resolve) => {
+        this._loadUserData()
+        setTimeout(resolve, 2000)
+        });
     }
-  }   
-  render() {
-    let item = this.state.data;
-    return (
-      <>
-        <SafeAreaView>
-          <ScrollView
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.refreshing || this.state.is_loading}
-                onRefresh={this.onRefresh}
-                colors={["gray", "orange"]}/>
-            }>
-              <View style={ProfileScreenStyle.Container}>
-                <View style={ProfileScreenStyle.ProfileHeader}/>
-                <View style={ProfileScreenStyle.ProfileCoverImgContainer}>
-                    <Image style={ProfileScreenStyle.ProfileCoverImg}
-                    key = {this.state.data.cover_photo}
-                    source={ this.state.data.cover_photo }/>
-                </View>
-                <View style={ProfileScreenStyle.FirstSection}>
-                    <View style={ProfileScreenStyle.ProfileImgContainer}>
-                    <Image style={ProfileScreenStyle.ProfileImg}
-                        key = {this.state.data.profile_photo}
-                        source={ this.state.data.profile_photo }/>
-                    </View>
-                    <View>
-                        { !this.state.refreshing &&
-                            <TouchableOpacity style={
-                                !item.is_following ? 
-                                    SystemStyle.FollowOrgBtn : SystemStyle.ToFollowOrgBtn}
-                                onPress={() => this._handleFollow(item.id)}>
-                                    <Text style={SystemStyle.FollowOrgTextBtn}>{
-                                        !item.is_following ? 'Follow' : 'Unfollow'
-                                    }</Text>
-                            </TouchableOpacity>
-                        }
-                    </View>
-                </View>
-                <View style={ProfileScreenStyle.SecondSection}>
-                    <Text style={ProfileScreenStyle.ProfileName}>
-                    {
-                        this.state.data.profile_name
-                    }
-                    </Text>
-                    {
-                    this.state.data.bio ? (
-                        <Text style={ProfileScreenStyle.ProfileBio}>
-                        {
-                            this.state.data.bio.replace(/(\r\n|\n|\r)/gm, " ")
-                        }
-                        </Text>
-                    ) : null
-                    }
-                    { this.state.data.location ? (
-                    <View style={ProfileScreenStyle.LocationContainer}>
-                        <SimpleLineIcons name="location-pin" size={13} color="#808080" />
-                        <Text style={ProfileScreenStyle.ProfileLocation}>
-                        {
-                            this.state.data.location
-                        }
-                        </Text>
-                    </View>
-                    ) : null}
-                    <View style={ProfileScreenStyle.Dashboard}>
-                        { !this.state.refreshing && 
-                            <>
-                                <View style={ProfileScreenStyle.Counter}>            
-                                    <Text style={ProfileScreenStyle.CounterNumber}> { this.state.data.total_followers } </Text>
-                                    <Text style={ProfileScreenStyle.BoardTextOne}>Followers</Text>
+    async onRefresh() {
+        console.log("Refreshing...")
+        this.setState({'refreshing': true})
+        await this.doRefresh().then(() => {
+            this.setState({'refreshing': false})
+            console.log("Refreshed.")
+        })
+    }
+    async _handleFollow(uid) {
+        let item = this.state.data;
+
+        let result = await _setFollowConnection(undefined, uid,
+            item.is_following ? 'unfollow' : 'follow');
+
+        if(result) {
+            this.setState({data: {
+                ...item,
+                is_following: !item.is_following
+            }})
+        }
+    }   
+    render() {
+        let item = this.state.data;
+        return (
+            <>
+                <SafeAreaView>
+                    <ScrollView
+                        refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.refreshing || this.state.is_loading}
+                            onRefresh={this.onRefresh}
+                            colors={["gray", "orange"]}/>
+                        }>
+                        <View style={ProfileScreenStyle.Container}>
+                            <View style={ProfileScreenStyle.ProfileHeader}/>
+                                <View style={ProfileScreenStyle.ProfileCoverImgContainer}>
+                                    <Image style={ProfileScreenStyle.ProfileCoverImg}
+                                        key = { item.cover_photo }
+                                        source={ item.cover_photo }/>
                                 </View>
-                                <View style={ProfileScreenStyle.Counter}>            
-                                    <Text style={ProfileScreenStyle.CounterNumber}> { this.state.data.total_following } </Text>
-                                    <Text style={ProfileScreenStyle.BoardTextTwo}>Following</Text>
+                                <View style={ProfileScreenStyle.FirstSection}>
+                                    <View style={ProfileScreenStyle.ProfileImgContainer}>
+                                        <Image style={ProfileScreenStyle.ProfileImg}
+                                            key = {item.profile_photo}
+                                            source={ item.profile_photo }/>
+                                    </View>
+                                <View>
+                                    { !this.state.is_loading &&
+                                        <TouchableOpacity style={
+                                            !item.is_following ? 
+                                                SystemStyle.FollowOrgBtn : SystemStyle.ToFollowOrgBtn}
+                                            onPress={() => this._handleFollow(item.id)}>
+                                                <Text style={SystemStyle.FollowOrgTextBtn}>{
+                                                    !item.is_following ? 'Follow' : 'Unfollow' } </Text>
+                                        </TouchableOpacity>
+                                    }
                                 </View>
-                            </>
-                        }
-                    </View>
+                            </View>
+                            <View style={ProfileScreenStyle.SecondSection}>
+                                <Text style={ProfileScreenStyle.ProfileName}> 
+                                    { item.profile_name } </Text>
+
+                                { item.bio &&
+                                    <Text style={ProfileScreenStyle.ProfileBio}> {
+                                        item.bio.replace(/(\r\n|\n|\r)/gm, " ") } </Text>
+                                }
+
+                                { item.location &&
+                                    <View style={ProfileScreenStyle.LocationContainer}>
+                                        <SimpleLineIcons name="location-pin" size={13} color="#808080" />
+                                        <Text style={ProfileScreenStyle.ProfileLocation}> 
+                                            { item.location } </Text>
+                                    </View>
+                                }
+
+                                <View style={ProfileScreenStyle.Dashboard}>
+                                    { !this.state.is_loading && 
+                                        <>
+                                            <View style={ProfileScreenStyle.Counter}>            
+                                                <Text style={ProfileScreenStyle.CounterNumber}> { item.total_followers } </Text>
+                                                <Text style={ProfileScreenStyle.BoardTextOne}>Followers</Text>
+                                            </View>
+                                            <View style={ProfileScreenStyle.Counter}>            
+                                                <Text style={ProfileScreenStyle.CounterNumber}> { item.total_following } </Text>
+                                                <Text style={ProfileScreenStyle.BoardTextTwo}>Following</Text>
+                                            </View>
+                                        </>
+                                    }
+                                </View>
+                            </View>
+                        </View>
+                    </ScrollView>
+                </SafeAreaView>
+                <View style={ProfileScreenStyle.Container}>
+                {!this.state.refreshing &&
+                    <EventList for_user = {true}
+                        user_id = {this.props.route.params.user_id}
+                        navigation = {this.props.navigation}/>
+                }
                 </View>
-            </View>
-        </ScrollView>
-      </SafeAreaView>
-        <EventList for_user = {true}
-            user_id = {this.props.route.params.user_id}
-            navigation = {this.props.navigation}/>
-    </>
-    );
-  }
+                
+            </>
+        );
+    }
 }
   
 export default {

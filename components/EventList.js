@@ -203,16 +203,12 @@ class EventList extends Component {
     }
 
     render() {
-        if(this.state.data.length == 0) {}
-        if(this.props.for_profile && this.props.user_id) {
-
-        }
         return (
             <View style = {SystemStyle.EventListContainer}>
                 {this.state.loading && 
                     <View style={SystemStyle.TabContainer}>
                         <ActivityIndicator size={
-                                this.props.for_profile ? 
+                                this.props.for_profile || this.props.for_user ? 
                                 'large' : 50
                             } color="orange"/> 
                     </View>

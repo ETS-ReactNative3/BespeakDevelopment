@@ -104,5 +104,7 @@ async function _countProfileRelation(user_id = auth.currentUser.uid) {
 export {
     _arrangeProfileData,
     _isFollowing,
-    _countProfileRelation
+    _countProfileRelation,
+    _getFollowersId,
+    _getFollowing
 }

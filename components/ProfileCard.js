@@ -3,13 +3,10 @@ import {
     Text,
     TouchableOpacity,
     Image,
-    View,
-    Alert
+    View
 } from 'react-native';
 import { 
-    Feather,
     Ionicons,
-    SimpleLineIcons,
     FontAwesome
 } from '@expo/vector-icons';
 

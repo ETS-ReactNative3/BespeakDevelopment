@@ -9,10 +9,15 @@ import {
 import { auth, db, _db } from '../firebase';
 
 import { ProfileCard } from "./ProfileCard";
+import { ProfileListItem } from "./ProfileListItem";
 
 import SystemStyle from "../styles/SystemStyle";
 
-import { _arrangeProfileData } from '../helper/ProfileLoad'
+import { 
+    _arrangeProfileData,
+    _getFollowersId,
+    _getFollowing
+} from '../helper/ProfileLoad'
 
 class OrganizerList extends Component {
     constructor() {
@@ -64,6 +69,24 @@ class OrganizerList extends Component {
                 .orderBy('_name')
                 .where('_name', '>=', key)
                 .where('_name', '<', key + `z`)
+        } else if(this.props.list_follower) {
+            let _list = await _getFollowersId();
+
+            if(_list.length == 0) {
+                return {'data': [], 'last': null}
+            }
+
+            get_organizer_query = get_organizer_query
+                .where(_db.FieldPath.documentId(), "in", _list)
+        } else if(this.props.list_following) {
+            let _list = await _getFollowing();
+
+            if(_list.length == 0) {
+                return {'data': [], 'last': null}
+            }
+
+            get_organizer_query = get_organizer_query
+                .where(_db.FieldPath.documentId(), "in", _list)
         }
 
         if(type_extend) {
@@ -84,7 +107,7 @@ class OrganizerList extends Component {
         doc_data = await _arrangeProfileData(doc_data);
         console.log("Arranged Profile Data: ", doc_data)
 
-        let last_value = documentSnapshots.docs[documentSnapshots.docs.length-1]; //doc_data[doc_data.length - 1]?.id;
+        let last_value = documentSnapshots.docs[documentSnapshots.docs.length-1]; 
 
         return {'data': doc_data, 'last': last_value}
     }
@@ -143,6 +166,7 @@ class OrganizerList extends Component {
                 </>
             )
         } else {
+            if(!this.props.for_search) return;
             return (
                 <View style={SystemStyle.Footer}>
                     <Text style={SystemStyle.BespeakLogo}>bespeak</Text>
@@ -157,7 +181,7 @@ class OrganizerList extends Component {
                 {this.state.loading && 
                     <View style={SystemStyle.TabContainer}>
                         <ActivityIndicator size={
-                                this.props.for_profile ? 
+                                !this.props.for_search ? 
                                 'large' : 50
                             } color="orange"/> 
                     </View>
@@ -170,17 +194,28 @@ class OrganizerList extends Component {
                 <FlatList
                     refreshControl={
                         <RefreshControl
-                          refreshing={this.state.user_refresh}
-                          onRefresh={this.onRefresh}
-                          colors={["gray", "orange"]}/>
+                            refreshing={this.state.user_refresh}
+                            onRefresh={this.onRefresh}
+                            colors={["gray", "orange"]}/>
                     }
                     data={Object.values(this.state.data)}
-                    renderItem={({ item }) => (
-                        <ProfileCard data = {item} 
-                            refreshing={this.state.refreshing}
-                            navigation = {this.props.navigation}
-                            update_relation = {this._updateRelation}/>
-                    )}
+                    renderItem={({ item }) => {
+                        if(this.props.for_search) {
+                            return (
+                                <ProfileCard data = {item} 
+                                    refreshing={this.state.refreshing}
+                                    navigation = {this.props.navigation}
+                                    update_relation = {this._updateRelation}/>
+                            );
+                        }
+
+                        return (
+                            <ProfileListItem data = {item} 
+                                refreshing={this.state.refreshing}
+                                navigation = {this.props.navigation}
+                                update_relation = {this._updateRelation}/>
+                        );
+                    }}
                     keyExtractor={(item, index) => index.toString()}
                     ListFooterComponent={this._renderFooter()}
                     onEndReached={() => { 
