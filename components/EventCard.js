@@ -113,7 +113,10 @@ class EventModal extends Component {
                                 
                                 <View style={SystemStyle.OrganizerTabModal}>
                                     <TouchableOpacity style={SystemStyle.OrganizerInfo}
-                                        onPress={() => navigation.navigate('NotificationDetailScreen')}>
+                                        onPress={() => {
+                                            this.props.modal_ref.current.close()    
+                                            this.props.navigation.navigate('UserProfileScreen', {user_id: item.owner})
+                                        }}>
                                             <View style={SystemStyle.OrganizerImgContainer}>
                                                 <Image style={SystemStyle.OrganizerImg}
                                                     source={item.owner_image}/>

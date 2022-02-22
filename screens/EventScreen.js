@@ -34,6 +34,8 @@ import {
     _getProfileImage,
     _getUserData
 } from "../helper/EventLoad"
+import { _isFollowing } from "../helper/ProfileLoad";
+import { _setFollowConnection } from '../helper/ProfileHelper';
 
 class EventScreen extends Component {
     constructor() {
@@ -82,6 +84,9 @@ class EventScreen extends Component {
         let _data = get_event_query.data();
         _data.id = get_event_query.id;
         _data = await _arrangeData([_data], true); 
+        _data = _data[0]
+
+        _data.is_following = await _isFollowing(uid, _data.owner);
 
         console.log("Opened Event Data: ", _data)
 
@@ -89,7 +94,7 @@ class EventScreen extends Component {
 
         this.setState({
             loading: false,
-            data: _data[0],
+            data: _data,
             user_data: {
                 name: user_profile_name,
                 profile_image: user_image
@@ -201,6 +206,23 @@ class EventScreen extends Component {
             console.log("Refreshed.")
         })
     }
+    async _handleFollow(uid) {
+        let item = this.state.data;
+
+        let result = await _setFollowConnection(undefined, uid,
+            item.is_following ? 'unfollow' : 'follow');
+
+        if(result) {
+            this.setState({data: {
+                ...item,
+                is_following: !item.is_following
+            }})
+        }
+    } 
+    _openProfile(uid) {
+        if(uid == auth.currentUser.uid) return;
+        this.props.navigation.navigate('UserProfileScreen', {user_id: uid})
+    }
     render() {
         let item = this.state.data;
         let comment_content = Object.values(this.state.comment_data);
@@ -229,16 +251,18 @@ class EventScreen extends Component {
                     <View style={EditEventStyle.EventContainer}>
                         <View style={EditEventStyle.TitleAndButtonRow}>
                         <Text style={EditEventStyle.EventTitle}>{ item.name }</Text>
-                            <TouchableOpacity style={SystemStyle.FollowOrgBtn}
-                                onPress={() => this.props.navigation.navigate('EditEventScreen', 
-                                {event_id: item.id, 
-                                _done: this.onRefresh})}>
-                                <Text style={SystemStyle.FollowOrgTextBtn}>Edit Event</Text>
-                            </TouchableOpacity>
+                            { item.owner == auth.currentUser.uid &&
+                                <TouchableOpacity style={SystemStyle.FollowOrgBtn}
+                                    onPress={() => this.props.navigation.navigate('EditEventScreen', 
+                                    {event_id: item.id, 
+                                    _done: this.onRefresh})}>
+                                        <Text style={SystemStyle.FollowOrgTextBtn}>Edit Event</Text>
+                                </TouchableOpacity>
+                            }
                         </View>
                         <View style={SystemStyle.OrganizerTab}>
                             <TouchableOpacity style={SystemStyle.OrganizerInfo}
-                                onPress={() => navigation.navigate('NotificationDetailScreen')}>
+                                onPress={() => this._openProfile(item.owner) }>
                                     <View style={SystemStyle.OrganizerImgContainer}>
                                         <Image style={SystemStyle.OrganizerImg}
                                             source={ item.owner_image }/>
@@ -248,19 +272,16 @@ class EventScreen extends Component {
                                     </View>
                             </TouchableOpacity>
 
-                            {item.owner == auth.currentUser.uid ? (
-                                <TouchableOpacity style={SystemStyle.FollowOrgBtn}
-                                    onPress={() => this.props.navigation.navigate('EditEventScreen', 
-                                        {event_id: item.id, 
-                                        _done: this.onRefresh})}>
-                                            <Text style={SystemStyle.FollowOrgTextBtn}>Edit Event</Text>
+                            {item.owner != auth.currentUser.uid &&
+                                <TouchableOpacity style={
+                                    !item.is_following ? 
+                                        SystemStyle.FollowOrgBtn : SystemStyle.ToFollowOrgBtn}
+                                    onPress={() => this._handleFollow(item.owner)}>
+                                        <Text style={SystemStyle.FollowOrgTextBtn}>{
+                                            !item.is_following ? 'Follow' : 'Unfollow'
+                                        }</Text>
                                 </TouchableOpacity>
-                            ) : (
-                                <TouchableOpacity style={SystemStyle.FollowOrgBtn}
-                                    onPress={() => navigation.navigate('')}>
-                                        <Text style={SystemStyle.FollowOrgTextBtn}>Followed</Text>
-                                </TouchableOpacity>
-                            )}
+                            }
                             
                         </View>
                         <View style={SystemStyle.LowerSection}>
@@ -296,12 +317,16 @@ class EventScreen extends Component {
                     { comment_content.length > 0 && (
                             comment_content.map((item)=> 
                                 <View key = {item.id} style={SystemStyle.BespeakerCommentContainer}>
-                                    <View style={SystemStyle.BespeakerImgContainer}>
-                                        <Image style={SystemStyle.BespeakerImg}
-                                            source={ item.owner_image }/>
+                                    <TouchableOpacity onPress = {() => this._openProfile(item.owner)}>
+                                        <View style={SystemStyle.BespeakerImgContainer}>
+                                            <Image style={SystemStyle.BespeakerImg}
+                                                source={ item.owner_image }/>
                                         </View>
+                                    </TouchableOpacity>
                                     <View style={SystemStyle.BespeakerContainer}>
-                                        <Text style={SystemStyle.BespeakerName}>{ item.owner_name }</Text>
+                                        <TouchableOpacity onPress = {() => this._openProfile(item.owner)}>
+                                            <Text style={SystemStyle.BespeakerName}>{ item.owner_name }</Text>
+                                        </TouchableOpacity>
                                         <Text style={SystemStyle.BespeakerComment}> 
                                             { item.content } </Text>
                                     </View>

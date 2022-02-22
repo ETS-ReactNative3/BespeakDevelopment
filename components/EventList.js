@@ -76,6 +76,7 @@ class EventList extends Component {
     }
     async _retrieveEvents(type_extend = false) {
         let for_profile = this.props.for_profile && this.props.user_id;
+        let for_user = this.props.for_user && this.props.user_id;
 
         let get_events_query = await db.collection('event');
 
@@ -84,7 +85,7 @@ class EventList extends Component {
                 .where('is_open', '==', true);
         }
 
-        if(for_profile) {
+        if(for_profile || for_user) {
             console.log("Getting all events for USER ID: ", this.props.user_id)
             get_events_query = get_events_query
                 .where("owner", "==", this.props.user_id)
