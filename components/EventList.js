@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { ActivityIndicator,
-    Alert,
     FlatList,
     Text,
     View, 
-    RefreshControl,
-    ScrollView } from 'react-native';
+    RefreshControl
+} from 'react-native';
 
 import { db, _db } from '../firebase';
 
@@ -38,9 +37,9 @@ class EventList extends Component {
 
     componentDidMount() {
         try {
+            //# TODO: Optimize
             this._unsubscribe = this.props.navigation.addListener('focus', () => {
-                //this.doRefresh() // Switch to onRefresh() to show animation
-                this._loadEvents() // Update Events
+                this._loadEvents();
             });
             this.setState({
                 loading: true
@@ -84,7 +83,6 @@ class EventList extends Component {
             get_events_query = get_events_query
                 .where('is_open', '==', true);
         }
-
 
         if(for_profile) {
             console.log("Getting all events for USER ID: ", this.props.user_id)
@@ -204,6 +202,10 @@ class EventList extends Component {
     }
 
     render() {
+        if(this.state.data.length == 0) {}
+        if(this.props.for_profile && this.props.user_id) {
+
+        }
         return (
             <View style = {SystemStyle.EventListContainer}>
                 {this.state.loading && 
@@ -214,10 +216,24 @@ class EventList extends Component {
                             } color="orange"/> 
                     </View>
                 }
-                {this.state.data.length == 0 &&
-                    <View style={SystemStyle.TabContainer}>
-                        <Text style={SystemStyle.TabEmptyList}> No events found. </Text>
-                    </View>
+                {this.state.data.length == 0 && (
+                        this.props.for_profile && this.props.user_id ? (
+                            // Dito yung ipapacreate mo siya ng ibint
+                            <View style={SystemStyle.TabContainer}>
+                                <Text style={SystemStyle.TabEmptyList}> No events found. Create one. </Text>
+                            </View>
+                        ) : this.props.for_saved ? (
+                            // Dito yung ipapa browse mo siya ng ibint para mag bookmark cya
+                            <View style={SystemStyle.TabContainer}>
+                                <Text style={SystemStyle.TabEmptyList}> No events found. Bookmark an event. </Text>
+                            </View>
+                        ) : (
+                            // Dito yung ipapa browse mo siya ng organizer para magka laman newspid niya
+                            <View style={SystemStyle.TabContainer}>
+                                <Text style={SystemStyle.TabEmptyList}> No events found. Follow an organizer. </Text>
+                            </View>
+                        )
+                    ) 
                 }
                 <FlatList
                     refreshControl={

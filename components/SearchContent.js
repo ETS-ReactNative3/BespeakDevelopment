@@ -1,22 +1,8 @@
 import React, { Component } from "react";
-import {
-  Text,
-  View,
-  ScrollView,
-  Image,
-  TouchableOpacity
-} from 'react-native';
-import { 
-    Feather,
-    FontAwesome,
-    Ionicons
-  } from '@expo/vector-icons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import SearchScreenStyle from "../styles/SearchScreenStyle";
-import SystemStyle from "../styles/SystemStyle";
-
 import EventList from "./EventList";
+import OrganizerList from "./OrganizerList"
 
 import Options from '../values/Options'
 
@@ -24,6 +10,7 @@ const Top = createMaterialTopTabNavigator();
 
 class SearchContent extends Component {
     render() {
+        console.log("Searching for: ", this.props.search_key)
         return (
             <Top.Navigator screenOptions={{
                     ...Options.SearchScreenNavigation,
@@ -33,7 +20,10 @@ class SearchContent extends Component {
                     <SearchEventContent search_key = {this.props.search_key}
                         refreshing = {this.props.refreshing}
                         navigation = {this.props.navigation}/>} />
-                <Top.Screen name="Organizers" component={SearchOrganizer}/>
+                <Top.Screen name="Organizers" children={() => 
+                    <SearchOrganizerContent search_key = {this.props.search_key}
+                        refreshing = {this.props.refreshing}
+                        navigation = {this.props.navigation}/>} />
             </Top.Navigator>
         );
     }
@@ -41,7 +31,6 @@ class SearchContent extends Component {
 
 class SearchEvent extends Component {
     render() {
-        console.log("Searching for: ", this.props.search_key)
         return (
             <>
                 { !this.props.refreshing &&
@@ -56,6 +45,16 @@ class SearchEvent extends Component {
 
 class SearchOrganizer extends Component {
     render() {
+        return (
+            <>
+                { !this.props.refreshing &&
+                    <OrganizerList for_search = {true} 
+                        search_key = {this.props.search_key}
+                        navigation = {this.props.navigation}/>
+                }
+            </>
+        );
+        /*
         return (
             <View style={SystemStyle.EventListContainer}> 
                 <TouchableOpacity style={SystemStyle.Card}>
@@ -92,6 +91,7 @@ class SearchOrganizer extends Component {
                 </TouchableOpacity>
             </View>
         );
+        */
     }
 }
 

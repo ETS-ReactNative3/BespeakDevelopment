@@ -19,7 +19,7 @@ async function _arrangeData(events_data, mod = false) {
 
         item.owner_image = await _getProfileImage(item.owner)
 
-        item.owner_name = await _getProfileName(item.owner);
+        item.owner_name = await _getUserData("_name", item.owner)
         item.event_image = await _getEventImage(item.id, item.random_banner);
 
         let raw_sched = parseInt(item.schedule);
@@ -94,30 +94,6 @@ async function _getEventImage(event_id, random_banner) {
     
     return _banner ? _banner : require('../assets/img/blank-cover.png');
 }
-// #TODO: OPTIMIZE
-async function _getProfileName(uid) {
-
-    const user_info = db.collection("user_info")
-    const query = user_info.doc(uid)
-    const snapshot = await query.get()
-
-    if(snapshot.empty) {
-        console.log('No data found for user: ', uid);
-        return "Bespeak User";
-    } 
-
-    var raw_data = snapshot.data()
-    var organizer_name = ''
-
-    if(raw_data.user_type == "INDIV") {
-        organizer_name = raw_data.f_name 
-            + ' ' + raw_data.l_name;
-    } else {
-        organizer_name = raw_data.org_name
-    }
-
-    return organizer_name;
-}
 
 async function _getUserData(metadata, uid = auth.currentUser.uid) {
     const user_info = db.collection("user_info")
@@ -136,6 +112,5 @@ async function _getUserData(metadata, uid = auth.currentUser.uid) {
 export {
     _getUserData,
     _arrangeData,
-    _getProfileImage,
-    _getProfileName
+    _getProfileImage
 }
