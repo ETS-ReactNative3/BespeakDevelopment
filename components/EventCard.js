@@ -42,7 +42,7 @@ class EventCard extends Component {
             bookmarked: _query
         }).catch((err) => {
             Alert.alert("Error!", err.message);
-            console.log("Error: ", error)
+            console.log("Error: ", err)
         }).then(() => {
             //# TODO: Rename to proper function name
             this.props.remove(this.props.data)

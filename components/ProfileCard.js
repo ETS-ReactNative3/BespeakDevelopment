@@ -13,11 +13,21 @@ import {
     FontAwesome
 } from '@expo/vector-icons';
 
-import { auth, db, _db } from '../firebase';
+import { _setFollowConnection } from "../helper/ProfileHelper";
 
 import SystemStyle from "../styles/SystemStyle";
 
 class ProfileCard extends Component {
+    async _handleFollow(uid) {
+        let item = this.props.data;
+
+        let result = await _setFollowConnection(undefined, uid,
+            item.is_following ? 'unfollow' : 'follow');
+
+        if(result) {
+            this.props.update_relation(item);
+        }
+    } 
     render() {
         let item = this.props.data;
 
@@ -37,9 +47,13 @@ class ProfileCard extends Component {
                                     <Text style={SystemStyle.OrganizerName}>{ item._name }</Text>
                                 </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style={SystemStyle.FollowOrgBtn}
-                            onPress={() => navigation.navigate('')}>
-                                <Text style={SystemStyle.FollowOrgTextBtn}>Follow</Text>
+                        <TouchableOpacity style={
+                            !item.is_following ? 
+                                SystemStyle.FollowOrgBtn : SystemStyle.ToFollowOrgBtn}
+                            onPress={() => this._handleFollow(item.id)}>
+                                <Text style={SystemStyle.FollowOrgTextBtn}>{
+                                    !item.is_following ? 'Follow' : 'Unfollow'
+                                }</Text>
                         </TouchableOpacity>
                     </View>
 

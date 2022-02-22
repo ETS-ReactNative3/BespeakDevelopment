@@ -3,6 +3,8 @@ import { auth, db, storage } from '../firebase'
 async function _arrangeProfileData(events_data, mod = false) {
     //console.log('Arranging: ', events_data)
     let arranged_data = [];
+    let following = await _getFollowing(undefined, true);
+    console.log("Following: ", following)
 
     for(var i = 0; i < events_data.length; i++) {
         let item = events_data[i]
@@ -13,6 +15,8 @@ async function _arrangeProfileData(events_data, mod = false) {
 
         item.profile_image = await _getProfileImage(item.id, 'profile')
         item.cover_image = await _getProfileImage(item.id, 'cover')
+
+        item.is_following = following?.includes(item.id);
 
         arranged_data.push(item)
     }
@@ -41,6 +45,27 @@ async function _getProfileImage(user_id = auth.currentUser.uid, image_type) {
         return require('../assets/img/blank-profile.png');
 
     return require('../assets/img/blank-cover.png');
+}
+
+async function _getFollowing(user_id = auth.currentUser.uid, ids_only = true) {
+    let _data = [];
+
+    let get_relation_query = await db.collection('_relation')
+        .where('follower', 'array-contains', user_id)
+        .get();
+
+    if(ids_only) {
+        get_relation_query.forEach((doc) => {
+            if(doc.id != user_id)
+                _data.push(doc.id)
+        })
+    } else {
+        get_relation_query.forEach((doc) => {
+            if(doc.id != user_id)
+                _data.push({id: doc.id, ...doc.data()})
+        })
+    }
+    return _data;
 }
 
 
