@@ -192,6 +192,15 @@ const SystemStyle = StyleSheet.create({
     marginLeft:10,
     width:'55%',
   },
+  // Oranizer Name for Own Event 
+  OwnEventName:{
+    fontSize: 20,
+    fontFamily:'RedHatDisplay-Medium',
+    color: '#000',
+    marginLeft:'1.4%',
+    marginTop:'-1%',
+  },
+  // Organizer Name for Cards
   OrganizerName:{
     fontSize: 17,
     fontFamily:'RedHatDisplay-Medium',

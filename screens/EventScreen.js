@@ -236,7 +236,7 @@ class EventScreen extends Component {
                                             source={ item.owner_image }/>
                                     </View>
                                     <View style={SystemStyle.OrgCardContainer}>
-                                        <Text style={SystemStyle.OrganizerName}>{ item.owner_name }</Text>
+                                        <Text style={SystemStyle.OwnEventName}>{ item.owner_name }</Text>
                                     </View>
                             </TouchableOpacity>
 
