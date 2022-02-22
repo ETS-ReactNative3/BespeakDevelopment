@@ -88,7 +88,7 @@ import React, {
           />
         </View>
             <View style={SystemStyle.OrgCardContainer}>
-              <Text style={SystemStyle.OrganizerName}>Every Nation Campus</Text>
+              <Text style={SystemStyle.OrganizerNameButBlack}>Every Nation Campus</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity style={SystemStyle.FollowOrgBtn}

@@ -32,13 +32,14 @@ class SearchContent extends Component {
 class SearchEvent extends Component {
     render() {
         return (
-            <>
+            <View style={SearchScreenStyle.Container}>
+                <Text style={SearchScreenStyle.TopSearch}>Top Search</Text>
                 { !this.props.refreshing &&
                     <EventList for_search = {true} 
                         search_key = {this.props.search_key}
                         navigation = {this.props.navigation}/>
                 }
-            </>
+            </View>
         );
     }
 }
@@ -46,13 +47,18 @@ class SearchEvent extends Component {
 class SearchOrganizer extends Component {
     render() {
         return (
-            <>
+
+            
+                
+
+            <View style={SearchScreenStyle.Container}>
+                <Text style={SearchScreenStyle.TopSearch}>Top Search</Text>
                 { !this.props.refreshing &&
                     <OrganizerList for_search = {true} 
                         search_key = {this.props.search_key}
                         navigation = {this.props.navigation}/>
                 }
-            </>
+            <View/>
         );
         /*
         return (
@@ -70,7 +76,7 @@ class SearchOrganizer extends Component {
                                     />
                             </View>
                             <View style={SystemStyle.OrganizerCardContainer}>
-                                <Text style={SystemStyle.OrganizerName}>Every Nation Campus</Text>
+                                <Text style={SystemStyle.OrganizerNameButBlack}>Every Nation Campus</Text>
                             </View>
                             </TouchableOpacity>
                             <TouchableOpacity style={SystemStyle.FollowOrgBtn}
@@ -89,6 +95,7 @@ class SearchOrganizer extends Component {
                         </TouchableOpacity>
                     </View>     
                 </TouchableOpacity>
+            </View>
             </View>
         );
         */
