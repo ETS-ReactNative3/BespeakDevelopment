@@ -185,7 +185,11 @@ class SignUpFormScreen extends Component {
                 user = userCredentials.user;
                 
                 var data = this.props.route.params;
+                data._name = data.user_type == "INDIV" ?
+                    data.f_name + ' ' + data.l_name : data.org_name; 
+
                 data.mobile = this.state.mobile.value;
+                
                 db
                     .collection('user_info')
                     .doc(user.uid)

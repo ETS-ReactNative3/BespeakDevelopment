@@ -54,7 +54,10 @@ class EditProfileScreen extends Component {
           return;
         } 
         var raw_data = snapshot.data()
-        raw_data.bio = raw_data.bio?.replace(/(\r\n|\n|\r)/gm, " ")
+
+        if(raw_data.bio)
+            raw_data.bio = raw_data.bio.replace(/(\r\n|\n|\r)/gm, " ")
+        
         this.setState({'data': raw_data})
 
         let profile_image = null
@@ -139,11 +142,15 @@ class EditProfileScreen extends Component {
         }
     }
     async _processSubmit() {
+        let _data = this.state.data
+        _data._name = _data.user_type == "INDIV" ?
+            _data.f_name + ' ' + _data.l_name : _data.org_name; 
+
         await db
             .collection('user_info')
             .doc(this.state.user.uid)
             .update({
-                ...this.state.data
+                ..._data
             })
             .catch(error => {
                 Alert.alert('Error!', error.message)

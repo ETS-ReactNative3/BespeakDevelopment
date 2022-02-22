@@ -32,7 +32,7 @@ import dateFormat from "../helper/DateFormat"
 import { 
     _arrangeData,
     _getProfileImage,
-    _getProfileName
+    _getUserData
 } from "../helper/EventLoad"
 
 class EventScreen extends Component {
@@ -66,7 +66,7 @@ class EventScreen extends Component {
     async _retrieveData(event_id) {
         let uid = auth.currentUser.uid;
 
-        let user_profile_name = await _getProfileName(uid);
+        let user_profile_name = await _getUserData("_name", uid);
         let user_image = await _getProfileImage(uid);
 
         let get_event_query = await db
@@ -122,7 +122,7 @@ class EventScreen extends Component {
         for(var i = 0; i < _data.length; i++) {
             let comment = _data[i]
 
-            comment.owner_name = await _getProfileName(comment.owner)
+            comment.owner_name = await _getUserData("_name", comment.owner)
             comment.owner_image = await _getProfileImage(comment.owner);
 
             comment.is_owned = comment.owner == auth.currentUser.uid;
