@@ -90,14 +90,7 @@ class ProfileScreen extends Component {
   
   componentDidMount() {
     this.onRefresh()
-    /*
-    this._unsubscribe = this.props.navigation.addListener('focus', () => {
-      this.onRefresh()
-    });*/
-  } /*
-  componentWillUnmount() {
-    this._unsubscribe();
-  }*/
+  } 
   doRefresh() {
     return new Promise((resolve) => {
       this._loadUserData()

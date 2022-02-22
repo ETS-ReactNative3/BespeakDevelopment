@@ -27,18 +27,21 @@ class ProfileCard extends Component {
         if(result) {
             this.props.update_relation(item);
         }
-    } 
+    }
+    _openProfile(uid) {
+        this.props.navigation.navigate('UserProfileScreen', {user_id: uid})
+    }
     render() {
         let item = this.props.data;
 
         return (
-            <TouchableOpacity style={SystemStyle.Card}>
+            <TouchableOpacity style={SystemStyle.Card} onPress={() => this._openProfile(item.id) }>
                 <Image style={SystemStyle.CardImage}
                     source={ item.cover_image }/>
                 <View style={SystemStyle.CardContainer}>
                     <View style={SystemStyle.OrganizerSectionTab}>
                         <TouchableOpacity style={SystemStyle.OrganizerInfo}
-                            onPress={() => navigation.navigate('NotificationDetailScreen')}>
+                            onPress={() => this._openProfile(item.id) }>
                                 <View style={SystemStyle.OrganizerImgContainer}>
                                     <Image style={SystemStyle.OrganizerImg}
                                         source={ item.profile_image }/>
