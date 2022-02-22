@@ -1,17 +1,18 @@
 import React, { Component } from "react";
-import { Text,
-View,
-TouchableOpacity,
-Image,
-} from "react-native";
+import { View } from "react-native";
+
+import OrganizerList from "../components/OrganizerList";
 
 import SystemStyle from "../styles/SystemStyle";
-
 
 class FollowingScreen extends Component {
     render() {
         return (
             <View style={SystemStyle.Container}>
+
+                <OrganizerList list_following = {true}
+                    navigation = { this.props.navigation }/>
+    /*
                 <View style={SystemStyle.FollowOrganizerTab}>
                     <TouchableOpacity style={SystemStyle.OrganizerInfo}
                     //onPress={() => navigation.navigate(' ')}
@@ -54,6 +55,7 @@ class FollowingScreen extends Component {
                         <Text style={SystemStyle.FollowOrgTextBtn}>Following</Text>
                     </TouchableOpacity>
                 </View>
+*/
             </View>
         );
     }
@@ -63,6 +65,9 @@ class FollowerScreen extends Component {
     render() {
         return (
             <View style={SystemStyle.Container}>
+                <OrganizerList list_follower = {true}
+                    navigation = { this.props.navigation }/>
+  /*
                 <View style={SystemStyle.FollowOrganizerTab}>
                     <TouchableOpacity style={SystemStyle.OrganizerInfo}
                     //onPress={() => navigation.navigate(' ')}
@@ -105,8 +110,8 @@ class FollowerScreen extends Component {
                         <Text style={SystemStyle.FollowOrgTextBtn}>Follow</Text>
                     </TouchableOpacity>
                 </View>
+*/
             </View>
-            
         );
     }
 }
