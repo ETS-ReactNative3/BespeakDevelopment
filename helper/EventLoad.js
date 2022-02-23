@@ -17,10 +17,12 @@ async function _arrangeData(events_data, mod = false) {
         // Check if own event.
         item.is_owned = item.owner == auth.currentUser.uid
 
-        item.owner_image = await _getProfileImage(item.owner)
+        // #REMOVED: To implement a faster loading
+        //item.owner_image = await _getProfileImage(item.owner)
+        //item.event_image = await _getEventImage(item.id, item.random_banner);
 
         item.owner_name = await _getUserData("_name", item.owner)
-        item.event_image = await _getEventImage(item.id, item.random_banner);
+        
 
         let raw_sched = parseInt(item.schedule);
         let raw_posted = parseInt(item.server_time);
@@ -112,5 +114,6 @@ async function _getUserData(metadata, uid = auth.currentUser.uid) {
 export {
     _getUserData,
     _arrangeData,
-    _getProfileImage
+    _getProfileImage,
+    _getEventImage
 }

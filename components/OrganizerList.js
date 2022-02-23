@@ -16,7 +16,8 @@ import SystemStyle from "../styles/SystemStyle";
 import { 
     _arrangeProfileData,
     _getFollowersId,
-    _getFollowing
+    _getFollowing,
+    _getProfileImage
 } from '../helper/ProfileLoad'
 
 class OrganizerList extends Component {
@@ -120,6 +121,8 @@ class OrganizerList extends Component {
             last_data: query_res.last,
             loading: false
         });
+
+        this._loadImages(query_res.data)
     }
     async _extendLoadOrganizers() {
         this.setState({
@@ -131,13 +134,26 @@ class OrganizerList extends Component {
         let query_res = await this._retrieveOrganizers(true);
 
         let has_data = query_res.data.length > 0;
+        let current_data = this.state.data;
 
         this.setState({
-            data: [... this.state.data, ... query_res.data],
+            data: [... current_data, ... query_res.data],
             last_data: query_res.last,
             refreshing: false,
             can_extend: has_data
         });
+
+        this._loadImages(query_res.data, current_data);
+    }
+
+    _loadImages(items, has_add = []) {
+        // Load Images Asynchronously
+        items?.forEach(async (item) => {
+            item.profile_image = await _getProfileImage(item.id, 'profile')
+            item.cover_image = await _getProfileImage(item.id, 'cover')
+
+            this.setState({data: [...has_add, ...items]});
+        })
     }
 
     doRefresh() {

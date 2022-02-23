@@ -32,6 +32,7 @@ import dateFormat from "../helper/DateFormat"
 import { 
     _arrangeData,
     _getProfileImage,
+    _getEventImage,
     _getUserData
 } from "../helper/EventLoad"
 import { _isFollowing } from "../helper/ProfileLoad";
@@ -68,9 +69,6 @@ class EventScreen extends Component {
     async _retrieveData(event_id) {
         let uid = auth.currentUser.uid;
 
-        let user_profile_name = await _getUserData("_name", uid);
-        let user_image = await _getProfileImage(uid);
-
         let get_event_query = await db
             .collection('event')
             .doc(event_id)
@@ -96,10 +94,21 @@ class EventScreen extends Component {
             loading: false,
             data: _data,
             user_data: {
-                name: user_profile_name,
-                profile_image: user_image
+                name: _data.owner_name,
             }
         });
+        
+        this._loadImages(_data, uid);
+    }
+
+    async _loadImages(item, uid) {
+        // Load Images Synchronously 
+        let user_image = await _getProfileImage(uid);
+
+        item.event_image = await _getEventImage(item.id, item.random_banner)
+        item.owner_image = await _getProfileImage(item.owner);
+
+        this.setState({data: item, user_data: {...this.state.user_data, profile_image: user_image}});
     }
 
     async _loadComments() {
@@ -128,7 +137,8 @@ class EventScreen extends Component {
             let comment = _data[i]
 
             comment.owner_name = await _getUserData("_name", comment.owner)
-            comment.owner_image = await _getProfileImage(comment.owner);
+
+            console.log("Comment Owner Image: ", comment.owner_image)
 
             comment.is_owned = comment.owner == auth.currentUser.uid;
             comment.server_time = await dateFormat(new Date(comment.server_time), "EEEE, MMMM d, yyyy h:mm aaa")
@@ -140,6 +150,11 @@ class EventScreen extends Component {
             comment_data: {..._cleaned_data}
         })
 
+        // Load Images
+        _cleaned_data.forEach(async (item) => {
+            item.owner_image = await _getProfileImage(item.owner);
+            this.setState({comment_data: _cleaned_data});
+        });
     }
 
     async _handleDelete(comment_data) {
