@@ -46,7 +46,7 @@ class ProfileListItem extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity style={
                     !item.is_following ? 
-                        SystemStyle.FollowOrgBtn : SystemStyle.ToFollowOrgBtn}
+                        SystemStyle.ToFollowingOrgBtn : SystemStyle.ToFollowOrgBtn}
                     onPress={() => this._handleFollow(item.id)}>
                         <Text style={SystemStyle.FollowOrgTextBtn}>{
                             !item.is_following ? 'Follow' : 'Unfollow'
