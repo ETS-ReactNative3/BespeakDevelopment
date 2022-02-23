@@ -44,7 +44,8 @@ async function _arrangeData(events_data, mod = false) {
 async function _getProfileImage(user_id) {
     let user_image = false;
 
-    user_image = await _getUserData('profile_image', user_id);
+    if(user_id)
+        user_image = await _getUserData('profile_image', user_id);
 
     /*
     await storage.ref(`/users/${user_id}/profile`)

@@ -163,7 +163,6 @@ class CreateEventScreen extends Component {
                 }
                 this.setState({'is_loading': false})
                 
-                this.props.route.params._done();
                 this.props.navigation.goBack()
             });
     }

@@ -42,7 +42,6 @@ class ProfileEvents extends Component {
         event_post: ''
     }
     render() {
-        console.log('Event Tab Contents Loaded.')
         return (
             <View style={ProfileContentStyle.CardContainer}>
                 <View style={ProfileContentStyle.CreateCard}>
@@ -55,8 +54,7 @@ class ProfileEvents extends Component {
                         <TouchableOpacity 
                             onPress = {() => {
                                 this.props.navigation.navigate('CreateEventScreen', {
-                                    event_name: this.state.event_post, 
-                                    _done: this.props.route.params._done})
+                                    event_name: this.state.event_post})
                             }}>
                         <Feather name="plus" size={50} style={ProfileContentStyle.CardIcon}/>
                     </TouchableOpacity>
@@ -74,7 +72,6 @@ class ProfileEvents extends Component {
 }
 class ProfileTickets extends Component {
     render() {
-        console.log('Ticket Tab Contents Loaded.')
         return (
             <View style={SystemStyle.TabContainer}>
                 <Text style={SystemStyle.TabEmptyList}> No ticket found</Text>
@@ -84,7 +81,6 @@ class ProfileTickets extends Component {
 }
 class ProfileBookmarks extends Component {
     render() {
-        console.log('Bookmarks Tab Contents Loaded.')
         return (
             <View style={ProfileContentStyle.CardContainer}>
                 <EventList for_saved = {true} for_profile = {true} 

@@ -103,7 +103,7 @@ class EventScreen extends Component {
 
     async _loadImages(item, uid) {
         // Load Images Synchronously 
-        let user_image = await _getProfileImage(uid);
+        let user_image = await _getProfileImage(item.owner);
 
         item.event_image = item._banner ? item._banner
             : await _getEventImage(undefined, item.random_banner)

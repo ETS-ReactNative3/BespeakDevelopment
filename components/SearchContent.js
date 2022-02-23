@@ -14,7 +14,6 @@ const Top = createMaterialTopTabNavigator();
 
 class SearchContent extends Component {
     render() {
-        console.log("Searching for: ", this.props.search_key)
         return (
             <Top.Navigator screenOptions={{
                     lazy: true,
