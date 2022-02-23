@@ -180,8 +180,9 @@ class EventList extends Component {
     _loadImages(items, has_add = []) {
         // Load Images
         items?.forEach(async (item) => {
-            item.event_image = await _getEventImage(item.id, item.random_banner)
-            item.owner_image = await _getProfileImage(item.owner)
+            item.event_image = item._banner ? item._banner
+                : await _getEventImage(undefined, item.random_banner)
+            //item.owner_image = await _getProfileImage(item.owner)
 
             this.setState({data: [...has_add, ...items]});
         })

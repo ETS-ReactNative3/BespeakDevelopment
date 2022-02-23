@@ -62,17 +62,19 @@ class EditProfileScreen extends Component {
         
         _data.id = snapshot.id;
 
-        //let profile_image = await _getProfileImage(_data.id, 'profile')
-        //let cover_image = await _getProfileImage(_data.id, 'cover')
+        let profile_image = _data.profile_image ? _data.profile_image 
+            : await _getProfileImage(undefined, 'profile')
+        let cover_image = _data.cover_image ? _data.cover_image 
+            : await _getProfileImage(undefined, 'cover')
 
         this.setState({
             'data': { ..._data },
             'profile_photo': {
-                'uri': _data.profile_image,
+                'uri': profile_image,
                 'hasChange': false
             },
             'cover_photo': {
-                'uri': _data.cover_image,
+                'uri': cover_image,
                 'hasChange': false
             },
             'is_loading': false
@@ -128,22 +130,49 @@ class EditProfileScreen extends Component {
         _data._name = _data.user_type == "INDIV" ?
             _data.f_name + ' ' + _data.l_name : _data.org_name; 
 
+        let _cleaned_data = {}
+
+        for(var key in _data) {
+            if(['f_name', 'l_name', 'location',
+                'org_name', 'bio', 'mobile', '_name'].includes(key)) 
+            _cleaned_data[key] = _data[key]
+        }
+        console.log('Value To Updated: ', _cleaned_data)
+        
+        let user_id = this.state.user.uid;
+
         await db
             .collection('user_info')
-            .doc(this.state.user.uid)
+            .doc(user_id)
             .update({
-                ..._data
+                ..._cleaned_data
             })
             .catch(error => {
                 Alert.alert('Error!', error.message)
                 return
             }) 
             .then(async () => {
+                let uri_change = {}
                 if (this.state.profile_photo.hasChange) {
-                    await this._uploadToStorage(this.state.profile_photo.uri.uri, `/users/${this.state.user.uid}/profile`)
+                    await this._uploadToStorage(this.state.profile_photo.uri.uri, `/users/${user_id}/profile`)
+                    uri_change.profile_image = await _getProfileImage(user_id, 'profile')
                 }
                 if (this.state.cover_photo.hasChange) {
-                    await this._uploadToStorage(this.state.cover_photo.uri.uri, `/users/${this.state.user.uid}/cover`)
+                    await this._uploadToStorage(this.state.cover_photo.uri.uri, `/users/${user_id }/cover`)
+                    uri_change.cover_image = await _getProfileImage(user_id, 'cover')
+                }
+
+                if(uri_change) {
+                    await db
+                        .collection('user_info')
+                        .doc(user_id)
+                        .update({
+                            ...uri_change
+                        })
+                        .catch(error => {
+                            Alert.alert('Error!', error.message)
+                            console.log('Error!', error.message)
+                        })
                 }
 
                 this.setState({'is_loading': false})

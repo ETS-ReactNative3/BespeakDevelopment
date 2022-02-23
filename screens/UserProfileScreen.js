@@ -71,8 +71,10 @@ class UserProfileScreen extends Component {
     async _loadImages(item) {
         // Load Images Synchronously 
 
-        let profile_image = await _getProfileImage(item.id, 'profile')
-        let cover_image = await _getProfileImage(item.id, 'cover')
+        let profile_image = item.profile_image ? item.profile_image
+            : await _getProfileImage(undefined, 'profile')
+        let cover_image = item.cover_image ? item.cover_image
+            : await _getProfileImage(undefined, 'cover')
 
         this.setState({data: {...this.state.data, 
             profile_photo: profile_image,

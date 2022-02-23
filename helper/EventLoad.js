@@ -43,6 +43,10 @@ async function _arrangeData(events_data, mod = false) {
 
 async function _getProfileImage(user_id) {
     let user_image = false;
+
+    user_image = await _getUserData('profile_image', user_id);
+
+    /*
     await storage.ref(`/users/${user_id}/profile`)
         .getDownloadURL()
         .then((url) => { 
@@ -54,30 +58,33 @@ async function _getProfileImage(user_id) {
                 Alert.alert('Error!', error.message)
             }
         })
-
+    */
     if(user_image) {
-        return {uri: user_image};
+        return user_image;
     }
     return require('../assets/img/blank-profile.png');
 }
 
 async function _getEventImage(event_id, random_banner) {
     let event_image = false;
-    await storage.ref(`/event/${event_id}/banner`)
-        .getDownloadURL()
-        .then((url) => { 
-            event_image = url
-            console.log("Loaded Event Image for ", event_id, ": ", url)
-        }).catch((error) => {
-            if(error.code != 'storage/object-not-found') {
-            console.log("Error occured: ", error.message)
-            Alert.alert('Error!', error.message)
-            }
-        })
+    
+    if(event_id) {
+        await storage.ref(`/event/${event_id}/banner`)
+            .getDownloadURL()
+            .then((url) => { 
+                event_image = url
+                console.log("Loaded Event Image for ", event_id, ": ", url)
+            }).catch((error) => {
+                if(error.code != 'storage/object-not-found') {
+                console.log("Error occured: ", error.message)
+                Alert.alert('Error!', error.message)
+                }
+            })
 
-    if(event_image) {
-        return {uri: event_image};
-    } 
+        if(event_image) {
+            return {uri: event_image};
+        } 
+    }
     
     
     if (random_banner) {
