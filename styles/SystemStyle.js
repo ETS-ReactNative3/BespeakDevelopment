@@ -270,23 +270,34 @@ const SystemStyle = StyleSheet.create({
         width: '102%',
         height: 180,
     },
-    //Event Info
-    EventTitle:{
-        fontSize: 30,
-        fontFamily: 'RedHatDisplay-Medium',
-        color: '#000',
-        marginBottom:'4%',
-    },
+  //Event Info
+  EventTitle:{
+    fontSize: 30,
+    fontFamily: 'RedHatDisplay-Medium',
+    color: '#000',
+    marginBottom:'4%',
+  },
     //For Follow Organizer Button
     FollowOrgBtn: {
-        alignItems: 'center',
-        justifyContent:'center',
-        backgroundColor: '#eb9834',
-        height: 36,
-        width: 120,
-        borderRadius: 25,
-        justifyContent:'center',
-    },
+    alignItems: 'center',
+    justifyContent:'center',
+    backgroundColor: '#eb9834',
+    height: 36,
+    width: 120,
+    borderRadius: 25,
+    justifyContent:'center',
+  },
+    //Gray Default Size Button
+    FollowingOrgBtn: {
+    alignItems: 'center',
+    justifyContent:'center',
+    backgroundColor: '#5b5c5a',
+    height: 36,
+    width: 120,
+    borderRadius: 25,
+    justifyContent:'center',
+  },  
+    //Text for Unfollow and Follow
     FollowOrgTextBtn:{
         marginTop: -2,
         fontSize: 20,
@@ -321,7 +332,7 @@ const SystemStyle = StyleSheet.create({
         borderBottomWidth: 1, 
         borderColor:'#000', 
         opacity:0.1,
-        marginTop:'-10%'
+        marginTop:'-7%'
     },
     BreakLineContainer:{
       paddingTop:'4%',
@@ -347,19 +358,19 @@ const SystemStyle = StyleSheet.create({
         fontFamily:'RedHatDisplay-Medium',
         fontSize: 25,
         marginTop:'-4%',
-        marginBottom:'4%',
+        marginBottom:'2%',
     },
     EventTextInfo:{
         color:'#000',
-        fontFamily:'RedHatDisplay-Regular',
+        fontFamily:'RedHatDisplay-Light',
         fontSize: 17.5,
     },
-    EventReminderTitle:{
+    EventAddInfoTitle:{
         color:'#000',
         fontFamily:'RedHatDisplay-Medium',
         fontSize: 25,
-        marginTop:'4%',
-        marginBottom:'4%',
+        marginTop:'5%',
+        marginBottom:'2%',
     },
     //No Comment Found
     EmptyComment:{
@@ -596,7 +607,7 @@ const SystemStyle = StyleSheet.create({
     justifyContent:'center',
     alignSelf:'center',
     marginLeft: '3%',
-    width:'65%',
+    width:'60%',
   },
   FollowListOrganizerName:{
     fontSize: 17,
@@ -612,7 +623,7 @@ const SystemStyle = StyleSheet.create({
     marginLeft:'1.4%',
     marginTop:'-1.5%',
   },
-  //Gray Button To Follow
+  //Gray Button To Follow -- Small
   ToFollowOrgBtn: {
     alignItems: 'center',
     justifyContent:'center',
@@ -622,7 +633,7 @@ const SystemStyle = StyleSheet.create({
     borderRadius: 25,
     justifyContent:'center',
   },  
-  //Orange Button Following
+  //Orange Button Following -- Small
   ToFollowingOrgBtn: {
     alignItems: 'center',
     justifyContent:'center',

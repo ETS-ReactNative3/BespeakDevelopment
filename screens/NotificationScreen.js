@@ -128,7 +128,7 @@ import React, {
           If fully vaccinated, please proceed to our online registration to
           secure a seat.
         </Text>
-        <Text style={SystemStyle.EventReminderTitle}>
+        <Text style={SystemStyle.EventAddInfoTitle}>
           Reminder</Text>
         <Text style={SystemStyle.EventTextInfo}>
           1. As much as we are all excited to regather, ENC is also

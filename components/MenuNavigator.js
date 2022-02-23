@@ -48,7 +48,10 @@ class HomeNavigator extends Component {
               options={{
                 title: ' ',
                 headerShown: true,
+                headerTintColor: '#000',
+                headerTransparent: true,
                 tabBarShowLabel:false,
+                headerShadowVisible: false,
             }}/>
           </MenuStack.Navigator>
         );
@@ -83,7 +86,10 @@ class SearchNavigator extends Component {
           options={{
             title: ' ',
             headerShown: true,
+            headerTintColor: '#000',
+            headerTransparent: true,
             tabBarShowLabel:false,
+            headerShadowVisible: false,
         }}/>
       </MenuStack.Navigator>
     );
@@ -191,7 +197,10 @@ class ProfileNavigator extends Component {
           options={{
             title: ' ',
             headerShown: true,
+            headerTintColor: '#000',
+            headerTransparent: true,
             tabBarShowLabel:false,
+            headerShadowVisible: false,
         }}/>
       </MenuStack.Navigator>
     );

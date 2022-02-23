@@ -138,7 +138,7 @@ class UserProfileScreen extends Component {
                                     { !this.state.is_loading &&
                                         <TouchableOpacity style={
                                             !item.is_following ? 
-                                                SystemStyle.FollowOrgBtn : SystemStyle.ToFollowOrgBtn}
+                                            ProfileScreenStyle.FollowUserBtn : ProfileScreenStyle.UnfollowUserBtn}
                                             onPress={() => this._handleFollow(item.id)}>
                                                 <Text style={SystemStyle.FollowOrgTextBtn}>{
                                                     !item.is_following ? 'Follow' : 'Unfollow' } </Text>

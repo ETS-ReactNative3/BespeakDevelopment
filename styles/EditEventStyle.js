@@ -161,7 +161,7 @@ const EditEventStyle=StyleSheet.create({
     },
     LockEventText:{
         marginLeft: '10%',
-        fontFamily:'RedHatDisplay-Regular',
+        fontFamily:'RedHatDisplay-Medium',
         fontSize:16,
         alignSelf:'center'
     },
