@@ -291,7 +291,7 @@ class EventScreen extends Component {
                             {item.owner != auth.currentUser.uid &&
                                 <TouchableOpacity style={
                                     !item.is_following ? 
-                                        SystemStyle.FollowOrgBtn : SystemStyle.ToFollowOrgBtn}
+                                        SystemStyle.FollowOrgBtn : SystemStyle.FollowingOrgBtn}
                                     onPress={() => this._handleFollow(item.owner)}>
                                         <Text style={SystemStyle.FollowOrgTextBtn}>{
                                             !item.is_following ? 'Follow' : 'Unfollow'
@@ -320,7 +320,7 @@ class EventScreen extends Component {
                         { item.desc }
                     </Text>
                     
-                    <Text style={SystemStyle.EventReminderTitle}>
+                    <Text style={SystemStyle.EventAddInfoTitle}>
                         Additional Information</Text>
                     <Text style={SystemStyle.EventTextInfo}>
                         { item.info } 
