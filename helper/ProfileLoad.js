@@ -10,8 +10,9 @@ async function _arrangeProfileData(user_data, mod = false) {
         let item = user_data[i]
         //console.log('Arranging: ', item)
 
-        item.profile_image = await _getProfileImage(item.id, 'profile')
-        item.cover_image = await _getProfileImage(item.id, 'cover')
+        // #REMOVED: For Faster Loading
+        //item.profile_image = await _getProfileImage(item.id, 'profile')
+        //item.cover_image = await _getProfileImage(item.id, 'cover')
 
         item.is_following = following?.includes(item.id);
 
@@ -76,7 +77,7 @@ async function _getFollowersId(user_id = auth.currentUser.uid) {
     } 
 
     let _data = snapshot.data();
-    return _data.follower;
+    return _data?.follower ? _data?.follower : [];
 }
 async function _isFollowing(_follower, _following) {
     if(_follower == _following) return false;
@@ -96,8 +97,8 @@ async function _countProfileRelation(user_id = auth.currentUser.uid) {
     const following = await _getFollowing(user_id);
 
     return {
-        total_followers: followers.length,
-        total_following: following.length
+        total_followers: followers?.length,
+        total_following: following?.length
     }
 }
 
@@ -106,5 +107,6 @@ export {
     _isFollowing,
     _countProfileRelation,
     _getFollowersId,
-    _getFollowing
+    _getFollowing,
+    _getProfileImage
 }

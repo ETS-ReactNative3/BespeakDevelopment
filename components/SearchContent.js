@@ -17,6 +17,7 @@ class SearchContent extends Component {
         console.log("Searching for: ", this.props.search_key)
         return (
             <Top.Navigator screenOptions={{
+                    lazy: true,
                     ...Options.SearchScreenNavigation,
                     ...Options.SearchTabNavigation
                 }}>

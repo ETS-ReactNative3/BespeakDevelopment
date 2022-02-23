@@ -30,7 +30,9 @@ import {
     validateMobile,
     validatePassword
 } from '../helper/TextValidate';
-import { _arrangeProfileData } from "../helper/ProfileLoad";
+import { 
+    _getProfileImage,
+} from "../helper/ProfileLoad";
 
 class EditProfileScreen extends Component {
     state = {
@@ -53,28 +55,30 @@ class EditProfileScreen extends Component {
             console.log('No data found for user: ', uid);
             return;
         } 
-        var raw_data = snapshot.data()
+        var _data = snapshot.data()
 
-        if(raw_data.bio)
-            raw_data.bio = raw_data.bio.replace(/(\r\n|\n|\r)/gm, " ")
+        if(_data.bio)
+            _data.bio = _data.bio.replace(/(\r\n|\n|\r)/gm, " ")
         
-        raw_data.id = snapshot.id;
-        raw_data = await _arrangeProfileData([raw_data]);
-        let _data = raw_data[0];
+        _data.id = snapshot.id;
+
+        let profile_image = await _getProfileImage(_data.id, 'profile')
+        let cover_image = await _getProfileImage(_data.id, 'cover')
 
         this.setState({
             'data': { ..._data },
             'profile_photo': {
-                'uri': _data.profile_image,
+                'uri': profile_image,
                 'hasChange': false
             },
             'cover_photo': {
-                'uri': _data.cover_image,
+                'uri': cover_image,
                 'hasChange': false
             },
             'is_loading': false
         })
     }
+
     componentDidMount() {
         this.setState({'is_loading': true})
 

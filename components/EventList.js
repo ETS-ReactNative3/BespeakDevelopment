@@ -9,7 +9,12 @@ import { ActivityIndicator,
 
 import { db, _db } from '../firebase';
 
-import { _arrangeData, _getUserData } from "../helper/EventLoad";
+import { 
+    _arrangeData, 
+    _getUserData,
+    _getEventImage,
+    _getProfileImage
+} from "../helper/EventLoad";
 
 import { EventCard, EventModal } from "./EventCard";
 
@@ -140,13 +145,15 @@ class EventList extends Component {
     async _loadEvents() {
         console.log('Loading Events...')
 
-       let query_res = await this._retrieveEvents();
+        let query_res = await this._retrieveEvents();
 
         this.setState({
             data: query_res.data,
             last_data: query_res.last,
             loading: false
         });
+
+        this._loadImages(query_res.data)
     }
     // #TODO: Optimize, Minimalize
     async _extendLoadEvents() {
@@ -159,15 +166,26 @@ class EventList extends Component {
         let query_res = await this._retrieveEvents(true);
 
         let has_data = query_res.data.length > 0;
+        let current_to_add = this.state.data;
 
         this.setState({
-            data: [... this.state.data, ... query_res.data],
+            data: [... current_to_add, ... query_res.data],
             last_data: query_res.last,
             refreshing: false,
             can_extend: has_data
         });
+        
+        this._loadImages(query_res.data, current_to_add)
     }
+    _loadImages(items, has_add = []) {
+        // Load Images
+        items?.forEach(async (item) => {
+            item.event_image = await _getEventImage(item.id, item.random_banner)
+            item.owner_image = await _getProfileImage(item.owner)
 
+            this.setState({data: [...has_add, ...items]});
+        })
+    }
     doRefresh() {
         return new Promise((resolve) => {
           this._loadEvents() 

@@ -18,7 +18,8 @@ import ProfileContent from "../components/ProfileContent";
 
 import { 
     _arrangeProfileData,
-    _countProfileRelation
+    _countProfileRelation,
+    _getProfileImage
 } from "../helper/ProfileLoad";
   
 class ProfileScreen extends Component {
@@ -54,15 +55,27 @@ class ProfileScreen extends Component {
 
         this.setState({'data': {
                 'profile_name': _data._name,
-                'profile_photo': _data.profile_image,
-                'cover_photo': _data.cover_image,
                 ...count,
                 ..._data
             },
             'is_loading': false
         })
+
+        this._loadImages(_data)
         console.log('Profile Name: ', this.state.data.profile_name)
     }
+
+    async _loadImages(item) {
+        // Load Images Synchronously 
+
+        let profile_image = await _getProfileImage(item.id, 'profile')
+        let cover_image = await _getProfileImage(item.id, 'cover')
+
+        this.setState({data: {...this.state.data, 
+            profile_photo: profile_image,
+            cover_photo: cover_image}});
+    }
+
     componentDidMount() {
         this.onRefresh()
     } 
