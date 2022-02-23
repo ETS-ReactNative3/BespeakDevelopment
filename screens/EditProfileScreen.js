@@ -6,14 +6,13 @@ import {
   Text, 
   View,
   Image,
-  Alert,
-  SafeAreaView
+  Alert
 } from 'react-native';
 import { 
   Feather,
 } from '@expo/vector-icons';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { InputOutline, InputStandard } from 'react-native-input-outline';
+import { InputStandard } from 'react-native-input-outline';
 import * as ImagePicker from 'react-native-image-crop-picker';
 
 import { auth, db, storage, _auth } from '../firebase';
@@ -31,6 +30,7 @@ import {
     validateMobile,
     validatePassword
 } from '../helper/TextValidate';
+import { _arrangeProfileData } from "../helper/ProfileLoad";
 
 class EditProfileScreen extends Component {
     state = {
@@ -50,56 +50,34 @@ class EditProfileScreen extends Component {
         const snapshot = await query.get()
     
         if(snapshot.empty) {
-          console.log('No data found for user: ', uid);
-          return;
+            console.log('No data found for user: ', uid);
+            return;
         } 
         var raw_data = snapshot.data()
 
         if(raw_data.bio)
             raw_data.bio = raw_data.bio.replace(/(\r\n|\n|\r)/gm, " ")
         
-        this.setState({'data': raw_data})
+        raw_data.id = snapshot.id;
+        raw_data = await _arrangeProfileData([raw_data]);
+        let _data = raw_data[0];
 
-        let profile_image = null
-        let cover_image = null
-        
-        await storage.ref(`/users/${uid}/profile`)
-        .getDownloadURL()
-        .then((url) => { 
-            profile_image = url
-            console.log("User's Profile Photo: ", url)
-        }).catch((error) => {
-            if(error.code != 'storage/object-not-found') {
-                console.log("Error occured: ", error.code)
-                Alert.alert('Error!', error.message)
-            }
+        this.setState({
+            'data': { ..._data },
+            'profile_photo': {
+                'uri': _data.profile_image,
+                'hasChange': false
+            },
+            'cover_photo': {
+                'uri': _data.cover_image,
+                'hasChange': false
+            },
+            'is_loading': false
         })
-
-        await storage.ref(`/users/${uid}/cover`)
-        .getDownloadURL()
-        .then((url) => { 
-            cover_image = url
-            console.log("User's Cover Photo: ", url)
-        }).catch((error) => {
-            if(error.code != 'storage/object-not-found') {
-                console.log("Error occured: ", error.code)
-                Alert.alert('Error!', error.message)
-            }
-        })
-
-        this.setState({'profile_photo': {
-            'uri': profile_image,
-            'hasChange': false
-        }})
-        this.setState({'cover_photo': {
-            'uri': cover_image,
-            'hasChange': false
-        }})
-
-        this.setState({'is_loading': false})
     }
     componentDidMount() {
         this.setState({'is_loading': true})
+
         this.props.navigation.setOptions({
             headerRight: () => (
                 <TouchableOpacity onPress={() => this._handleSubmit()}>
@@ -121,12 +99,12 @@ class EditProfileScreen extends Component {
             console.log('Attached Image: ', images.path);
             if(upload_type == "dp") {
                 this.setState({'profile_photo': {
-                    'uri': images.path,
+                    'uri': {uri: images.path},
                     'hasChange': true
                 }})
             } else {
                 this.setState({'cover_photo': {
-                    'uri': images.path,
+                    'uri': {uri: images.path},
                     'hasChange': true
                 }})
             }
@@ -158,10 +136,10 @@ class EditProfileScreen extends Component {
             }) 
             .then(async () => {
                 if (this.state.profile_photo.hasChange) {
-                    await this._uploadToStorage(this.state.profile_photo.uri, `/users/${this.state.user.uid}/profile`)
+                    await this._uploadToStorage(this.state.profile_photo.uri.uri, `/users/${this.state.user.uid}/profile`)
                 }
                 if (this.state.cover_photo.hasChange) {
-                    await this._uploadToStorage(this.state.cover_photo.uri, `/users/${this.state.user.uid}/cover`)
+                    await this._uploadToStorage(this.state.cover_photo.uri.uri, `/users/${this.state.user.uid}/cover`)
                 }
 
                 this.setState({'is_loading': false})
@@ -197,7 +175,7 @@ class EditProfileScreen extends Component {
         return task.then(() => {                                 
             console.log('Photo Uploaded to Storage', path);
         }).catch((e) => {
-            Alert.alert('Error!', e)
+            Alert.alert('Error!', e.message)
             console.log('Uploading Image Error: ', e)
         });
     }
@@ -258,16 +236,14 @@ class EditProfileScreen extends Component {
         
         this.setState({'data': dataState})
         this.setState({'valid': validState})
-
-        console.log('Data State: ', this.state.data)
-        console.log('Valid State: ', this.state.valid)
     }
     render() {
+        let item = this.state.data;
+
         return (
             <View style={EditProfileScreenStyle.EditProfileContainer}>
-                {
-                    this.state.is_loading && 
-                        <Spinner visible={true} 
+                { this.state.is_loading && 
+                    <Spinner visible={true} 
                         textStyle={SystemStyle.whiteLoader}
                         color = '#fff'
                         animation = 'fade'
@@ -275,13 +251,9 @@ class EditProfileScreen extends Component {
                 }
                 <TouchableOpacity onPress = {() => this._selectImage("cover")}>
                     <View style={EditProfileScreenStyle.EditProfileCoverImgContainer}>
-                            <Feather name="plus" size={50} style={EditProfileScreenStyle.EditCoverImgIcon}/>
-                            <Image style={EditProfileScreenStyle.EditProfileCoverImg}
-                                source={
-                                    this.state.cover_photo.uri ?
-                                    {uri: this.state.cover_photo.uri}:
-                                    require('../assets/img/blank-cover.png')
-                                }/>
+                        <Feather name="plus" size={50} style={EditProfileScreenStyle.EditCoverImgIcon}/>
+                        <Image style={EditProfileScreenStyle.EditProfileCoverImg}
+                            source={ this.state.cover_photo.uri }/>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress = {() => this._selectImage("dp")}>
@@ -289,81 +261,81 @@ class EditProfileScreen extends Component {
                         <View style={EditProfileScreenStyle.EditProfileImgContainer}>
                             <Feather name="plus" size={50} style={EditProfileScreenStyle.EditProfileImgIcon}/>
                             <Image style={EditProfileScreenStyle.EditProfileImg}
-                                source={
-                                    this.state.profile_photo.uri ?
-                                    {uri: this.state.profile_photo.uri}:
-                                    require('../assets/img/blank-profile.png')
-                                }/>
+                                source={ this.state.profile_photo.uri }/>
                         </View>
                     </View>
                 </TouchableOpacity>
                 <ScrollView>
                     <View style = {EditProfileScreenStyle.EditProfileFormContainer}>
-                    {this.state.data.user_type == 'INDIV' ? (
-                        <>
-                            <InputStandard placeholder = 'First Name'
-                                style = {EditProfileScreenStyle.EditProfileTextInput}
-                                characterCount = {26}
-                                value={this.state.data.f_name}
-                                onChangeText = {text => this._handleText('f_name', text)}
-                                {...Properties.defaultInputStandard}
-                                autoCorrect = {false}/> 
-                            {this.state.valid.f_name ?
-                                <Text style={Validation.textVal}>
-                                    {this.state.valid.f_name}</Text>
-                            : null}
-                            <InputStandard placeholder = 'Last Name'
-                                style = {EditProfileScreenStyle.EditProfileTextInput}
-                                characterCount = {26}
-                                value={this.state.data.l_name}
-                                onChangeText = {text => this._handleText('l_name', text)}
-                                {...Properties.defaultInputStandard}
-                                autoCorrect = {false}/> 
-                            {this.state.valid.l_name ?
-                                <Text style={Validation.textVal}>
-                                    {this.state.valid.l_name}</Text>
-                            : null}
-                        </>  
-                    ) : (
-                        <>
-                            <InputStandard placeholder = 'Organization Name'
-                                style = {EditProfileScreenStyle.EditProfileTextInput}
-                                characterCount = {46}
-                                value={this.state.data.org_name}
-                                onChangeText = {text => this._handleText('org_name', text)}
-                                {...Properties.defaultInputStandard}
-                                autoCorrect = {false}/> 
-                            {this.state.valid.org_name ?
-                                <Text style={Validation.textVal}>
-                                    {this.state.valid.org_name}</Text>
-                            : null}  
-                        </>
-                    )}
+                        { item.user_type == 'INDIV' ? (
+                            <>
+                                <InputStandard placeholder = 'First Name'
+                                    style = {EditProfileScreenStyle.EditProfileTextInput}
+                                    characterCount = {26}
+                                    value={item.f_name}
+                                    onChangeText = {text => this._handleText('f_name', text)}
+                                    {...Properties.defaultInputStandard}
+                                    autoCorrect = {false}/> 
+                                {this.state.valid.f_name ?
+                                    <Text style={Validation.textVal}>
+                                        {this.state.valid.f_name}</Text>
+                                : null}
+
+                                <InputStandard placeholder = 'Last Name'
+                                    style = {EditProfileScreenStyle.EditProfileTextInput}
+                                    characterCount = {26}
+                                    value={item.l_name}
+                                    onChangeText = {text => this._handleText('l_name', text)}
+                                    {...Properties.defaultInputStandard}
+                                    autoCorrect = {false}/> 
+                                {this.state.valid.l_name ?
+                                    <Text style={Validation.textVal}>
+                                        {this.state.valid.l_name}</Text>
+                                : null}
+                            </>  
+                        ) : (
+                            <>
+                                <InputStandard placeholder = 'Organization Name'
+                                    style = {EditProfileScreenStyle.EditProfileTextInput}
+                                    characterCount = {46}
+                                    value={item.org_name}
+                                    onChangeText = {text => this._handleText('org_name', text)}
+                                    {...Properties.defaultInputStandard}
+                                    autoCorrect = {false}/> 
+                                {this.state.valid.org_name ?
+                                    <Text style={Validation.textVal}>
+                                        {this.state.valid.org_name}</Text>
+                                : null}  
+                            </>
+                        )}
                     <InputStandard placeholder = 'Bio'
                         style = {EditProfileScreenStyle.EditProfileTextInput}
                         characterCount = {300}
-                        value={this.state.data.bio}
+                        value={item.bio}
                         onChangeText = {text => this._handleText('bio', text)}
                         {...Properties.defaultInputStandard}
                         characterCountFontSize = {12}
                         multiline = {true}
                         minHeight = {60}
                         textAlignVertical = 'top'/> 
+
                     <InputStandard placeholder = 'Location'
                         style = {EditProfileScreenStyle.EditProfileTextInput}
                         characterCount = {64}
-                        value={this.state.data.location}
+                        value={item.location}
                         onChangeText = {text => this._handleText('location', text)}
                         {...Properties.defaultInputStandard}/> 
+
                     <InputStandard placeholder = 'Phone Number'
                         style = {EditProfileScreenStyle.EditProfileTextInput}
                         characterCount = {15}
-                        value={this.state.data.mobile}
+                        value={item.mobile}
                         onChangeText = {text => this._handleText('mobile', text)}
                         {...Properties.defaultInputStandard}/> 
                     <Text style={Validation.textVal}>
                             {this.state.valid.mobile}</Text>
                     </View>
+
                     <TouchableOpacity style={EditProfileScreenStyle.ChangePassBtn}
                         onPress = {() => { this.props.navigation.navigate('ChangePasswordScreen') }}>
                             <Text style={EditProfileScreenStyle.ChangePassTextBtn}> Change Password</Text>

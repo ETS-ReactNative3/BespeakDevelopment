@@ -3,14 +3,12 @@ import {
     Text,
     TouchableOpacity,
     Image,
-    View,
-    Alert
+    View
 } from 'react-native';
 import { 
-    Feather,
     Ionicons,
-    SimpleLineIcons,
-    FontAwesome
+    FontAwesome,
+    Feather
 } from '@expo/vector-icons';
 
 import { _setFollowConnection } from "../helper/ProfileHelper";
