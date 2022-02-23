@@ -168,6 +168,7 @@ class EventScreen extends Component {
                     return
                 }) 
                 .then(async (doc) => {
+                    this.comment_modal.current.close()
                     this.reloadComments();
                 });
             this.setState({ active_comment: false, is_active: false})

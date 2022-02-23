@@ -62,17 +62,17 @@ class EditProfileScreen extends Component {
         
         _data.id = snapshot.id;
 
-        let profile_image = await _getProfileImage(_data.id, 'profile')
-        let cover_image = await _getProfileImage(_data.id, 'cover')
+        //let profile_image = await _getProfileImage(_data.id, 'profile')
+        //let cover_image = await _getProfileImage(_data.id, 'cover')
 
         this.setState({
             'data': { ..._data },
             'profile_photo': {
-                'uri': profile_image,
+                'uri': _data.profile_image,
                 'hasChange': false
             },
             'cover_photo': {
-                'uri': cover_image,
+                'uri': _data.cover_image,
                 'hasChange': false
             },
             'is_loading': false
