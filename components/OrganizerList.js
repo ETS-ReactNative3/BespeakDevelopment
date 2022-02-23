@@ -149,10 +149,13 @@ class OrganizerList extends Component {
     _loadImages(items, has_add = []) {
         // Load Images Asynchronously
         items?.forEach(async (item) => {
-            item.profile_image = await _getProfileImage(item.id, 'profile')
-            item.cover_image = await _getProfileImage(item.id, 'cover')
+            item.profile_image =  item.profile_image ? item.profile_image 
+                : await _getProfileImage(false, 'profile')
+            item.cover_image = item.cover_image ? item.cover_image 
+                : await _getProfileImage(false, 'cover')
 
             this.setState({data: [...has_add, ...items]});
+            console.log(this.state.data)
         })
     }
 

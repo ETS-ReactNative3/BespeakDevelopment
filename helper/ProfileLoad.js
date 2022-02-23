@@ -21,25 +21,27 @@ async function _arrangeProfileData(user_data, mod = false) {
     return arranged_data;
 }
 
-async function _getProfileImage(user_id = auth.currentUser.uid, image_type) {
-    let user_image = false;
-    await storage.ref(`/users/${user_id}/${image_type}`)
-        .getDownloadURL()
-        .then((url) => { 
-            user_image = url
-            //console.log("Loaded Event Image for ", user_image, ": ", url)
-        }).catch((error) => {
-            if(error.code != 'storage/object-not-found') {
-                console.log("Error occured: ", error.message)
-                Alert.alert('Error!', error.message)
-            }
-        })
+async function _getProfileImage(user_id, image_type) {
+    if(user_id) {
+        let user_image = false;
+        await storage.ref(`/users/${user_id}/${image_type}`)
+            .getDownloadURL()
+            .then((url) => { 
+                user_image = url
+                //console.log("Loaded Event Image for ", user_image, ": ", url)
+            }).catch((error) => {
+                if(error.code != 'storage/object-not-found') {
+                    console.log("Error occured: ", error.message)
+                    Alert.alert('Error!', error.message)
+                }
+            })
 
-    if(user_image) {
-        return {uri: user_image};
+        if(user_image) {
+            return {uri: user_image};
+        }
     }
 
-    if(image_type == 'profile' )
+    if(image_type == 'profile')
         return require('../assets/img/blank-profile.png');
 
     return require('../assets/img/blank-cover.png');

@@ -33,7 +33,10 @@ import SystemStyle from "../styles/SystemStyle";
 import Properties from "../values/Properties"
 import dateFormat from "../helper/DateFormat"
 import { _uploadToStorage } from "../helper/EventHelper"
-import { _arrangeData } from '../helper/EventLoad';
+import { 
+    _arrangeData,
+    _getEventImage
+} from '../helper/EventLoad';
 
 class CreateEventScreen extends Component {
     state = {
@@ -144,6 +147,19 @@ class CreateEventScreen extends Component {
             .then(async (doc) => {
                 if(has_upload) {
                     await _uploadToStorage(this.state.banner_photo.uri, `/event/${doc.id}/banner`)
+                    let _image = await _getEventImage(doc.id, undefined)
+                    
+                    await db
+                        .collection('event')
+                        .doc(doc.id)
+                        .update({
+                            _banner: _image
+                        })
+                        .catch(error => {
+                            Alert.alert('Error!', error.message)
+                            console.log('Error!', error.message)
+                        })
+
                 }
                 this.setState({'is_loading': false})
                 
@@ -416,8 +432,17 @@ class EditEventScreen extends Component {
                 info: data.info,
                 is_open: data.is_open
             },
-            banner_photo: data.event_image
         });
+
+        this._loadImages(data);
+    }
+    async _loadImages(item) {
+        // Load Images Synchronously 
+
+        item.event_image = item._banner ? item._banner
+            : await _getEventImage(undefined, item.random_banner)
+
+        this.setState({banner_photo: item.event_image});
     }
     componentDidMount() {
         this.props.navigation.setOptions({
@@ -474,6 +499,18 @@ class EditEventScreen extends Component {
             .then(async () => {
                 if(this.state.banner_photo.uri && this.state.banner_has_change) {
                     await _uploadToStorage(this.state.banner_photo.uri, `/event/${event_id}/banner`)
+                    let _image = await _getEventImage(event_id, undefined)
+                    
+                    await db
+                        .collection('event')
+                        .doc(event_id)
+                        .update({
+                            _banner: _image
+                        })
+                        .catch(error => {
+                            Alert.alert('Error!', error.message)
+                            console.log('Error!', error.message)
+                        })
                 }
                 this.setState({'is_loading': false})
                 

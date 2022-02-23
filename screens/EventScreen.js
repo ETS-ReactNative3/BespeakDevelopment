@@ -105,8 +105,9 @@ class EventScreen extends Component {
         // Load Images Synchronously 
         let user_image = await _getProfileImage(uid);
 
-        item.event_image = await _getEventImage(item.id, item.random_banner)
-        item.owner_image = await _getProfileImage(item.owner);
+        item.event_image = item._banner ? item._banner
+            : await _getEventImage(undefined, item.random_banner)
+        item.owner_image = user_image;
 
         this.setState({data: item, user_data: {...this.state.user_data, profile_image: user_image}});
     }
@@ -168,6 +169,7 @@ class EventScreen extends Component {
                     return
                 }) 
                 .then(async (doc) => {
+                    this.comment_modal.current.close()
                     this.reloadComments();
                 });
             this.setState({ active_comment: false, is_active: false})
