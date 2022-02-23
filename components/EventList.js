@@ -15,6 +15,7 @@ import {
     _getEventImage,
     _getProfileImage
 } from "../helper/EventLoad";
+import { _getFollowing } from "../helper/ProfileLoad";
 
 import { EventCard, EventModal } from "./EventCard";
 
@@ -32,7 +33,9 @@ class EventList extends Component {
             refreshing: false,
             user_refresh: false, // Manual Refreshing
             can_extend: true,
-            modal_data: false
+            modal_data: false,
+
+            is_mounted: false
         }
         this.onRefresh = this.onRefresh.bind(this)
         this._viewModal = this._viewModal.bind(this)
@@ -43,18 +46,25 @@ class EventList extends Component {
 
     componentDidMount() {
         try {
-            //# TODO: Optimize
-            this._unsubscribe = this.props.navigation.addListener('focus', () => {
-                this._loadEvents();
-            });
             this.setState({
                 loading: true
             })
             this._loadEvents();
+
+            //# TODO | FIX: Prevent Rerendering of Events to Top First.
+            this.setState({is_mounted: true});
+
+            //# TODO: Optimize
+            this._unsubscribe = this.props.navigation.addListener('focus', () => {
+                if(this.state.is_mounted) {
+                    this._loadEvents();
+                }
+            }); 
         } catch(error) {
             console.log(error);
         }
     }
+    //# TODO | FIX -
     componentWillUnmount() {
         this._unsubscribe();
     }
@@ -107,10 +117,20 @@ class EventList extends Component {
                 .where(_db.FieldPath.documentId(), "in", saved_events)
         } else if(this.props.for_search && this.props.search_key) {
             let key = this.props.search_key;
+
             get_events_query = get_events_query
                 .orderBy('name')
                 .where('name', '>=', key)
                 .where('name', '<', key + `z`)
+        } else if(this.props.for_home) {
+            let following = await _getFollowing();
+
+            if(following.length == 0) {
+                return {'data': [], 'last': null}
+            }
+
+            get_events_query = get_events_query
+                .where('owner', "in", following);
         }
 
         if(!this.props.for_saved && !this.props.search_key) {
@@ -182,7 +202,10 @@ class EventList extends Component {
         items?.forEach(async (item) => {
             item.event_image = item._banner ? item._banner
                 : await _getEventImage(undefined, item.random_banner)
-            //item.owner_image = await _getProfileImage(item.owner)
+            
+            this.setState({data: [...has_add, ...items]});
+
+            item.owner_image = await _getProfileImage(item.owner)
 
             this.setState({data: [...has_add, ...items]});
         })
@@ -190,7 +213,7 @@ class EventList extends Component {
     doRefresh() {
         return new Promise((resolve) => {
           this._loadEvents() 
-          setTimeout(resolve, 5000)
+          setTimeout(resolve, 3000)
         });
     }
     async onRefresh() {

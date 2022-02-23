@@ -30,7 +30,9 @@ class ProfileScreen extends Component {
             user: auth.currentUser,
             data: {},
             is_loading: true,
-            refreshing: false
+            refreshing: false,
+
+            is_mounted: false,
         }
     }
     async _loadUserData() {
@@ -79,8 +81,17 @@ class ProfileScreen extends Component {
     }
 
     componentDidMount() {
-        this.onRefresh()
-    } 
+        this.doRefresh()
+        this.setState({is_mounted: true});
+
+        this._unsubscribe = this.props.navigation.addListener('focus', () => {
+            if(this.state.is_mounted)
+                this._loadUserData()
+        });
+    }
+    componentWillUnmount() {
+        this._unsubscribe();
+    }
     doRefresh() {
         return new Promise((resolve) => {
             this._loadUserData()
@@ -166,7 +177,7 @@ class ProfileScreen extends Component {
                             </View>
                     </ScrollView>
                 </SafeAreaView>
-                <ProfileContent refreshing = {this.state.refreshing} _on_done = {this.onRefresh}/>
+                <ProfileContent refreshing = {this.state.refreshing} />
             </>
         );
     }

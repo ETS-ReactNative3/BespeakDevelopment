@@ -64,7 +64,8 @@ class OrganizerList extends Component {
 
         let get_organizer_query = await db.collection('user_info');
 
-        if(this.props.for_search && this.props.search_key) {
+        if(this.props.for_search && this.props.search_key
+            && this.props.search_key != '') {
             let key = this.props.search_key;
             get_organizer_query = get_organizer_query
                 .orderBy('_name')
