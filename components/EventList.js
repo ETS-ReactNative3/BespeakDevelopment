@@ -7,7 +7,7 @@ import { ActivityIndicator,
     RefreshControl
 } from 'react-native';
 
-import { db, _db } from '../firebase';
+import { auth, db, _db } from '../firebase';
 
 import { 
     _arrangeData, 
@@ -128,6 +128,8 @@ class EventList extends Component {
             if(following.length == 0) {
                 return {'data': [], 'last': null}
             }
+
+            following.push(auth.currentUser.uid)
 
             get_events_query = get_events_query
                 .where('owner', "in", following);
