@@ -163,6 +163,7 @@ const EditEventStyle=StyleSheet.create({
         marginLeft: '10%',
         fontFamily:'RedHatDisplay-Medium',
         fontSize:16,
+        color:'#eb9834',
         alignSelf:'center'
     },
     //Toggle Switch

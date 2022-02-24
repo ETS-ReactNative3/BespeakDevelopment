@@ -280,7 +280,6 @@ class EventList extends Component {
                                     <Text style={SystemStyle.EmptyTitleAdditionalInfo}> All the events you have saved will show up here. </Text>
                             </View>
                         ) : (
-                            // Dito yung ipapa browse mo siya ng organizer para magka laman newspid niya
                             <View style={SystemStyle.TabContainer}>
                                 <View style={SystemStyle.WelcomeToBespeakImgContainer}>
                                     <Image style={SystemStyle.WelcomeToBespeakImg} source={require('../assets/img/WelcomeToBespeak.png')}/>      
