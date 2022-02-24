@@ -105,15 +105,17 @@ const SystemStyle = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignSelf:'baseline',
-    backgroundColor:'rgba(0,0,0,.5)',
+    backgroundColor:'#fff',
   },
   BottomSheetModalContainer: {
     flex: 1,
-    width: '100%',
     height: '100%',
     backgroundColor:'#fff',
     alignItems: "center",
-    padding:'4%'
+    justifyContent:'center',
+    padding:'4%',
+    marginLeft:'4%',
+    marginRight:'4%',
   },
   //Draggable Modal Image Container
   BottomSheetImage:{
@@ -419,7 +421,7 @@ const SystemStyle = StyleSheet.create({
       backgroundColor:'#f5f5f5',
       paddingLeft:'3%',
       paddingRight:'3%',
-      width:'96%',
+      width:'98%',
       fontFamily: 'RedHatDisplay-Regular',
     },
     BespeakerInput:{
