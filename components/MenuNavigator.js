@@ -30,13 +30,9 @@ class HomeNavigator extends Component {
               }}/>
             <MenuStack.Screen name="EditEventScreen" component={ManageEventScreens.EditEventScreen}
               options={{
-                title: 'Edit Event',
+                title: ' ',
                 headerShown: true,
                 tabBarShowLabel:false,
-                headerTitleStyle: {
-                  fontFamily: 'RedHatDisplay-Medium',
-                  color: '#eb9834',
-                }
             }}/>
             <MenuStack.Screen name="ParticipantListScreen" component={ParticipantListScreens}
               options={{
@@ -159,13 +155,9 @@ class ProfileNavigator extends Component {
           }}/>
         <MenuStack.Screen name="EditEventScreen" component={ManageEventScreens.EditEventScreen}
           options={{
-            title: 'Edit Event',
+            title: ' ',
             headerShown: true,
             tabBarShowLabel:false,
-            headerTitleStyle: {
-              fontFamily: 'RedHatDisplay-Medium',
-              color: '#eb9834',
-            }
         }}/>
         <MenuStack.Screen name="ParticipantListScreen" component={ParticipantListScreens}
           options={{

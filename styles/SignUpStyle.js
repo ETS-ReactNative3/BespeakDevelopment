@@ -92,6 +92,7 @@ const SignUpStyle=StyleSheet.create({
     TicketContainer:{
         flex:1,
         backgroundColor:'#eb9834',
+        marginTop:'2%',
         marginLeft:'-15%',
         marginRight:'-15%'
     },

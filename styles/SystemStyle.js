@@ -417,7 +417,8 @@ const SystemStyle = StyleSheet.create({
       borderRadius:25,
       height:35,
       backgroundColor:'#f5f5f5',
-      paddingLeft:'2%',
+      paddingLeft:'3%',
+      paddingRight:'3%',
       width:'96%',
       fontFamily: 'RedHatDisplay-Regular',
     },
@@ -679,35 +680,30 @@ const SystemStyle = StyleSheet.create({
   LookEventImgContainer: {
     alignItems:'center',
     justifyContent:'center',
-    marginBottom:'-5%'
   },
   LookEventImg: {
-    marginBottom:'1.5%',
-    width: '30%',
-    height: '55%',
+    width: 110,
+    height: 100,
     justifyContent:'center',
   },
   CreateEventImgContainer: {
     alignItems:'center',
     justifyContent:'center',
-    marginBottom:'-5%'
   },
   CreateEventImg: {
     marginBottom:'1.5%',
-    width: '33%',
-    height: '60%',
+    width: 125,
+    height: 120,
     justifyContent:'center',
   },
   WelcomeToBespeakImgContainer: {
     alignItems:'center',
     justifyContent:'center',
-    marginTop:'-50%',
-    marginBottom:'-25%',
   },
   WelcomeToBespeakImg: {
     marginBottom:'1.5%',
-    width: '58%',
-    height: '40%',
+    width: 215,
+    height: 140,
     justifyContent:'center',
   },
 });
