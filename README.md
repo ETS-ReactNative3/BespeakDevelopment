@@ -42,3 +42,6 @@ Install this module:
 - ```expo install react-native-status-bar-height```
 - ```expo install react-native-popup-confirm-toast```
 https://www.npmjs.com/package/react-native-popup-confirm-toast
+
+# Bespeak DEV Client Version 1.6
+- ```expo install @react-native-firebase/dynamic-links```
