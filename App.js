@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LogBox } from 'react-native';
 
-import { auth } from './firebase';
+import { auth, d_link } from './firebase';
 
 import StartScreen from './screens/StartScreen';
 import SignUpScreen from './screens/SignUpScreen';
@@ -53,6 +53,12 @@ export default function App() {
         }, 1000);
         return () => clearInterval(interval);
     });
+
+    useEffect(() => {
+        const unsubscribeDynamicLinks = d_link().onLink(({url}) => {
+            console.log('Link loaded:  ', url);
+        });
+    })
 
     if(!isLoaded){
         return (

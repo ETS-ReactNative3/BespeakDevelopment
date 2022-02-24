@@ -85,8 +85,10 @@ class EventScreen extends Component {
         _data = _data[0]
 
         _data.is_following = await _isFollowing(uid, _data.owner);
-
+        
         console.log("Opened Event Data: ", _data)
+
+        let _user_data_name = await _getUserData('_name', undefined)
 
         this._loadComments();
 
@@ -94,7 +96,7 @@ class EventScreen extends Component {
             loading: false,
             data: _data,
             user_data: {
-                name: _data.owner_name,
+                name: _user_data_name,
             }
         });
         
@@ -103,11 +105,11 @@ class EventScreen extends Component {
 
     async _loadImages(item, uid) {
         // Load Images Synchronously 
-        let user_image = await _getProfileImage(item.owner);
+        let user_image = await _getProfileImage(uid);
 
         item.event_image = item._banner ? item._banner
             : await _getEventImage(undefined, item.random_banner)
-        item.owner_image = user_image;
+        item.owner_image = await _getProfileImage(item.owner);;
 
         this.setState({data: item, user_data: {...this.state.user_data, profile_image: user_image}});
     }

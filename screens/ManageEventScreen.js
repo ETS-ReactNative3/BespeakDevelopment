@@ -32,7 +32,10 @@ import SystemStyle from "../styles/SystemStyle";
 
 import Properties from "../values/Properties"
 import dateFormat from "../helper/DateFormat"
-import { _uploadToStorage } from "../helper/EventHelper"
+import { 
+    _uploadToStorage,
+    _getGeneratedLink
+} from "../helper/EventHelper"
 import { 
     _arrangeData,
     _getEventImage
@@ -145,22 +148,34 @@ class CreateEventScreen extends Component {
                 return
             }) 
             .then(async (doc) => {
+                let to_update = []
+
                 if(has_upload) {
                     await _uploadToStorage(this.state.banner_photo.uri, `/event/${doc.id}/banner`)
-                    let _image = await _getEventImage(doc.id, undefined)
-                    
+                    to_update._banner = await _getEventImage(doc.id, undefined)
+                }
+
+                try {
+                    let link_title = event_data.name + ' (' 
+                        + await dateFormat(new Date(this.state.data.schedule), "EEEE, MMMM d, yyyy - h:mm aaa") + ', ' 
+                        + event_data.location + ') ';
+
+                    // Create a dynamic link.
+                    to_update._link = await _getGeneratedLink('event', doc.id, 
+                        link_title, has_upload ? to_update._banner.uri : undefined, event_data.desc);
+
                     await db
                         .collection('event')
                         .doc(doc.id)
                         .update({
-                            _banner: _image
+                            ...to_update
                         })
                         .catch(error => {
                             Alert.alert('Error!', error.message)
                             console.log('Error!', error.message)
                         })
+                } catch(e) { console.log('Error!', e)}
 
-                }
                 this.setState({'is_loading': false})
                 
                 this.props.navigation.goBack()
@@ -496,21 +511,34 @@ class EditEventScreen extends Component {
                 return
             }) 
             .then(async () => {
+                let to_update = []
+
                 if(this.state.banner_photo.uri && this.state.banner_has_change) {
                     await _uploadToStorage(this.state.banner_photo.uri, `/event/${event_id}/banner`)
-                    let _image = await _getEventImage(event_id, undefined)
-                    
+                    to_update._banner = await _getEventImage(event_id, undefined)
+                }
+
+                try {
+                    let link_title = event_data.name + ' (' 
+                        + await dateFormat(new Date(event_data.schedule), "EEEE, MMMM d, yyyy - h:mm aaa") + ', ' 
+                        + event_data.location + ') ';
+
+                    // Create a dynamic link.
+                    to_update._link = await _getGeneratedLink('event', event_id, 
+                        link_title, to_update._banner.uri ? to_update._banner.uri : undefined, event_data.desc);
+
                     await db
                         .collection('event')
                         .doc(event_id)
                         .update({
-                            _banner: _image
+                            ...to_update
                         })
                         .catch(error => {
                             Alert.alert('Error!', error.message)
                             console.log('Error!', error.message)
                         })
-                }
+                } catch(e) { console.log('Error!', e)}
+
                 this.setState({'is_loading': false})
                 
                 this.props.route.params._done();

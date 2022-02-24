@@ -19,6 +19,8 @@ import BottomSheet from "react-native-gesture-bottom-sheet";
 
 import SystemStyle from "../styles/SystemStyle";
 
+import { _initiateSharing } from "../helper/LinkHelper";
+
 class EventCard extends Component {
     constructor() {
         super();
@@ -76,7 +78,7 @@ class EventCard extends Component {
                         </View>
                     </View>
                     <View style={SystemStyle.CardOption}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress = {() => _initiateSharing(item)}>
                             <Ionicons name="share-social-outline" size={22} color="black" />
                         </TouchableOpacity>
                         <TouchableOpacity onPress = {() => this._bookmarkEvent()}>
