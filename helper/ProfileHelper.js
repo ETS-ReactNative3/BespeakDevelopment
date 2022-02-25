@@ -1,4 +1,4 @@
-import { auth, db, _db } from '../firebase';
+import { auth, db, _db, d_link } from '../firebase';
 import { Alert } from 'react-native';
 
 async function _setFollowConnection(_follower = auth.currentUser.uid,
@@ -51,6 +51,32 @@ async function _initializeDoc(collection, _data, _id) {
     });
 }
 
+async function _getUserGeneratedLink(value, _title = 'A Bespeak User', 
+    _img = 'https://firebasestorage.googleapis.com/v0/b/bespeak-development.appspot.com/o/system%2Fbespeak-icon.jpg?alt=media&token=c929cf2e-0626-4d8c-a15c-b7231d8d96eb',
+    _desc = null) {
+
+    console.log('Creating User Link: Name -',  _title, ' Image -', _img);
+
+    const link = await d_link().buildShortLink({
+        link: `https://bespeak.page.link/app?user=${value}`,
+        android: {
+            packageName: 'com.jedpedregosa.Bespeak',
+            fallbackUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+        },
+        
+        social: {
+            title: _title + ' is now on Bespeak! 👀🤟',
+            imageUrl: _img,
+            descriptionText: _desc?.substring(0, 60) + '... 😎 Be updated with ' + _title + ' now on the Bespeak mobile app! 🥳'
+        },
+        domainUriPrefix: 'https://bespeak.page.link',
+    });
+    
+    console.log('Link Made: ', link)
+    return link;
+}
+
 export {
-    _setFollowConnection
+    _setFollowConnection,
+    _getUserGeneratedLink
 };

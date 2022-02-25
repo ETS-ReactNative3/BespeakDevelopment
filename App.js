@@ -55,16 +55,17 @@ export default function App() {
         }, 1000);
         return () => clearInterval(interval);
     });
-    
+
     // Listener for clicked Dynamic Links
     useEffect(() => {
         const unsubscribeDynamicLinks = d_link().onLink(({url}) => {
             console.log('Link loaded 1:  ', url);
 
+            setLink(false);
+
             // #TODO: Refactor
             var regex = /[?&]([^=#]+)=([^&#]*)/g, params = {}, match;
-            try {
-                
+            try {        
                 while (match = regex.exec(url)) {
                     console.log('Getting parameters...')
                     params[match[1]] = match[2];
@@ -73,36 +74,37 @@ export default function App() {
 
             console.log(params?.event)
 
-            if(user && user.emailVerified) {
+            //if(user && user.emailVerified) {
                 setLink(params);
-            }
+            //}
         });
         return () => unsubscribeDynamicLinks();
     })
     
-/*
-    useEffect(() => {
-        d_link()
+    useEffect(async () => {
+        await d_link()
             .getInitialLink()
             .then(link => {
-                let url = link.url;
+                let url = link?.url;
 
                 console.log('Link loaded 2:  ', link);
 
+                setLink(false);
+
                 // #TODO: Refactor
                 var regex = /[?&]([^=#]+)=([^&#]*)/g, params = {}, match;
-                while (match = regex.exec(url)) {
-                    params[match[1]] = match[2];
-                }
+                try {    
+                    while (match = regex.exec(url)) {
+                        console.log('Getting parameters...')
+                        params[match[1]] = match[2];
+                    }
+                } catch(e) { Alert.alert(e.message) }
 
-                console.log(params)
+                console.log(params?.event)
 
-                if(user && user.emailVerified) {
-                    setLink(params);
-                }
+                setLink(params);
             });
-    }, []);*/
-    
+    }, []);
 
     if(!isLoaded){
         return (
@@ -115,11 +117,12 @@ export default function App() {
     return(
         <>
             {user && user.emailVerified ? (
-                <UserTabNavigate direct = {_link} key = {_link?.event}/>
+                <UserTabNavigate direct = {_link} key = {_link?.event ? _link?.event : _link?.user}/>
             ) : (
-                <NavigationContainer>
-                    <Stack.Navigator>
-                        <Stack.Screen options={Options.TitleScreen} name="TitleScreen" component={StartScreen.TitleScreen} />
+                <NavigationContainer key = {_link?.event ? _link?.event : _link?.user}>
+                    <Stack.Navigator >
+                        <Stack.Screen options={Options.TitleScreen} name="TitleScreen" component={StartScreen.TitleScreen} 
+                            initialParams ={{direct: _link}} />
                         <Stack.Screen options={Options.NoTitleWithBack} name="LoginScreen" component={SignInScreen.LoginScreen} />
                         <Stack.Screen options={Options.WithTitleWithBack.ForgotPassword} name="ResetFormScreen" component={SignInScreen.ResetFormScreen} />
                         <Stack.Screen options={Options.NoTitleNoBack} name="ResetPasswordScreen" component={SignInScreen.ResetPasswordScreen} />

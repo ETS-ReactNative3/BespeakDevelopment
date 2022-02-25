@@ -33,6 +33,8 @@ import {
 import { 
     _getProfileImage,
 } from "../helper/ProfileLoad";
+import { _getUserGeneratedLink } from "../helper/ProfileHelper"
+
 
 class EditProfileScreen extends Component {
     state = {
@@ -152,28 +154,37 @@ class EditProfileScreen extends Component {
                 return
             }) 
             .then(async () => {
-                let uri_change = {}
+                let _update = _cleaned_data;
+                _update.profile_image = _data.profile_image;
+                _update.cover_image = _data.profile_image;
+
                 if (this.state.profile_photo.hasChange) {
                     await this._uploadToStorage(this.state.profile_photo.uri.uri, `/users/${user_id}/profile`)
-                    uri_change.profile_image = await _getProfileImage(user_id, 'profile')
+                    _update.profile_image = await _getProfileImage(user_id, 'profile')
                 }
                 if (this.state.cover_photo.hasChange) {
                     await this._uploadToStorage(this.state.cover_photo.uri.uri, `/users/${user_id }/cover`)
-                    uri_change.cover_image = await _getProfileImage(user_id, 'cover')
+                    _update.cover_image = await _getProfileImage(user_id, 'cover')
                 }
 
-                if(uri_change) {
+                try {
+                    let link_title = _data.user_type == "INDIV" ? _data.f_name : _data.org_name;
+
+                    // Create a dynamic link.
+                    _update._link = await _getUserGeneratedLink(user_id, 
+                        link_title, _update.profile_image.uri ? _update.profile_image.uri : undefined, _update.bio);
+
                     await db
                         .collection('user_info')
                         .doc(user_id)
                         .update({
-                            ...uri_change
+                            ..._update
                         })
                         .catch(error => {
                             Alert.alert('Error!', error.message)
                             console.log('Error!', error.message)
                         })
-                }
+                } catch(e) { console.log('Error!', e)}
 
                 this.setState({'is_loading': false})
                 
@@ -342,7 +353,7 @@ class EditProfileScreen extends Component {
                         )}
                     <InputStandard placeholder = 'Bio'
                         style = {EditProfileScreenStyle.EditProfileTextInput}
-                        characterCount = {300}
+                        characterCount = {100}
                         value={item.bio}
                         onChangeText = {text => this._handleText('bio', text)}
                         {...Properties.defaultInputStandard}

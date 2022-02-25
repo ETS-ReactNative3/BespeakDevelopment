@@ -60,8 +60,8 @@ class SearchNavigator extends Component {
     //var route = _direct?.event ? 'EventScreen' : 'SearchScreen';
     console.log('Received ID: ', _direct);
     return (
-      <MenuStack.Navigator key = {_direct?.event}>
-        <MenuStack.Screen name="SearchScreen" component={SearchScreens.SearchScreen} key = {_direct?.event} initialParams = {{direct: _direct}}
+      <MenuStack.Navigator>
+        <MenuStack.Screen name="SearchScreen" component={SearchScreens.SearchScreen} initialParams = {{direct: _direct}}
           options={{
             title: ' ',
             headerShown: false,

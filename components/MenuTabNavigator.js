@@ -17,7 +17,7 @@ const Tab = createBottomTabNavigator();
 class UserTabNavigate extends Component {
     render() {
         let _direct = this.props.direct;
-        var route = _direct?.event ? 'SearchTab' : 'HomeTab';
+        var route = _direct?.event || _direct?.user ? 'SearchTab' : 'HomeTab';
         console.log('Route: ', route)
         return (
             // #TODO: Implement Deep Link Instead.
