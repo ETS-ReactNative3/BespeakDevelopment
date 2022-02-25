@@ -56,18 +56,21 @@ class HomeNavigator extends Component {
 
 class SearchNavigator extends Component {
   render() {
+    let _direct = this.props.route.params.direct
+    //var route = _direct?.event ? 'EventScreen' : 'SearchScreen';
+    console.log('Received ID: ', _direct);
     return (
-      <MenuStack.Navigator>
-        <MenuStack.Screen name="SearchScreen" component={SearchScreens.SearchScreen}
+      <MenuStack.Navigator key = {_direct?.event}>
+        <MenuStack.Screen name="SearchScreen" component={SearchScreens.SearchScreen} key = {_direct?.event} initialParams = {{direct: _direct}}
           options={{
             title: ' ',
             headerShown: false,
             tabBarShowLabel:false
           }}/>
-        <MenuStack.Screen name="EventScreen" component={EventScreens.EventScreen}
-          options={{
-            title: ' ',
-          }}/>
+        <MenuStack.Screen name="EventScreen" component={EventScreens.EventScreen} 
+            options={{
+                title: ' ',
+            }}/>
         <MenuStack.Screen name="EditEventScreen" component={ManageEventScreens.EditEventScreen}
           options={{
             title: ' ',
@@ -198,6 +201,8 @@ class ProfileNavigator extends Component {
     );
   }
 }
+
+SearchNavigator = React.memo(SearchNavigator);
 
 export default {
   HomeNavigator,

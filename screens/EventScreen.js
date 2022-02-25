@@ -60,6 +60,9 @@ class EventScreen extends Component {
     }
     _startLoad() {
         let event_id = this.props.route.params.event_id
+        
+        console.log('Opeing Event with ID: ', event_id)
+
         if(event_id) {
             this._retrieveData(event_id)
         } else {
