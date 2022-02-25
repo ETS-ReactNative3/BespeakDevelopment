@@ -114,7 +114,7 @@ const SystemStyle = StyleSheet.create({
     alignItems: "center",
     justifyContent:'center',
     padding:'4%',
-    marginLeft:'4%',
+    marginLeft:'2%',
     marginRight:'4%',
   },
   //Draggable Modal Image Container
@@ -421,7 +421,7 @@ const SystemStyle = StyleSheet.create({
       backgroundColor:'#f5f5f5',
       paddingLeft:'3%',
       paddingRight:'3%',
-      width:'98%',
+      width:'100%',
       fontFamily: 'RedHatDisplay-Regular',
     },
     BespeakerInput:{
