@@ -19,6 +19,14 @@ class SearchScreen extends Component {
     _search_key: null,
     refreshing: false
   }
+    componentDidMount() {
+        let direct = this.props.route.params.direct;
+        console.log('Direct in Search Screen: ', direct);
+        
+        if(direct?.event) {
+            this.props.navigation.navigate('EventScreen', {event_id: direct.event});
+        }
+    }
   _handleText(value) {
     this.setState({refreshing: true})
     setTimeout(() => {

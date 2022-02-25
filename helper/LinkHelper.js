@@ -5,11 +5,13 @@ import dateFormat from './DateFormat';
 import { _getGeneratedLink } from './EventHelper'
 
 async function _initiateSharing(item) {
-    let _link = item.link;
+    let _link = item._link;
 
     let link_title = item.name + ' (' 
         + await dateFormat(new Date(item.schedule), "EEEE, MMMM d, yyyy - h:mm aaa") + ', ' 
         + item.location + ') ';
+
+    console.log('Saved Link: ', _link)
 
     if(!_link) {
 

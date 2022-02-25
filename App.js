@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import  Apploading  from 'expo-app-loading';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LogBox } from 'react-native';
+import { Alert, LogBox } from 'react-native';
 
 import { auth, d_link } from './firebase';
 
@@ -22,6 +22,7 @@ export default function App() {
     const [user, setUser] = useState();
     const [isLoaded, setIsLoaded] = useState(false);
     const [dummy, setDummy] = useState(true);
+    const [_link, setLink] = useState(false);
 
     LogBox.ignoreLogs([
         'Warning: Can\'t perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.',
@@ -31,6 +32,7 @@ export default function App() {
         await useFonts();
     };
 
+    // Listener for any Authentication Changes
     useEffect(() => {
         const subscribe = auth.onAuthStateChanged((receivedUser) => {
             setUser(receivedUser);
@@ -53,12 +55,54 @@ export default function App() {
         }, 1000);
         return () => clearInterval(interval);
     });
-
+    
+    // Listener for clicked Dynamic Links
     useEffect(() => {
         const unsubscribeDynamicLinks = d_link().onLink(({url}) => {
-            console.log('Link loaded:  ', url);
+            console.log('Link loaded 1:  ', url);
+
+            // #TODO: Refactor
+            var regex = /[?&]([^=#]+)=([^&#]*)/g, params = {}, match;
+            try {
+                
+                while (match = regex.exec(url)) {
+                    console.log('Getting parameters...')
+                    params[match[1]] = match[2];
+                }
+            } catch(e) { Alert.alert(e.message) }
+
+            console.log(params?.event)
+
+            if(user && user.emailVerified) {
+                setLink(params);
+            }
         });
+        return () => unsubscribeDynamicLinks();
     })
+    
+/*
+    useEffect(() => {
+        d_link()
+            .getInitialLink()
+            .then(link => {
+                let url = link.url;
+
+                console.log('Link loaded 2:  ', link);
+
+                // #TODO: Refactor
+                var regex = /[?&]([^=#]+)=([^&#]*)/g, params = {}, match;
+                while (match = regex.exec(url)) {
+                    params[match[1]] = match[2];
+                }
+
+                console.log(params)
+
+                if(user && user.emailVerified) {
+                    setLink(params);
+                }
+            });
+    }, []);*/
+    
 
     if(!isLoaded){
         return (
@@ -71,7 +115,7 @@ export default function App() {
     return(
         <>
             {user && user.emailVerified ? (
-                <UserTabNavigate />
+                <UserTabNavigate direct = {_link} key = {_link?.event}/>
             ) : (
                 <NavigationContainer>
                     <Stack.Navigator>
