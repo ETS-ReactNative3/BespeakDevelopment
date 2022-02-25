@@ -36,6 +36,9 @@ class LoginScreen extends Component {
         submit_result: '',
         is_loading: false
     }
+    componentDidMount() {
+        this.txtEmail.focus();
+    }
     _handleText(key, value) {
         this.setState({[key]: {'valid': false, 'value': value}});
         if(value) {
@@ -130,6 +133,7 @@ class LoginScreen extends Component {
                             characterCount = {150}
                             onChangeText = {text => this._handleText('email', text)}
                             returnKeyType="next"
+                            ref={(input) => { this.txtEmail = input; }}
                             onSubmitEditing={() => { this.txtPassword.focus(); }}
                             blurOnSubmit={false}
                             {...Properties.defaultInputStandard}/> 

@@ -15,27 +15,34 @@ import SystemStyle from "../styles/SystemStyle.js";
 
 
 class TitleScreen extends Component {
-  render () {
-    return (
-      <View style={StartScreenStyle.Container}>
-        <ScrollView>
-            
-        </ScrollView>
-        <Image style={StartScreenStyle.FrontPic}
-          source={require('../assets/img/TitlePage.png')}/>      
-        <View style={StartScreenStyle.Footer}>
-          <TouchableOpacity style={StartScreenStyle.LogIn}
-            onPress={() => this.props.navigation.navigate('LoginScreen')}>
-              <Text style={StartScreenStyle.LogInText}>Log In</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={StartScreenStyle.SignUp}
-            onPress={() => this.props.navigation.navigate('ContinueScreen')}>
-              <Text style={StartScreenStyle.SignUpText}>Sign Up</Text>
-          </TouchableOpacity>
+    componentDidMount() {
+        let _direct = this.props.route.params.direct;
+        console.log('Login to Open Link: ', _direct)
+        if(_direct?.event || _direct?.user) {
+            this.props.navigation.navigate('LoginScreen');
+        }
+    }
+    render () {
+        return (
+        <View style={StartScreenStyle.Container}>
+            <ScrollView>
+                
+            </ScrollView>
+            <Image style={StartScreenStyle.FrontPic}
+                source={require('../assets/img/TitlePage.png')}/>      
+            <View style={StartScreenStyle.Footer}>
+                <TouchableOpacity style={StartScreenStyle.LogIn}
+                    onPress={() => this.props.navigation.navigate('LoginScreen')}>
+                        <Text style={StartScreenStyle.LogInText}>Log In</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={StartScreenStyle.SignUp}
+                    onPress={() => this.props.navigation.navigate('ContinueScreen')}>
+                        <Text style={StartScreenStyle.SignUpText}>Sign Up</Text>
+                </TouchableOpacity>
+            </View>
         </View>
-      </View>
-    );
-  }
+        );
+    }
 }
 
 class ContinueScreen extends Component {

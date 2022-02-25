@@ -15,6 +15,8 @@ import { _setFollowConnection } from "../helper/ProfileHelper";
 
 import SystemStyle from "../styles/SystemStyle";
 
+import { _initiateUserSharing } from "../helper/LinkHelper";
+
 class ProfileCard extends Component {
     async _handleFollow(uid) {
         let item = this.props.data;
@@ -61,14 +63,8 @@ class ProfileCard extends Component {
                     <Text style={SystemStyle.OrgCardInfo}>{ item.bio }</Text>
                 </View>
                 <View style={SystemStyle.CardOption}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress = {() => _initiateUserSharing(item)}>
                         <Ionicons name="share-social-outline" size={22} color="black" />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Feather name="bookmark" size={22} color="black" />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <FontAwesome name="bookmark" size={22} color="black" />
                     </TouchableOpacity>
                 </View>     
             </TouchableOpacity>

@@ -96,10 +96,7 @@ class EventCard extends Component {
 
 class EventModal extends Component {
     render() {
-        let item = this.props.data
-        if(item.id) {
-            console.log("Opened Event Modal: ", item.id)
-        }
+        let item = this.props.data;
         return(
             <BottomSheet hasDraggableIcon
                 ref={this.props.modal_ref}

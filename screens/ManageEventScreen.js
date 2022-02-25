@@ -162,7 +162,7 @@ class CreateEventScreen extends Component {
 
                     // Create a dynamic link.
                     to_update._link = await _getGeneratedLink('event', doc.id, 
-                        link_title, has_upload ? to_update._banner.uri : undefined, event_data.desc);
+                        link_title, has_upload ? to_update._banner?.uri : undefined, event_data.desc);
 
                     await db
                         .collection('event')
@@ -274,7 +274,7 @@ class CreateEventScreen extends Component {
                             <View style={CreateEventStyle.EventFieldContainer}>
                                 <SimpleLineIcons name="location-pin" size={24} style={CreateEventStyle.EventFieldIcon}/>
                                 <TextInput style={CreateEventStyle.FormEventField} placeholder="Location "
-                                    maxLength={30} 
+                                    maxLength={50} 
 
                                     onChangeText = {text => this._handleText('location', text)}
                                     ref={(input) => { this.txtLocation = input; }}/>
@@ -513,7 +513,10 @@ class EditEventScreen extends Component {
             .then(async () => {
                 let to_update = []
 
-                if(this.state.banner_photo.uri && this.state.banner_has_change) {
+                let has_change = this.state.banner_photo.uri && this.state.banner_has_change;
+                let current = this.state.banner_photo.uri;
+
+                if(has_change) {
                     await _uploadToStorage(this.state.banner_photo.uri, `/event/${event_id}/banner`)
                     to_update._banner = await _getEventImage(event_id, undefined)
                 }
@@ -525,7 +528,7 @@ class EditEventScreen extends Component {
 
                     // Create a dynamic link.
                     to_update._link = await _getGeneratedLink('event', event_id, 
-                        link_title, to_update._banner.uri ? to_update._banner.uri : undefined, event_data.desc);
+                        link_title, has_change ? to_update._banner.uri : current ? current : undefined, event_data.desc);
 
                     await db
                         .collection('event')
@@ -629,7 +632,7 @@ class EditEventScreen extends Component {
                     <Pressable onPress = {() => this.txtLocation.focus() } >
                         <View style={EditEventStyle.EditEventLoccontainer}>
                             <TextInput style={EditEventStyle.EditEventLocField} placeholder="Location "
-                                maxLength={30} 
+                                maxLength={50} 
                                 value = {this.state.data.location}
 
                                 onChangeText = {text => this._handleText('location', text)}

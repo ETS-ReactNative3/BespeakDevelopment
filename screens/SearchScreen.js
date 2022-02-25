@@ -25,6 +25,8 @@ class SearchScreen extends Component {
         
         if(direct?.event) {
             this.props.navigation.navigate('EventScreen', {event_id: direct.event});
+        } else if(direct?.user) {
+            this.props.navigation.navigate('UserProfileScreen', {user_id: direct.user});
         }
     }
   _handleText(value) {
