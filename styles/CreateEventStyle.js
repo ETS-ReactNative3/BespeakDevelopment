@@ -40,82 +40,18 @@ const CreateEventStyle=StyleSheet.create({
         backgroundColor: 'rgba(221, 221, 221, 0.5)',
         borderRadius: 10,
     },
-    FormField: {
-        marginTop: '3%',
-        paddingRight: '5%'
-    },
     FormFieldAssisted: {
         marginTop: '3%',
         marginBottom: '3%',
         paddingRight: '5%'
     },
-    createeventcontainer:{
-        margin:20,
-    },
-    CreateEventNamecontainer:{
-        marginLeft: 20,
-        marginRight: 20,
-        flexDirection:'row',
-        backgroundColor: 'rgba(221, 221, 221, 0.5)',
-        borderRadius:10,
-        marginBottom:15,
-    },
     CreateEventIcon:{
         color:'#000',
         opacity: .5
     },
-    CreateEventNameField:{
-        fontSize:16,
-        fontFamily:'RedHatDisplay-Regular',
-        marginLeft: 10,
-        marginRight: 20,
-        flexDirection:'row',
-        marginTop:-3,
-        padding:10,
-    },
-    CreateEventSchedcontainer:{
-        marginLeft: 20,
-        marginRight: 20,
-        flexDirection:'row',
-        backgroundColor: 'rgba(221, 221, 221, 0.5)',
-        borderRadius:10,
-        marginBottom:15,
-    },
-
-    CreateEventSchedField:{
-        fontSize:16,
-        fontFamily:'RedHatDisplay-Regular',
-        marginLeft: 12,
-        marginRight: 20,
-        flexDirection:'row',
-        marginTop:-3,
-        padding:10,
-    },
-    CreateEventLoccontainer:{
-        marginLeft: 20,
-        marginRight: 20,
-        flexDirection:'row',
-        backgroundColor: 'rgba(221, 221, 221, 0.5)',
-        borderRadius:10,
-        marginBottom:15,
-    },
-    CreateEventLocIcon:{
-        color:'#000',
-        opacity: .5,
-        marginLeft:10,
-        marginTop:10
-    },
-    CreateEventLocField:{
-        fontSize:16,
-        fontFamily:'RedHatDisplay-Regular',
-        marginLeft: 10,
-        marginRight: 20,
-        flexDirection:'row',
-        marginTop:-3,
-        padding:10,
-    },
     EventFieldContainer:{
         marginTop: '3%',
+        marginRight:'0%',
         flexDirection:'row',
         backgroundColor: 'rgba(221, 221, 221, 0.5)',
         borderRadius:10,
@@ -131,53 +67,7 @@ const CreateEventStyle=StyleSheet.create({
         fontSize:16,
         fontFamily:'RedHatDisplay-Regular',
         marginLeft: 10,
-        marginRight: 20,
-        flexDirection:'row',
-        marginTop:-3,
-        padding:10,
-    },
-    CreateEventDesccontainer:{
-        marginLeft: 20,
-        marginRight: 20,
-        flexDirection:'row',
-        backgroundColor: 'rgba(221, 221, 221, 0.5)',
-        borderRadius:10,
-        marginBottom:15,
-    },
-    CreateEventDescIcon:{
-        color:'#000',
-        opacity: .5,
-        marginLeft:10,
-        marginTop:10
-    },
-    CreateEventDescField:{
-        fontSize:16,
-        fontFamily:'RedHatDisplay-Regular',
-        marginLeft: 10,
-        marginRight: 20,
-        flexDirection:'row',
-        marginTop:-3,
-        padding:10,
-    },
-    CreateEventInfocontainer:{
-        marginLeft: 20,
-        marginRight: 20,
-        flexDirection:'row',
-        backgroundColor: 'rgba(221, 221, 221, 0.5)',
-        borderRadius:10,
-        marginBottom:15,
-    },
-    CreateEventInfoIcon:{
-        color:'#000',
-        opacity: .5,
-        marginLeft:10,
-        marginTop:10
-    },
-    CreateEventInfoField:{
-        fontSize:16,
-        fontFamily:'RedHatDisplay-Regular',
-        marginLeft: 10,
-        marginRight: 20,
+        marginRight: '1%',
         flexDirection:'row',
         marginTop:-3,
         padding:10,
