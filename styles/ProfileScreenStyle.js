@@ -40,7 +40,7 @@ const ProfileScreenStyle=StyleSheet.create({
   },
   //Edit Profile Button
   EditProfileBtn: {
-    marginRight:'4%',
+    marginRight:'-1%',
     alignItems: 'center',
     backgroundColor: '#eb9834',
     height: 36,
@@ -115,7 +115,7 @@ const ProfileScreenStyle=StyleSheet.create({
   },
     //For Follow Organizer Button
   FollowUserBtn: {
-    marginRight:'4%',
+    marginRight:'-1%',
     alignItems: 'center',
     justifyContent:'center',
     backgroundColor: '#eb9834',
@@ -125,7 +125,7 @@ const ProfileScreenStyle=StyleSheet.create({
   },
   //Gray Default Size Button
   UnfollowUserBtn: {
-    marginRight:'4%',
+    marginRight:'-1%',
     alignItems: 'center',
     justifyContent:'center',
     backgroundColor: '#5b5c5a',

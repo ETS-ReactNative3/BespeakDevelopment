@@ -389,7 +389,7 @@ const SystemStyle = StyleSheet.create({
     },
     BespeakerContainer:{
         paddingLeft:'3%',
-        width:'90%',
+        width:'88%',
     },
     BespeakerName:{
         paddingBottom:'1%',
@@ -421,7 +421,7 @@ const SystemStyle = StyleSheet.create({
       backgroundColor:'#f5f5f5',
       paddingLeft:'3%',
       paddingRight:'3%',
-      width:'100%',
+      width:'98%',
       fontFamily: 'RedHatDisplay-Regular',
     },
     BespeakerInput:{
@@ -435,7 +435,7 @@ const SystemStyle = StyleSheet.create({
     //Send Comment
     SendComment:{
         marginTop:'2%',
-        marginLeft:'12%',
+        marginLeft:'10%',
         marginRight:'2%',
     },
     //I'm Attending, View Attendee Container
@@ -713,6 +713,29 @@ const SystemStyle = StyleSheet.create({
     padding:'2%',
     margin:'2%',
   },
+  //For Load More Comments
+  //Center
+  Center:{
+    alignItems: 'center',
+    justifyContent:'center',
+  },
+  LoadBtn: {
+    alignItems: 'center',
+    justifyContent:'center',
+    backgroundColor: '#ebebeb',
+    height: 20,
+    width: 75,
+    borderRadius: 6,
+    justifyContent:'center',
+  },
+  LoadText:{
+    marginTop: -2,
+    fontSize: 13,
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#000',
+    fontFamily: 'RedHatDisplay-Medium',
+},  
 });
 
 export default SystemStyle

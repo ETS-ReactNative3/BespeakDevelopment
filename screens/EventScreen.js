@@ -409,13 +409,15 @@ class EventScreen extends Component {
                     
                     { comment_content.length > 0 && (
                             <>
-                                { this.state._extend &&                                      
-                                    <TouchableOpacity style={SystemStyle.ToFollowOrgBtn}
-                                        onPress={() => this._extendLoadComments()}>
-                                            <Text style={SystemStyle.FollowOrgTextBtn}>{
-                                                'Load more...'
-                                            }</Text>
-                                    </TouchableOpacity>
+                                { this.state._extend && 
+                                    <View style={SystemStyle.Center}>  
+                                      <TouchableOpacity style={SystemStyle.LoadBtn}
+                                          onPress={() => this._extendLoadComments()}>
+                                              <Text style={SystemStyle.LoadText}>{
+                                                  'Load more...'
+                                              }</Text>
+                                      </TouchableOpacity>
+                                    </View>
                                 }
                                 <ScrollView>
                                     { comment_content.map((item)=> 
@@ -423,7 +425,7 @@ class EventScreen extends Component {
                                             key = {item.id}
                                             navigation = {this.props.navigation}
                                             _triggerOption = {this._showOptions}/>
-                                    ) }
+                                    )}
                                 </ScrollView>
                             </>
                         )
