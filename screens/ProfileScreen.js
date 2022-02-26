@@ -9,10 +9,12 @@ import {
 } from 'react-native';
 import { 
     SimpleLineIcons,
+    Ionicons
 } from '@expo/vector-icons';
 import { auth, db, storage } from '../firebase';
 
 import ProfileScreenStyle from "../styles/ProfileScreenStyle";
+import SystemStyle from "../styles/SystemStyle";
 
 import ProfileContent from "../components/ProfileContent";
 
@@ -133,7 +135,12 @@ class ProfileScreen extends Component {
                                             key = {item.profile_photo}
                                             source={ item.profile_photo }/>
                                     </View>
-                                    <View>
+                                    <View style={SystemStyle.RowImg}>
+                                        <View style={SystemStyle.ShareUserOption}>
+                                            <TouchableOpacity onPress = {() => _initiateUserSharing(item)}>
+                                                <Ionicons name="share-social-outline" size={22} color="#000" />
+                                            </TouchableOpacity>
+                                        </View>
                                         <TouchableOpacity style={ProfileScreenStyle.EditProfileBtn}
                                             onPress={() => this.props.navigation.navigate('EditProfileScreen', {_done: this.onRefresh})}>
                                                 <Text style={ProfileScreenStyle.EditProfileText}>Edit Profile</Text>
