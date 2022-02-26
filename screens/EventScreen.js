@@ -5,11 +5,9 @@ import {
     Text, 
     View,
     Image,
-    Pressable,
     RefreshControl,
     TextInput,
     ActivityIndicator,
-    Modal,
     Alert
 } from 'react-native';
 import { 
@@ -24,6 +22,8 @@ import BottomSheet from "react-native-gesture-bottom-sheet";
 import { auth, db } from '../firebase'
 
 import fetch_date_time from '../api/GlobalTime'
+
+import { CommentSection } from '../components/CommentSection'
 
 import SystemStyle from "../styles/SystemStyle";
 import EditEventStyle from "../styles/EditEventStyle";
@@ -47,13 +47,19 @@ class EventScreen extends Component {
             user_data: null,
             
             raw_comment: null,
-            comment_data: {},
+            comment_data: [],
             active_comment: false,
-            is_active: false
+            is_active: false,
+
+            _extend: true,
+            _limit: 5,
+            _last: null,
         }
         this.onRefresh = this.onRefresh.bind(this)
+        this._showOptions = this._showOptions.bind(this);
 
         this.comment_modal = React.createRef();
+        this.comment_scroll = React.createRef();
     }
     componentDidMount() {
         this._startLoad()
@@ -105,7 +111,7 @@ class EventScreen extends Component {
         
         this._loadImages(_data, uid);
     }
-
+    
     async _loadImages(item, uid) {
         // Load Images Synchronously 
         let user_image = await _getProfileImage(uid);
@@ -117,18 +123,26 @@ class EventScreen extends Component {
         this.setState({data: item, user_data: {...this.state.user_data, profile_image: user_image}});
     }
 
-    async _loadComments() {
+    async _retrieveComments(type_extend = false) {
         let event_id = this.props.route.params.event_id
 
         let get_comment_query = await db
             .collection('comment')
             .where('event_id', '==', event_id)
-            .orderBy('server_time', 'desc')
-            .get();
+            .orderBy('server_time')
+        
+        if(type_extend && this.state._last) {
+            get_comment_query = get_comment_query
+                .startAfter(this.state._last)
+        }
+
+        get_comment_query = await get_comment_query
+            .limit(this.state._limit)
+            .get()
             
         if(get_comment_query.empty) {
             console.log('No comments found for event: ', event_id);
-            return;
+            return {data: [], _last: this.state._last};
         }
         
         let _data = [];
@@ -144,23 +158,57 @@ class EventScreen extends Component {
 
             comment.owner_name = await _getUserData("_name", comment.owner)
 
-            console.log("Comment Owner Image: ", comment.owner_image)
-
             comment.is_owned = comment.owner == auth.currentUser.uid;
             comment.server_time = await dateFormat(new Date(comment.server_time), "EEEE, MMMM d, yyyy h:mm aaa")
 
             _cleaned_data.push(comment);
         }
+        
+        let _last = get_comment_query.docs[get_comment_query.docs.length-1]; 
+
+        return {data: _cleaned_data, last: _last};
+    }
+
+    _loadCommentImages(items, has_add = []) {
+        // Load Images
+        items?.forEach(async (item) => {
+            item.owner_image = await _getProfileImage(item.owner);
+
+            this.setState({comment_data: [...has_add, ...items]});
+        })
+    }
+    
+    async _loadComments() {
+        let query_res = await this._retrieveComments();
 
         this.setState({
-            comment_data: {..._cleaned_data}
-        })
-
-        // Load Images
-        _cleaned_data.forEach(async (item) => {
-            item.owner_image = await _getProfileImage(item.owner);
-            this.setState({comment_data: _cleaned_data});
+            comment_data: query_res.data,
+            _last: query_res.last,
+            _extend: query_res.data.length == this.state._limit
         });
+
+        this._loadCommentImages(query_res.data)
+    }
+
+    async _extendLoadComments() {
+        this.setState({
+            _extend: false
+        });
+        console.log('Extending Comments...')
+
+        let query_res = await this._retrieveComments(true);
+
+        let has_data = query_res.data.length == this.state._limit;
+        
+        let current_to_add = this.state.comment_data;
+
+        this.setState({
+            comment_data: [... current_to_add, ... query_res?.data],
+            _last: query_res.last,
+            _extend: has_data
+        });
+        
+        this._loadCommentImages(query_res?.data, current_to_add)
     }
 
     async _handleDelete(comment_data) {
@@ -173,9 +221,14 @@ class EventScreen extends Component {
                     Alert.alert('Error!', error.message)
                     return
                 }) 
-                .then(async (doc) => {
+                .then(async () => {
                     this.comment_modal.current.close()
-                    this.reloadComments();
+                    
+                    let current = this.state.comment_data;
+
+                    let index = current?.indexOf(comment_data);
+                    current.splice(index, 1)
+                    this.setState({comment_data: current});
                 });
             this.setState({ active_comment: false, is_active: false})
         }
@@ -201,17 +254,24 @@ class EventScreen extends Component {
                 }) 
                 .then(async (doc) => {
                     this.setState({raw_comment: null})
-                    this.reloadComments();
+                    
+                    let current = this.state.comment_data;
+                    
+                    comment_data.id = doc.id;
+                    comment_data.owner_image = await _getProfileImage(comment_data.owner);
+                    comment_data.owner_name = await _getUserData("_name", comment_data.owner)
+                    comment_data.server_time = await dateFormat(new Date(comment_data.server_time), "EEEE, MMMM d, yyyy h:mm aaa")
+                    comment_data.is_owned = true;
+
+                    current?.push(comment_data);
+                    this.setState({comment_data: current});
+                    
+                    console.log(this.comment_scroll.current);
+                    //this.comment_scroll.current.scrollTo({y: 0, animated: true}); 
                 });
         }
     }
 
-    reloadComments() {
-        return new Promise((resolve) => {
-            this._loadComments();
-            setTimeout(resolve, 100)
-        });
-    }
     doRefresh() {
         return new Promise((resolve) => {
           this._startLoad()
@@ -223,7 +283,8 @@ class EventScreen extends Component {
         this.setState({'refreshing': true})
         await this.doRefresh().then(() => {
             this.setState({
-                'refreshing': false
+                'refreshing': false,
+                '_extend': true
             })
             console.log("Refreshed.")
         })
@@ -244,6 +305,10 @@ class EventScreen extends Component {
     _openProfile(uid) {
         if(uid == auth.currentUser.uid) return;
         this.props.navigation.navigate('UserProfileScreen', {user_id: uid})
+    }
+    _showOptions(item) {
+        this.setState({ active_comment: item, is_active: true })
+        this.comment_modal.current.show();
     }
     render() {
         let item = this.state.data;
@@ -336,33 +401,29 @@ class EventScreen extends Component {
                         <Text style={SystemStyle.BreakLineComment}>Comments</Text>
                     </View>
                     
+                    
                     { comment_content.length > 0 && (
-                            comment_content.map((item)=> 
-                                <View key = {item.id} style={SystemStyle.BespeakerCommentContainer}>
-                                    <TouchableOpacity onPress = {() => this._openProfile(item.owner)}>
-                                        <View style={SystemStyle.BespeakerImgContainer}>
-                                            <Image style={SystemStyle.BespeakerImg}
-                                                source={ item.owner_image }/>
-                                        </View>
+                            <>
+                                <ScrollView>
+                                    { comment_content.map((item)=> 
+                                        <CommentSection data = {item}
+                                            key = {item.id}
+                                            navigation = {this.props.navigation}
+                                            _triggerOption = {this._showOptions}/>
+                                    ) }
+                                </ScrollView>
+                                { this.state._extend &&                                      
+                                    <TouchableOpacity style={SystemStyle.ToFollowOrgBtn}
+                                        onPress={() => this._extendLoadComments()}>
+                                            <Text style={SystemStyle.FollowOrgTextBtn}>{
+                                                'Load more...'
+                                            }</Text>
                                     </TouchableOpacity>
-                                    <View style={SystemStyle.BespeakerContainer}>
-                                        <TouchableOpacity onPress = {() => this._openProfile(item.owner)}>
-                                            <Text style={SystemStyle.BespeakerName}>{ item.owner_name }</Text>
-                                        </TouchableOpacity>
-                                        <Text style={SystemStyle.BespeakerComment}> 
-                                            { item.content } </Text>
-                                    </View>
-                                    
-                                    <TouchableOpacity onPress={() => {
-                                        this.setState({ active_comment: item, is_active: true })
-                                        this.comment_modal.current.show();
-                                    }}>
-                                        <SimpleLineIcons name="options" size={24} color="#5b5c5a" style={SystemStyle.CommentInfo}/>
-                                    </TouchableOpacity>
-                                </View>   
-                            )
+                                }
+                            </>
                         )
                     }
+                    
 
                     <View style={SystemStyle.BespeakerCommentContainer}>
                         <View style={SystemStyle.BespeakerImgContainer}>
