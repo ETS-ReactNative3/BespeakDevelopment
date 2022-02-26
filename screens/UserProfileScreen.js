@@ -25,6 +25,7 @@ import {
     _countProfileRelation,
     _getProfileImage,
 } from "../helper/ProfileLoad";
+import { _initiateUserSharing } from "../helper/LinkHelper";
 import { _setFollowConnection } from "../helper/ProfileHelper";
 
 class UserProfileScreen extends Component {
@@ -84,7 +85,14 @@ class UserProfileScreen extends Component {
 
     componentDidMount() {
         this.onRefresh()
-    } 
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.route.params.user_id !== prevProps.route.params.user_id ) {
+            this.onRefresh()
+        };
+    }
+
     doRefresh() {
         return new Promise((resolve) => {
         this._loadUserData()
