@@ -62,11 +62,16 @@ class EventScreen extends Component {
         this.comment_scroll = React.createRef();
     }
     componentDidMount() {
-        this._startLoad()
-    }
-    _startLoad() {
         let event_id = this.props.route.params.event_id
-        
+        this._startLoad(event_id)
+    }
+    componentDidUpdate(prevProps) {
+        if(this.props.route.params.event_id !== prevProps.route.params.event_id ) {
+            this.setState({loading: true})
+            this._startLoad(this.props.route.params.event_id)
+        };
+    }
+    _startLoad(event_id) {
         console.log('Opeing Event with ID: ', event_id)
 
         if(event_id) {
@@ -129,7 +134,7 @@ class EventScreen extends Component {
         let get_comment_query = await db
             .collection('comment')
             .where('event_id', '==', event_id)
-            .orderBy('server_time')
+            .orderBy('server_time', 'desc')
         
         if(type_extend && this.state._last) {
             get_comment_query = get_comment_query
@@ -149,7 +154,7 @@ class EventScreen extends Component {
         let _cleaned_data = [];
 
         get_comment_query.forEach((doc) => {
-            _data.push({id: doc.id, ...doc.data()})
+            _data.unshift({id: doc.id, ...doc.data()})
         })
 
 
@@ -174,7 +179,7 @@ class EventScreen extends Component {
         items?.forEach(async (item) => {
             item.owner_image = await _getProfileImage(item.owner);
 
-            this.setState({comment_data: [...has_add, ...items]});
+            this.setState({comment_data: [...items, ...has_add]});
         })
     }
     
@@ -203,7 +208,7 @@ class EventScreen extends Component {
         let current_to_add = this.state.comment_data;
 
         this.setState({
-            comment_data: [... current_to_add, ... query_res?.data],
+            comment_data: [... query_res?.data, ... current_to_add],
             _last: query_res.last,
             _extend: has_data
         });
@@ -404,14 +409,6 @@ class EventScreen extends Component {
                     
                     { comment_content.length > 0 && (
                             <>
-                                <ScrollView>
-                                    { comment_content.map((item)=> 
-                                        <CommentSection data = {item}
-                                            key = {item.id}
-                                            navigation = {this.props.navigation}
-                                            _triggerOption = {this._showOptions}/>
-                                    ) }
-                                </ScrollView>
                                 { this.state._extend &&                                      
                                     <TouchableOpacity style={SystemStyle.ToFollowOrgBtn}
                                         onPress={() => this._extendLoadComments()}>
@@ -420,6 +417,14 @@ class EventScreen extends Component {
                                             }</Text>
                                     </TouchableOpacity>
                                 }
+                                <ScrollView>
+                                    { comment_content.map((item)=> 
+                                        <CommentSection data = {item}
+                                            key = {item.id}
+                                            navigation = {this.props.navigation}
+                                            _triggerOption = {this._showOptions}/>
+                                    ) }
+                                </ScrollView>
                             </>
                         )
                     }
@@ -495,5 +500,7 @@ class EventScreen extends Component {
         );
     }
 }
+
+EventScreen = React.memo(EventScreen);
 
 export default { EventScreen };
