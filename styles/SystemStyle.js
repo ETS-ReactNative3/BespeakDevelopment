@@ -385,7 +385,7 @@ const SystemStyle = StyleSheet.create({
     BespeakerCommentContainer:{
         flexDirection:'row',
         marginBottom:'3%',
-        width:'88%'
+        width:'90%'
     },
     BespeakerContainer:{
         paddingLeft:'3%',
@@ -426,7 +426,7 @@ const SystemStyle = StyleSheet.create({
     },
     BespeakerInput:{
       flexDirection:'row',
-      marginLeft:'-1%'
+      marginLeft:'-1%',
     },
     //For Comment Info
     CommentInfo:{
@@ -568,7 +568,7 @@ const SystemStyle = StyleSheet.create({
     justifyContent:'center',
     alignSelf:'center',
     marginLeft:10,
-    width:'50%',
+    width:'62.5%',
   },
   //To view organizer tab
   OrganizerSectionTab:{
@@ -707,6 +707,11 @@ const SystemStyle = StyleSheet.create({
     width: 215,
     height: 140,
     justifyContent:'center',
+  },
+  //user Profile Sharing Icon
+  ShareUserOption:{
+    padding:'2%',
+    margin:'2%',
   },
 });
 

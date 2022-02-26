@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { 
     SimpleLineIcons,
+    Ionicons
 } from '@expo/vector-icons';
 import { auth, db, storage } from '../firebase';
 
@@ -136,7 +137,12 @@ class UserProfileScreen extends Component {
                                             key = {item.profile_photo}
                                             source={ item.profile_photo }/>
                                     </View>
-                                <View>
+                                    <View style={SystemStyle.RowImg}>
+                                        <View style={SystemStyle.ShareUserOption}>
+                                            <TouchableOpacity onPress = {() => _initiateUserSharing(item)}>
+                                                <Ionicons name="share-social-outline" size={22} color="#000" />
+                                            </TouchableOpacity>
+                                        </View>     
                                     { !this.state.is_loading &&
                                         <TouchableOpacity style={
                                             !item.is_following ? 
