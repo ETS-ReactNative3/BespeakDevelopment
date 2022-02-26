@@ -46,3 +46,5 @@ https://www.npmjs.com/package/react-native-popup-confirm-toast
 # Bespeak DEV Client Version 1.6
 - ```expo install @react-native-firebase/dynamic-links```
 - ```expo install react-native-three-dots-loader```
+- Modify react-native-input-outline (TO REMOVE LINE ISSUE ON PLACEHOLDER)
+    Using the following link: https://github.com/swushi/react-native-input-outline/issues/18#issuecomment-939224620
