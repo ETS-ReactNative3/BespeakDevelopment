@@ -23,6 +23,7 @@ import {
     _countProfileRelation,
     _getProfileImage
 } from "../helper/ProfileLoad";
+import { _initiateUserSharing } from "../helper/LinkHelper";
   
 class ProfileScreen extends Component {
     constructor() {
