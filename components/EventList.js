@@ -56,7 +56,7 @@ class EventList extends Component {
 
             //# TODO: Optimize
             this._unsubscribe = this.props.navigation.addListener('focus', () => {
-                if(this.state.is_mounted) {
+                if(this.state.is_mounted && this.props.for_profile) {
                     this._loadEvents();
                 }
             }); 
@@ -107,9 +107,10 @@ class EventList extends Component {
                 .where("owner", "==", this.props.user_id)
         } else if(this.props.for_saved) {
             let saved_events = await _getUserData("bookmarked")
-            console.log("Getting all bookmarked events for USER ID: ", this.props.user_id)
+            
+            console.log("Getting all bookmarked events...");
 
-            if(saved_events.length == 0) {
+            if(!saved_events || saved_events.length == 0) {
                 return {'data': [], 'last': null}
             }
 

@@ -51,7 +51,7 @@ class EventScreen extends Component {
             active_comment: false,
             is_active: false,
 
-            _extend: true,
+            _extend: false,
             _limit: 5,
             _last: null,
         }
@@ -62,17 +62,18 @@ class EventScreen extends Component {
         this.comment_scroll = React.createRef();
     }
     componentDidMount() {
-        let event_id = this.props.route.params.event_id
-        this._startLoad(event_id)
+        this._startLoad();
     }
     componentDidUpdate(prevProps) {
         if(this.props.route.params.event_id !== prevProps.route.params.event_id ) {
-            this.setState({loading: true})
-            this._startLoad(this.props.route.params.event_id)
-        };
+            this.setState({loading: true});
+            this._startLoad();
+        }
     }
-    _startLoad(event_id) {
-        console.log('Opeing Event with ID: ', event_id)
+    _startLoad() {
+        let event_id = this.props.route.params.event_id
+
+        console.log('Opening Event with ID: ', event_id)
 
         if(event_id) {
             this._retrieveData(event_id)
@@ -500,7 +501,5 @@ class EventScreen extends Component {
         );
     }
 }
-
-EventScreen = React.memo(EventScreen);
 
 export default { EventScreen };
