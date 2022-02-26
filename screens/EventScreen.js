@@ -10,6 +10,7 @@ import {
     ActivityIndicator,
     Alert
 } from 'react-native';
+import Loader from 'react-native-three-dots-loader'
 import { 
     Feather,
     SimpleLineIcons,
@@ -50,6 +51,8 @@ class EventScreen extends Component {
             comment_data: [],
             active_comment: false,
             is_active: false,
+            is_extending: false,
+            is_submitting: false,
 
             _extend: false,
             _limit: 5,
@@ -198,7 +201,8 @@ class EventScreen extends Component {
 
     async _extendLoadComments() {
         this.setState({
-            _extend: false
+            _extend: false,
+            is_extending: true
         });
         console.log('Extending Comments...')
 
@@ -211,7 +215,8 @@ class EventScreen extends Component {
         this.setState({
             comment_data: [... query_res?.data, ... current_to_add],
             _last: query_res.last,
-            _extend: has_data
+            _extend: has_data,
+            is_extending: false
         });
         
         this._loadCommentImages(query_res?.data, current_to_add)
@@ -242,6 +247,7 @@ class EventScreen extends Component {
     
     async _handleSubmit() {
         if(this.state.raw_comment) {
+            this.setState({is_submitting: true});
             let comment_data = {
                 owner: auth.currentUser.uid,
                 event_id: this.state.data.id,
@@ -270,7 +276,7 @@ class EventScreen extends Component {
                     comment_data.is_owned = true;
 
                     current?.push(comment_data);
-                    this.setState({comment_data: current});
+                    this.setState({comment_data: current, is_submitting: false});
                     
                     console.log(this.comment_scroll.current);
                     //this.comment_scroll.current.scrollTo({y: 0, animated: true}); 
@@ -410,15 +416,21 @@ class EventScreen extends Component {
                     
                     { comment_content.length > 0 && (
                             <>
+                                { this.state.is_extending &&
+                                    <View style={SystemStyle.Center}>  
+                                        <Loader />
+                                    </View>
+                                }
                                 { this.state._extend && 
                                     <View style={SystemStyle.Center}>  
-                                      <TouchableOpacity style={SystemStyle.LoadBtn}
-                                          onPress={() => this._extendLoadComments()}>
-                                              <Text style={SystemStyle.LoadText}>{
-                                                  'Load more...'
-                                              }</Text>
-                                      </TouchableOpacity>
+                                        <TouchableOpacity style={SystemStyle.LoadBtn}
+                                            onPress={() => this._extendLoadComments()}>
+                                                <Text style={SystemStyle.LoadText}>{
+                                                    'Load more comments...'
+                                                }</Text>
+                                        </TouchableOpacity>
                                     </View>
+                                    
                                 }
                                 <ScrollView>
                                     { comment_content.map((item)=> 
@@ -431,7 +443,6 @@ class EventScreen extends Component {
                             </>
                         )
                     }
-                    
 
                     <View style={SystemStyle.BespeakerCommentContainer}>
                         <View style={SystemStyle.BespeakerImgContainer}>
@@ -449,15 +460,22 @@ class EventScreen extends Component {
                                         this.setState({raw_comment: text});
                                     }}/>
 
-                                <TouchableOpacity
-                                    onPress = {() => this._handleSubmit()}>
-                                    <Ionicons name="send" size={24} 
-                                        color={ this.state.raw_comment ? "black" : "#5b5c5a"}
-                                        style={SystemStyle.SendComment}/>
-                                </TouchableOpacity>
+                                <View style={SystemStyle.SendComment}>
+                                    { this.state.is_submitting ? (
+                                            <ActivityIndicator size={25} color="orange"/> 
+                                        ) : (
+                                            <TouchableOpacity
+                                                onPress = {() => this._handleSubmit()}>
+                                                    <Ionicons name="send" size={24} 
+                                                        color={ this.state.raw_comment ? "black" : "#5b5c5a"}/>
+                                            </TouchableOpacity>
+                                        )
+                                    }
+                                </View>
+                                
                             </View>
                         </View>
-                    </View>          
+                    </View>       
                 </View>
                 <View style={SystemStyle.AttendingContainer}>
                     {item.owner == auth.currentUser.uid ? (
