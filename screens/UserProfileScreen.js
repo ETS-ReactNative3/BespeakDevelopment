@@ -146,19 +146,22 @@ class UserProfileScreen extends Component {
                                             source={ item.profile_photo }/>
                                     </View>
                                     <View style={SystemStyle.RowImg}>
-                                        <View style={SystemStyle.ShareUserOption}>
-                                            <TouchableOpacity onPress = {() => _initiateUserSharing(item)}>
-                                                <Ionicons name="share-social-outline" size={22} color="#000" />
-                                            </TouchableOpacity>
-                                        </View>     
                                     { !this.state.is_loading &&
-                                        <TouchableOpacity style={
-                                            !item.is_following ? 
-                                            ProfileScreenStyle.FollowUserBtn : ProfileScreenStyle.UnfollowUserBtn}
-                                            onPress={() => this._handleFollow(item.id)}>
-                                                <Text style={SystemStyle.FollowOrgTextBtn}>{
-                                                    !item.is_following ? 'Follow' : 'Unfollow' } </Text>
-                                        </TouchableOpacity>
+                                        <>
+                                            <View style={SystemStyle.ShareUserOption}>
+                                                <TouchableOpacity onPress = {() => _initiateUserSharing(item)}>
+                                                    <Ionicons name="share-social-outline" size={22} color="#000" />
+                                                </TouchableOpacity>
+                                            </View>     
+                                        
+                                            <TouchableOpacity style={
+                                                !item.is_following ? 
+                                                ProfileScreenStyle.FollowUserBtn : ProfileScreenStyle.UnfollowUserBtn}
+                                                onPress={() => this._handleFollow(item.id)}>
+                                                    <Text style={SystemStyle.FollowOrgTextBtn}>{
+                                                        !item.is_following ? 'Follow' : 'Unfollow' } </Text>
+                                            </TouchableOpacity>
+                                        </>
                                     }
                                 </View>
                             </View>

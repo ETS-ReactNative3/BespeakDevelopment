@@ -435,7 +435,7 @@ const SystemStyle = StyleSheet.create({
     //Send Comment
     SendComment:{
         marginTop:'2%',
-        marginLeft:'10%',
+        marginLeft:'2%',
         marginRight:'2%',
     },
     //I'm Attending, View Attendee Container
@@ -724,7 +724,6 @@ const SystemStyle = StyleSheet.create({
     justifyContent:'center',
     backgroundColor: '#ebebeb',
     height: 20,
-    width: 75,
     borderRadius: 6,
     justifyContent:'center',
   },
@@ -735,6 +734,8 @@ const SystemStyle = StyleSheet.create({
     justifyContent: 'center',
     color: '#000',
     fontFamily: 'RedHatDisplay-Medium',
+    marginLeft: 5,
+    marginRight: 5
 },  
 });
 
