@@ -568,7 +568,7 @@ const SystemStyle = StyleSheet.create({
     justifyContent:'center',
     alignSelf:'center',
     marginLeft:10,
-    width:'62.5%',
+    width:'58%',
   },
   //To view organizer tab
   OrganizerSectionTab:{
