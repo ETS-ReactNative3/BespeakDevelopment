@@ -412,13 +412,15 @@ class EventScreen extends Component {
                                             _triggerOption = {this._showOptions}/>
                                     ) }
                                 </ScrollView>
-                                { this.state._extend &&                                      
-                                    <TouchableOpacity style={SystemStyle.ToFollowOrgBtn}
-                                        onPress={() => this._extendLoadComments()}>
-                                            <Text style={SystemStyle.FollowOrgTextBtn}>{
-                                                'Load more...'
-                                            }</Text>
+                                { this.state._extend &&
+                                    <View style={SystemStyle.Center}>                                      
+                                        <TouchableOpacity style={SystemStyle.LoadBtn}
+                                            onPress={() => this._extendLoadComments()}>
+                                                <Text style={SystemStyle.LoadText}>
+                                                    Load more...
+                                                </Text>
                                     </TouchableOpacity>
+                                    </View>
                                 }
                             </>
                         )
