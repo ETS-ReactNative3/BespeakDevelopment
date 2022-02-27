@@ -49,3 +49,7 @@ https://www.npmjs.com/package/react-native-popup-confirm-toast
 - Reinstall a react-native-input-outline (TO REMOVE LINE ISSUE ON PLACEHOLDER)
     - ```npm uninstall react-native-input-outline```
     - ```expo install git+https://github.com/jedpedregosa/react-native-input-outline.git```
+
+# Bespeak DEV Client Version 1.7
+-```expo install expo-notifications```
+-```expo install expo-device```
