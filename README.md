@@ -47,5 +47,5 @@ https://www.npmjs.com/package/react-native-popup-confirm-toast
 - ```expo install @react-native-firebase/dynamic-links```
 - ```expo install react-native-three-dots-loader```
 - Reinstall a react-native-input-outline (TO REMOVE LINE ISSUE ON PLACEHOLDER)
-    ```npm uninstall react-native-input-outline```
-    ```expo install git+https://github.com/jedpedregosa/react-native-input-outline.git```
+    - ```npm uninstall react-native-input-outline```
+    - ```expo install git+https://github.com/jedpedregosa/react-native-input-outline.git```
