@@ -78,5 +78,6 @@ async function _getUserGeneratedLink(value, _title = 'A Bespeak User',
 
 export {
     _setFollowConnection,
-    _getUserGeneratedLink
+    _getUserGeneratedLink,
+    _initializeDoc
 };

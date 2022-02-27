@@ -23,7 +23,8 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 import { auth, db, storage } from '../firebase'
 
-import fetch_date_time from '../api/GlobalTime'
+import fetch_date_time from '../api/GlobalTime';
+import push_notif from '../api/PushNotification';
 
 import CreateEventStyle from "../styles/CreateEventStyle.js";
 import EditEventStyle from "../styles/EditEventStyle.js";
@@ -40,6 +41,12 @@ import {
     _arrangeData,
     _getEventImage
 } from '../helper/EventLoad';
+import {
+    _getFollowersToken
+} from '../helper/ProfileLoad'; 
+import {
+    _constructNewEventNotif
+} from '../helper/NotificationHelper';
 
 class CreateEventScreen extends Component {
     state = {
@@ -174,6 +181,13 @@ class CreateEventScreen extends Component {
                             Alert.alert('Error!', error.message)
                             console.log('Error!', error.message)
                         })
+
+                    let all_token = await _getFollowersToken();
+
+                    if(all_token.length > 0) {
+                        const _data = await _constructNewEventNotif(all_token, {event: doc.id});
+                        push_notif(_data);
+                    }
                 } catch(e) { console.log('Error!', e)}
 
                 this.setState({'is_loading': false})

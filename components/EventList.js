@@ -155,10 +155,11 @@ class EventList extends Component {
             doc_data.push({id: doc.id, ...doc.data()})
         })
         
-        //console.log("Loaded Data: ", doc_data)
+        // console.log("Loaded Data: ", doc_data)
 
         doc_data = await _arrangeData(doc_data);
-        console.log("Arranged Data: ", doc_data)
+        // console.log("Arranged Data: ", doc_data)
+        console.log("Loaded Events.")
 
         let last_value = documentSnapshots.docs[documentSnapshots.docs.length-1]; //doc_data[doc_data.length - 1]?.id;
 
