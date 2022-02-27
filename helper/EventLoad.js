@@ -5,7 +5,7 @@ import Banners from '../values/Banners'
 
 async function _arrangeData(events_data, mod = false) {
     let saved_events = await _getUserData("bookmarked");
-    console.log("Bookmarked Events: ", saved_events)
+    //console.log("Bookmarked Events: ", saved_events) // Logs All Events
 
     //console.log('Arranging: ', events_data)
     let arranged_data = [];
@@ -74,11 +74,11 @@ async function _getEventImage(event_id, random_banner) {
             .getDownloadURL()
             .then((url) => { 
                 event_image = url
-                console.log("Loaded Event Image for ", event_id, ": ", url)
+                //console.log("Loaded Event Image for ", event_id, ": ", url)
             }).catch((error) => {
                 if(error.code != 'storage/object-not-found') {
-                console.log("Error occured: ", error.message)
-                Alert.alert('Error!', error.message)
+                    console.log("Error occured: ", error.message)
+                    Alert.alert('Error!', error.message)
                 }
             })
 

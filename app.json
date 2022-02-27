@@ -30,7 +30,12 @@
       "package": "com.jedpedregosa.Bespeak"
     },
     "plugins": [
-      "@react-native-firebase/app"
+      "@react-native-firebase/app",
+      ["expo-notifications",
+        {
+          "icon": "./assets/bespeak-icon-test.png"
+        }
+      ]
     ],
     "web": {
       "favicon": "./assets/favicon.png"

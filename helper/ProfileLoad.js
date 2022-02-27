@@ -81,6 +81,30 @@ async function _getFollowersId(user_id = auth.currentUser.uid) {
     let _data = snapshot.data();
     return _data?.follower ? _data?.follower : [];
 }
+
+async function _getFollowersToken(user_id = auth.currentUser.uid) {
+    let followers = await _getFollowersId(user_id);
+
+    if(followers.length == 0) return;
+
+    let get_token_query = db.collection("_token")
+        .where('owner', 'in', followers);
+        
+    let snapshot = await get_token_query.get();
+
+    if(snapshot.empty) {
+        return [];
+    } 
+
+    let _tokens = [];
+
+    snapshot.forEach((doc) => {
+        _tokens.push(doc.id)
+    })
+
+    return _tokens;
+}
+
 async function _isFollowing(_follower, _following) {
     if(_follower == _following) return false;
 
@@ -110,5 +134,6 @@ export {
     _countProfileRelation,
     _getFollowersId,
     _getFollowing,
-    _getProfileImage
+    _getProfileImage,
+    _getFollowersToken
 }

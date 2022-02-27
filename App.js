@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import  Apploading  from 'expo-app-loading';
+
+import * as Notifications from 'expo-notifications';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Alert, LogBox } from 'react-native';
@@ -17,6 +20,14 @@ import Options from './values/Options';
 
 const Stack = createNativeStackNavigator();
 
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
+    }),
+});
+
 export default function App() {
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState();
@@ -24,10 +35,38 @@ export default function App() {
     const [dummy, setDummy] = useState(true);
     const [_link, setLink] = useState(false);
 
+    const [expoPushToken, setExpoPushToken] = useState('');
+    const [notification, setNotification] = useState(false);
+    const notificationListener = useRef();
+    const responseListener = useRef();
+
     LogBox.ignoreLogs([
         'Warning: Can\'t perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.',
         'Non-serializable values were found in the navigation state',
         'Animated: `useNativeDriver`']);
+    
+    useEffect(() => {
+        // This listener is fired whenever a notification is received while the app is foregrounded
+        notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+            setNotification(notification);
+        });
+    
+        // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+
+            //when the user taps on the notification, this line checks if they //are suppose to be taken to a particular screen 
+            try {        
+                let notif_data = response.notification.request.content.data;
+
+                setLink(notif_data);
+
+            } catch(e) { console.log(e.message) }
+        });
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener.current);
+            Notifications.removeNotificationSubscription(responseListener.current);
+        };
+    }, []);
 
     const getFonts = async () => {
         await useFonts();
