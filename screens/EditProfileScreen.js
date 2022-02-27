@@ -156,7 +156,7 @@ class EditProfileScreen extends Component {
             .then(async () => {
                 let _update = _cleaned_data;
                 _update.profile_image = _data.profile_image;
-                _update.cover_image = _data.profile_image;
+                _update.cover_image = _data.cover_image;
 
                 if (this.state.profile_photo.hasChange) {
                     await this._uploadToStorage(this.state.profile_photo.uri.uri, `/users/${user_id}/profile`)
@@ -296,7 +296,9 @@ class EditProfileScreen extends Component {
                     <View style={EditProfileScreenStyle.EditProfileCoverImgContainer}>
                         <Feather name="plus" size={50} style={EditProfileScreenStyle.EditCoverImgIcon}/>
                         <Image style={EditProfileScreenStyle.EditProfileCoverImg}
-                            source={ this.state.cover_photo.uri }/>
+                            source={ this.state.cover_photo.uri ?
+                                this.state.cover_photo.uri 
+                                : require('../assets/img/blank-cover.png') }/>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress = {() => this._selectImage("dp")}>
@@ -304,7 +306,9 @@ class EditProfileScreen extends Component {
                         <View style={EditProfileScreenStyle.EditProfileImgContainer}>
                             <Feather name="plus" size={50} style={EditProfileScreenStyle.EditProfileImgIcon}/>
                             <Image style={EditProfileScreenStyle.EditProfileImg}
-                                source={ this.state.profile_photo.uri }/>
+                                source={ this.state.profile_photo.uri ?
+                                    this.state.profile_photo.uri
+                                    : require('../assets/img/blank-profile.png') }/>
                         </View>
                     </View>
                 </TouchableOpacity>
