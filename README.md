@@ -51,5 +51,5 @@ https://www.npmjs.com/package/react-native-popup-confirm-toast
     - ```expo install git+https://github.com/jedpedregosa/react-native-input-outline.git```
 
 # Bespeak DEV Client Version 1.7
--```expo install expo-notifications```
--```expo install expo-device```
+- ```expo install expo-notifications```
+- ```expo install expo-device```
