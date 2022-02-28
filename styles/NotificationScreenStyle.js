@@ -5,24 +5,26 @@ const NotificationScreenStyle=StyleSheet.create({
     Container: {
         flex: 1,
         backgroundColor: '#fff',
-        padding: '4%',
+        paddingVertical:'4%',
     },
     //Page Guide
     NotifDates:{
         fontFamily: 'RedHatDisplay-Regular',
         fontSize: 22,
         color:'#eb9834',
-        marginTop:'1.5%'
+        paddingHorizontal: '4%',
+        marginVertical:'1.5%'
     },
     //Notification Card
     NotifTab:{
         flexDirection:'row',
-        marginTop:'2%',
-        marginBottom: '2%'
-
+        marginTop:'.5%',
+        marginBottom: '.5%',
+        paddingVertical:'4%',
     },
     //Notification Image
     NotifImgContainer: {
+        marginLeft:'5%',
         alignItems:'center',
         justifyContent:'center',
     },
@@ -55,7 +57,34 @@ const NotificationScreenStyle=StyleSheet.create({
         fontSize: 15,
         fontFamily:'RedHatDisplay-Light',
         color: '#000',
+    },
+    // For Unread NotifCard
+    NotifTabUnread:{
+        backgroundColor:'#f5f2f2',
+        flexDirection:'row',
+        paddingVertical:'2%',
+        borderRadius: 6,
+    },
+    NotifContentNameUnread:{
+        fontSize: 16,
+        fontFamily:'RedHatDisplay-Medium',
+        color: '#eb9834',
+    },
+    NotifContentPostUnread:{
+        fontSize: 16,
+        fontFamily:'RedHatDisplay-Medium',
+        color: '#000',
+    },
+    NotifContentTimeUnread:{
+        fontSize: 15,
+        fontFamily:'RedHatDisplay-Regular',
+        color: '#000',
+    },
+    BUlletPosition:{
+        marginTop:'1.5%',
+        marginLeft:'3%'
     }
+
 })
 
 export default NotificationScreenStyle;
