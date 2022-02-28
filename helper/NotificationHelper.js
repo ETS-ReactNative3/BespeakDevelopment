@@ -1,6 +1,30 @@
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
+
+import fetch_date_time from '../api/GlobalTime';
 
 import { _getUserData } from './EventLoad';
+import { _getFollowersId } from './ProfileLoad';
+
+async function _processNewEventNotif(event_id) {
+    const current_time = await fetch_date_time();
+    const to_notif = await _getFollowersId();
+    var batch = db.batch();
+
+    if(to_notif == 0) return;
+
+    to_notif.forEach((item) => {
+        var to_notif_query = db.collection('_notification').doc();
+        batch.set(to_notif_query, {
+            type: 'NEW_EVENT',
+            event_id: event_id,
+            to: item,
+            is_read: false,
+            server_time: current_time.epoch
+        });
+    })
+
+    batch.commit();
+}
 
 async function _constructNewEventNotif(_tokens = [], _data = {}, _creator = auth.currentUser.uid) {
     if(_tokens.length == 0) return;
@@ -21,4 +45,7 @@ async function _constructNewEventNotif(_tokens = [], _data = {}, _creator = auth
     return _result;
 }
 
-export { _constructNewEventNotif };
+export { 
+    _constructNewEventNotif,
+    _processNewEventNotif
+};

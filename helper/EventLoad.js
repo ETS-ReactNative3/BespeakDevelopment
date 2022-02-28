@@ -66,6 +66,26 @@ async function _getProfileImage(user_id) {
     return require('../assets/img/blank-profile.png');
 }
 
+async function _getOwnerDataByEventId(event_id) {
+    let get_owner_query = await db.collection('event')
+        .doc(event_id)
+        .get();
+
+    if(get_owner_query.empty) {
+        console.log('No data found for event: ', event_id);
+        return;
+    } 
+
+    var event_data = get_owner_query.data()
+
+    var owner_name = await _getUserData('_name', event_data.owner);
+
+    return {
+        name: owner_name ? owner_name : 'A Bespeak User',
+        id: event_data.owner
+    };
+}
+
 async function _getEventImage(event_id, random_banner) {
     let event_image = false;
     
@@ -123,5 +143,6 @@ export {
     _getUserData,
     _arrangeData,
     _getProfileImage,
-    _getEventImage
+    _getEventImage,
+    _getOwnerDataByEventId
 }

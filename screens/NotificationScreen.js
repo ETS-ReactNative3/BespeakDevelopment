@@ -1,269 +1,216 @@
 import React, { 
-    useState,
-    useRef, 
     Component 
-  } from "react";
-  import {
-    SafeAreaView,
-    TextInput, 
-    ScrollView, 
+} from "react";
+import {
     TouchableOpacity,
     Text, 
     View,
     Image,
-     Alert, Modal,Pressable, StyleSheet
-  } from 'react-native';
-  import NotificationScreenStyle from "../styles/NotificationScreenStyle";
-  import SystemStyle from "../styles/SystemStyle";
-  import { 
-    Feather,
-    Ionicons,
-    MaterialCommunityIcons,
-    SimpleLineIcons,
-    FontAwesome5,
-    MaterialIcons,
+    ActivityIndicator,
+    FlatList,
+    RefreshControl
+} from 'react-native';
+import { 
     Entypo
-  } from '@expo/vector-icons';
-  import A from "../assets/img/A.jpg";
+} from '@expo/vector-icons';
+import { auth, db} from '../firebase';
 
-  function NotificationScreen({ navigation }) {
-    return (
-      <ScrollView style={NotificationScreenStyle.Container}>
-      <Text style={NotificationScreenStyle.NotifDates}>Today</Text>
+import NotificationScreenStyle from "../styles/NotificationScreenStyle";
+import SystemStyle from "../styles/SystemStyle";
+
+import { 
+    _getProfileImage
+} from '../helper/EventLoad';
+import { _loadAllNotification } from "../helper/NotificationLoad";
+
+class NotificationScreen extends Component {
+    state = {
+        data: {},
+
+        limit: 10,
+        loading: true,
+        refreshing: false,
+        user_refresh: false,
+        is_mounted: false,
+
+        last_data: null,
+        can_extend: false
+    }
+    componentDidMount() {
+        try {
+            this._loadNotifications();
+
+            this.setState({is_mounted: true});
+
+            //# TODO: Optimize
+            this._unsubscribe = this.props.navigation.addListener('focus', () => {
+                if(this.state.is_mounted) {
+                    this._loadNotifications();
+                }
+            }); 
+        } catch(error) {
+            console.log(error);
+        }
+    }
+    async _retrieveNotifications(type_extend = false) {
+        return await _loadAllNotification(type_extend, this.state.limit, this.state.last);
+    }
+
+    async _loadNotifications() {
+        console.log('Loading Notifs...')
+
+        let query_res = await this._retrieveNotifications();
+
+        // console.log('Loaded Notif: ', query_res.data);
+
+        this.setState({
+            data: query_res.data,
+            last_data: query_res.last,
+            loading: false,
+            can_extend: query_res.data.length == this.state.limit
+        });
+
+        this._loadImages(query_res.data)
+    }
+    async _extendNotifications() {
+        this.setState({
+            refreshing: true,
+            can_extend: false
+        });
+        console.log('Retrieving Other Notifs...')
+
+        let query_res = await this._retrieveNotifications(true);
+
+        let has_data = query_res.data.length == this.state.limit;
+        let current_to_add = this.state.data;
+
+        this.setState({
+            data: [... current_to_add, ... query_res.data],
+            last_data: query_res.last,
+            refreshing: false,
+            can_extend: has_data
+        });
         
-      <TouchableOpacity style={NotificationScreenStyle.NotifTabUnread}
-        onPress={() => navigation.navigate('NotificationDetailScreen')}>
-        <View style={NotificationScreenStyle.NotifImgContainer}>
-          <Image
-          style={NotificationScreenStyle.NotifImg}
-          source={require('../assets/img/EveryNation.png')}
-          />
-        </View>
-        <View style={NotificationScreenStyle.NotifCard}>
-          <Text style={NotificationScreenStyle.NotifContentNameUnread}>Every Nation Campus</Text>
-          <Text style={NotificationScreenStyle.NotifContentPostUnread}>Created a new event! Find out whats new!</Text>
-          <Text style={NotificationScreenStyle.NotifContentTimeUnread}>a minute ago.</Text>
-        </View>
-        <View style={NotificationScreenStyle.BUlletPosition}>
-        <Entypo name="dot-single" size={40} color="#eb9834" />
-        </View>
-      </TouchableOpacity>
+        this._loadImages(query_res.data, current_to_add)
+    }
+    _loadImages(items, has_add = []) {
+        // Load Images
+        items?.forEach(async (item) => {
+            item.owner_image = await _getProfileImage(item.owner_id)
 
-      <TouchableOpacity style={NotificationScreenStyle.NotifTab}
-        onPress={() => navigation.navigate('NotificationDetailScreen')}>
-        <View style={NotificationScreenStyle.NotifImgContainer}>
-          <Image
-          style={NotificationScreenStyle.NotifImg}
-          source={require('../assets/img/EveryNation.png')}
-          />
-        </View>
-        <View style={NotificationScreenStyle.NotifCard}>
-          <Text style={NotificationScreenStyle.NotifContentName}>Every Nation Campus</Text>
-          <Text style={NotificationScreenStyle.NotifContentPost}>Created a new event! Find out whats new!</Text>
-          <Text style={NotificationScreenStyle.NotifContentTime}>a minute ago.</Text>
-        </View>
-      </TouchableOpacity>
+            this.setState({data: [...has_add, ...items]});
+        })
+    }
+    doRefresh() {
+        return new Promise((resolve) => {
+          this._loadNotifications() 
+          setTimeout(resolve, 3000)
+        });
+    }
+    async onRefresh() {
+        console.log("Refreshing...")
+        this.setState({'user_refresh': true})
+        await this.doRefresh().then(() => {
+            this.setState({
+                'user_refresh': false,
+                'can_extend': true
+            })
+            console.log("Refreshed.")
+        })
+    }
+    _renderFooter() {
+        if(this.state.refreshing) {
+            return (
+                <>
+                    <ActivityIndicator color="orange"/> 
+                    <Text style={SystemStyle.TabEmptyList}> Please wait. </Text>
+                </>
+            )
+        } 
+    }
+    async _handleNotificationClick(item) {
+        if(!item.is_read) {
+            await db.collection('_notification')
+                .doc(item.id)
+                .update({
+                    is_read: true
+                }).catch(err => console.log('Error!: ', err.message));
+        }
 
-
-      <Text style={NotificationScreenStyle.NotifDates}>Earlier</Text>
-      <TouchableOpacity style={NotificationScreenStyle.NotifTab}
-        onPress={() => navigation.navigate('NotificationDetailScreen')}>
-        <View style={NotificationScreenStyle.NotifImgContainer}>
-          <Image
-          style={NotificationScreenStyle.NotifImg}
-          source={require('../assets/img/EveryNation.png')}
-          />
-        </View>
-        <View style={NotificationScreenStyle.NotifCard}>
-          <Text style={NotificationScreenStyle.NotifContentName}>Every Nation Campus</Text>
-          <Text style={NotificationScreenStyle.NotifContentPost}>Created a new event! Find out whats new!</Text>
-          <Text style={NotificationScreenStyle.NotifContentTime}>a minute ago.</Text>
-        </View>
-      </TouchableOpacity>
-  </ScrollView>
-    );
-  }
-  
-  function NotificationDetailScreen() {
-    const [modalVisible, setModalVisible] = useState(false);
-    const [modalAttendingVisible, setModalAttendingVisible] = useState(false);
-    return (
-  <ScrollView>
-      <View style={SystemStyle.EventContainer}>
-        <View style={SystemStyle.ImgContainer}>
-          <Image
-            style={SystemStyle.ImgContainer}
-            source={require('../assets/img/B.jpg')}
-            />
-        </View>
-        <View style={SystemStyle.EventContainer}>
-        <Text style={SystemStyle.EventTitle}>Sunday Worship Service</Text>
-        <View style={SystemStyle.OrganizerTab}>
-          <TouchableOpacity style={SystemStyle.OrganizerInfo}
-            onPress={() => navigation.navigate('NotificationDetailScreen')}>
-          <View style={SystemStyle.OrganizerImgContainer}>
-          <Image
-          style={SystemStyle.OrganizerImg}
-          source={require('../assets/img/EveryNation.png')}
-          />
-        </View>
-            <View style={SystemStyle.OrgCardContainer}>
-              <Text style={SystemStyle.OrganizerNameButBlack}>Every Nation Campus</Text>
+        this.props.navigation.navigate('EventScreen', {event_id: item.event_id});
+    }
+    render() {
+        return (
+            <View style={NotificationScreenStyle.Container}>   
+                {this.state.loading && 
+                    <View style={SystemStyle.TabContainer}>
+                        <ActivityIndicator size={50} color="orange"/> 
+                    </View>
+                }
+                {this.state.data.length == 0 && 
+                    <View style={SystemStyle.TabContainer}>
+                        <View style={SystemStyle.WelcomeToBespeakImgContainer}>
+                            <Image style={SystemStyle.WelcomeToBespeakImg} source={require('../assets/img/WelcomeToBespeak.png')}/>      
+                        </View>
+                            <Text style={SystemStyle.EmptyTitle}> Get Notified! </Text>
+                            <Text style={SystemStyle.AdditionalInfo}> Follow organizers to be notified on their upcoming events. </Text>
+                    </View>
+                }
+                <FlatList
+                    refreshControl={
+                        <RefreshControl
+                          refreshing={this.state.user_refresh}
+                          onRefresh={this.onRefresh}
+                          colors={["gray", "orange"]}/>
+                    }
+                    data={Object.values(this.state.data)}
+                    renderItem={({ item }) => (
+                        item.is_read ? (
+                            <TouchableOpacity style={NotificationScreenStyle.NotifTab}
+                                onPress={() => this._handleNotificationClick(item)}>
+                                    <View style={NotificationScreenStyle.NotifImgContainer}>
+                                        <Image style={NotificationScreenStyle.NotifImg}
+                                            source={ item.owner_image }/>
+                                    </View>
+                                    <View style={NotificationScreenStyle.NotifCard}>
+                                        <Text style={NotificationScreenStyle.NotifContentName}>{ item.owner_name }</Text>
+                                        <Text style={NotificationScreenStyle.NotifContentPost}>{ item.content }</Text>
+                                        <Text style={NotificationScreenStyle.NotifContentTime}>a minute ago.</Text>
+                                    </View>
+                            </TouchableOpacity>
+                        ) : (
+                            <TouchableOpacity style={NotificationScreenStyle.NotifTabUnread}
+                                onPress={() => this._handleNotificationClick(item)}>
+                                    <View style={NotificationScreenStyle.NotifImgContainer}>
+                                        <Image style={NotificationScreenStyle.NotifImg}
+                                            source={ item.owner_image }/>
+                                    </View>
+                                    <View style={NotificationScreenStyle.NotifCard}>
+                                        <Text style={NotificationScreenStyle.NotifContentNameUnread}>{ item.owner_name }</Text>
+                                        <Text style={NotificationScreenStyle.NotifContentPostUnread}>{ item.content }</Text>
+                                        <Text style={NotificationScreenStyle.NotifContentTimeUnread}>a minute ago.</Text>
+                                    </View>
+                                    <View style={NotificationScreenStyle.BUlletPosition}>
+                                        <Entypo name="dot-single" size={40} color="#eb9834" />
+                                    </View>
+                            </TouchableOpacity>
+                        )
+                    )}
+                    keyExtractor={(item, index) => index.toString()}
+                    ListFooterComponent={this._renderFooter()}
+                    onEndReached={() => { 
+                            console.log("Can Extend: ", this.state.can_extend)
+                            if(this.state.can_extend) this._extendNotifications()
+                        }
+                    }
+                    onEndReachedThreshold={0.5}
+                    refreshing={this.state.refreshing}>
+                </FlatList>   
             </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={SystemStyle.FollowOrgBtn}
-            onPress={() => navigation.navigate('')}>
-            <Text style={SystemStyle.FollowOrgTextBtn}>Followed</Text>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <View style={SystemStyle.LowerSection}>
-            <Feather name="calendar" size={24} color="black" />
-            <Text style={SystemStyle.EventSchedule}>Sunday, November 14 ∘ Starts at 12:00PM</Text>
-          </View>
-          <View style={SystemStyle.LowerSection}>
-            <SimpleLineIcons name="location-pin" size={24} color="black" />
-            <Text style={SystemStyle.EventPlace}>L3 Robinsons MetroEast Barangay, Pasig, 1800, Metro Manila, Philippines</Text>
-          </View>
-        </View>
-      </View>
-      </View>
-      <View>
-        <Text style={SystemStyle.LineBreak}></Text>
-      </View>
-      <View style={SystemStyle.Container}>
-        <Text style={SystemStyle.EventAboutTitle}>About</Text>
-        <Text style={SystemStyle.EventTextInfo}>
-          As much as we are all excited to regather, ENC is also
-          commited in ensuring a safe worry-free Worship
-          experience for you
-        </Text>
-        <Text style={SystemStyle.EventTextInfo}>
-          ENC adheres to the safety protocols and guidelines issued by
-          the Government during pandemic. In compliance to this,
-          membres who wish to worship onsite must be FULLY
-          VACCINATED
-        </Text>
-        <Text style={SystemStyle.EventTextInfo}>
-          If fully vaccinated, please proceed to our online registration to
-          secure a seat.
-        </Text>
-        <Text style={SystemStyle.EventAddInfoTitle}>
-          Reminder</Text>
-        <Text style={SystemStyle.EventTextInfo}>
-          1. As much as we are all excited to regather, ENC is also
-          commited in ensuring a safe worry-free Worship
-          experience for you
-        </Text>
-        <Text style={SystemStyle.EventTextInfo}>
-          2. As much as we are all excited to regather, ENC is also
-          commited in ensuring a safe worry-free Worship
-          experience for you
-        </Text>
-        <Text style={SystemStyle.EventTextInfo}>
-          3. As much as we are all excited to regather, ENC is also
-          commited in ensuring a safe worry-free Worship
-          experience for you
-        </Text>
-        <View style={SystemStyle.BreakLineContainer}>
-          <Text style={SystemStyle.BreakLine}></Text>
-          <Text style={SystemStyle.BreakLineComment}>Comment</Text>
-        </View>
-
-        <View style={SystemStyle.BespeakerCommentContainer}>
-          <View style={SystemStyle.BespeakerImgContainer}>
-            <Image
-              style={SystemStyle.BespeakerImg}
-              source={require('../assets/img/EveryNation.png')}
-            />
-          </View>
-            <View style={SystemStyle.BespeakerContainer}>
-              <Text style={SystemStyle.BespeakerName}>Aegon Targaryen</Text>
-              <Text style={SystemStyle.BespeakerComment}>I guess it would be good to go here after finding out
-                something about myself.</Text>
-            </View>
-            <TouchableOpacity onPress={() => setModalVisible(true)}>
-              <SimpleLineIcons name="options" size={24} color="black" style={SystemStyle.CommentInfo}/>
-            </TouchableOpacity>
-          </View>          
-
-        <View style={SystemStyle.BespeakerCommentContainer}>
-          <View style={SystemStyle.BespeakerImgContainer}>
-            <Image
-              style={SystemStyle.BespeakerImg}
-              source={require('../assets/img/EveryNation.png')}
-            />
-          </View>
-            <View style={SystemStyle.BespeakerContainer}>
-              <Text style={SystemStyle.BespeakerName}>Sansa Stark</Text>
-              <View style={SystemStyle.BespeakerInput}>
-              <TextInput style={SystemStyle.MyCommentInput} placeholder=' Write a comment..'>
-              </TextInput>
-              <TouchableOpacity>
-                <Ionicons name="send" size={24} color="black" style={SystemStyle.SendComment}/>
-              </TouchableOpacity>
-              </View>
-            </View>
-          </View>          
-        </View>
-
-        <View style={SystemStyle.AttendingContainer}>
-          <TouchableOpacity style={SystemStyle.AttendingBtn}
-            onPress={() => setModalAttendingVisible(true)}>
-            <Text style={SystemStyle.AttendingTextBtn}>I'm attending!</Text>
-          </TouchableOpacity>
-        </View>
-
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalAttendingVisible}
-        onRequestClose={() => {
-          setModalAttendingVisible(!modalAttendingVisible);}}>
-        <View style={SystemStyle.YoureSetView}>
-          <View style={SystemStyle.YoureSetModalView}>
-          <View>
-            <Text style={SystemStyle.ModalText}>Youre all set!</Text>
-          </View>
-          <View>
-          <Feather name="check-circle" size={55} color="black" />
-          </View>
-          <View style={SystemStyle.commentdateinfo}>
-            <TouchableOpacity style={SystemStyle.ViewBtn}
-              //onPress={() => navigation.navigate('')}
-              >
-            <Text style={SystemStyle.ViewTextBtn}>View ticket</Text>
-            </TouchableOpacity>
-          </View>
-          </View>
-        </View>
-      </Modal>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);}}>
-        <View style={SystemStyle.CommentInfoView}>
-          <View style={SystemStyle.DeleteModalView}>
-              <TouchableOpacity style={SystemStyle.Icon}
-                onPress={() => ('')}
-                >
-                <MaterialIcons name="delete-outline" size={24} color="black" />
-                <Text style={SystemStyle.DeleteTextBtn}>Delete</Text>
-              </TouchableOpacity>
-              <View style={SystemStyle.CommentDateInfo}>
-                <FontAwesome5 name="clock" size={24} color="black" style={SystemStyle.Icon}/>
-                <Text style={SystemStyle.CommentDate}>Sunday, November 9  12:00PM</Text>
-              </View>
-          </View>
-        </View>
-      </Modal>
-      </ScrollView>
-    );
-  }
+        );
+    }
+}
 
 export default {
     NotificationScreen,
-    NotificationDetailScreen
 }

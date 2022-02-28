@@ -45,7 +45,8 @@ import {
     _getFollowersToken
 } from '../helper/ProfileLoad'; 
 import {
-    _constructNewEventNotif
+    _constructNewEventNotif,
+    _processNewEventNotif
 } from '../helper/NotificationHelper';
 
 class CreateEventScreen extends Component {
@@ -181,7 +182,8 @@ class CreateEventScreen extends Component {
                             Alert.alert('Error!', error.message)
                             console.log('Error!', error.message)
                         })
-
+                    
+                    _processNewEventNotif(doc.id);
                     let all_token = await _getFollowersToken();
 
                     if(all_token.length > 0) {

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { 
@@ -10,12 +9,22 @@ import {
 import Menu from './MenuNavigator'
 import ScanScreen from '../screens/ScanScreen' //#TODO: Migrate Soon
 
-import SystemStyle from "../styles/SystemStyle";
+import { _loadAllNotification } from "../helper/NotificationLoad";
 
 const Tab = createBottomTabNavigator();
 
 class UserTabNavigate extends Component {
+    state = {
+        notif_count: 0
+    }
+    async componentDidMount() {
+        let all_notif = await _loadAllNotification();
+        all_notif = all_notif.unread_count;
+        this.setState({notif_count: all_notif.length});
+    }
     render() {
+        let count = this.state.notif_count;
+
         let _direct = this.props.direct;
         var route = _direct?.event || _direct?.user ? 'SearchTab' : 'HomeTab';
         console.log('Route: ', route)
@@ -57,16 +66,17 @@ class UserTabNavigate extends Component {
                         }}/>
                     <Tab.Screen name="NotificationTab" component={Menu.NotificationNavigator}
                         options={{
-                            title: <Text style={SystemStyle.TabTitle}>Notifications</Text>,
+                            title: ' ',
+                            headerShown: false,
                             tabBarShowLabel:false,
                             tabBarLabel: 'Updates',
                             tabBarIcon: ({ color, size }) => (
                                 <Ionicons name="notifications-sharp" color={color} size={27} />
                             ),
-                            tabBarBadge: 3,
-                            tabBarBadgeStyle: {
+                            tabBarBadge: count > 0 ? count : null,
+                            tabBarBadgeStyle: count > 0 ? {
                                 backgroundColor:'#eb9834',
-                                color:'#fff'},
+                                color:'#fff'} : ''
                             }
                         }/>
                     <Tab.Screen name="ProfileTab" component={Menu.ProfileNavigator}
