@@ -153,14 +153,15 @@ class UserProfileScreen extends Component {
                                                     <Ionicons name="share-social-outline" size={22} color="#000" />
                                                 </TouchableOpacity>
                                             </View>     
-                                        
-                                            <TouchableOpacity style={
-                                                !item.is_following ? 
-                                                ProfileScreenStyle.FollowUserBtn : ProfileScreenStyle.UnfollowUserBtn}
-                                                onPress={() => this._handleFollow(item.id)}>
-                                                    <Text style={SystemStyle.FollowOrgTextBtn}>{
-                                                        !item.is_following ? 'Follow' : 'Unfollow' } </Text>
-                                            </TouchableOpacity>
+                                            { item.id != auth.currentUser.uid &&
+                                                <TouchableOpacity style={
+                                                    !item.is_following ? 
+                                                    ProfileScreenStyle.FollowUserBtn : ProfileScreenStyle.UnfollowUserBtn}
+                                                    onPress={() => this._handleFollow(item.id)}>
+                                                        <Text style={SystemStyle.FollowOrgTextBtn}>{
+                                                            !item.is_following ? 'Follow' : 'Unfollow' } </Text>
+                                                </TouchableOpacity>
+                                            }
                                         </>
                                     }
                                 </View>

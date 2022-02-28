@@ -21,7 +21,7 @@ async function fetch_date_time() {
                 date_time = new Date(date_time)
                 
                 if (response.status !== 200) {
-                    console.log('Status Code: ' + response.status);
+                    // console.log('Status Code: ' + response.status);
                     return;
                 }
             }
