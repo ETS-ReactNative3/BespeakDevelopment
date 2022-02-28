@@ -22,6 +22,7 @@ import React, {
     SimpleLineIcons,
     FontAwesome5,
     MaterialIcons,
+    Entypo
   } from '@expo/vector-icons';
   import A from "../assets/img/A.jpg";
 
@@ -30,6 +31,24 @@ import React, {
       <ScrollView style={NotificationScreenStyle.Container}>
       <Text style={NotificationScreenStyle.NotifDates}>Today</Text>
         
+      <TouchableOpacity style={NotificationScreenStyle.NotifTabUnread}
+        onPress={() => navigation.navigate('NotificationDetailScreen')}>
+        <View style={NotificationScreenStyle.NotifImgContainer}>
+          <Image
+          style={NotificationScreenStyle.NotifImg}
+          source={require('../assets/img/EveryNation.png')}
+          />
+        </View>
+        <View style={NotificationScreenStyle.NotifCard}>
+          <Text style={NotificationScreenStyle.NotifContentNameUnread}>Every Nation Campus</Text>
+          <Text style={NotificationScreenStyle.NotifContentPostUnread}>Created a new event! Find out whats new!</Text>
+          <Text style={NotificationScreenStyle.NotifContentTimeUnread}>a minute ago.</Text>
+        </View>
+        <View style={NotificationScreenStyle.BUlletPosition}>
+        <Entypo name="dot-single" size={40} color="#eb9834" />
+        </View>
+      </TouchableOpacity>
+
       <TouchableOpacity style={NotificationScreenStyle.NotifTab}
         onPress={() => navigation.navigate('NotificationDetailScreen')}>
         <View style={NotificationScreenStyle.NotifImgContainer}>
@@ -44,7 +63,8 @@ import React, {
           <Text style={NotificationScreenStyle.NotifContentTime}>a minute ago.</Text>
         </View>
       </TouchableOpacity>
-      
+
+
       <Text style={NotificationScreenStyle.NotifDates}>Earlier</Text>
       <TouchableOpacity style={NotificationScreenStyle.NotifTab}
         onPress={() => navigation.navigate('NotificationDetailScreen')}>

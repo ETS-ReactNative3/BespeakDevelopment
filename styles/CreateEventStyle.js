@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native'
 
 const CreateEventStyle=StyleSheet.create({
     ScreenContainer: {
-        flex: 2,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#fff',
@@ -71,6 +71,7 @@ const CreateEventStyle=StyleSheet.create({
         flexDirection:'row',
         marginTop:-3,
         padding:10,
+        width:'87.5%'
     },
     FormButton: {
         alignItems: 'center',
