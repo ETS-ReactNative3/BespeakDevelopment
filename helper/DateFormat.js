@@ -64,3 +64,4 @@ export default function formatDate(date, patternStr){
 function twoDigitPad(num) {
     return num < 10 ? "0" + num : num;
 }
+

@@ -1,9 +1,13 @@
 import { auth, db } from '../firebase';
 
 import { _getOwnerDataByEventId } from './EventLoad';
+import { _getTimeAgo } from '../helper/DateTextFormat';
+import fetch_date_time from '../api/GlobalTime';
 
 export async function _loadAllNotification(type_extend = false, 
     limit = undefined, start_after = undefined, user_id = auth.currentUser.uid) {
+
+        let time_now = await fetch_date_time();
 
         let get_notif_query = await db.collection('_notification')
             .where('to', '==', user_id)
@@ -34,6 +38,7 @@ export async function _loadAllNotification(type_extend = false,
 
             item.owner_name = owner.name;
             item.owner_id = owner.id;
+            item.ago = await _getTimeAgo(new Date(item.server_time), time_now.epoch);
 
             if(!item.is_read) unread_count++;
             
@@ -47,5 +52,4 @@ export async function _loadAllNotification(type_extend = false,
         let last_value = get_notif_query.docs[get_notif_query.docs.length-1];
 
         return {'data': _data, 'last': last_value, 'unread_count': unread_count};
-
 }

@@ -13,7 +13,7 @@ import {
 import { 
     Entypo
 } from '@expo/vector-icons';
-import { auth, db} from '../firebase';
+import { db } from '../firebase';
 
 import NotificationScreenStyle from "../styles/NotificationScreenStyle";
 import SystemStyle from "../styles/SystemStyle";
@@ -22,6 +22,8 @@ import {
     _getProfileImage
 } from '../helper/EventLoad';
 import { _loadAllNotification } from "../helper/NotificationLoad";
+
+import Loader from 'react-native-three-dots-loader';
 
 class NotificationScreen extends Component {
     state = {
@@ -36,6 +38,11 @@ class NotificationScreen extends Component {
         last_data: null,
         can_extend: false
     }
+    constructor() {
+        super();
+        this.onRefresh = this.onRefresh.bind(this);
+    }
+
     componentDidMount() {
         try {
             this._loadNotifications();
@@ -52,6 +59,11 @@ class NotificationScreen extends Component {
             console.log(error);
         }
     }
+    
+    componentWillUnmount() {
+        this._unsubscribe();
+    }
+
     async _retrieveNotifications(type_extend = false) {
         return await _loadAllNotification(type_extend, this.state.limit, this.state.last);
     }
@@ -72,6 +84,7 @@ class NotificationScreen extends Component {
 
         this._loadImages(query_res.data)
     }
+
     async _extendNotifications() {
         this.setState({
             refreshing: true,
@@ -142,12 +155,12 @@ class NotificationScreen extends Component {
     render() {
         return (
             <View style={NotificationScreenStyle.Container}>   
-                {this.state.loading && 
+                { this.state.loading && 
                     <View style={SystemStyle.TabContainer}>
                         <ActivityIndicator size={50} color="orange"/> 
                     </View>
                 }
-                {this.state.data.length == 0 && 
+                { this.state.data.length == 0 && 
                     <View style={SystemStyle.TabContainer}>
                         <View style={SystemStyle.WelcomeToBespeakImgContainer}>
                             <Image style={SystemStyle.WelcomeToBespeakImg} source={require('../assets/img/WelcomeToBespeak.png')}/>      
@@ -175,7 +188,7 @@ class NotificationScreen extends Component {
                                     <View style={NotificationScreenStyle.NotifCard}>
                                         <Text style={NotificationScreenStyle.NotifContentName}>{ item.owner_name }</Text>
                                         <Text style={NotificationScreenStyle.NotifContentPost}>{ item.content }</Text>
-                                        <Text style={NotificationScreenStyle.NotifContentTime}>a minute ago.</Text>
+                                        <Text style={NotificationScreenStyle.NotifContentTime}>{ item.ago }.</Text>
                                     </View>
                             </TouchableOpacity>
                         ) : (
@@ -188,7 +201,7 @@ class NotificationScreen extends Component {
                                     <View style={NotificationScreenStyle.NotifCard}>
                                         <Text style={NotificationScreenStyle.NotifContentNameUnread}>{ item.owner_name }</Text>
                                         <Text style={NotificationScreenStyle.NotifContentPostUnread}>{ item.content }</Text>
-                                        <Text style={NotificationScreenStyle.NotifContentTimeUnread}>a minute ago.</Text>
+                                        <Text style={NotificationScreenStyle.NotifContentTimeUnread}>{ item.ago }.</Text>
                                     </View>
                                     <View style={NotificationScreenStyle.BUlletPosition}>
                                         <Entypo name="dot-single" size={40} color="#eb9834" />

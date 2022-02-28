@@ -15,13 +15,15 @@ const Tab = createBottomTabNavigator();
 
 class UserTabNavigate extends Component {
     state = {
-        notif_count: 0
+        notif_count: 0,
+        is_mounted: false
     }
     async componentDidMount() {
         let all_notif = await _loadAllNotification();
         all_notif = all_notif.unread_count;
-        this.setState({notif_count: all_notif.length});
+        this.setState({notif_count: all_notif, is_mounted: true});
     }
+
     render() {
         let count = this.state.notif_count;
 
