@@ -418,16 +418,16 @@ class EventScreen extends Component {
                             <>
                                 { this.state.is_extending &&
                                     <View style={SystemStyle.Center}>  
-                                        <Loader />
+                                        <Loader key = {this.state.is_extending}/>
                                     </View>
                                 }
                                 { this.state._extend && 
                                     <View style={SystemStyle.Center}>  
                                         <TouchableOpacity style={SystemStyle.LoadBtn}
                                             onPress={() => this._extendLoadComments()}>
-                                                <Text style={SystemStyle.LoadText}>{
+                                                <Text style={SystemStyle.LoadText}> {
                                                     'Load more comments...'
-                                                }</Text>
+                                                } </Text>
                                         </TouchableOpacity>
                                     </View>
                                     

@@ -101,15 +101,13 @@ class NotificationNavigator extends Component {
       <MenuStack.Navigator>
         <MenuStack.Screen name="NotificationScreen" component={NotificationScreens.NotificationScreen} 
           options={{
-            title: ' ',
-            headerShown: false,
+            title: 'Notifications',
+            headerShown: true,
             tabBarShowLabel:false
           }}/>
-        <MenuStack.Screen name="NotificationDetailScreen" component={NotificationScreens.NotificationDetailScreen}
+        <MenuStack.Screen name="EventScreen" component={EventScreens.EventScreen}
           options={{
             title: ' ',
-            headerShown: false,
-            tabBarShowLabel:false
           }}/>
       </MenuStack.Navigator>
     );

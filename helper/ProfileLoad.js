@@ -75,7 +75,7 @@ async function _getFollowersId(user_id = auth.currentUser.uid) {
     let snapshot = await get_relation_query.get();
 
     if(snapshot.empty) {
-        return false;
+        return [];
     } 
 
     let _data = snapshot.data();
