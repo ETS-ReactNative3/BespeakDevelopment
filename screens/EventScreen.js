@@ -462,7 +462,8 @@ class EventScreen extends Component {
                             <View style={SystemStyle.BespeakerInput}>
                                 <TextInput style={SystemStyle.MyCommentInput} 
                                     value = {this.state.raw_comment}
-                                    placeholder=' Write a comment..'
+                                    selectionColor={'#eb9834'}
+                                    placeholder='Write a comment..'
                                     maxLength={50}
                                     onChangeText={text => {
                                         this.setState({raw_comment: text});
@@ -496,8 +497,8 @@ class EventScreen extends Component {
                     ) : (
                         <>
                             { item.has_ended ? (
-                                <View style={SystemStyle.ViewAttendeeBtn}>
-                                        <Text style={SystemStyle.AttendingTextBtn}>Event Ended</Text>
+                                <View style={SystemStyle.EventEndedBtnButOrange}>
+                                        <Text style={SystemStyle.EventEndedTextBtn}>Event Ended</Text>
                                 </View>
                             ) : (
                                 <TouchableOpacity style={SystemStyle.AttendingBtn}

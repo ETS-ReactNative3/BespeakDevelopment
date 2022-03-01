@@ -287,6 +287,7 @@ class CreateEventScreen extends Component {
                                 <AntDesign name="book" size={24} style={CreateEventStyle.EventFieldIcon}/>
                                 <TextInput style={CreateEventStyle.FormEventField} placeholder="Event Name "
                                     maxLength={50} 
+                                    selectionColor={'#eb9834'}
                                     value = {this.state.data.name}
                                     onChangeText = {text => this._handleText('name', text)}
                                     ref={(input) => { this.txtName = input; }}/>
@@ -307,6 +308,7 @@ class CreateEventScreen extends Component {
                                         ? dateFormat(new Date(this.state.data.schedule), "EEEE, MMMM d, yyyy - h:mm aaa")
                                         : ''}
                                     maxLength={50} 
+                                    selectionColor={'#eb9834'}
                                     editable = {false}
                                     ref={(input) => { this.txtSchedule = input; }}/>
                             </View>
@@ -323,7 +325,7 @@ class CreateEventScreen extends Component {
                                 <SimpleLineIcons name="location-pin" size={24} style={CreateEventStyle.EventFieldIcon}/>
                                 <TextInput style={CreateEventStyle.FormEventField} placeholder="Location "
                                     maxLength={50} 
-
+                                    selectionColor={'#eb9834'}
                                     onChangeText = {text => this._handleText('location', text)}
                                     ref={(input) => { this.txtLocation = input; }}/>
                             </View>
@@ -340,6 +342,7 @@ class CreateEventScreen extends Component {
                                 <MaterialCommunityIcons name="account-group" size={24} style={CreateEventStyle.EventFieldIcon}/>
                                 <TextInput style={CreateEventStyle.FormEventField} placeholder='Max Attendees '
                                     maxLength={4} 
+                                    selectionColor={'#eb9834'}
                                     value = {this.state.data.max?.toString()}
                                     keyboardType = 'numeric'
                                     onChangeText = {text => this._handleText('max', text)}
@@ -670,6 +673,7 @@ class EditEventScreen extends Component {
                         <View style={EditEventStyle.EditEventNamecontainer}>
                             <TextInput style={EditEventStyle.EditEventNameField} placeholder='Event Name '
                                 maxLength={50} 
+                                selectionColor={'#eb9834'}
                                 value = {this.state.data.name}
                                 onChangeText = {text => this._handleText('name', text)}
                                 ref={(input) => { this.txtName = input; }}/>
@@ -688,7 +692,8 @@ class EditEventScreen extends Component {
                                 value = {this.state.data.schedule 
                                     ? dateFormat(new Date(this.state.data.schedule), "EEEE, MMMM d, yyyy - h:mm aaa")
                                     : ''}
-                                maxLength={50} 
+                                maxLength={50}
+                                selectionColor={'#eb9834'}
                                 editable = {false}
                                 ref={(input) => { this.txtSchedule = input; }}/>
                         </View>
@@ -704,8 +709,8 @@ class EditEventScreen extends Component {
                         <View style={EditEventStyle.EditEventLoccontainer}>
                             <TextInput style={EditEventStyle.EditEventLocField} placeholder="Location "
                                 maxLength={50} 
+                                selectionColor={'#eb9834'}
                                 value = {this.state.data.location}
-
                                 onChangeText = {text => this._handleText('location', text)}
                                 ref={(input) => { this.txtLocation = input; }}/>
                         </View>
@@ -720,7 +725,8 @@ class EditEventScreen extends Component {
                     <Pressable onPress = {() => this.txtMaxAttend.focus() } >
                         <View style={EditEventStyle.EditEventMaxAttendcontainer}>
                             <TextInput style={EditEventStyle.EditEventMaxAttendField} placeholder='Max Attendees '
-                                maxLength={4} 
+                                maxLength={4}
+                                selectionColor={'#eb9834'}
                                 value = {this.state.data.max?.toString()}
                                 keyboardType = 'numeric'
                                 onChangeText = {text => this._handleText('max', text)}

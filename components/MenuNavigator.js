@@ -104,6 +104,7 @@ class NotificationNavigator extends Component {
             title: 'Notifications',
             headerShown: true,
             tabBarShowLabel:false,
+            headerShadowVisible: false,
             headerTitleStyle: {
               fontFamily: 'RedHatDisplay-Medium',
               color: '#eb9834',

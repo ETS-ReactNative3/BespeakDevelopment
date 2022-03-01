@@ -41,6 +41,7 @@ class SearchScreen extends Component {
         <View style={SearchScreenStyle.CardSearchInHeader}> 
           <Feather name="search" size={24} style={SearchScreenStyle.SearchBarIcon}/>
           <TextInput style={SearchScreenStyle.SearchBar} placeholder=' Search Bespeak... '
+            selectionColor={'#eb9834'}
             onChangeText = {text => {
               this._handleText(text);
             }}/>

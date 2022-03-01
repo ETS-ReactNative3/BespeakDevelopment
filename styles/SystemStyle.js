@@ -419,8 +419,8 @@ const SystemStyle = StyleSheet.create({
       borderRadius:25,
       height:35,
       backgroundColor:'#f5f5f5',
-      paddingLeft:'3%',
-      paddingRight:'3%',
+      paddingLeft:'4.5%',
+      paddingRight:'4%',
       width:'98%',
       fontFamily: 'RedHatDisplay-Regular',
     },
@@ -736,7 +736,40 @@ const SystemStyle = StyleSheet.create({
     fontFamily: 'RedHatDisplay-Medium',
     marginLeft: 5,
     marginRight: 5
-},  
+}, 
+//For Event Ended Buttons
+EventEndedBtnButOrange: {
+  marginTop:-2,
+  alignItems: 'center',
+  alignContent:'center',
+  justifyContent:'center',
+  backgroundColor: '#fff',
+  borderColor:'#eb9834',
+  borderWidth: 2,
+  height: 40,
+  borderRadius: 25,
+},
+//Optional kaya diko dinelete
+EventEndedBtnButGray: {
+  marginTop:-2,
+  alignItems: 'center',
+  alignContent:'center',
+  justifyContent:'center',
+  backgroundColor: '#fff',
+  borderColor:'#5b5c5a',
+  borderWidth: 2,
+  height: 40,
+  borderRadius: 25,
+},
+//text for button
+EventEndedTextBtn:{
+  marginTop: -2,
+  fontSize: 20,
+  alignItems: 'center',
+  justifyContent: 'center',
+  color: '#eb9834', //palitan lang to into  "#5b5c5a" kapag gray but duplicate text styles
+  fontFamily: 'RedHatDisplay-Medium',
+},
 });
 
 export default SystemStyle
