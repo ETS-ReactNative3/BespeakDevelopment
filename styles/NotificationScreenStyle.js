@@ -20,11 +20,11 @@ const NotificationScreenStyle=StyleSheet.create({
         flexDirection:'row',
         marginTop:'.5%',
         marginBottom: '.5%',
-        paddingVertical:'4%',
+        paddingVertical:'3%',
     },
     //Notification Image
     NotifImgContainer: {
-        marginLeft:'5%',
+        marginLeft:'4%',
         alignItems:'center',
         justifyContent:'center',
     },
@@ -62,7 +62,9 @@ const NotificationScreenStyle=StyleSheet.create({
     NotifTabUnread:{
         backgroundColor:'#f5f2f2',
         flexDirection:'row',
-        paddingVertical:'2%',
+        marginTop:'.5%',
+        marginBottom: '.5%',
+        paddingVertical:'3%',
         borderRadius: 6,
     },
     NotifContentNameUnread:{

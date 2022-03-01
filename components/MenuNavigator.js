@@ -44,7 +44,7 @@ class HomeNavigator extends Component {
               options={{
                 title: ' ',
                 headerShown: true,
-                headerTintColor: '#000',
+                headerTintColor: '#fff',
                 headerTransparent: true,
                 tabBarShowLabel:false,
                 headerShadowVisible: false,
@@ -85,7 +85,7 @@ class SearchNavigator extends Component {
           options={{
             title: ' ',
             headerShown: true,
-            headerTintColor: '#000',
+            headerTintColor: '#fff',
             headerTransparent: true,
             tabBarShowLabel:false,
             headerShadowVisible: false,
@@ -103,7 +103,11 @@ class NotificationNavigator extends Component {
           options={{
             title: 'Notifications',
             headerShown: true,
-            tabBarShowLabel:false
+            tabBarShowLabel:false,
+            headerTitleStyle: {
+              fontFamily: 'RedHatDisplay-Medium',
+              color: '#eb9834',
+            }
           }}/>
         <MenuStack.Screen name="EventScreen" component={EventScreens.EventScreen}
           options={{
@@ -190,7 +194,7 @@ class ProfileNavigator extends Component {
           options={{
             title: ' ',
             headerShown: true,
-            headerTintColor: '#000',
+            headerTintColor: '#fff',
             headerTransparent: true,
             tabBarShowLabel:false,
             headerShadowVisible: false,
