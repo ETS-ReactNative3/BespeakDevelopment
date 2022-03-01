@@ -74,6 +74,12 @@ const SystemStyle = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'RedHatDisplay-Regular',
   },
+  //Card Schedule for archived || FOR EVENTCARD.JS LINE 71
+  CardSchedArchived:{
+    color: "#A30000",
+    fontSize: 20,
+    fontFamily: 'RedHatDisplay-Regular',
+  },
   //Card Organizer
   CardOrg:{
     color: "#eb9834",
@@ -738,6 +744,7 @@ const SystemStyle = StyleSheet.create({
     marginRight: 5
 }, 
 //For Event Ended Buttons
+//Orange Bordered Button
 EventEndedBtnButOrange: {
   marginTop:-2,
   alignItems: 'center',
@@ -749,7 +756,15 @@ EventEndedBtnButOrange: {
   height: 40,
   borderRadius: 25,
 },
-//Optional kaya diko dinelete
+EventEndedTextForOrangeBtn:{
+  marginTop: -2,
+  fontSize: 20,
+  alignItems: 'center',
+  justifyContent: 'center',
+  color: '#eb9834',
+  fontFamily: 'RedHatDisplay-Medium',
+},
+//Gray Bordered Button
 EventEndedBtnButGray: {
   marginTop:-2,
   alignItems: 'center',
@@ -761,13 +776,12 @@ EventEndedBtnButGray: {
   height: 40,
   borderRadius: 25,
 },
-//text for button
-EventEndedTextBtn:{
+EventEndedTextForGrayBtn:{
   marginTop: -2,
   fontSize: 20,
   alignItems: 'center',
   justifyContent: 'center',
-  color: '#eb9834', //palitan lang to into  "#5b5c5a" kapag gray but duplicate text styles
+  color: '#5b5c5a',
   fontFamily: 'RedHatDisplay-Medium',
 },
 });
