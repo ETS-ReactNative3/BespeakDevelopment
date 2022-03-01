@@ -71,16 +71,28 @@ class CreateEventScreen extends Component {
         is_loading: true
     }
     async _load_date_time() {
-        this.setState({'_server': {... await fetch_date_time()},
-            'is_loading': false});
-        console.log("Loaded DateTime: ", this.state._server.date_time)
+        let time_data = await fetch_date_time();
+
+        this.setState({
+            '_server': {... time_data},
+            'is_loading': false,
+            'data': 
+                { 
+                 ...this.state.data, 
+                 'schedule': time_data.epoch + 2 * (60 * 60 * 1000)
+                } 
+        });
     }
     componentDidMount () {
         this._load_date_time()
     }
-    _handleDateSelection(status) {
-        console.log('Opening/Closing Date & Time Selection...')
-        this.setState({'is_date_select': status})
+    async _handleDateSelection(status) {
+        //console.log('Opening/Closing Date & Time Selection...')
+        this.setState({
+            'is_date_select': status,
+            '_server': !status ? this.state._server : {... await fetch_date_time()}
+        })
+        console.log("Loaded DateTime: ", new Date(this.state._server.epoch) )
     }
     _handleText(key, value) {
         var current_data = this.state.data;
@@ -90,7 +102,7 @@ class CreateEventScreen extends Component {
         current_valid[key] = '';
         
         if(key == 'max') {
-            editable_val = value.toString()?.replace(/[^0-9]/g, '')
+            editable_val = value?.toString()?.replace(/[^0-9]/g, '')
 
             if(editable_val) {
                 editable_val = parseInt(editable_val)
@@ -130,7 +142,18 @@ class CreateEventScreen extends Component {
             }
             is_valid = is_valid && true;
         }
-        return is_valid
+
+        let current_time = await fetch_date_time();
+
+        if(this.state.data.schedule) {
+            if(current_time.epoch > this.state.data.schedule) {
+                is_valid = false;
+                Alert.alert('Select a different schedule',
+                    'The schedule of this event takes place in the past. You\'ll need to update the schedule'+
+                    ' before you can create the event.')
+            }
+        }
+        return is_valid;
     }
     async _processSubmit() {
         var event_data = this.state.data;
@@ -223,18 +246,27 @@ class CreateEventScreen extends Component {
                 }
                 <ScrollView>
                     <View style={CreateEventStyle.FormContainer}>
-                        <DateTimePickerModal
-                            isVisible={this.state.is_date_select}
-                            mode="datetime"
-                            minimumDate = {this.state._server.date_time ? this.state._server.date_time : new Date()}
-                            onConfirm={(value) => {
-                                console.log('Date selected: ', value)
-                                let current = this.state.data;
-                                current.schedule = Date.parse(value);
-                                this.setState({'data': current})
-                                this._handleDateSelection(false) 
-                            }}
-                            onCancel={() => this._handleDateSelection(false) }/>
+                            <DateTimePickerModal
+                                isVisible={this.state.is_date_select}
+                                mode="datetime"
+                                date = {this.state.data.schedule ? new Date(this.state.data.schedule) : new Date(this.state._server.epoch)}
+                                minimumDate = {this.state._server.epoch ? new Date(this.state._server.epoch) : new Date()}
+                                onConfirm={async (value) => {
+                                    console.log('Date selected: ', value)
+                                    let current = this.state.data;
+                                     
+                                    let selected = Date.parse(value);
+                                    this.setState({'_server': {... await fetch_date_time()}});
+
+                                    if(selected < this.state._server.epoch) {
+                                        selected = this.state._server.epoch;    
+                                    }
+
+                                    current.schedule = selected;
+                                    this.setState({'data': current})
+                                    this._handleDateSelection(false) 
+                                }}
+                                onCancel={() => this._handleDateSelection(false) }/>
 
                         <TouchableOpacity onPress = {() => this._selectImage()}>
                             <View style={CreateEventStyle.AddBannerContainer}>
@@ -393,7 +425,7 @@ class EditEventScreen extends Component {
         current_valid[key] = '';
         
         if(key == 'max') {
-            editable_val = value.toString()?.replace(/[^0-9]/g, '')
+            editable_val = value?.toString()?.replace(/[^0-9]/g, '')
 
             if(editable_val) {
                 editable_val = parseInt(editable_val)
@@ -484,9 +516,12 @@ class EditEventScreen extends Component {
         });
         this._retrieveData(this.props.route.params.event_id)
     }
-    _handleDateSelection(status) {
-        console.log('Opening/Closing Date & Time Selection...')
-        this.setState({'is_date_select': status})
+    async _handleDateSelection(status) {
+        this.setState({
+            'is_date_select': status,
+            '_server': !status ? this.state._server : {... await fetch_date_time()}
+        })
+        console.log("Loaded DateTime: ", new Date(this.state._server.epoch) )
     }
     async _handleSubmit() {
         let is_valid = await this._processValidate()
@@ -508,6 +543,18 @@ class EditEventScreen extends Component {
             }
             is_valid = is_valid && true;
         }
+
+        let current_time = await fetch_date_time();
+
+        if(this.state.data.schedule) {
+            if(current_time.epoch > this.state.data.schedule) {
+                is_valid = false;
+                Alert.alert('Select a different schedule',
+                    'The schedule of this event takes place in the past. You\'ll need to update the schedule'+
+                    ' before you can edit this event.')
+            }
+        }
+
         return is_valid
     }
     async _processSubmit() {
@@ -578,12 +625,20 @@ class EditEventScreen extends Component {
                         isVisible={this.state.is_date_select}
                         mode="datetime"
                         minimumDate = {this.state._server.date_time ? this.state._server.date_time : new Date()}
-                        onConfirm={(value) => {
+                        onConfirm={async (value) => {
                             console.log('Date selected: ', value)
                             let current = this.state.data;
-                            current.schedule = Date.parse(value);
-                            this.setState({'data': current})
-                            this._handleDateSelection(false) 
+                                
+                            let selected = Date.parse(value);
+                            this.setState({'_server': {... await fetch_date_time()}});
+
+                            if(selected < this.state._server.epoch) {
+                                selected = this.state._server.epoch;    
+                            }
+
+                            current.schedule = selected;
+                            this.setState({'data': current});
+                            this._handleDateSelection(false);
                         }}
                         onCancel={() => this._handleDateSelection(false) }/>
 

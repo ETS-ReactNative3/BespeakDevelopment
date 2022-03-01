@@ -89,7 +89,10 @@ class OrganizerList extends Component {
 
             get_organizer_query = get_organizer_query
                 .where(_db.FieldPath.documentId(), "in", _list)
-        }
+        } /* else if(this.props.for_search) {
+            get_organizer_query = get_organizer_query
+                .orderBy('_trend');
+        } */ // #TODO: Top Search
 
         if(type_extend) {
             get_organizer_query = get_organizer_query

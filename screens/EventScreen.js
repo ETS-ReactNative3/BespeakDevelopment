@@ -86,6 +86,7 @@ class EventScreen extends Component {
     }
     async _retrieveData(event_id) {
         let uid = auth.currentUser.uid;
+        let current_time = await fetch_date_time();
 
         let get_event_query = await db
             .collection('event')
@@ -100,7 +101,15 @@ class EventScreen extends Component {
         let _data = get_event_query.data();
         _data.id = get_event_query.id;
         _data = await _arrangeData([_data], true); 
+
         _data = _data[0]
+
+        console.log('Comparing time: ', _data.schedule, ' to ', current_time.epoch);
+        _data.has_ended = _data.schedule < current_time.epoch;
+
+        if(_data.has_ended) {
+            Alert.alert('This event has ended', 'This event is now archived however interactions will remain enabled.')
+        }
 
         _data.is_following = await _isFollowing(uid, _data.owner);
         
@@ -295,8 +304,7 @@ class EventScreen extends Component {
         this.setState({'refreshing': true})
         await this.doRefresh().then(() => {
             this.setState({
-                'refreshing': false,
-                '_extend': true
+                'refreshing': false
             })
             console.log("Refreshed.")
         })
@@ -350,7 +358,7 @@ class EventScreen extends Component {
                     <View style={EditEventStyle.EventContainer}>
                         <View style={EditEventStyle.TitleAndButtonRow}>
                         <Text style={EditEventStyle.EventTitle}>{ item.name }</Text>
-                            { item.owner == auth.currentUser.uid &&
+                            { item.owner == auth.currentUser.uid && !item.has_ended &&
                                 <TouchableOpacity style={SystemStyle.FollowOrgBtn}
                                     onPress={() => this.props.navigation.navigate('EditEventScreen', 
                                     {event_id: item.id, 
@@ -487,10 +495,16 @@ class EventScreen extends Component {
                         </>
                     ) : (
                         <>
-                            <TouchableOpacity style={SystemStyle.AttendingBtn}
-                                onPress={() => Alert.alert("La pa", "Lapa Lapa.")}>
-                                    <Text style={SystemStyle.AttendingTextBtn}>I'm attending!</Text>
-                            </TouchableOpacity>
+                            { item.has_ended ? (
+                                <View style={SystemStyle.ViewAttendeeBtn}>
+                                        <Text style={SystemStyle.AttendingTextBtn}>Event Ended</Text>
+                                </View>
+                            ) : (
+                                <TouchableOpacity style={SystemStyle.AttendingBtn}
+                                    onPress={() => Alert.alert("La pa", "Lapa Lapa.")}>
+                                        <Text style={SystemStyle.AttendingTextBtn}>I'm attending!</Text>
+                                </TouchableOpacity>
+                            )}
                         </>
                     )}
                 </View>

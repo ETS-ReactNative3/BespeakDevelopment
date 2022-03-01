@@ -9,6 +9,8 @@ import { ActivityIndicator,
 
 import { auth, db, _db } from '../firebase';
 
+import fetch_date_time from '../api/GlobalTime';
+
 import { 
     _arrangeData, 
     _getUserData,
@@ -130,15 +132,19 @@ class EventList extends Component {
                 return {'data': [], 'last': null}
             }
 
+            let current_time = await fetch_date_time();
+
             following.push(auth.currentUser.uid)
 
             get_events_query = get_events_query
-                .where('owner', "in", following);
+                .orderBy('schedule')
+                .where('schedule', '>', current_time.epoch)
+                .where('owner', "in", following)
         }
 
         if(!this.props.for_saved && !this.props.search_key) {
-            get_events_query = get_events_query
-                .orderBy('server_time', 'desc')
+                get_events_query = get_events_query
+                    .orderBy('server_time', 'desc')
         }
 
         if(type_extend) {
