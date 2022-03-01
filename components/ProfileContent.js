@@ -47,6 +47,7 @@ class ProfileEvents extends Component {
                 <View style={ProfileContentStyle.CreateCard}>
                     <TextInput style={ProfileContentStyle.CreateCardContent} 
                         maxLength ={50}
+                        selectionColor={'#eb9834'}
                         placeholder="Create event "
                         onChangeText = {(text) => this.setState({'event_post': text})}></TextInput>
 
