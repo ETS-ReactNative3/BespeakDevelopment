@@ -39,7 +39,8 @@ import {
 } from "../helper/EventHelper"
 import { 
     _arrangeData,
-    _getEventImage
+    _getEventImage,
+    _getAttendingCount
 } from '../helper/EventLoad';
 import {
     _getFollowersToken
@@ -420,7 +421,7 @@ class EditEventScreen extends Component {
         },
         is_loading: true
     }
-    _handleText(key, value) {
+    async _handleText(key, value) {
         var current_data = this.state.data;
         var current_valid = this.state.valid
         var editable_val = value
@@ -432,6 +433,13 @@ class EditEventScreen extends Component {
 
             if(editable_val) {
                 editable_val = parseInt(editable_val)
+
+                let event_id = this.props.route.params.event_id;
+                let current_count = await _getAttendingCount(event_id);
+
+                if(current_count > editable_val) {
+                    editable_val = current_count;
+                }
             }
 
             if(editable_val == 0) {
@@ -447,8 +455,6 @@ class EditEventScreen extends Component {
 
         this.setState({'data': current_data});
         this.setState({'valid': current_valid});
-
-        console.log('State Value: ', this.state.data)
     }
     _selectImage() {
         //#TODO: Add Support for IOS, Optimize, Seperate to Option File

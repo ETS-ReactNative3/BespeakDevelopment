@@ -166,11 +166,9 @@ class TicketList extends Component {
                 <FlatList
                     data={Object.values(this.state.data)}
                     renderItem={({ item }) => {
-                        let nav = this.props.navigation;
                         return (
                             <TouchableOpacity style={TicketScreenStyle.MyTicketStub}
-                                onPress = {() => this.props.navigation.navigate('TicketScreen', 
-                                    {ticket_id: item.id, navigation: nav})}>
+                                onPress = {() => this.props.navigation.navigate('TicketScreen', {ticket_id: item.id})}>
                                     <View style={TicketScreenStyle.MyTicketStubDiv}>
                                         <View>
                                             <Text style={TicketScreenStyle.MyTicketEvent}>{ item.name }</Text>
@@ -180,7 +178,7 @@ class TicketList extends Component {
                                             <Text style={TicketScreenStyle.MyTicketLocation}>{ item.location }</Text>
                                         </View>
                                         <View style={TicketScreenStyle.MyTicketQR}>
-                                                <QRCode value={ item.id }/>
+                                            <QRCode value={ item.id }/>
                                         </View>
                                     </View>
                             </TouchableOpacity>

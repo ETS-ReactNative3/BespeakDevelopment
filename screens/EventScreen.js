@@ -36,6 +36,7 @@ import {
     _getProfileImage,
     _getEventImage,
     _getUserData,
+    _getAttendingCount,
     _checkEventAvailability,
     _checkUserAttendance
 } from "../helper/EventLoad"
@@ -93,6 +94,8 @@ class EventScreen extends Component {
     async _retrieveData(event_id) {
         let uid = auth.currentUser.uid;
 
+        let current_count = await _getAttendingCount(event_id);
+
         let get_event_query = await db
             .collection('event')
             .doc(event_id)
@@ -110,6 +113,7 @@ class EventScreen extends Component {
         _data = _data[0]
 
         _data.is_attending = await _checkUserAttendance(_data.id);
+        _data.is_limit = current_count >= _data.max
         _data.is_following = await _isFollowing(uid, _data.owner);
         
         console.log("Opened Event Data: ", _data)
@@ -345,7 +349,11 @@ class EventScreen extends Component {
                 break;
             case 102:
                 msg_content = ['This event ', 
-                    'The event may have been deleted or hidden by its organizer'];
+                    'The event may have been deleted or hidden by its organizer.'];
+                break;
+            case 101:
+                msg_content = ['No slots left', 
+                    'The event has reached its registration limit.'];
                 break;
             default:
         }
@@ -571,10 +579,18 @@ class EventScreen extends Component {
                                         <Text style={SystemStyle.EventEndedTextForOrangeBtn}>You're attending.</Text>
                                     </TouchableOpacity>
                                 ) : (
-                                    <TouchableOpacity style={SystemStyle.AttendingBtn}
-                                        onPress={() => this._handleAttend()}>
-                                            <Text style={SystemStyle.AttendingTextBtn}>I'm attending!</Text>
-                                    </TouchableOpacity>
+                                    <>
+                                        { item.is_limit ? (
+                                            <View style={SystemStyle.EventEndedBtnButGray}>
+                                                <Text style={SystemStyle.EventEndedTextForGrayBtn}>No remaining slots left.</Text>
+                                            </View>
+                                        ) : (
+                                            <TouchableOpacity style={SystemStyle.AttendingBtn}
+                                                onPress={() => this._handleAttend()}>
+                                                    <Text style={SystemStyle.AttendingTextBtn}>I'm attending!</Text>
+                                            </TouchableOpacity>
+                                        )}
+                                    </>
                                 )}
                                 </>
                                 

@@ -20,6 +20,7 @@ import BottomSheet from "react-native-gesture-bottom-sheet";
 import SystemStyle from "../styles/SystemStyle";
 
 import { _initiateSharing } from "../helper/LinkHelper";
+import { _initializeDoc } from '../helper/ProfileHelper';
 
 class EventCard extends Component {
     constructor() {
@@ -76,7 +77,7 @@ class EventCard extends Component {
                             { item.owner_name }
                         </Text>
                         <View style={SystemStyle.CardLocationContainer}>
-                            <SimpleLineIcons name="location-pin" size={16} color="black"/>
+                            <SimpleLineIcons name="location-pin" size={14} color="black"/>
                             <Text style={SystemStyle.CardLocation}>{ item.location }</Text>
                         </View>
                     </View>
@@ -98,8 +99,31 @@ class EventCard extends Component {
 }
 
 class EventModal extends Component {
+    _handleInterested(event) {
+        this.props.modal_ref.current.close()
+
+        let uid = auth.currentUser.uid;
+
+        db.collection("_participant")
+            .doc(event.id)
+            .update({
+                interested: _db.FieldValue.arrayUnion(uid)
+            }).catch(async (err) => {
+                if(err.code == 'firestore/not-found') {
+                    await _initializeDoc("_participant", {
+                        interested: [uid]
+                    }, event.id)
+                    return;
+                }
+                Alert.alert("Error!", err.message);
+                console.log("Error: ", err)
+            })
+        
+        this.props.navigation.navigate('EventScreen', {event_id: event.id})
+    }
     render() {
         let item = this.props.data;
+
         return(
             <BottomSheet hasDraggableIcon
                 ref={this.props.modal_ref}
@@ -133,22 +157,20 @@ class EventModal extends Component {
                                 <Text style={SystemStyle.DraggableModalDescription}>For All</Text>
 
                                 <View style={SystemStyle.InterestedParticipantsContainer}>
-                                    <TouchableOpacity style={SystemStyle.InterestedParticipantsBtn}
-                                        onPress={() => navigation.navigate('')}> 
-                                            <View style={SystemStyle.RowImg}>
-                                                <Image style={SystemStyle.InterestedIndividuals}
-                                                    source={require('../assets/img/EveryNation.png')}/>
-                                                <Image style={SystemStyle.InterestedIndividuals}
-                                                    source={require('../assets/img/EveryNation.png')}/>
-                                            </View>
-                                            
-                                            <Text style={SystemStyle.InterestedIndividualsText}>Name, Name and Other's are interested</Text>
-                                    </TouchableOpacity>  
+                                    <View style={SystemStyle.InterestedParticipantsBtn}> 
+                                        <View style={SystemStyle.RowImg}>
+                                            { item.sneak_imgs?.map((content, index) => {
+                                                return (
+                                                    <Image style={SystemStyle.InterestedIndividuals}
+                                                        source={ content } key = { index }/>
+                                                );
+                                            })}
+                                        </View>
+                                        
+                                        <Text style={SystemStyle.InterestedIndividualsText}>{ item.summary }</Text>
+                                    </View>  
                                     <TouchableOpacity style={SystemStyle.InterestedBtn}
-                                        onPress={() => {
-                                            this.props.modal_ref.current.close()
-                                            this.props.navigation.navigate('EventScreen', {event_id: item.id})
-                                        }}>
+                                        onPress={() => this._handleInterested(item)}>
                                             <Text style={SystemStyle.InterestedTextBtn}>I'm Interested</Text>
                                     </TouchableOpacity>
                                 </View>
