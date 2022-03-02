@@ -1,4 +1,48 @@
-import { d_link, storage } from '../firebase'
+import { Alert } from 'react-native'; 
+
+import { auth, db, _db, d_link, storage } from '../firebase'
+
+import fetch_date_time from '../api/GlobalTime'
+
+import { _initializeDoc } from './ProfileHelper'
+
+async function _joinUserToEvent(event_id, uid = auth.currentUser.uid) {
+    let current_time = await fetch_date_time();
+    let ticket_id = false;
+
+    await db.collection('ticket')
+        .add({
+            event_id: event_id,
+            owner: uid,
+            server_time: current_time.epoch
+        }).catch(error => {
+            Alert.alert('Error!', error.message)
+            return;
+        }).then(async (doc) => {
+            console.log('Created a ticket: ', doc.id)
+            let to_add = {attending: _db.FieldValue.arrayUnion(doc.id)}
+            await db.collection("_participant").doc(event_id)
+                .update({
+                    ...to_add
+                }).catch(async (err) => {
+                    if(err.code == 'firestore/not-found') {
+                        console.log('No participant document found, creating now...')
+                        await _initializeDoc("_participant", {
+                            ...to_add
+                        }, event_id);
+                        
+                        return;
+                    }
+                    Alert.alert("Error!", err.message);
+                    console.log("Error: ", err)
+                }).then(() => {
+                    ticket_id = doc.id;
+                })
+        })
+    
+
+    return ticket_id
+}
 
 // #TODO: Move to Helper
 function _uploadToStorage(path, imageName) {
@@ -40,6 +84,7 @@ async function _getGeneratedLink(param, value, _title = 'Bespeak Event',
 
 export {
     _getGeneratedLink,
-    _uploadToStorage
+    _uploadToStorage,
+    _joinUserToEvent
 }
 

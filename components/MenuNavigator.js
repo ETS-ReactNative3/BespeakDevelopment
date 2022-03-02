@@ -12,6 +12,8 @@ import ParticipantListScreens from "../screens/ParticipantListScreen";
 import FollowListScreens from "../screens/FollowListScreen";
 import UserProfileScreens from "../screens/UserProfileScreen";
 
+import TicketScreen from "../screens/TicketScreen";
+
 const MenuStack = createNativeStackNavigator();
 
 class HomeNavigator extends Component {
@@ -48,6 +50,16 @@ class HomeNavigator extends Component {
                 headerTransparent: true,
                 tabBarShowLabel:false,
                 headerShadowVisible: false,
+            }}/>
+            <MenuStack.Screen name="TicketScreen" component={TicketScreen}
+                options={{
+                    title: 'Your Ticket',
+                    headerShown: true,
+                    tabBarShowLabel:false,
+                    headerTitleStyle: {
+                        fontFamily: 'RedHatDisplay-Medium',
+                        color: '#eb9834',
+                    }
             }}/>
           </MenuStack.Navigator>
         );
@@ -90,6 +102,16 @@ class SearchNavigator extends Component {
             tabBarShowLabel:false,
             headerShadowVisible: false,
         }}/>
+        <MenuStack.Screen name="TicketScreen" component={TicketScreen}
+            options={{
+                title: 'Your Ticket',
+                headerShown: true,
+                tabBarShowLabel:false,
+                headerTitleStyle: {
+                    fontFamily: 'RedHatDisplay-Medium',
+                    color: '#eb9834',
+                }
+        }}/>
       </MenuStack.Navigator>
     );
   }
@@ -114,6 +136,16 @@ class NotificationNavigator extends Component {
           options={{
             title: ' ',
           }}/>
+        <MenuStack.Screen name="TicketScreen" component={TicketScreen}
+            options={{
+                title: 'Your Ticket',
+                headerShown: true,
+                tabBarShowLabel:false,
+                headerTitleStyle: {
+                    fontFamily: 'RedHatDisplay-Medium',
+                    color: '#eb9834',
+                }
+        }}/>
       </MenuStack.Navigator>
     );
   }
@@ -199,6 +231,16 @@ class ProfileNavigator extends Component {
             headerTransparent: true,
             tabBarShowLabel:false,
             headerShadowVisible: false,
+        }}/>
+        <MenuStack.Screen name="TicketScreen" component={TicketScreen}
+            options={{
+                title: 'Your Ticket',
+                headerShown: true,
+                tabBarShowLabel:false,
+                headerTitleStyle: {
+                    fontFamily: 'RedHatDisplay-Medium',
+                    color: '#eb9834',
+                }
         }}/>
       </MenuStack.Navigator>
     );

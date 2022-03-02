@@ -10,6 +10,7 @@ import {
     ActivityIndicator,
     Alert
 } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 import Loader from 'react-native-three-dots-loader'
 import { 
     Feather,
@@ -34,8 +35,11 @@ import {
     _arrangeData,
     _getProfileImage,
     _getEventImage,
-    _getUserData
+    _getUserData,
+    _checkEventAvailability,
+    _checkUserAttendance
 } from "../helper/EventLoad"
+import { _joinUserToEvent } from '../helper/EventHelper';
 import { _isFollowing } from "../helper/ProfileLoad";
 import { _setFollowConnection } from '../helper/ProfileHelper';
 
@@ -53,6 +57,8 @@ class EventScreen extends Component {
             is_active: false,
             is_extending: false,
             is_submitting: false,
+            is_verifying: false,
+            is_admitting: false,
 
             _extend: false,
             _limit: 5,
@@ -86,7 +92,6 @@ class EventScreen extends Component {
     }
     async _retrieveData(event_id) {
         let uid = auth.currentUser.uid;
-        let current_time = await fetch_date_time();
 
         let get_event_query = await db
             .collection('event')
@@ -104,17 +109,7 @@ class EventScreen extends Component {
 
         _data = _data[0]
 
-        let sched_end = _data.schedule + 86400000 // Add one day to event schedule
-
-        console.log('Comparing time: ', _data.schedule, ' to ', current_time.epoch);
-
-        _data.is_overlap = _data.schedule < current_time.epoch;
-        _data.has_ended = sched_end < current_time.epoch;
-
-        if(_data.has_ended) {
-            Alert.alert('This event has ended', 'This event is now archived however interactions will remain enabled.')
-        }
-
+        _data.is_attending = await _checkUserAttendance(_data.id);
         _data.is_following = await _isFollowing(uid, _data.owner);
         
         console.log("Opened Event Data: ", _data)
@@ -337,6 +332,47 @@ class EventScreen extends Component {
         this.setState({ active_comment: item, is_active: true })
         this.comment_modal.current.show();
     }
+
+    async _handleAttend() {
+        let item = this.state.data;
+        let msg_content = false
+
+        this.setState({is_verifying: true});
+
+        switch(await _checkEventAvailability(item.id)) {
+            case 103:
+                msg_content = ['This event has ended', 'This event is now archived however interactions will remain enabled.'];
+                break;
+            case 102:
+                msg_content = ['This event ', 
+                    'The event may have been deleted or hidden by its organizer'];
+                break;
+            default:
+        }
+
+        if(await _checkUserAttendance(item.id)) {
+            msg_content = ['You are already attending!', 'You are already registered on this event.'];
+        }
+
+        if(msg_content) {
+            Alert.alert(msg_content[0], msg_content[1]);
+            this.doRefresh();
+            return
+        }
+
+        this.setState({
+            is_verifying: false,
+            is_admitting: true
+        });
+
+        let ticket_id = await _joinUserToEvent(item.id);
+
+        this.setState({is_admitting: false});
+
+        if(ticket_id) {
+            this.props.navigation.navigate('TicketScreen', {ticket_id: ticket_id})
+        }
+    }
     render() {
         let item = this.state.data;
         let comment_content = Object.values(this.state.comment_data);
@@ -357,6 +393,15 @@ class EventScreen extends Component {
                         onRefresh={this.onRefresh}
                         colors={["gray", "orange"]}/>
                 }>
+
+                {
+                    (this.state.is_verifying || this.state.is_admitting) && 
+                    <Spinner visible={true} textContent={this.state.is_verifying ?
+                        'Verifying your request...' : 'Please wait...'}
+                            textStyle={SystemStyle.defaultLoader}
+                            animation = 'fade'
+                            overlayColor = 'rgba(0, 0, 0, 0.50)'/>
+                }
                 <View style={EditEventStyle.EventContainer}>
                     <View style={EditEventStyle.ImgContainer}>
                         <Image style={EditEventStyle.ImgContainer}
@@ -472,7 +517,7 @@ class EventScreen extends Component {
                                     selectionColor={'#eb9834'}
                                     multiline={true}
                                     placeholder='Write a comment..'
-                                    maxLength={50}
+                                    maxLength={150}
                                     onChangeText={text => {
                                         this.setState({raw_comment: text});
                                     }}/>
@@ -507,20 +552,29 @@ class EventScreen extends Component {
                             { item.is_overlap ? (
                                 <>
                                 { item.has_ended ? (
-                                    <View style={SystemStyle.EventEndedBtnButOrange}>
-                                        <Text style={SystemStyle.EventEndedTextBtn}>Event Ended</Text>
+                                    <View style={SystemStyle.EventEndedBtnButGray}>
+                                        <Text style={SystemStyle.EventEndedTextForGrayBtn}>Event Ended</Text>
                                     </View>
                                 ) : (
-                                    <View style={SystemStyle.EventEndedBtnButOrange}>
-                                        <Text style={SystemStyle.EventEndedTextBtn}>Admission Ended</Text>
+                                    <View style={SystemStyle.EventEndedBtnButGray}>
+                                        <Text style={SystemStyle.EventEndedTextForGrayBtn}>Admission Ended</Text>
                                     </View>
                                 )}
                                 </>
                             ) : (
-                                <TouchableOpacity style={SystemStyle.AttendingBtn}
-                                    onPress={() => Alert.alert("La pa", "Lapa Lapa.")}>
-                                        <Text style={SystemStyle.AttendingTextBtn}>I'm attending!</Text>
-                                </TouchableOpacity>
+                                <>
+                                { item.is_attending ? (
+                                    <TouchableOpacity style={SystemStyle.EventEndedBtnButOrange}>
+                                        <Text style={SystemStyle.EventEndedTextForOrangeBtn}>You're attending.</Text>
+                                    </TouchableOpacity>
+                                ) : (
+                                    <TouchableOpacity style={SystemStyle.AttendingBtn}
+                                        onPress={() => this._handleAttend()}>
+                                            <Text style={SystemStyle.AttendingTextBtn}>I'm attending!</Text>
+                                    </TouchableOpacity>
+                                )}
+                                </>
+                                
                             )}
                         </>
                     )}
@@ -548,7 +602,7 @@ class EventScreen extends Component {
                 </BottomSheet>
 
             </ScrollView>
-
+            
         );
     }
 }
