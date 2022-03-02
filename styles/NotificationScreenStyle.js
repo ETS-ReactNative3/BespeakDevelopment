@@ -18,8 +18,6 @@ const NotificationScreenStyle=StyleSheet.create({
     //Notification Card
     NotifTab:{
         flexDirection:'row',
-        marginTop:'.5%',
-        marginBottom: '.5%',
         paddingVertical:'3%',
     },
     //Notification Image
@@ -62,8 +60,6 @@ const NotificationScreenStyle=StyleSheet.create({
     NotifTabUnread:{
         backgroundColor:'#f5f2f2',
         flexDirection:'row',
-        marginTop:'.5%',
-        marginBottom: '.5%',
         paddingVertical:'3%',
         borderRadius: 6,
     },

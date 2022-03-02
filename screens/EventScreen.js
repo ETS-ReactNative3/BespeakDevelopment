@@ -470,6 +470,7 @@ class EventScreen extends Component {
                                 <TextInput style={SystemStyle.MyCommentInput} 
                                     value = {this.state.raw_comment}
                                     selectionColor={'#eb9834'}
+                                    multiline={true}
                                     placeholder='Write a comment..'
                                     maxLength={50}
                                     onChangeText={text => {
@@ -515,7 +516,6 @@ class EventScreen extends Component {
                                     </View>
                                 )}
                                 </>
-                                
                             ) : (
                                 <TouchableOpacity style={SystemStyle.AttendingBtn}
                                     onPress={() => Alert.alert("La pa", "Lapa Lapa.")}>
