@@ -9,7 +9,7 @@ import QRCode from 'react-native-qrcode-svg';
 
 import { db } from '../firebase.js';
 
-import ViewTicket from "../styles/ViewTicket.js";
+import TicketScreenStyle from "../styles/TicketScreenStyle.js";
 import SystemStyle from '../styles/SystemStyle.js';
 
 import dateFormat from '../helper/DateFormat';
@@ -77,44 +77,39 @@ class TicketScreen extends Component {
 
         let item = this.state.data;
         return (
-            <View style={ViewTicket.SIcontainer}> 
-                <View style={ViewTicket.TicketContent}>
-                    <View style={ViewTicket.YourTicket}>
-                        <View style={ViewTicket.YourTicketContent}>
-                            <Text style={ViewTicket.bespeaklogoWhite}>bespeak</Text>
-                            <Text style={ViewTicket.eventTitlecontentWhite}>{ item.name }</Text>
-                            <Text style={ViewTicket.eventDTRcontentWhite}>{ item.sched }</Text>
-                            <Text style={ViewTicket.eventLOCcontentWhite}>{ item.owner_name }</Text>
-                            <Text style={ViewTicket.feedcontentWhite}>{ item.location }</Text>
-                        </View>
-                        <View style={ViewTicket.SampleQRpicContainer}>
-                            <View style={ViewTicket.SampleQRpic}> 
-                                <QRCode value={ this.props.route.params.ticket_id }/>
-                            </View>
-                        </View>
-                        <View style={ViewTicket.YourTicketContent}>
-                            <Text style={ViewTicket.NameOnTicketWhite}>{ item.ticket_owner }</Text>
-                            <Text style={ViewTicket.DateRegisteredWhite}>{ item.reg_date }</Text>
-                            <Text style={ViewTicket.RefNumWhite}>Ref: 182hencxais</Text>
-                        </View>
+            <View style={TicketScreenStyle.Container}>
+                <View style={TicketScreenStyle.YourTicketContent}>
+                    <Text style={TicketScreenStyle.BespeakLogo}>bespeak</Text>
+                    <Text style={TicketScreenStyle.EventTitle}>{ item.name }</Text>
+                    <Text style={TicketScreenStyle.EventSched}>{ item.sched }</Text>
+                    <Text style={TicketScreenStyle.EventOrg}>{ item.owner_name }</Text>
+                    <Text style={TicketScreenStyle.EventLocation}>{ item.location }</Text>
+                </View>
+                <View style={TicketScreenStyle.QRContainer}>
+                    <View style={TicketScreenStyle.QRImg}> 
+                        <QRCode value={ this.props.route.params.ticket_id }/>
                     </View>
-                    <View style={ViewTicket.DetailscontentOnTicket}>
-                        <Text style={ViewTicket.contentDetailsOnTicket}>
-                            { item.desc }
-                        </Text>
-                        <Text style={ViewTicket.contentDetailsOnTicket}>
-                            { item.info }
-                        </Text>
-                    </View>
-                    <View style={ViewTicket.doneContainer}>
-                        <TouchableOpacity style={ViewTicket.donebtn} 
-                            onPress={() => {
-                                console.log('Closing ticket...');
-                                this.props.route.params.navigation.goBack()
-                                this.props.route.params.navigation.goBack()}}>
-                                <Text style={ViewTicket.donebtntext}>Done</Text>
-                        </TouchableOpacity>
-                    </View>
+                </View>
+                <View style={TicketScreenStyle.YourTicketContent}>
+                    <Text style={TicketScreenStyle.TicketOwner}>{ item.ticket_owner }</Text>
+                    <Text style={TicketScreenStyle.RegistrationDate}>{ item.reg_date }</Text>
+                </View>   
+                <View style={TicketScreenStyle.EventDescriptionContainer}>
+                    <Text style={TicketScreenStyle.EventDescriptionText}>
+                        { item.desc }
+                    </Text>
+                    <Text style={TicketScreenStyle.EventDescriptionText}>
+                        { item.info }
+                    </Text>
+                </View>
+                <View style={TicketScreenStyle.Button}>
+                <TouchableOpacity style={TicketScreenStyle.DoneBtn} 
+                    onPress={() => {
+                        console.log('Closing ticket...');
+                        this.props.route.params.navigation.goBack()
+                        this.props.route.params.navigation.goBack()}}>
+                        <Text style={TicketScreenStyle.DoneTextBtn}>Done</Text>
+                </TouchableOpacity>
                 </View>
             </View>
         );
