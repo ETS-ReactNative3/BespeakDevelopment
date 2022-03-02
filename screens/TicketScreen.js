@@ -36,7 +36,7 @@ class TicketScreen extends Component {
             .get();
 
         if(get_ticket_query.empty) {
-            this.props.route.params.navigation.goBack();
+            this.props.navigation.goBack();
         }
 
         let _ticket = get_ticket_query.data();
@@ -46,7 +46,7 @@ class TicketScreen extends Component {
             .get();
 
         if(get_event_query.empty) {
-            this.props.route.params.navigation.goBack();
+            this.props.navigation.goBack();
         }
 
         let _event = get_event_query.data();
@@ -106,8 +106,7 @@ class TicketScreen extends Component {
                 <TouchableOpacity style={TicketScreenStyle.DoneBtn} 
                     onPress={() => {
                         console.log('Closing ticket...');
-                        this.props.route.params.navigation.goBack()
-                        this.props.route.params.navigation.goBack()}}>
+                        this.props.navigation.goBack()}}>
                         <Text style={TicketScreenStyle.DoneTextBtn}>Done</Text>
                 </TouchableOpacity>
                 </View>

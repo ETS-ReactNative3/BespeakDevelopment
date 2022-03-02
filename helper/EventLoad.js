@@ -138,6 +138,8 @@ async function _getUserData(metadata, uid = auth.currentUser.uid) {
 
 async function _checkEventAvailability(event_id) {
     let current_time = await fetch_date_time();
+    let current_count = await _getAttendingCount(event_id);
+
     let get_event_query = await db.collection('event')
         .doc(event_id)
         .get();
@@ -153,7 +155,9 @@ async function _checkEventAvailability(event_id) {
         return 103;
     } else if(!_data.is_open) {
         return 102;
-    } // #TODO: Add Maximum Participant Validator return 101.
+    } else if(current_count >= _data.max) {
+        return 101;
+    }// #TODO: Add Maximum Participant Validator return 101.
 
     return 100;
 }
@@ -175,12 +179,35 @@ async function _checkUserAttendance(event_id, uid = auth.currentUser.uid) {
     return attending;
 }
 
+async function _getAttendingCount(event_id) {
+    let list = [];
+    
+    let get_participant_query = await db.collection('_participant')
+        .doc(event_id)
+        .get();
+    
+    if(get_participant_query.empty) {
+        return 0;
+    }
+
+    list = get_participant_query.data();
+
+    try {
+        console.log('Event attendee count: ', list.attending.length);
+
+        return list.attending.length;
+    } catch(e) {
+        return 0;
+    }
+}
+
 export {
     _getUserData,
     _arrangeData,
     _getProfileImage,
     _getEventImage,
     _getOwnerDataByEventId,
+    _getAttendingCount,
     _checkEventAvailability,
     _checkUserAttendance
 }
