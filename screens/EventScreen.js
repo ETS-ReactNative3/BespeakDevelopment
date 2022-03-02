@@ -463,6 +463,7 @@ class EventScreen extends Component {
                                 <TextInput style={SystemStyle.MyCommentInput} 
                                     value = {this.state.raw_comment}
                                     selectionColor={'#eb9834'}
+                                    multiline={true}
                                     placeholder='Write a comment..'
                                     maxLength={50}
                                     onChangeText={text => {
@@ -497,9 +498,14 @@ class EventScreen extends Component {
                     ) : (
                         <>
                             { item.has_ended ? (
+                            <View>
                                 <View style={SystemStyle.EventEndedBtnButOrange}>
-                                        <Text style={SystemStyle.EventEndedTextBtn}>Event Ended</Text>
+                                        <Text style={SystemStyle.EventEndedTextForOrangeBtn}>Event Ended</Text>
                                 </View>
+                                <View style={SystemStyle.EventEndedBtnButGray}>
+                                        <Text style={SystemStyle.EventEndedTextForGrayBtn}>Event Ended</Text>
+                                </View>
+                            </View>
                             ) : (
                                 <TouchableOpacity style={SystemStyle.AttendingBtn}
                                     onPress={() => Alert.alert("La pa", "Lapa Lapa.")}>
