@@ -10,7 +10,7 @@ import QRCode from 'react-native-qrcode-svg';
 import { auth, db, _db } from '../firebase';
 
 import SystemStyle from "../styles/SystemStyle";
-import homeStyles from '../styles/homeStyles';
+import TicketScreenStyle from '../styles/TicketScreenStyle';
 
 import dateFormat from '../helper/DateFormat';
 import { 
@@ -168,21 +168,19 @@ class TicketList extends Component {
                     renderItem={({ item }) => {
                         let nav = this.props.navigation;
                         return (
-                            <TouchableOpacity style={homeStyles.MyTicketStub}
+                            <TouchableOpacity style={TicketScreenStyle.MyTicketStub}
                                 onPress = {() => this.props.navigation.navigate('TicketScreen', 
                                     {ticket_id: item.id, navigation: nav})}>
-                                    <View style={homeStyles.MyTicketStubDiv}>
+                                    <View style={TicketScreenStyle.MyTicketStubDiv}>
                                         <View>
-                                            <Text style={homeStyles.MyTicketEvent}>{ item.name }</Text>
-                                            <Text style={homeStyles.MyTicketDate}>{ item.sched }</Text>
+                                            <Text style={TicketScreenStyle.MyTicketEvent}>{ item.name }</Text>
+                                            <Text style={TicketScreenStyle.MyTicketDate}>{ item.sched }</Text>
 
-                                            <Text style={homeStyles.MyTicketOrganizer}>{ item.owner_name }</Text>
-                                            <Text style={homeStyles.MyTicketLocation}>{ item.location }</Text>
+                                            <Text style={TicketScreenStyle.MyTicketOrganizer}>{ item.owner_name }</Text>
+                                            <Text style={TicketScreenStyle.MyTicketLocation}>{ item.location }</Text>
                                         </View>
-                                        <View style={homeStyles.MyTicketQRContainer}>
-                                            <View style={homeStyles.MyTicketQR}>
+                                        <View style={TicketScreenStyle.MyTicketQR}>
                                                 <QRCode value={ item.id }/>
-                                            </View>
                                         </View>
                                     </View>
                             </TouchableOpacity>

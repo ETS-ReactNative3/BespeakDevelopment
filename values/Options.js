@@ -73,7 +73,7 @@ const Options = {
     // Attendees Screen Tab Navigator
     AttendeesScreenNavigation: {
         tabBarActiveTintColor: '#eb9834',
-        tabBarInactiveTintColor:'#5b5c5a',
+        tabBarInactiveTintColor:'#bbb',
         tabBarPressColor:'#f0c28b',
         tabBarLabelStyle: {
             fontSize: 18,
@@ -84,9 +84,10 @@ const Options = {
     AttendeesTabNavigation: {
         tabBarIndicatorStyle: {
             borderBottomColor: '#eb9834',
-            borderBottomWidth: 3,
+            borderBottomWidth: 4,
             borderRadius:10,
-            width: "50%",
+            width: "15%",
+            marginLeft: '6.5%',
         },
     }
 

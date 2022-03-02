@@ -784,6 +784,34 @@ EventEndedTextForGrayBtn:{
   color: '#5b5c5a',
   fontFamily: 'RedHatDisplay-Medium',
 },
+//For View Attendee Screen
+NameList:{
+  flexDirection:'row',
+  paddingVertical:'1.5%',
+},
+  // Image
+  NamesImgContainer: {
+    alignItems:'center',
+    justifyContent:'center',
+  },
+  NamesImg: {
+    borderRadius:25,
+    width: 40,
+    height:40,
+    justifyContent:'center',
+  },
+  //Names Info
+  NamesInCard:{
+    justifyContent:'center',
+    alignSelf:'center',
+    marginLeft:'4%',
+  },
+  NamesInCardText:{
+    fontSize: 20,
+    fontFamily:'RedHatDisplay-Regular',
+    color: '#5b5c5a',
+  },
+
 });
 
 export default SystemStyle
