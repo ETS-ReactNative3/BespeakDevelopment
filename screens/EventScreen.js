@@ -104,8 +104,12 @@ class EventScreen extends Component {
 
         _data = _data[0]
 
+        let sched_end = _data.schedule + 86400000 // Add one day to event schedule
+
         console.log('Comparing time: ', _data.schedule, ' to ', current_time.epoch);
-        _data.has_ended = _data.schedule < current_time.epoch;
+
+        _data.is_overlap = _data.schedule < current_time.epoch;
+        _data.has_ended = sched_end < current_time.epoch;
 
         if(_data.has_ended) {
             Alert.alert('This event has ended', 'This event is now archived however interactions will remain enabled.')
@@ -126,6 +130,10 @@ class EventScreen extends Component {
                 name: _user_data_name,
             }
         });
+
+        if(_data.has_ended) {
+            Alert.alert('This event has ended', 'This event is now archived however interactions will remain enabled.')
+        }
         
         this._loadImages(_data, uid);
     }
@@ -169,7 +177,6 @@ class EventScreen extends Component {
         get_comment_query.forEach((doc) => {
             _data.unshift({id: doc.id, ...doc.data()})
         })
-
 
         for(var i = 0; i < _data.length; i++) {
             let comment = _data[i]
@@ -358,7 +365,7 @@ class EventScreen extends Component {
                     <View style={EditEventStyle.EventContainer}>
                         <View style={EditEventStyle.TitleAndButtonRow}>
                         <Text style={EditEventStyle.EventTitle}>{ item.name }</Text>
-                            { item.owner == auth.currentUser.uid && !item.has_ended &&
+                            { item.owner == auth.currentUser.uid && !item.is_overlap &&
                                 <TouchableOpacity style={SystemStyle.FollowOrgBtn}
                                     onPress={() => this.props.navigation.navigate('EditEventScreen', 
                                     {event_id: item.id, 
@@ -497,15 +504,18 @@ class EventScreen extends Component {
                         </>
                     ) : (
                         <>
-                            { item.has_ended ? (
-                            <View>
-                                <View style={SystemStyle.EventEndedBtnButOrange}>
-                                        <Text style={SystemStyle.EventEndedTextForOrangeBtn}>Event Ended</Text>
-                                </View>
-                                <View style={SystemStyle.EventEndedBtnButGray}>
-                                        <Text style={SystemStyle.EventEndedTextForGrayBtn}>Event Ended</Text>
-                                </View>
-                            </View>
+                            { item.is_overlap ? (
+                                <>
+                                { item.has_ended ? (
+                                    <View style={SystemStyle.EventEndedBtnButOrange}>
+                                        <Text style={SystemStyle.EventEndedTextBtn}>Event Ended</Text>
+                                    </View>
+                                ) : (
+                                    <View style={SystemStyle.EventEndedBtnButOrange}>
+                                        <Text style={SystemStyle.EventEndedTextBtn}>Admission Ended</Text>
+                                    </View>
+                                )}
+                                </>
                             ) : (
                                 <TouchableOpacity style={SystemStyle.AttendingBtn}
                                     onPress={() => Alert.alert("La pa", "Lapa Lapa.")}>
