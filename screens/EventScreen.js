@@ -357,6 +357,7 @@ class EventScreen extends Component {
         if(msg_content) {
             Alert.alert(msg_content[0], msg_content[1]);
             this.doRefresh();
+            this.setState({is_verifying: false});
             return
         }
 
@@ -370,7 +371,9 @@ class EventScreen extends Component {
         this.setState({is_admitting: false});
 
         if(ticket_id) {
-            this.props.navigation.navigate('TicketScreen', {ticket_id: ticket_id})
+            let nav = this.props.navigation;
+            this.props.navigation.navigate('TicketScreen', 
+                {ticket_id: ticket_id, navigation: nav})
         }
     }
     render() {
