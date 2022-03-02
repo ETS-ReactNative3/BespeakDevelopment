@@ -1,10 +1,13 @@
 import { auth, db, storage } from '../firebase'
 import dateFormat from '../helper/DateFormat';
 
+import fetch_date_time from '../api/GlobalTime'
+
 import Banners from '../values/Banners'
 
 async function _arrangeData(events_data, mod = false) {
     let saved_events = await _getUserData("bookmarked");
+    let current_time = await fetch_date_time();
     //console.log("Bookmarked Events: ", saved_events) // Logs All Events
 
     //console.log('Arranging: ', events_data)
@@ -23,6 +26,13 @@ async function _arrangeData(events_data, mod = false) {
 
         item.owner_name = await _getUserData("_name", item.owner)
         
+        let sched_end = item.schedule + 86400000 // Add one day to event schedule
+
+        console.log('Comparing time: ', item.schedule, ' to ', current_time.epoch);
+
+        item.is_overlap = item.schedule < current_time.epoch;
+        item.has_ended = sched_end < current_time.epoch;
+
 
         let raw_sched = parseInt(item.schedule);
         let raw_posted = parseInt(item.server_time);
@@ -47,19 +57,6 @@ async function _getProfileImage(user_id) {
     if(user_id)
         user_image = await _getUserData('profile_image', user_id);
 
-    /*
-    await storage.ref(`/users/${user_id}/profile`)
-        .getDownloadURL()
-        .then((url) => { 
-            user_image = url
-            //console.log("Loaded Event Image for ", user_image, ": ", url)
-        }).catch((error) => {
-            if(error.code != 'storage/object-not-found') {
-                console.log("Error occured: ", error.message)
-                Alert.alert('Error!', error.message)
-            }
-        })
-    */
     if(user_image) {
         return user_image;
     }
@@ -139,10 +136,51 @@ async function _getUserData(metadata, uid = auth.currentUser.uid) {
     return raw_data[metadata];
 }
 
+async function _checkEventAvailability(event_id) {
+    let current_time = await fetch_date_time();
+    let get_event_query = await db.collection('event')
+        .doc(event_id)
+        .get();
+
+    if(get_event_query.empty) {
+        console.log('No data found for event: ', event_id);
+        return 102;
+    } 
+
+    var _data = get_event_query.data()
+
+    if(_data.schedule < current_time.epoch) {
+        return 103;
+    } else if(!_data.is_open) {
+        return 102;
+    } // #TODO: Add Maximum Participant Validator return 101.
+
+    return 100;
+}
+
+async function _checkUserAttendance(event_id, uid = auth.currentUser.uid) {
+    let attending = true;
+
+    let get_ticket_query = await db.collection('ticket')
+        .where('event_id', '==', event_id)
+        .where('owner', '==', uid)
+        .get();
+
+    if(get_ticket_query.empty) {
+        attending = false;
+    }
+
+    console.log('Is User Attending?: ', attending);
+
+    return attending;
+}
+
 export {
     _getUserData,
     _arrangeData,
     _getProfileImage,
     _getEventImage,
-    _getOwnerDataByEventId
+    _getOwnerDataByEventId,
+    _checkEventAvailability,
+    _checkUserAttendance
 }

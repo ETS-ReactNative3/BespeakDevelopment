@@ -12,6 +12,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { auth } from '../firebase'
 
 import EventList from "./EventList"
+import TicketList from "./TicketList";
 
 import SystemStyle from "../styles/SystemStyle";
 import ProfileContentStyle from "../styles/ProfileContentStyle";
@@ -74,8 +75,8 @@ class ProfileEvents extends Component {
 class ProfileTickets extends Component {
     render() {
         return (
-            <View style={SystemStyle.TabContainer}>
-                <Text style={SystemStyle.TabEmptyList}> No ticket found</Text>
+            <View style={ProfileContentStyle.CardContainer}>
+                <TicketList navigation = {this.props.navigation}/>
             </View>
         );
     }
