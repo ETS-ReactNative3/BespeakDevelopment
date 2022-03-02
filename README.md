@@ -53,3 +53,7 @@ https://www.npmjs.com/package/react-native-popup-confirm-toast
 # Bespeak DEV Client Version 1.7
 - ```expo install expo-notifications```
 - ```expo install expo-device```
+
+# Bespeak DEV Client Version 1.8
+- ```expo install react-native-svg react-native-qrcode-svg```
+- ```expo install expo-linear-gradient```
