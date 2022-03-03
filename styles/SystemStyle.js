@@ -98,6 +98,29 @@ const SystemStyle = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'RedHatDisplay-Light',
   },
+  //Card Status Container
+  CardStatContainer:{
+    flexDirection:'row',
+    alignContent:'center',
+  },
+  EventEnded:{
+    color: "#A30000",
+    justifyContent: 'space-around',
+    fontSize: 14,
+    fontFamily: 'RedHatDisplay-Light',
+  },
+  AdmissionEnded:{
+    color: "#5b5c5a",
+    justifyContent: 'space-around',
+    fontSize: 14,
+    fontFamily: 'RedHatDisplay-Light',
+  },
+  StartAndSlot:{
+    color: "#eb9834",
+    justifyContent: 'space-around',
+    fontSize: 14,
+    fontFamily: 'RedHatDisplay-Light',
+  },
   //Card Options
   CardOption:{
     flexDirection:'row',
@@ -247,6 +270,7 @@ const SystemStyle = StyleSheet.create({
     justifyContent: 'center',
     color: '#000',
     fontFamily: 'RedHatDisplay-Light',
+    width: 190
   },
   // For Interested Button
   InterestedBtn: {

@@ -10,7 +10,9 @@ import {
     Feather,
     Ionicons,
     SimpleLineIcons,
-    FontAwesome
+    FontAwesome,
+    MaterialIcons,
+    MaterialCommunityIcons
 } from '@expo/vector-icons';
 
 import { auth, db, _db } from '../firebase';
@@ -76,8 +78,26 @@ class EventCard extends Component {
                         <Text style={SystemStyle.CardOrg}>
                             { item.owner_name }
                         </Text>
+
+                        <View style={SystemStyle.CardStatContainer}>
+                            <MaterialIcons name="block" size={14} color="#a30000" />
+                            <Text style={SystemStyle.EventEnded}>Event Ended</Text>
+                        </View>
+                        <View style={SystemStyle.CardStatContainer}>
+                        <MaterialIcons name="lock-outline" size={14} color="#5b5c5a" />
+                            <Text style={SystemStyle.AdmissionEnded}>Admission Ended</Text>
+                        </View>
+                        <View style={SystemStyle.CardStatContainer}>
+                            <MaterialCommunityIcons name="calendar-clock" size={14} color="#eb9834" />
+                            <Text style={SystemStyle.StartAndSlot}>Start in Days</Text>
+                        </View>
+                        <View style={SystemStyle.CardStatContainer}>
+                            <MaterialIcons name="people-outline" size={14} color="#eb9834" />
+                            <Text style={SystemStyle.StartAndSlot}>Slots Left</Text>
+                        </View>
+
                         <View style={SystemStyle.CardLocationContainer}>
-                            <SimpleLineIcons name="location-pin" size={14} color="black"/>
+                            <SimpleLineIcons name="location-pin" size={14} color="#5b5c5a"/>
                             <Text style={SystemStyle.CardLocation}>{ item.location }</Text>
                         </View>
                     </View>
