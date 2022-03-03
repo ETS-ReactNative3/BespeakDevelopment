@@ -136,9 +136,10 @@ class EventList extends Component {
 
             following.push(auth.currentUser.uid)
 
+            let _negate_day = current_time.epoch - 86400000;
             get_events_query = get_events_query
                 .orderBy('schedule')
-                .where('schedule', '>', current_time.epoch)
+                .where('schedule', '>', _negate_day)
                 .where('owner', "in", following)
         }
 

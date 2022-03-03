@@ -555,7 +555,10 @@ class EventScreen extends Component {
                     {item.owner == auth.currentUser.uid ? (
                         <>
                             <TouchableOpacity style={SystemStyle.ViewAttendeeBtn}
-                                onPress={() => this.props.navigation.navigate('ParticipantListScreen') }>
+                                onPress={() => 
+                                    this.props.navigation.navigate('ParticipantListScreen', {
+                                        event_id: item.id
+                                    }) }>
                                     <Text style={SystemStyle.ViewAttendeeTextBtn}>View Attendees</Text> 
                             </TouchableOpacity>
                         </>
