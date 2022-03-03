@@ -129,9 +129,9 @@ const SystemStyle = StyleSheet.create({
   CardOption:{
     flexDirection:'row',
     alignContent:'center',
-    justifyContent:'flex-end',
+    justifyContent:'space-between',
     marginBottom:'4%',
-    marginRight:'4%',
+    marginHorizontal:'4%',
   },
   //Draggable Modal Bottom Sheet
   BottomSheetModal: {
@@ -251,9 +251,9 @@ const SystemStyle = StyleSheet.create({
   },
   InterestedParticipantsBtn: {
     alignItems: 'center',
-    alignSelf: 'stretch',
+    justifyContent:'center',
+    width: '58.5%',
     padding: 10,
-    borderRadius: 25,
     flexDirection: 'column',
   },
   //Interested Individual in Draggable Modal
@@ -270,11 +270,10 @@ const SystemStyle = StyleSheet.create({
   },
   InterestedIndividualsText:{
     fontSize: 13,
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent:'center',
+    alignItems:'center',
     color: '#000',
     fontFamily: 'RedHatDisplay-Light',
-    width: 190
   },
   // For Interested Button
   InterestedBtn: {

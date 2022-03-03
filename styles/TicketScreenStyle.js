@@ -96,41 +96,55 @@ const TicketScreenStyle=StyleSheet.create({
     },
     //For Ticket Stub in Menu Tab Navigator
     MyTicketStub:{
-        margin:20,
+        marginHorizontal:'3%',
+        marginBottom:'3%',
         borderRadius:20,
         backgroundColor:'#eb9834',
-        width: 370,
+        height: 140,
+    },
+    //For MyTicketExpiredStub || Gray
+    MyTicketExpiredStub:{
+        marginHorizontal:'3%',
+        marginBottom:'3%',
+        borderRadius:20,
+        backgroundColor:'#5b5c5a',
         height: 140,
     },
     MyTicketStubDiv:{
-        margin: '5%',
+        marginVertical: '5%',
+        marginHorizontal:'3%',
         flexDirection:'row',
         justifyContent:'space-between'
     },
     MyTicketEvent:{
         color:'#fff',
         fontSize:23,
+        width:'80%',
         fontFamily:'RedHatDisplay-Medium',
     },
     MyTicketDate:{
         color:'#fff',
         fontSize:15,
+        width:'100%',
         marginBottom:10,
         fontFamily:'RedHatDisplay-Light',
     },
     MyTicketOrganizer:{
         color:'#fff',
         fontSize:20,
+        width:'80%',
         fontFamily:'RedHatDisplay-Medium',
     },
     MyTicketLocation:{
         color:'#fff',
         fontSize:15,
+        width:'80%',
         fontFamily:'RedHatDisplay-Light',
     },
     MyTicketQR:{
         borderRadius: 15,
         marginTop: '-2%',
+        marginLeft:'-13%',
         padding: '2.5%',
         backgroundColor:'#fff'
     },
