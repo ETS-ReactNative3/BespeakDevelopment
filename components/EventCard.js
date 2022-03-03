@@ -81,7 +81,10 @@ class EventCard extends Component {
                             <Text style={SystemStyle.CardLocation}>{ item.location }</Text>
                         </View>
 
-                        <View style={SystemStyle.CardStatContainer}>
+                        
+                    </View>
+                    <View style={SystemStyle.CardOption}>
+                    <View style={SystemStyle.CardStatContainer}>
                             { item.has_ended ? (
                                 <>
                                     <MaterialIcons name="event-busy" size={14} color="#a30000" />
@@ -104,8 +107,7 @@ class EventCard extends Component {
                                 </>
                             ) : null}
                         </View>
-                    </View>
-                    <View style={SystemStyle.CardOption}>
+                        <View style={SystemStyle.RowImg}>
                         <TouchableOpacity onPress = {() => _initiateSharing(item)}>
                             <Ionicons name="share-social-outline" size={22} color="black" />
                         </TouchableOpacity>
@@ -116,6 +118,7 @@ class EventCard extends Component {
                                 <Feather name="bookmark" size={22} color="black" />
                             )}
                         </TouchableOpacity>
+                        </View>
                     </View>     
             </TouchableOpacity>
         )
@@ -190,9 +193,10 @@ class EventModal extends Component {
                                                 );
                                             })}
                                         </View>
-                                        
-                                        <Text style={SystemStyle.InterestedIndividualsText}>{ item.summary }</Text>
-                                    </View>  
+                                        <View  style={SystemStyle.Center}>
+                                            <Text style={SystemStyle.InterestedIndividualsText}>{ item.summary }</Text>
+                                        </View>
+                                    </View>
                                     <TouchableOpacity style={SystemStyle.InterestedBtn}
                                         onPress={() => this._handleInterested(item)}>
                                             <Text style={SystemStyle.InterestedTextBtn}>I'm Interested</Text>
