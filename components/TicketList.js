@@ -167,7 +167,9 @@ class TicketList extends Component {
                     data={Object.values(this.state.data)}
                     renderItem={({ item }) => {
                         return (
-                            <TouchableOpacity style={TicketScreenStyle.MyTicketStub} //MyTicketExpiredStub For Expired
+                            <TouchableOpacity style={
+                                    !item.has_ended ? TicketScreenStyle.MyTicketStub
+                                    : TicketScreenStyle.MyTicketExpiredStub } 
                                 onPress = {() => this.props.navigation.navigate('TicketScreen', {ticket_id: item.id})}>
                                     <View style={TicketScreenStyle.MyTicketStubDiv}>
                                         <View>
