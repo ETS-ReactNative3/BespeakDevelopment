@@ -4,10 +4,11 @@ import {
     Text, 
     View,
 } from 'react-native';
+import { sha256 } from 'react-native-sha256';
 import Spinner from 'react-native-loading-spinner-overlay';
 import QRCode from 'react-native-qrcode-svg';
 
-import { db } from '../firebase.js';
+import { auth, db } from '../firebase.js';
 
 import TicketScreenStyle from "../styles/TicketScreenStyle.js";
 import SystemStyle from '../styles/SystemStyle.js';
@@ -31,6 +32,8 @@ class TicketScreen extends Component {
     }
     
     async _loadTicket(ticket_id) {
+        let uid = auth.currentUser.uid;
+
         let get_ticket_query = await db.collection('ticket')
             .doc(ticket_id)
             .get();
@@ -51,9 +54,18 @@ class TicketScreen extends Component {
 
         let _event = get_event_query.data();
 
-        _data = await _arrangeData([_event]);
+        let _data = await _arrangeData([_event]);
         
         _data = _data[0];
+
+        let content = {};
+
+        content.key1 = ticket_id;
+        await sha256(uid + _ticket.server_time).then( hash => {
+            content.key2 = hash;
+        })
+
+        _data.key_content = JSON.stringify(content);
 
         _data.ticket_owner = await _getUserData('_name', _ticket.owner);
         _data.reg_date = await dateFormat(new Date(_ticket.server_time),
@@ -87,7 +99,7 @@ class TicketScreen extends Component {
                 </View>
                 <View style={TicketScreenStyle.QRContainer}>
                     <View style={TicketScreenStyle.QRImg}> 
-                        <QRCode value={ this.props.route.params.ticket_id }/>
+                        <QRCode value={ item.key_content }/>
                     </View>
                 </View>
                 <View style={TicketScreenStyle.YourTicketContent}>

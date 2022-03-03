@@ -36,7 +36,7 @@ class NotificationScreen extends Component {
         is_mounted: false,
 
         last_data: null,
-        can_extend: false
+        can_extend: true
     }
     constructor() {
         super();
