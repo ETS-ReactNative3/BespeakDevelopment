@@ -379,6 +379,7 @@ class EventScreen extends Component {
         this.setState({is_admitting: false});
 
         if(ticket_id) {
+            this.doRefresh();
             let nav = this.props.navigation;
             this.props.navigation.navigate('TicketScreen', 
                 {ticket_id: ticket_id, navigation: nav})
@@ -560,18 +561,10 @@ class EventScreen extends Component {
                         </>
                     ) : (
                         <>
-                            { item.is_overlap ? (
-                                <>
-                                { item.has_ended ? (
-                                    <View style={SystemStyle.EventEndedBtnButGray}>
-                                        <Text style={SystemStyle.EventEndedTextForGrayBtn}>Event Ended</Text>
-                                    </View>
-                                ) : (
-                                    <View style={SystemStyle.EventEndedBtnButGray}>
-                                        <Text style={SystemStyle.EventEndedTextForGrayBtn}>Admission Ended</Text>
-                                    </View>
-                                )}
-                                </>
+                            { item.has_ended ? (
+                                <View style={SystemStyle.EventEndedBtnButGray}>
+                                    <Text style={SystemStyle.EventEndedTextForGrayBtn}>Event Ended</Text>
+                                </View>
                             ) : (
                                 <>
                                 { item.is_attending ? (
@@ -584,6 +577,11 @@ class EventScreen extends Component {
                                             <View style={SystemStyle.EventEndedBtnButGray}>
                                                 <Text style={SystemStyle.EventEndedTextForGrayBtn}>No remaining slots left.</Text>
                                             </View>
+                                        ) : item.is_overlap ? (
+                                            <TouchableOpacity style={SystemStyle.AttendingBtn}
+                                                onPress={() => this._handleAttend()}>
+                                                    <Text style={SystemStyle.AttendingTextBtn}>Register</Text>
+                                            </TouchableOpacity>
                                         ) : (
                                             <TouchableOpacity style={SystemStyle.AttendingBtn}
                                                 onPress={() => this._handleAttend()}>
