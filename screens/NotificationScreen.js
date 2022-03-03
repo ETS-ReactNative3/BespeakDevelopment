@@ -65,7 +65,7 @@ class NotificationScreen extends Component {
     }
 
     async _retrieveNotifications(type_extend = false) {
-        return await _loadAllNotification(type_extend, this.state.limit, this.state.last);
+        return await _loadAllNotification(type_extend, this.state.limit, this.state.last_data);
     }
 
     async _loadNotifications() {
@@ -73,7 +73,7 @@ class NotificationScreen extends Component {
 
         let query_res = await this._retrieveNotifications();
 
-        // console.log('Loaded Notif: ', query_res.data);
+        //console.log('Loaded Notif Last: ', query_res.last);
 
         this.setState({
             data: query_res.data,
