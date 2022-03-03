@@ -6,7 +6,9 @@ import {
     View,
     TouchableOpacity
 } from 'react-native';
+import { sha256 } from 'react-native-sha256';
 import QRCode from 'react-native-qrcode-svg';
+
 import { auth, db, _db } from '../firebase';
 
 import SystemStyle from "../styles/SystemStyle";
@@ -93,6 +95,15 @@ class TicketList extends Component {
             raw_data.reg_date = await dateFormat(new Date(item.server_time),
                 "MMMM d, yyyy ∘ h:mm aaa");
 
+            let content = {};
+
+            content.key1 = item.id;
+            await sha256(uid + item.server_time).then( hash => {
+                content.key2 = hash;
+            })
+    
+            raw_data.key_content = JSON.stringify(content);
+            
             _data.push(raw_data)
         }
 
@@ -180,7 +191,7 @@ class TicketList extends Component {
                                             <Text style={TicketScreenStyle.MyTicketLocation}>{ item.location }</Text>
                                         </View>
                                         <View style={TicketScreenStyle.MyTicketQR}>
-                                            <QRCode value={ item.id }/>
+                                            <QRCode value={ item.key_content }/>
                                         </View>
                                     </View>
                             </TouchableOpacity>

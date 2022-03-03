@@ -166,55 +166,11 @@ class EventList extends Component {
 
         doc_data = await _arrangeData(doc_data);
         // console.log("Arranged Data: ", doc_data)
-
+        /*
         for(var i = 0; i < doc_data.length; i++) {
-            doc_data[i].sneak_imgs = [];
-            doc_data[i].summary = 'Be the first to join this event!';
-
-            if(!for_profile) {
-                let get_participant_query = await db.collection("_participant")
-                    .doc(doc_data[i].id)
-                    .get();
-
-                if(!get_participant_query.empty) {
-                    let participant = []
-                    let _names = []
-                    
-                    let raw_data = get_participant_query.data();
-
-                    raw_data = raw_data?.interested;
-
-                    if(raw_data) {
-                        //console.log('Participants: ', raw_data)
-
-                        for(var inc = 0; inc < raw_data.length 
-                            && inc < 5; inc++) {
-                                participant.push(await _getProfileImage(raw_data[inc]));
-                                if(inc < 2) {
-                                    let f_name = await _getUserData('f_name', raw_data[inc])
-
-                                    if(f_name) 
-                                        _names.push(f_name);
-                                    else
-                                        _names.push(await _getUserData('org_name', raw_data[inc]))
-                                        
-                                }
-                            }
-                        
-                        if(_names.length > 1) {
-                            let others = raw_data.length - 2;
-
-                            doc_data[i].summary = `${_names[0] ? _names[0] : 'A user'}, ${_names[1] ? _names[1] : 'A user'}` +
-                            `${others > 1 ? ' and ' + others : others == 1 ? ' and one other' : ''} are interested.`
-                        } else if(_names.length == 1){
-                            doc_data[i].summary = `${_names[0] ? _names[0] : 'A user'} is interested.`
-                        } 
-                    }
-                    doc_data[i].sneak_imgs = participant;
-                } 
-            }
+            
             //console.log('User Images: ', doc_data[i].sneak_imgs);
-        }
+        }*/
 
         console.log("Loaded Events.")
 
@@ -236,6 +192,9 @@ class EventList extends Component {
         });
 
         this._loadImages(query_res.data)
+
+        if(!this.props.for_profile)
+            this._loadMiscs(query_res.data)
     }
     // #TODO: Optimize, Minimalize
     async _extendLoadEvents() {
@@ -258,6 +217,60 @@ class EventList extends Component {
         });
         
         this._loadImages(query_res.data, current_to_add)
+
+        if(!this.props.for_profile)
+            this._loadMiscs(query_res.data, current_to_add)
+    }
+    _loadMiscs(items, has_add = []) {
+        // Load Images
+        items?.forEach(async (item) => {
+            item.sneak_imgs = [];
+            item.summary = 'Be the first to join this event!';
+
+            let get_participant_query = await db.collection("_participant")
+                .doc(item.id)
+                .get();
+
+            if(!get_participant_query.empty) {
+                let participant = []
+                let _names = []
+                
+                let raw_data = get_participant_query.data();
+
+                raw_data = raw_data?.interested;
+
+                if(raw_data) {
+                    //console.log('Participants: ', raw_data)
+
+                    for(var inc = 0; inc < raw_data.length 
+                        && inc < 5; inc++) {
+                            participant.push(await _getProfileImage(raw_data[inc]));
+                            if(inc < 2) {
+                                let f_name = await _getUserData('f_name', raw_data[inc])
+
+                                if(f_name) 
+                                    _names.push(f_name);
+                                else
+                                    _names.push(await _getUserData('org_name', raw_data[inc]))
+                                    
+                            }
+                        }
+                    
+                    if(_names.length > 1) {
+                        let others = raw_data.length - 2;
+
+                        item.summary = `${_names[0] ? _names[0] : 'A user'}, ${_names[1] ? _names[1] : 'A user'}` +
+                        `${others > 1 ? ' and ' + others : others == 1 ? ' and one other' : ''} are interested.`
+                    } else if(_names.length == 1){
+                        item.summary = `${_names[0] ? _names[0] : 'A user'} is interested.`
+                    } 
+                }
+                item.sneak_imgs = participant;
+            } 
+
+            
+            this.setState({data: [...has_add, ...items]});
+        })
     }
     _loadImages(items, has_add = []) {
         // Load Images

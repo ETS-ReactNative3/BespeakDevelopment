@@ -13,6 +13,8 @@ import FollowListScreens from "../screens/FollowListScreen";
 import UserProfileScreens from "../screens/UserProfileScreen";
 
 import TicketScreen from "../screens/TicketScreen";
+import AdmitScreen from "../screens/AdmitScreen";
+import ScanScreen from '../screens/ScanScreen' //#TODO: Migrate Soon
 
 const MenuStack = createNativeStackNavigator();
 
@@ -115,6 +117,62 @@ class SearchNavigator extends Component {
       </MenuStack.Navigator>
     );
   }
+}
+
+class ScanNavigator extends Component {
+    render() {
+        return (
+          <MenuStack.Navigator>
+            <MenuStack.Screen name="ScanScreen" component={ScanScreen}
+              options={{
+                title: ' ',
+                headerShown: false,
+                tabBarShowLabel:false
+              }}/>
+            <MenuStack.Screen name="AdmitScreen" component={AdmitScreen}
+              options={{
+                title: ' ',
+                headerShown: true,
+                tabBarShowLabel:false
+              }}/>
+            <MenuStack.Screen name="EventScreen" component={EventScreens.EventScreen}
+              options={{
+                title: ' ',
+              }}/>
+            <MenuStack.Screen name="EditEventScreen" component={ManageEventScreens.EditEventScreen}
+              options={{
+                title: ' ',
+                headerShown: true,
+                tabBarShowLabel:false,
+            }}/>
+            <MenuStack.Screen name="ParticipantListScreen" component={ParticipantListScreens}
+              options={{
+                title: ' ',
+                headerShown: true,
+                tabBarShowLabel:false,
+            }}/>
+            <MenuStack.Screen name="UserProfileScreen" component={UserProfileScreens.UserProfileScreen}
+              options={{
+                title: ' ',
+                headerShown: true,
+                headerTintColor: '#fff',
+                headerTransparent: true,
+                tabBarShowLabel:false,
+                headerShadowVisible: false,
+            }}/>
+            <MenuStack.Screen name="TicketScreen" component={TicketScreen}
+                options={{
+                    title: 'Your Ticket',
+                    headerShown: true,
+                    tabBarShowLabel:false,
+                    headerTitleStyle: {
+                        fontFamily: 'RedHatDisplay-Medium',
+                        color: '#eb9834',
+                    }
+            }}/>
+          </MenuStack.Navigator>
+        );
+    }
 }
 
 class NotificationNavigator extends Component {
@@ -252,6 +310,7 @@ SearchNavigator = React.memo(SearchNavigator);
 export default {
   HomeNavigator,
   SearchNavigator,
+  ScanNavigator,
   NotificationNavigator,
   ProfileNavigator
 }

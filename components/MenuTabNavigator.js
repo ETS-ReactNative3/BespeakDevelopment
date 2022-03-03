@@ -7,7 +7,6 @@ import {
 } from '@expo/vector-icons';
 
 import Menu from './MenuNavigator'
-import ScanScreen from '../screens/ScanScreen' //#TODO: Migrate Soon
 
 import { _loadAllNotification } from "../helper/NotificationLoad";
 
@@ -56,11 +55,11 @@ class UserTabNavigate extends Component {
                                 <Ionicons name="search"  color={color} size={30} />
                             ),
                         }}/>
-                    <Tab.Screen name="ScanTab" component={ScanScreen}
+                    <Tab.Screen name="ScanTab" component={Menu.ScanNavigator}
                         options={{
-                            title: '',
+                            title: ' ',
+                            headerShown: false,
                             tabBarShowLabel:false,
-                            headerShadowVisible:false,
                             tabBarLabel: 'Scan',
                             tabBarIcon: ({ color, size }) => (
                                 <Ionicons name="scan" color={color} size={45} />

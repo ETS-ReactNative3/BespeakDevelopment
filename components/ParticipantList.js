@@ -119,7 +119,8 @@ class ParticipantList extends Component {
         this.setState({
             data: query_res.data,
             last_data: query_res.last,
-            loading: false
+            loading: false,
+            can_extend: query_res.data.length == this.state.limit
         });
 
         this._loadImages(query_res.data)
@@ -134,7 +135,7 @@ class ParticipantList extends Component {
 
         let query_res = await this._retrieveParticipants(true);
 
-        let has_data = query_res.data.length > 0;
+        let has_data = query_res.data.length == this.state.limit;
         let current_data = this.state.data;
 
         this.setState({
