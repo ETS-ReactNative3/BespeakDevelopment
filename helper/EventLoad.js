@@ -151,7 +151,7 @@ async function _checkEventAvailability(event_id) {
 
     var _data = get_event_query.data()
 
-    if(_data.schedule < current_time.epoch) {
+    if(_data.schedule + 86400000 < current_time.epoch) {
         return 103;
     } else if(!_data.is_open) {
         return 102;

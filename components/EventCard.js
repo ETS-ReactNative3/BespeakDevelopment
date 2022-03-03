@@ -71,10 +71,7 @@ class EventCard extends Component {
                         source={ item.event_image }/>
                     <View style={SystemStyle.CardContainer}>
                         <Text style={SystemStyle.CardTitle}>{item.name}</Text>
-                        <Text style={
-                            item.is_overlap ? 
-                                SystemStyle.CardSchedArchived 
-                                : SystemStyle.CardSched}>{item.sched}</Text>
+                        <Text style={SystemStyle.CardSched}>{item.sched}</Text>
                         <Text style={SystemStyle.CardOrg}>
                             { item.owner_name }
                         </Text>
