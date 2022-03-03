@@ -1,3 +1,5 @@
+import fetch_date_time from '../api/GlobalTime'
+
 export async function _getTimeAgo(time, to_compare = false) {
 
     if(!to_compare) {

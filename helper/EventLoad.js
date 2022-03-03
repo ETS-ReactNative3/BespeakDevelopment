@@ -1,5 +1,6 @@
 import { auth, db, storage } from '../firebase'
 import dateFormat from '../helper/DateFormat';
+import { _getTimeAgo } from './DateTextFormat';
 
 import fetch_date_time from '../api/GlobalTime'
 
@@ -33,9 +34,21 @@ async function _arrangeData(events_data, mod = false) {
         item.is_overlap = item.schedule < current_time.epoch;
         item.has_ended = sched_end < current_time.epoch;
 
-
         let raw_sched = parseInt(item.schedule);
         let raw_posted = parseInt(item.server_time);
+        
+        if(!item.is_overlap) {
+            let current_count = await  _getAttendingCount(item.id);
+            let remaining = item.max - current_count
+            if(remaining < item.max * .20 && remaining > 0) {
+                item.remaining_status = remaining + ' limited slots left';
+            } else {
+                let countdown = await _getTimeAgo(raw_sched, current_time.epoch);
+                countdown = countdown[0].toLowerCase() + countdown.slice(1);
+
+                item.countdown_status = 'Starts ' + countdown
+            }
+        }
 
         let sched = await dateFormat(new Date(raw_sched), 
             mod ? "EEEE, MMMM d, yyyy ∘ Starts at h:mm aaa" : "EEEE, MMMM d, yyyy ∘ h:mm aaa");
