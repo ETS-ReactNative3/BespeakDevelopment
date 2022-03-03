@@ -96,8 +96,8 @@ const TicketScreenStyle=StyleSheet.create({
     },
     //For Ticket Stub in Menu Tab Navigator
     MyTicketStub:{
-        marginHorizontal:'3%',
-        marginBottom:'3%',
+        marginHorizontal: '3%',
+        marginBottom: '3%',
         borderRadius:20,
         backgroundColor:'#eb9834',
         height: 140,
@@ -118,35 +118,35 @@ const TicketScreenStyle=StyleSheet.create({
     },
     MyTicketEvent:{
         color:'#fff',
-        fontSize:23,
-        width:'80%',
+        fontSize:22,
+        width:'98%',
         fontFamily:'RedHatDisplay-Medium',
     },
     MyTicketDate:{
         color:'#fff',
-        fontSize:15,
-        width:'100%',
+        fontSize:14,
         marginBottom:10,
         fontFamily:'RedHatDisplay-Light',
     },
     MyTicketOrganizer:{
         color:'#fff',
-        fontSize:20,
-        width:'80%',
+        fontSize:18,
         fontFamily:'RedHatDisplay-Medium',
     },
     MyTicketLocation:{
         color:'#fff',
-        fontSize:15,
+        fontSize:14,
         width:'80%',
         fontFamily:'RedHatDisplay-Light',
     },
     MyTicketQR:{
-        borderRadius: 15,
+        borderRadius: 12,
         marginTop: '-2%',
         marginLeft:'-13%',
-        padding: '2.5%',
-        backgroundColor:'#fff'
+        padding: '2%',
+        backgroundColor:'#fff',
+        alignItems:'center',
+        justifyContent:'center'
     },
     
 
