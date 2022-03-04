@@ -591,10 +591,11 @@ const SystemStyle = StyleSheet.create({
     backgroundColor: '#ebebeb',
     padding: '12%',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignSelf: 'stretch',
     marginLeft:'-15%',
     marginRight:'-15%',
+    height: '100%',
   },
   BespeakLogo:{
     color: '#eb9834',
