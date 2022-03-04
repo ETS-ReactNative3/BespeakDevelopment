@@ -868,8 +868,8 @@ NameList:{
   },
   NamesImg: {
     borderRadius:25,
-    width: 40,
-    height:40,
+    width: 45,
+    height:45,
     justifyContent:'center',
   },
   //Names Info
@@ -877,10 +877,23 @@ NameList:{
     justifyContent:'center',
     alignSelf:'center',
     marginLeft:'4%',
+    flexDirection:'column'
   },
   NamesInCardText:{
     fontSize: 20,
     fontFamily:'RedHatDisplay-Regular',
+    color: '#000',
+  },
+  EmailInCardText:{
+    marginBottom:'-1.5%',
+    fontSize: 15,
+    fontFamily:'RedHatDisplay-Light',
+    color: '#eb9834',
+  },
+  MobileNoInCardText:{
+    marginTop:'-1.5%',
+    fontSize: 15,
+    fontFamily:'RedHatDisplay-Light',
     color: '#5b5c5a',
   },
 

@@ -220,6 +220,8 @@ class ParticipantList extends Component {
                             </View>
                             <View style={SystemStyle.NamesInCard}>
                                 <Text style={SystemStyle.NamesInCardText}>{ item._name }</Text>
+                                <Text style={SystemStyle.EmailInCardText}>{ item._name }</Text>
+                                <Text style={SystemStyle.MobileNoInCardText}>{ item._name }</Text>
                             </View>
                         </View>);
                     }}
