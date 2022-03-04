@@ -152,8 +152,8 @@ DeleteAcctBtn: {
     backgroundColor: '#fff',
     borderRadius: 25,
     color: '#eb9834',
-    marginLeft: '15%',
-    marginRight: '15%',
+    marginTop:'15%',
+    marginHorizontal: '15%',
     alignItems: 'center',
     justifyContent:'center'
   },
@@ -161,10 +161,26 @@ DeleteAcctTextBtn:{
     alignItems: 'center',
     justifyContent: 'center',
     color: '#A30000',
+    fontFamily: 'RedHatDisplay-Light',
+    fontSize: 20,
+  },
+DeleteBtn: {
+    alignSelf: 'stretch',
+    height: 46,
+    backgroundColor: '#fff',
+    borderRadius: 25,
+    color: '#eb9834',
+    marginHorizontal: '15%',
+    alignItems: 'center',
+    justifyContent:'center'
+  },
+DeleteTextBtn:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#A30000',
     fontFamily: 'RedHatDisplay-Medium',
     fontSize: 20,
   },
-
 
 
 
