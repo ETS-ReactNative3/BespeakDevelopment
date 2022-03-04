@@ -158,16 +158,17 @@ class AdmitScreen extends Component {
                         <Text style={PreviewTicketScanned.sandboxtech}>© Sandbox Tech</Text>
                     </View>      
                     <View style={PreviewTicketScanned.AdmitContainer}>
-                        <TouchableOpacity style={PreviewTicketScanned.AdmitBtn}
+                        { _event.is_overlap ? (
+                            <TouchableOpacity style={PreviewTicketScanned.AdmitBtn}
                             onPress={() => this._handleAdmit(_event, _user.id)}>
                                 <Text style={PreviewTicketScanned.AdmitTextBtn}>{
                                     _event.is_admitted ? 'Re-admit' : 'Admit'}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={PreviewTicketScanned.WhyAreYouHere}
-                            onPress={() => this._handleAdmit(_event, _user.id)}>
+                            </TouchableOpacity>
+                        ) : (
+                            <TouchableOpacity style={PreviewTicketScanned.WhyAreYouHere}>
                                 <Text style={PreviewTicketScanned.WhyAreYouStillHere}>
-                                    Event is on _date_</Text>
-                        </TouchableOpacity>
+                                    Event is on {_event.sched}</Text>
+                            </TouchableOpacity>)}
                     </View>
                 </View>
             </ScrollView>
