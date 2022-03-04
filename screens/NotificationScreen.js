@@ -166,7 +166,7 @@ class NotificationScreen extends Component {
                             <Image style={SystemStyle.WelcomeToBespeakImg} source={require('../assets/img/WelcomeToBespeak.png')}/>      
                         </View>
                             <Text style={SystemStyle.EmptyTitle}> Get Notified! </Text>
-                            <Text style={SystemStyle.AdditionalInfo}> Follow organizers to be notified on their upcoming events. </Text>
+                            <Text style={SystemStyle.GetNotifiedInfo}> Follow organizers to be notified on their upcoming events. </Text>
                     </View>
                 }
                 <FlatList
