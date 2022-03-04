@@ -17,6 +17,7 @@ import {
     SimpleLineIcons,
     MaterialIcons,
     FontAwesome5,
+    MaterialCommunityIcons,
     Ionicons
 } from '@expo/vector-icons';
 import BottomSheet from "react-native-gesture-bottom-sheet";
@@ -559,6 +560,7 @@ class EventScreen extends Component {
                                     this.props.navigation.navigate('ParticipantListScreen', {
                                         event_id: item.id
                                     }) }>
+                                    <MaterialIcons name="people-outline" size={16} color="#fff" />
                                     <Text style={SystemStyle.ViewAttendeeTextBtn}>View Attendees</Text> 
                             </TouchableOpacity>
                         </>
@@ -566,29 +568,33 @@ class EventScreen extends Component {
                         <>
                             { item.has_ended ? (
                                 <View style={SystemStyle.EventEndedBtnButGray}>
-                                    <Text style={SystemStyle.EventEndedTextForGrayBtn}>Event Ended</Text>
+                                    <MaterialIcons name="event-busy" size={16} color="#5b5c5a" />
+                                    <Text style={SystemStyle.EventEndedTextForGrayBtn}>Event has ended</Text>
                                 </View>
                             ) : (
                                 <>
                                 { item.is_attending ? (
                                     <TouchableOpacity style={SystemStyle.EventEndedBtnButOrange}>
-                                        <Text style={SystemStyle.EventEndedTextForOrangeBtn}>You're attending.</Text>
+                                        <MaterialCommunityIcons name="checkbox-multiple-marked-circle" size={16} color="#eb834" />
+                                        <Text style={SystemStyle.EventEndedTextForOrangeBtn}>You're attending</Text>
                                     </TouchableOpacity>
                                 ) : (
                                     <>
                                         { item.is_limit ? (
                                             <View style={SystemStyle.EventEndedBtnButGray}>
-                                                <Text style={SystemStyle.EventEndedTextForGrayBtn}>No remaining slots left.</Text>
+                                                <MaterialIcons name="emoji-people" size={16} color="#5b5c5a" />
+                                                <Text style={SystemStyle.EventEndedTextForGrayBtn}>No remaining slots left</Text>
                                             </View>
                                         ) : item.is_overlap ? (
                                             <TouchableOpacity style={SystemStyle.AttendingBtn}
                                                 onPress={() => this._handleAttend()}>
-                                                    <Text style={SystemStyle.AttendingTextBtn}>Register</Text>
+                                                    <MaterialCommunityIcons name="human-handsup" size={16} color="#fff" />
+                                                    <Text style={SystemStyle.AttendingTextBtn}>Happening now - Register</Text>
                                             </TouchableOpacity>
                                         ) : (
                                             <TouchableOpacity style={SystemStyle.AttendingBtn}
                                                 onPress={() => this._handleAttend()}>
-                                                    <Text style={SystemStyle.AttendingTextBtn}>I'm attending!</Text>
+                                                    <Text style={SystemStyle.AttendingTextBtn}>I want to attend</Text>
                                             </TouchableOpacity>
                                         )}
                                     </>

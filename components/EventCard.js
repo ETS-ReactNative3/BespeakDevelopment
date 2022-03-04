@@ -126,25 +126,27 @@ class EventCard extends Component {
 }
 
 class EventModal extends Component {
-    _handleInterested(event) {
-        this.props.modal_ref.current.close()
+    _handleInterested(event, save = true) {
+        if(save) {
+            this.props.modal_ref.current.close()
 
-        let uid = auth.currentUser.uid;
+            let uid = auth.currentUser.uid;
 
-        db.collection("_participant")
-            .doc(event.id)
-            .update({
-                interested: _db.FieldValue.arrayUnion(uid)
-            }).catch(async (err) => {
-                if(err.code == 'firestore/not-found') {
-                    await _initializeDoc("_participant", {
-                        interested: [uid]
-                    }, event.id)
-                    return;
-                }
-                Alert.alert("Error!", err.message);
-                console.log("Error: ", err)
-            })
+            db.collection("_participant")
+                .doc(event.id)
+                .update({
+                    interested: _db.FieldValue.arrayUnion(uid)
+                }).catch(async (err) => {
+                    if(err.code == 'firestore/not-found') {
+                        await _initializeDoc("_participant", {
+                            interested: [uid]
+                        }, event.id)
+                        return;
+                    }
+                    Alert.alert("Error!", err.message);
+                    console.log("Error: ", err)
+                })
+        }
         
         this.props.navigation.navigate('EventScreen', {event_id: event.id})
     }
@@ -197,10 +199,17 @@ class EventModal extends Component {
                                             <Text style={SystemStyle.InterestedIndividualsText}>{ item.summary }</Text>
                                         </View>
                                     </View>
-                                    <TouchableOpacity style={SystemStyle.InterestedBtn}
-                                        onPress={() => this._handleInterested(item)}>
-                                            <Text style={SystemStyle.InterestedTextBtn}>I'm Interested</Text>
-                                    </TouchableOpacity>
+                                    { item.has_ended ? (
+                                        <TouchableOpacity style={SystemStyle.InterestedBtn}
+                                            onPress={() => this._handleInterested(item, false)}>
+                                                <Text style={SystemStyle.InterestedTextBtn}>View</Text>
+                                        </TouchableOpacity>
+                                    ) : (
+                                        <TouchableOpacity style={SystemStyle.InterestedBtn}
+                                            onPress={() => this._handleInterested(item)}>
+                                                <Text style={SystemStyle.InterestedTextBtn}>I'm Interested</Text>
+                                        </TouchableOpacity>
+                                    )}
                                 </View>
                             </View>
                         </View>
