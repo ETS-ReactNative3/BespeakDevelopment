@@ -296,7 +296,6 @@ class EventScreen extends Component {
                     this.setState({comment_data: current, is_submitting: false});
                     
                     console.log(this.comment_scroll.current);
-                    //this.comment_scroll.current.scrollTo({y: 0, animated: true}); 
                 });
         }
     }
@@ -580,10 +579,17 @@ class EventScreen extends Component {
                             ) : (
                                 <>
                                 { item.is_attending ? (
-                                    <View style={SystemStyle.EventEndedBtnButOrange}>
-                                        <MaterialCommunityIcons name="checkbox-multiple-marked-circle" size={20} color="#eb9834" />
-                                        <Text style={SystemStyle.EventEndedTextForOrangeBtn}>You are attending</Text>
-                                    </View>
+                                    <>
+                                        <View style={SystemStyle.EventEndedBtnButOrange}>
+                                            <MaterialCommunityIcons name="checkbox-multiple-marked-circle" size={20} color="#eb9834" />
+                                            <Text style={SystemStyle.EventEndedTextForOrangeBtn}>You are attending</Text>
+                                        </View>
+                                        <TouchableOpacity style={EditProfileScreenStyle.DeleteAcctBtn}
+                                            //onPress = {() => { auth.signOut() }}
+                                            >
+                                                <Text style={EditProfileScreenStyle.DeleteAcctTextBtn}> Cancel Reservation</Text>
+                                        </TouchableOpacity>
+                                    </>
                                 ) : (
                                     <>
                                         { item.is_limit ? (
@@ -610,11 +616,6 @@ class EventScreen extends Component {
                             )}
                         </>
                     )}
-                    <TouchableOpacity style={EditProfileScreenStyle.DeleteAcctBtn}
-                        //onPress = {() => { auth.signOut() }}
-                        >
-                            <Text style={EditProfileScreenStyle.DeleteAcctTextBtn}> Cancel Reservation</Text>
-                    </TouchableOpacity>
                 </View>
                 
                 <BottomSheet hasDraggableIcon
