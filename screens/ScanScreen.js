@@ -79,7 +79,7 @@ class ScanScreen extends Component {
                     reactivate = {true}
                     reactivateTimeout = {5000}
                     topContent={
-                        <Text style={ScanScreenStyle.ScanText}>Scan an bespeak QR code</Text>
+                        <Text style={ScanScreenStyle.ScanText}>Scan a bespeak QR code</Text>
                     }/>
             </>
         );

@@ -582,7 +582,7 @@ class EventScreen extends Component {
                                 { item.is_attending ? (
                                     <View style={SystemStyle.EventEndedBtnButOrange}>
                                         <MaterialCommunityIcons name="checkbox-multiple-marked-circle" size={20} color="#eb9834" />
-                                        <Text style={SystemStyle.EventEndedTextForOrangeBtn}>You're attending</Text>
+                                        <Text style={SystemStyle.EventEndedTextForOrangeBtn}>You are attending</Text>
                                     </View>
                                 ) : (
                                     <>
