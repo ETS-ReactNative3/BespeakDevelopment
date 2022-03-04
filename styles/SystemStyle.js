@@ -283,7 +283,7 @@ const SystemStyle = StyleSheet.create({
     color: '#000',
     fontFamily: 'RedHatDisplay-Light',
   },
-  // For Interested Button
+  // For Interested Button Orange
   InterestedBtn: {
     alignItems: 'center',
     justifyContent:'center',
@@ -301,6 +301,25 @@ const SystemStyle = StyleSheet.create({
     color: '#fff',
     fontFamily: 'RedHatDisplay-Medium',
   },
+  // For Interested Button Gray
+  ViewBtn: {
+    alignItems: 'center',
+    justifyContent:'center',
+    backgroundColor: '#5b5c5a',
+    height: 46,
+    width: 150,
+    padding: 10,
+    borderRadius: 25,
+    justifyContent:'center',
+  },
+  ViewTextBtn:{
+    fontSize: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#fff',
+    fontFamily: 'RedHatDisplay-Medium',
+  },
+
   //Detailed Screen
     //For Event Notification Detail Screen
     EventContainer:{
@@ -494,6 +513,7 @@ const SystemStyle = StyleSheet.create({
       backgroundColor: '#eb9834',
       height: 40,
       borderRadius: 25,
+      flexDirection:'row'
     },
     AttendingTextBtn:{
       marginTop: -2,
@@ -511,9 +531,11 @@ const SystemStyle = StyleSheet.create({
       backgroundColor: '#5b5c5a',
       height: 40,
       borderRadius: 25,
+      flexDirection:'row',
     },
     ViewAttendeeTextBtn:{
       marginTop: -2,
+      marginLeft:'2%',
       fontSize: 20,
       alignItems: 'center',
       justifyContent: 'center',
@@ -800,9 +822,11 @@ EventEndedBtnButOrange: {
   borderWidth: 2,
   height: 40,
   borderRadius: 25,
+  flexDirection:'row'
 },
 EventEndedTextForOrangeBtn:{
   marginTop: -2,
+  marginLeft:'2%',
   fontSize: 20,
   alignItems: 'center',
   justifyContent: 'center',
@@ -820,9 +844,11 @@ EventEndedBtnButGray: {
   borderWidth: 2,
   height: 40,
   borderRadius: 25,
+  flexDirection:'row'
 },
 EventEndedTextForGrayBtn:{
   marginTop: -2,
+  marginLeft:'2%',
   fontSize: 20,
   alignItems: 'center',
   justifyContent: 'center',

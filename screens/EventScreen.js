@@ -560,7 +560,7 @@ class EventScreen extends Component {
                                     this.props.navigation.navigate('ParticipantListScreen', {
                                         event_id: item.id
                                     }) }>
-                                    <MaterialIcons name="people-outline" size={16} color="#fff" />
+                                    <MaterialIcons name="people-outline" size={20} color="#fff" />
                                     <Text style={SystemStyle.ViewAttendeeTextBtn}>View Attendees</Text> 
                             </TouchableOpacity>
                         </>
@@ -568,27 +568,27 @@ class EventScreen extends Component {
                         <>
                             { item.has_ended ? (
                                 <View style={SystemStyle.EventEndedBtnButGray}>
-                                    <MaterialIcons name="event-busy" size={16} color="#5b5c5a" />
+                                    <MaterialIcons name="event-busy" size={20} color="#5b5c5a" />
                                     <Text style={SystemStyle.EventEndedTextForGrayBtn}>Event has ended</Text>
                                 </View>
                             ) : (
                                 <>
                                 { item.is_attending ? (
                                     <TouchableOpacity style={SystemStyle.EventEndedBtnButOrange}>
-                                        <MaterialCommunityIcons name="checkbox-multiple-marked-circle" size={16} color="#eb834" />
+                                        <MaterialCommunityIcons name="checkbox-multiple-marked-circle" size={20} color="#eb834" />
                                         <Text style={SystemStyle.EventEndedTextForOrangeBtn}>You're attending</Text>
                                     </TouchableOpacity>
                                 ) : (
                                     <>
                                         { item.is_limit ? (
                                             <View style={SystemStyle.EventEndedBtnButGray}>
-                                                <MaterialIcons name="emoji-people" size={16} color="#5b5c5a" />
+                                                <MaterialIcons name="emoji-people" size={20} color="#5b5c5a" />
                                                 <Text style={SystemStyle.EventEndedTextForGrayBtn}>No remaining slots left</Text>
                                             </View>
                                         ) : item.is_overlap ? (
                                             <TouchableOpacity style={SystemStyle.AttendingBtn}
                                                 onPress={() => this._handleAttend()}>
-                                                    <MaterialCommunityIcons name="human-handsup" size={16} color="#fff" />
+                                                    <MaterialCommunityIcons name="human-handsup" size={20} color="#fff" />
                                                     <Text style={SystemStyle.AttendingTextBtn}>Happening now - Register</Text>
                                             </TouchableOpacity>
                                         ) : (
