@@ -563,10 +563,10 @@ class EventScreen extends Component {
                                     <MaterialIcons name="people-outline" size={20} color="#fff" />
                                     <Text style={SystemStyle.ViewAttendeeTextBtn}>View Attendees</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={EditProfileScreenStyle.DeleteAcctBtn}
+                            <TouchableOpacity style={EditProfileScreenStyle.DeleteBtn}
                                 //onPress = {() => { auth.signOut() }}
                                 >
-                                <Text style={EditProfileScreenStyle.DeleteAcctTextBtn}> Delete Event</Text>
+                                <Text style={EditProfileScreenStyle.DeleteTextBtn}> Delete Event</Text>
                             </TouchableOpacity>
                         </>
                     ) : (
@@ -616,6 +616,11 @@ class EventScreen extends Component {
                             )}
                         </>
                     )}
+                    <TouchableOpacity style={EditProfileScreenStyle.DeleteBtn}
+                        //onPress = {() => { auth.signOut() }}
+                        >
+                            <Text style={EditProfileScreenStyle.DeleteTextBtn}> Cancel Reservation</Text>
+                    </TouchableOpacity>
                 </View>
                 
                 <BottomSheet hasDraggableIcon
