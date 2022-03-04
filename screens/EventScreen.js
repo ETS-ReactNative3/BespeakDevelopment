@@ -575,8 +575,8 @@ class EventScreen extends Component {
                                 <>
                                 { item.is_attending ? (
                                     <TouchableOpacity style={SystemStyle.EventEndedBtnButOrange}>
-                                        <MaterialCommunityIcons name="checkbox-multiple-marked-circle" size={20} color="#eb834" />
-                                        <Text style={SystemStyle.EventEndedTextForOrangeBtn}>You're attending</Text>
+                                        <MaterialCommunityIcons name="checkbox-multiple-marked-circle" size={20} color="#eb9834" />
+                                        <Text style={SystemStyle.EventEndedTextForOrangeBtn}>You are attending</Text>
                                     </TouchableOpacity>
                                 ) : (
                                     <>
