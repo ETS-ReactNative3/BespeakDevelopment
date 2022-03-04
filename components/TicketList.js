@@ -94,15 +94,7 @@ class TicketList extends Component {
             raw_data.ticket_owner = await _getUserData('_name', item.owner);
             raw_data.reg_date = await dateFormat(new Date(item.server_time),
                 "MMMM d, yyyy ∘ h:mm aaa");
-
-            let content = {};
-
-            content.key1 = item.id;
-            await sha256(uid + item.server_time).then( hash => {
-                content.key2 = hash;
-            })
-    
-            raw_data.key_content = JSON.stringify(content);
+            raw_data.server_time = item.server_time;
             
             _data.push(raw_data)
         }
@@ -123,6 +115,8 @@ class TicketList extends Component {
             loading: false,
             can_extend: query_res.data.length == this.state.limit
         });
+
+        this._loadQRCode(query_res.data)
     }
     async _extendLoadTickets() {
         this.setState({
@@ -142,6 +136,26 @@ class TicketList extends Component {
             refreshing: false,
             can_extend: has_data
         });
+
+        this._loadQRCode(query_res.data, current_data)
+    }
+
+    _loadQRCode(items, has_add = []) {
+        let uid = auth.currentUser.uid;
+
+        // Load Images
+        items?.forEach(async (item) => {
+            let content = {};
+
+            content.key1 = item.id;
+            await sha256(uid + item.server_time).then( hash => {
+                content.key2 = hash;
+            })
+    
+            item.key_content = JSON.stringify(content);
+
+            this.setState({data: [...has_add, ...items]});
+        })
     }
 
     _renderFooter() {
@@ -175,6 +189,7 @@ class TicketList extends Component {
                     </View>
                 }
                 <FlatList
+                    contentContainerStyle={{ flexGrow: 1 }}
                     data={Object.values(this.state.data)}
                     renderItem={({ item }) => {
                         return (

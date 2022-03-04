@@ -163,7 +163,8 @@ class NotificationScreen extends Component {
                 { this.state.data.length == 0 && 
                     <View style={SystemStyle.TabContainer}>
                         <View style={SystemStyle.WelcomeToBespeakImgContainer}>
-                            <Image style={SystemStyle.WelcomeToBespeakImg} source={require('../assets/img/WelcomeToBespeak.png')}/>      
+                            <Image style={SystemStyle.WelcomeToBespeakImg} 
+                                source={ require('../assets/img/WelcomeToBespeak.png') }/>      
                         </View>
                             <Text style={SystemStyle.EmptyTitle}> Get Notified! </Text>
                             <Text style={SystemStyle.AdditionalInfo}> Follow organizers to be notified on their upcoming events. </Text>
