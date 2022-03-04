@@ -49,7 +49,7 @@ class ProfileEvents extends Component {
                     <TextInput style={ProfileContentStyle.CreateCardContent} 
                         maxLength ={50}
                         selectionColor={'#eb9834'}
-                        placeholder="Create event "
+                        placeholder="Create a bespeak event..."
                         onChangeText = {(text) => this.setState({'event_post': text})}></TextInput>
 
 
