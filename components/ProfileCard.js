@@ -62,7 +62,7 @@ class ProfileCard extends Component {
 
                     <Text style={SystemStyle.OrgCardInfo}>{ item.bio }</Text>
                 </View>
-                <View style={SystemStyle.CardOption}>
+                <View style={SystemStyle.CardOptionForProfCard}>
                     <TouchableOpacity onPress = {() => _initiateUserSharing(item)}>
                         <Ionicons name="share-social-outline" size={22} color="black" />
                     </TouchableOpacity>

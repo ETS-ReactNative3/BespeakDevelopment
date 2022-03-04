@@ -157,10 +157,10 @@ class AdmitScreen extends Component {
                         <Text style={PreviewTicketScanned.bespeaklogo}>bespeak</Text>
                         <Text style={PreviewTicketScanned.sandboxtech}>© Sandbox Tech</Text>
                     </View>      
-                    <View style={PreviewTicketScanned.admitcontainer}>
-                        <TouchableOpacity style={PreviewTicketScanned.admitbtn}
+                    <View style={PreviewTicketScanned.AdmitContainer}>
+                        <TouchableOpacity style={PreviewTicketScanned.AdmitBtn}
                             onPress={() => this._handleAdmit(_event, _user.id)}>
-                                <Text style={PreviewTicketScanned.admitbtntxt}>{
+                                <Text style={PreviewTicketScanned.AdmitTextBtn}>{
                                     _event.is_admitted ? 'Re-admit' : 'Admit'}</Text>
                         </TouchableOpacity>
                     </View>

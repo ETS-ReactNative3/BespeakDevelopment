@@ -6,14 +6,15 @@ const PreviewTicketScannedStyle=StyleSheet.create({
         backgroundColor: '#fff',
     },    
     EventContainer:{
-        marginTop:15,
-        marginLeft:40,
-        marginRight:40,
+        marginTop:'4%',
+        marginLeft:'10%',
+        marginRight:'10%',
     },
     EventName:{
         fontFamily:'RedHatDisplay-Medium',
         fontSize:35,
         color:'#000',
+        width:'75%',
     },
     EventDate:{
         fontFamily:'RedHatDisplay-Regular',
@@ -41,10 +42,11 @@ const PreviewTicketScannedStyle=StyleSheet.create({
     imgscan: {
         width: 260,
         height: 260,
+        borderRadius: 150
     },
     EventStat:{
-        marginLeft:40,
-        marginRight:40,
+        marginLeft: '10%',
+        marginRight: '10%',
     },
     EventStattxt:{
         fontFamily:'RedHatDisplay-Medium',
@@ -52,9 +54,9 @@ const PreviewTicketScannedStyle=StyleSheet.create({
         color:'#eb9834',
     },
     TicketPersonalInfo:{
-        marginTop:15,
-        marginLeft:40,
-        marginRight:40,
+        marginTop: '3%',
+        marginLeft: '10%',
+        marginRight: '10%',
         opacity: .6
     },
     PersonName:{
@@ -88,24 +90,21 @@ const PreviewTicketScannedStyle=StyleSheet.create({
         fontSize:15,
         fontFamily: 'RedHatDisplay-Regular',
     },
-    admitcontainer:{
-        marginLeft:40,
-        marginRight:40,
+    AdmitContainer:{
+        marginHorizontal: '10%',
+        marginBottom: '3%',
+
+    },
+    AdmitBtn: {
         alignItems: 'center',
         justifyContent: 'center',
-        alignSelf: 'stretch',
-    },
-    admitbtn: {
-        alignItems: 'center',
-        alignSelf: 'stretch',
         backgroundColor: '#eb9834',
         height: 46,
-        padding: 10,
         borderWidth: 2,
         borderColor: '#fff',
         borderRadius: 25,
     },
-    admitbtntxt:{
+    AdmitTextBtn:{
         fontSize: 20,
         alignItems: 'center',
         justifyContent: 'center',

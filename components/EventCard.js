@@ -83,7 +83,7 @@ class EventCard extends Component {
 
                         
                     </View>
-                    <View style={SystemStyle.CardOption}>
+                    <View style={SystemStyle.CardOptionForEventCard}>
                     <View style={SystemStyle.CardStatContainer}>
                             { item.has_ended ? (
                                 <>

@@ -125,11 +125,19 @@ const SystemStyle = StyleSheet.create({
     fontSize:16,
     marginLeft: 2,
   },
-  //Card Options
-  CardOption:{
+  //Card Options For EventCard
+  CardOptionForEventCard:{
     flexDirection:'row',
     alignContent:'center',
     justifyContent:'space-between',
+    marginBottom:'4%',
+    marginHorizontal:'4%',
+  },
+  //Card Options For ProfileCard
+  CardOptionForProfCard:{
+    flexDirection:'row',
+    alignContent:'center',
+    justifyContent:'flex-end',
     marginBottom:'4%',
     marginHorizontal:'4%',
   },
@@ -710,6 +718,15 @@ const SystemStyle = StyleSheet.create({
     justifyContent:'center',
     marginLeft:'8%',
     marginRight:'8%'
+  },
+  GetNotifiedInfo:{
+    color:'#5b5c5a',
+    fontSize:17,
+    fontFamily:'RedHatDisplay-Regular',
+    alignItems:'center',
+    justifyContent:'center',
+    marginLeft:'7%',
+    marginRight:'7%'
   },
   //Empty Screen Images
   LookEventImgContainer: {
