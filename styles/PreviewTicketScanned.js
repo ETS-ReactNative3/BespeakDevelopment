@@ -82,6 +82,7 @@ const PreviewTicketScannedStyle=StyleSheet.create({
         alignSelf: 'stretch',
     },
     bespeaklogo:{
+        marginTop:'1%',
         color: '#eb9834',
         fontFamily: 'RedHatDisplay-Medium',
         fontSize: 30,
@@ -96,6 +97,7 @@ const PreviewTicketScannedStyle=StyleSheet.create({
 
     },
     AdmitBtn: {
+        marginTop:'4%',
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#eb9834',
@@ -111,6 +113,29 @@ const PreviewTicketScannedStyle=StyleSheet.create({
         color: '#fff',
         fontFamily: 'RedHatDisplay-Medium',
     },
+    //For Not Today Sched
+    WhyAreYouHere: {
+        marginTop:-2,
+        alignItems: 'center',
+        alignContent:'center',
+        justifyContent:'center',
+        backgroundColor: '#fff',
+        borderColor:'#eb9834',
+        borderWidth: 2,
+        height: 40,
+        borderRadius: 25,
+        flexDirection:'row'
+      },
+    WhyAreYouStillHere:{
+        marginTop: -2,
+        marginLeft:'2%',
+        fontSize: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#eb9834',
+        fontFamily: 'RedHatDisplay-Medium',
+      },
+      
 
 
 })
