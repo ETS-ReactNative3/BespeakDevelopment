@@ -391,6 +391,11 @@ class EditProfileScreen extends Component {
                         onPress = {() => { auth.signOut() }}>
                             <Text style={EditProfileScreenStyle.LogOutTextBtn}> Log Out</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity style={EditProfileScreenStyle.DeleteAcctBtn}
+                        //onPress = {() => { auth.signOut() }}
+                        >
+                            <Text style={EditProfileScreenStyle.DeleteAcctTextBtn}> Delete Account</Text>
+                    </TouchableOpacity>
                 </ScrollView>
             </View>
         );

@@ -113,11 +113,11 @@ ChangePassBtn: {
     alignSelf: 'stretch',
     height: 46,
     backgroundColor: '#eb9834',
-    padding: 10,
     borderRadius: 25,
     color: '#eb9834',
     marginTop:'1%',
     alignItems: 'center',
+    justifyContent:'center',
 },
 ChangePassTextBtn:{
     alignItems: 'center',
@@ -131,12 +131,12 @@ LogOutBtn: {
     alignSelf: 'stretch',
     height: 46,
     backgroundColor: '#fff',
-    padding: 10,
     borderRadius: 25,
     color: '#eb9834',
     marginLeft: '15%',
     marginRight: '15%',
     alignItems: 'center',
+    justifyContent:'center'
   },
 LogOutTextBtn:{
     alignItems: 'center',
@@ -145,6 +145,26 @@ LogOutTextBtn:{
     fontFamily: 'RedHatDisplay-Medium',
     fontSize: 20,
   },
+//Delete Account Button
+DeleteAcctBtn: {
+    alignSelf: 'stretch',
+    height: 46,
+    backgroundColor: '#fff',
+    borderRadius: 25,
+    color: '#eb9834',
+    marginLeft: '15%',
+    marginRight: '15%',
+    alignItems: 'center',
+    justifyContent:'center'
+  },
+DeleteAcctTextBtn:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#A30000',
+    fontFamily: 'RedHatDisplay-Medium',
+    fontSize: 20,
+  },
+
 
 
 
