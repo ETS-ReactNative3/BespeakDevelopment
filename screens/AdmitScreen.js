@@ -163,6 +163,11 @@ class AdmitScreen extends Component {
                                 <Text style={PreviewTicketScanned.AdmitTextBtn}>{
                                     _event.is_admitted ? 'Re-admit' : 'Admit'}</Text>
                         </TouchableOpacity>
+                        <TouchableOpacity style={PreviewTicketScanned.WhyAreYouHere}
+                            onPress={() => this._handleAdmit(_event, _user.id)}>
+                                <Text style={PreviewTicketScanned.WhyAreYouStillHere}>
+                                    Event is on _date_</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>

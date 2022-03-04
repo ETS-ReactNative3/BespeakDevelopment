@@ -202,7 +202,7 @@ class EventModal extends Component {
                                     { item.has_ended ? (
                                         <TouchableOpacity style={SystemStyle.ViewBtn}
                                             onPress={() => this._handleInterested(item, false)}>
-                                                <Text style={SystemStyle.ViewTextBtn}>View</Text>
+                                                <Text style={SystemStyle.ViewTextBtn}> View </Text>
                                         </TouchableOpacity>
                                     ) : (
                                         <TouchableOpacity style={SystemStyle.InterestedBtn}

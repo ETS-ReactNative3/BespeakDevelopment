@@ -30,6 +30,7 @@ import { CommentSection } from '../components/CommentSection'
 
 import SystemStyle from "../styles/SystemStyle";
 import EditEventStyle from "../styles/EditEventStyle";
+import EditProfileScreenStyle from "../styles/EditProfileScreenStyle";
 
 import dateFormat from "../helper/DateFormat"
 import { 
@@ -561,7 +562,12 @@ class EventScreen extends Component {
                                         event_id: item.id
                                     }) }>
                                     <MaterialIcons name="people-outline" size={20} color="#fff" />
-                                    <Text style={SystemStyle.ViewAttendeeTextBtn}>View Attendees</Text> 
+                                    <Text style={SystemStyle.ViewAttendeeTextBtn}>View Attendees</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={EditProfileScreenStyle.DeleteAcctBtn}
+                                //onPress = {() => { auth.signOut() }}
+                                >
+                                <Text style={EditProfileScreenStyle.DeleteAcctTextBtn}> Delete Event</Text>
                             </TouchableOpacity>
                         </>
                     ) : (
@@ -574,10 +580,10 @@ class EventScreen extends Component {
                             ) : (
                                 <>
                                 { item.is_attending ? (
-                                    <TouchableOpacity style={SystemStyle.EventEndedBtnButOrange}>
+                                    <View style={SystemStyle.EventEndedBtnButOrange}>
                                         <MaterialCommunityIcons name="checkbox-multiple-marked-circle" size={20} color="#eb9834" />
                                         <Text style={SystemStyle.EventEndedTextForOrangeBtn}>You are attending</Text>
-                                    </TouchableOpacity>
+                                    </View>
                                 ) : (
                                     <>
                                         { item.is_limit ? (
@@ -604,6 +610,11 @@ class EventScreen extends Component {
                             )}
                         </>
                     )}
+                    <TouchableOpacity style={EditProfileScreenStyle.DeleteAcctBtn}
+                        //onPress = {() => { auth.signOut() }}
+                        >
+                            <Text style={EditProfileScreenStyle.DeleteAcctTextBtn}> Cancel Reservation</Text>
+                    </TouchableOpacity>
                 </View>
                 
                 <BottomSheet hasDraggableIcon

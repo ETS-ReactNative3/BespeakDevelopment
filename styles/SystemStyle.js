@@ -305,7 +305,7 @@ const SystemStyle = StyleSheet.create({
   ViewBtn: {
     alignItems: 'center',
     justifyContent:'center',
-    backgroundColor: '#5b5c5a',
+    backgroundColor: 'red',
     height: 46,
     width: 150,
     padding: 10,
@@ -566,6 +566,7 @@ const SystemStyle = StyleSheet.create({
   // For View Ticket Button
     ViewBtn: {
         marginTop:8,
+        marginHorizontal:'3%',
         alignItems: 'center',
         backgroundColor: '#eb9834',
         height: 40,
