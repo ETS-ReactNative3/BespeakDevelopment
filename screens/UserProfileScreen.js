@@ -50,6 +50,7 @@ class UserProfileScreen extends Component {
             console.log('No data found for user: ', uid);
             Alert.alert('Content not found',
                 'The content you were trying to access may have been removed on bespeak.');
+            this.props.navigation.goBack();
             return;
         } 
 

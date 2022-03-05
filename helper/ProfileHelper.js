@@ -76,8 +76,114 @@ async function _getUserGeneratedLink(value, _title = 'A Bespeak User',
     return link;
 }
 
+async function _deleteOverallAccount(uid = auth.currentUser.uid) {
+    var batch = db.batch();
+
+    await db.collection('user_info')
+        .doc(uid).get()
+        .then((doc) => {
+            batch.delete(doc.ref);
+        })
+
+    await db.collection('ticket')
+        .where('owner', '==', uid)
+        .get().then((querySnapshot) => {
+            querySnapshot.forEach(async (doc) => {
+                await db.collection('_participant')
+                    .where('attending', 'array-contains', doc.id)
+                    .get().then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            batch.update(doc.ref, {
+                                attending: _db.FieldValue.arrayRemove(uid),
+                            })
+                        })
+                    });
+
+                batch.delete(doc.ref);
+            })
+        })
+
+    await db.collection('event')
+        .where('owner', '==', uid)
+        .get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                batch.delete(doc.ref);
+            })
+        })
+
+    await db.collection('comment')
+        .where('owner', '==', uid)
+        .get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                batch.update(doc.ref, {
+                    owner: '_UNDEFINED_'
+                })
+            })
+        })
+
+    await db.collection('_token')
+        .where('owner', '==', uid)
+        .get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                batch.delete(doc.ref);
+            })
+        })
+
+    await db.collection('_relation')
+        .doc(uid).get()
+        .then((doc) => {
+            batch.delete(doc.ref);
+        })
+
+    await db.collection('_relation')
+        .where('follower', 'array-contains', uid)
+        .get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                batch.update(doc.ref, {
+                    follower: _db.FieldValue.arrayRemove(uid),
+                })
+            })
+        })
+
+    await db.collection('_participant')
+        .where('interested', 'array-contains', uid)
+        .get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                batch.update(doc.ref, {
+                    interested: _db.FieldValue.arrayRemove(uid),
+                })
+            })
+        });
+
+    await db.collection('_participant')
+        .where('attending', 'array-contains', uid)
+        .get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                batch.update(doc.ref, {
+                    attending: _db.FieldValue.arrayRemove(uid),
+                })
+            })
+        });
+
+    await db.collection('_notification')
+        .where('to', '==', uid)
+        .get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                batch.delete(doc.ref);
+            })
+        })
+
+    await auth.currentUser
+        .delete().then(async () => {
+            await batch.commit();
+        }).catch(error => {
+            console.log('Error!: ', error);
+        })
+}
+
 export {
     _setFollowConnection,
     _getUserGeneratedLink,
-    _initializeDoc
+    _initializeDoc,
+    _deleteOverallAccount
 };

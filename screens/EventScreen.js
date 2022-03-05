@@ -206,7 +206,11 @@ class EventScreen extends Component {
         for(var i = 0; i < _data.length; i++) {
             let comment = _data[i]
 
-            comment.owner_name = await _getUserData("_name", comment.owner)
+            comment.owner_name = await _getUserData("_name", comment.owner) 
+
+            if(!comment.owner_name) {
+                comment.owner_name = 'Bespeak User';
+            }
 
             comment.is_owned = comment.owner == auth.currentUser.uid;
             comment.server_time = await dateFormat(new Date(comment.server_time), "EEEE, MMMM d, yyyy h:mm aaa")
