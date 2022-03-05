@@ -31,7 +31,7 @@ class ProfileContent extends Component {
                     ...Options.ProfileTabNavigation
                 }}>
                 <Top.Screen name="My Events" component={React.memo(ProfileEvents)} initialParams = {{_done: this.props._on_done}}/>
-                <Top.Screen name="My Tickets" component={ProfileTickets} />
+                <Top.Screen name="My Tickets" component={React.memo(ProfileTickets)} />
                 <Top.Screen name="Bookmarks" component={React.memo(ProfileBookmarks)} />
             </Top.Navigator>
         );

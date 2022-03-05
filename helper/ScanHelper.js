@@ -12,7 +12,7 @@ export async function _fetchScannedData(ticket) {
         .doc(_key1)
         .get();
 
-    if(ticket_query.empty) {
+    if(!ticket_query.exists) {
         console.log('Ticket not existing!')
         return 103;
     }
@@ -34,7 +34,7 @@ export async function _fetchScannedData(ticket) {
         .doc(_ticket.event_id)
         .get();
 
-    if(event_query.empty) {
+    if(!event_query.exists) {
         console.log('Event not existing!')
         return 103;
     }

@@ -189,6 +189,7 @@ class SignUpFormScreen extends Component {
                     data.f_name + ' ' + data.l_name : data.org_name; 
 
                 data.mobile = this.state.mobile.value;
+                data.email = email;
                 
                 db
                     .collection('user_info')

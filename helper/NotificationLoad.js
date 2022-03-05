@@ -1,6 +1,9 @@
 import { auth, db } from '../firebase';
 
-import { _getOwnerDataByEventId } from './EventLoad';
+import { 
+    _getOwnerDataByEventId,
+    _getUserData
+} from './EventLoad';
 import { _getTimeAgo } from '../helper/DateTextFormat';
 import fetch_date_time from '../api/GlobalTime';
 
@@ -34,18 +37,17 @@ export async function _loadAllNotification(type_extend = false,
         for(var i=0; i < _data.length; i++) {
             let item = _data[i];
 
-            let owner = await _getOwnerDataByEventId(item.event_id);
-
-            item.owner_name = owner.name;
-            item.owner_id = owner.id;
             item.ago = await _getTimeAgo(new Date(item.server_time), time_now.epoch);
+            item.owner_id = item.from;
+            item.owner_name = await _getUserData('_name', item.from);
 
-            if(!item.is_read) unread_count++;
+            if(item.type == 'NEW_EVENT') {                
+                item.content = "Created a new event! Find out what's new!"; 
+            } else if(item.type == 'DEL_EVENT') {
+                item.content = "Has decided to cancel an event you are attending.";
+            }
             
-            item.content = item.type == 'NEW_EVENT' ? 
-                "Created a new event! Find out what's new!" :
-                "A notification from " + item.owner_name;
-
+            if(!item.is_read) unread_count++;
             _data[i] = item;
         }
 

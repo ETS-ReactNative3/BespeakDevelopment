@@ -178,7 +178,7 @@ DeleteTextBtn:{
     alignItems: 'center',
     justifyContent: 'center',
     color: '#A30000',
-    fontFamily: 'RedHatDisplay-Medium',
+    fontFamily: 'RedHatDisplay-Regular',
     fontSize: 20,
   },
 
