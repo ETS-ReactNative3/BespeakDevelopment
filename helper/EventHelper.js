@@ -9,7 +9,9 @@ import { _initializeDoc } from './ProfileHelper'
 
 import {
     _processDelEventNotif,
-    _constructDelEventNotif
+    _constructDelEventNotif,
+    _processEventChangeNotif,
+    _constructEventChangeNotif
 } from './NotificationHelper';
 
 async function _joinUserToEvent(event_id, uid = auth.currentUser.uid) {
@@ -89,12 +91,13 @@ async function _cancelReservation(event_id, uid = auth.currentUser.uid) {
 
 async function _deleteEvent(event_id, uid = auth.currentUser.uid) {
     let current_time = await fetch_date_time();
+    var batch = db.batch();
 
     db.collection('comment')
         .where('event_id', '==', event_id)
         .get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                doc.ref.delete();
+                batch.delete(doc.ref);
             })
         })
 
@@ -103,13 +106,14 @@ async function _deleteEvent(event_id, uid = auth.currentUser.uid) {
         .then(async (doc) => {
             let _data = doc.data();
             let participants = [];
+
             await db.collection('ticket')
                 .where('event_id', '==', event_id)
                 .get().then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
                         let _data = doc.data();
                         participants.push(_data.owner)
-                        doc.ref.delete();
+                        batch.delete(doc.ref);
                     })
                 });
             
@@ -120,14 +124,39 @@ async function _deleteEvent(event_id, uid = auth.currentUser.uid) {
                     if(_data?.attending) {
                         participants = [...participants, ..._data.attending];
                     }
-                    doc.ref.delete();
+                    batch.delete(doc.ref);
                 })
-                
+            
+            var update_batch = db.batch();
+            // Optional
+            await db.collection('user_info')
+                .where('bookmarked', 'array-contains', event_id)
+                .get().then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        update_batch.update(doc.ref, {
+                            bookmarked: _db.FieldValue.arrayRemove(event_id),
+                        })
+                    }) 
+                })
+
+            await db.collection('_notification')
+                .where('event_id', '==', event_id)
+                .get().then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        update_batch.update(doc.ref, {
+                            event_id: '_UNDEFINED_'
+                        })
+                    })
+                })
+
+            await update_batch.commit();
+
             console.log('Participants to notify about the deletion: ', participants);
 
             if(participants.length == 0 
                 || doc.schedule > current_time.epoch + 86400000) {
-                    doc.ref.delete();
+                    batch.delete(doc.ref);
+                    await batch.commit();
                     return;
             }
 
@@ -152,10 +181,55 @@ async function _deleteEvent(event_id, uid = auth.currentUser.uid) {
                 push_notif(_data);
             }
 
-            doc.ref.delete();
+            batch.delete(doc.ref);
+            await batch.commit();
         })
 
 } 
+
+async function _notifyEventChange(event_id, uid = auth.currentUser.uid) {
+    let participants = [];
+    await db.collection('ticket')
+        .where('event_id', '==', event_id)
+        .get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                let _data = doc.data();
+                participants.push(_data.owner)
+            })
+        });
+    
+    await db.collection('_participant')
+        .doc(event_id)
+        .get().then((doc) => {
+            let _data = doc.data();
+            if(_data?.attending) {
+                participants = [...participants, ..._data.attending];
+            }
+        })
+        
+    console.log('Participants to notify about the update: ', participants);
+
+    let uniq_participants = [...new Set(participants)];
+    console.log('Participants Duplicate Removal: ', uniq_participants);
+
+    _processEventChangeNotif(event_id, uniq_participants);
+    let _tokens = []
+
+    await db.collection('_token')
+        .where('owner', 'in', participants)
+        .get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                _tokens.push(doc.id);
+            })
+        })
+
+    console.log('Tokens obtained: ', _tokens);
+    
+    if(_tokens.length > 0) {
+        const _notif_data = await _constructEventChangeNotif(_tokens, {event: event_id});
+        push_notif(_notif_data);
+    }
+}
 
 // #TODO: Move to Helper
 function _uploadToStorage(path, imageName) {
@@ -201,6 +275,7 @@ export {
     _joinUserToEvent,
     _cancelReservation,
     _hasUserAdmitted,
-    _deleteEvent
+    _deleteEvent,
+    _notifyEventChange
 }
 

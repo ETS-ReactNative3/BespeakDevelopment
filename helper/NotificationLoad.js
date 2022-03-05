@@ -44,7 +44,11 @@ export async function _loadAllNotification(type_extend = false,
             if(item.type == 'NEW_EVENT') {                
                 item.content = "Created a new event! Find out what's new!"; 
             } else if(item.type == 'DEL_EVENT') {
-                item.content = "Has decided to cancel an event you are attending.";
+                item.content = `Decided to cancel "${ item.event_name }" an event that you were planning to attend.`;
+            } else if(item.type == 'UPD_EVENT') {
+                item.content = "Updated the description of an event you are attending.";
+            } else {
+                item.content = "A Bespeak Notification.";
             }
             
             if(!item.is_read) unread_count++;

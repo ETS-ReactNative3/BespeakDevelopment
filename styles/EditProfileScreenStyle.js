@@ -6,8 +6,8 @@ Container: {
     flex: 1,
     backgroundColor: '#fff',
     paddingTop: '6%',
-    paddingLeft:'8%',
-    paddingRight:'8%',
+    marginLeft:'8%',
+    marginRight:'8%',
 },
 //Option Guide
 OptionGuide:{
@@ -161,7 +161,7 @@ DeleteAcctTextBtn:{
     alignItems: 'center',
     justifyContent: 'center',
     color: '#A30000',
-    fontFamily: 'RedHatDisplay-Light',
+    fontFamily: 'RedHatDisplay-Regular',
     fontSize: 20,
   },
 DeleteBtn: {

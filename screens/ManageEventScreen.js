@@ -35,7 +35,8 @@ import Properties from "../values/Properties"
 import dateFormat from "../helper/DateFormat"
 import { 
     _uploadToStorage,
-    _getGeneratedLink
+    _getGeneratedLink,
+    _notifyEventChange
 } from "../helper/EventHelper"
 import { 
     _arrangeData,
@@ -505,7 +506,9 @@ class EditEventScreen extends Component {
                 is_open: data.is_open
             },
             to_compare: {
-                
+                location: data.location,
+                schedule: data.schedule,
+                name: data.name
             }
         });
 
@@ -582,6 +585,10 @@ class EditEventScreen extends Component {
                 ...event_data
             })
             .catch(error => {
+                if(error.code == 'firestore/not-found') {
+                    this.props.navigation.goBack()
+                    return;
+                }
                 this.setState({'is_loading': false})
                 Alert.alert('Error!', error.message)
                 return
@@ -616,6 +623,13 @@ class EditEventScreen extends Component {
                             Alert.alert('Error!', error.message)
                             console.log('Error!', error.message)
                         })
+                    
+                    let initial = this.state.to_compare;
+                    if(initial.name != event_data.name 
+                        || initial.schedule != event_data.schedule
+                        || initial.location != event_data.location) {
+                            await _notifyEventChange(event_id);
+                        }
                 } catch(e) { console.log('Error!', e)}
 
                 this.setState({'is_loading': false})

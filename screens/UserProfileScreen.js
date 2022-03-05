@@ -46,8 +46,10 @@ class UserProfileScreen extends Component {
         const query = user_info.doc(uid)
         const snapshot = await query.get()
 
-        if(snapshot.empty) {
+        if(!snapshot.exists) {
             console.log('No data found for user: ', uid);
+            Alert.alert('Content not found',
+                'The content you were trying to access may have been removed on bespeak.');
             return;
         } 
 
