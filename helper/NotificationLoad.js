@@ -41,10 +41,14 @@ export async function _loadAllNotification(type_extend = false,
             item.owner_id = item.from;
             item.owner_name = await _getUserData('_name', item.from);
 
+            if(!item.owner_name) {
+                item.owner_name = 'Bespeak User'
+            }
+
             if(item.type == 'NEW_EVENT') {                
                 item.content = "Created a new event! Find out what's new!"; 
             } else if(item.type == 'DEL_EVENT') {
-                item.content = `Decided to cancel "${ item.event_name }" an event that you were planning to attend.`;
+                item.content = `Decided to cancel "${ item.event_name }", an event that you were planning to attend.`;
             } else if(item.type == 'UPD_EVENT') {
                 item.content = "Updated the description of an event you are attending.";
             } else {

@@ -10,7 +10,8 @@ import {
   KeyboardAvoidingView,
   SafeAreaView,
 } from 'react-native';
-import { InputOutline, InputStandard } from 'react-native-input-outline';
+import Dialog from "react-native-dialog";
+import { InputOutline } from 'react-native-input-outline';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import { auth, db } from '../firebase';
@@ -35,6 +36,9 @@ class SignUpNameScreen extends Component {
         l_name: '',
         f_name: '',
         org_name: '',
+
+        show_terms: false,
+        show_policy: false,
     }
     constructor (props) {
         super(props);
@@ -257,6 +261,10 @@ class SignUpFormScreen extends Component {
                             maxLength={150}
                             value = {this.state.email.value}
                             onChangeText = {text => this._handleText('email', text)}
+                            returnKeyType="next"
+                            ref={(input) => { this.txtEmail = input; }}
+                            onSubmitEditing={() => { this.txtMobile.focus(); }}
+                            blurOnSubmit={false}
                         {...Properties.defaultInputOutline}/> 
                         </SafeAreaView>
                         {this.state.email.valid ?
@@ -268,6 +276,10 @@ class SignUpFormScreen extends Component {
                             maxLength={15}
                             value = {this.state.mobile.value}
                             onChangeText = {text => this._handleText('mobile', text)}
+                            returnKeyType="next"
+                            ref={(input) => { this.txtMobile = input; }}
+                            onSubmitEditing={() => { this.txtPassword.focus(); }}
+                            blurOnSubmit={false}
                         {...Properties.defaultInputOutline}/> 
                         </SafeAreaView>
                         {this.state.mobile.valid ?
@@ -280,6 +292,10 @@ class SignUpFormScreen extends Component {
                             value = {this.state.password.value}
                             onChangeText = {text => this._handleText('password', text)}
                             secureTextEntry={true}
+                            returnKeyType="next"
+                            ref={(input) => { this.txtPassword = input; }}
+                            onSubmitEditing={() => { this.txtConfirm.focus(); }}
+                            blurOnSubmit={false}
                         {...Properties.defaultInputOutline}/> 
                         </SafeAreaView>  
                         {this.state.password.valid ?
@@ -292,6 +308,8 @@ class SignUpFormScreen extends Component {
                             value = {this.state.confirm.value}
                             onChangeText = {text => this._handleText('confirm', text)}
                             secureTextEntry={true}
+                            returnKeyType="next"
+                            ref={(input) => { this.txtConfirm = input; }}
                         {...Properties.defaultInputOutline}/> 
                         </SafeAreaView>
                         {this.state.confirm.valid ?
@@ -299,11 +317,12 @@ class SignUpFormScreen extends Component {
                                 {this.state.confirm.valid}</Text>
                         : null}  
                         <View style={SignUpStyle.Container}>
-                            <Text style={SignUpStyle.GreyText}>By clicking the button below, you agree to our</Text>
+                            <Text style={SignUpStyle.GreyText}>By clicking the button below, 
+                                you are agreeing to our</Text>
                         </View>
                         <View style={{flexDirection:'row', justifyContent:'center'}}>
                             <TouchableOpacity 
-                                onPress = {() => Alert.alert("Terms of Service", Messages.terms)}>
+                                onPress = {() => this.setState({show_terms: true})}>
                                     <Text style={SignUpStyle.TextBtn}>Terms</Text>
                             </TouchableOpacity>
                             <Text style={SignUpStyle.GreyText}> and </Text>
@@ -324,6 +343,16 @@ class SignUpFormScreen extends Component {
                             source={require('../assets/img/AlmostThere.png')}/>
                     </View>
                 </KeyboardAvoidingView>
+                <Dialog.Container visible={this.state.show_terms}>
+                    <ScrollView>
+                    <Dialog.Title>Terms and Conditions</Dialog.Title>
+                    <Dialog.Description>
+                        {Messages.terms}
+                    </Dialog.Description>
+                    <Dialog.Button label="I understand" color = {'gray'}
+                        onPress={() => { this.setState({show_terms: false}) }} />
+                    </ScrollView>
+                </Dialog.Container>
             </View>
         );
     }

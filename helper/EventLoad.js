@@ -140,9 +140,9 @@ async function _getUserData(metadata, uid = auth.currentUser.uid) {
     const query = user_info.doc(uid)
     const snapshot = await query.get()
 
-    if(snapshot.empty) {
+    if(!snapshot.exists) {
         console.log('No data found for user: ', uid);
-        return;
+        return false;
     } 
 
     var raw_data = snapshot.data()

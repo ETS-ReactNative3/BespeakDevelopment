@@ -11,6 +11,7 @@ import {
 import { 
   Feather,
 } from '@expo/vector-icons';
+import Dialog from "react-native-dialog";
 import Spinner from 'react-native-loading-spinner-overlay';
 import { InputStandard } from 'react-native-input-outline';
 import * as ImagePicker from 'react-native-image-crop-picker';
@@ -33,7 +34,10 @@ import {
 import { 
     _getProfileImage,
 } from "../helper/ProfileLoad";
-import { _getUserGeneratedLink } from "../helper/ProfileHelper"
+import { 
+    _getUserGeneratedLink, 
+    _deleteOverallAccount
+} from "../helper/ProfileHelper"
 
 
 class EditProfileScreen extends Component {
@@ -43,7 +47,14 @@ class EditProfileScreen extends Component {
         valid: {},
         profile_photo: {uri: '', hasChange: false},
         cover_photo: {uri: '', hasChange: false},
-        is_loading: false
+        is_loading: false,
+
+        show_dialog: false,
+        show_confirm: false,
+        show_valid: false,
+
+        pass_confirm: null,
+        show_load: false,
     }
     async _loadUserData() {
         let uid = auth.currentUser.uid
@@ -280,6 +291,34 @@ class EditProfileScreen extends Component {
         this.setState({'data': dataState})
         this.setState({'valid': validState})
     }
+
+    async _handleDelete() {
+        this.setState({show_load: true});
+
+        var user_creds = _auth.EmailAuthProvider
+            .credential(this.state.user.email, this.state.pass_confirm)
+        console.log('Started deleting account... ')
+        
+        await auth
+            .currentUser
+            .reauthenticateWithCredential(user_creds)
+            .then(async () => {
+                console.log('Deleting account now...')
+                this.setState({show_load: false});
+                await _deleteOverallAccount();
+            })
+            .catch(error => {
+                console.log('Error on Reauthentication: ', error.message)
+                if(error.code == 'auth/wrong-password') {
+                    this.setState({show_valid: true})
+                } else {
+                    Alert.alert('Error!', error.message)
+                }
+            })
+
+        this.setState({show_load: false});
+    }
+
     render() {
         let item = this.state.data;
 
@@ -288,6 +327,14 @@ class EditProfileScreen extends Component {
                 { this.state.is_loading && 
                     <Spinner visible={true} 
                         textStyle={SystemStyle.whiteLoader}
+                        color = '#fff'
+                        animation = 'fade'
+                        overlayColor = 'rgba(0, 0, 0, 0.50)'/>
+                }
+                { this.state.show_load && 
+                    <Spinner visible={true}
+                        textContent = {'Deleting your information...'}
+                        textStyle={SystemStyle.defaultLoader}
                         color = '#fff'
                         animation = 'fade'
                         overlayColor = 'rgba(0, 0, 0, 0.50)'/>
@@ -392,9 +439,37 @@ class EditProfileScreen extends Component {
                             <Text style={EditProfileScreenStyle.LogOutTextBtn}> Log Out</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={EditProfileScreenStyle.DeleteAcctBtn}
-                        onPress = {() => {}}>
+                        onPress = {() => { this.setState({show_dialog: true}) }}>
                             <Text style={EditProfileScreenStyle.DeleteAcctTextBtn}> Delete Account</Text>
                     </TouchableOpacity>
+                    <Dialog.Container visible={this.state.show_dialog}>
+                        <Dialog.Title>Account Delete</Dialog.Title>
+                            <Dialog.Description>
+                                Do you want to delete this account? You will lose all of your events and
+                                connections on bespeak. Are you sure?
+                            </Dialog.Description>
+                        <Dialog.Button label="Cancel" color = {'orange'}
+                            onPress={() => { this.setState({show_dialog: false}) }} />
+                        <Dialog.Button label="Delete" color = {'gray'}
+                            onPress={() => { this.setState({show_confirm: true, show_dialog: false}) }} />
+                    </Dialog.Container>
+                    <Dialog.Container visible={this.state.show_confirm}>
+                        <Dialog.Title>Confirm Delete</Dialog.Title>
+                        <Dialog.Description>
+                            We need your confirmation for your request. Its sad for us to see you go but we guarantee that
+                            all of your information saved in bespeak will be securely removed. 
+                        </Dialog.Description>
+                        <Dialog.Input label = 'Confirm using your password' secureTextEntry={true}
+                            onChangeText = {text => {
+                                this.setState({pass_confirm: text, show_valid: false})}}/>
+                        <Dialog.Description visible = {this.state.show_valid}>
+                            Your password does not match.
+                        </Dialog.Description>
+                        <Dialog.Button label="Cancel" color = {'orange'}
+                            onPress={() => { this.setState({show_confirm: false}) }} />
+                        <Dialog.Button label="Delete my information" color = {'gray'}
+                            onPress={() => { this._handleDelete(); }} />
+                    </Dialog.Container>
                 </ScrollView>
             </View>
         );
