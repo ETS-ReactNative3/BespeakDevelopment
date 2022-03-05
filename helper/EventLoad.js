@@ -88,11 +88,11 @@ async function _getOwnerDataByEventId(event_id) {
 
     var event_data = get_owner_query.data()
 
-    var owner_name = await _getUserData('_name', event_data.owner);
+    var owner_name = await _getUserData('_name', event_data?.owner);
 
     return {
         name: owner_name ? owner_name : 'A Bespeak User',
-        id: event_data.owner
+        id: event_data?.owner
     };
 }
 
@@ -157,7 +157,7 @@ async function _checkEventAvailability(event_id) {
         .doc(event_id)
         .get();
 
-    if(get_event_query.empty) {
+    if(!get_event_query.exists) {
         console.log('No data found for event: ', event_id);
         return 102;
     } 
@@ -175,17 +175,27 @@ async function _checkEventAvailability(event_id) {
     return 100;
 }
 
-async function _checkUserAttendance(event_id, uid = auth.currentUser.uid) {
-    let attending = true;
-
-    let get_ticket_query = await db.collection('ticket')
-        .where('event_id', '==', event_id)
-        .where('owner', '==', uid)
+async function _checkEventExist(event_id) {
+    let get_event_query = await db.collection('event')
+        .doc(event_id)
         .get();
 
-    if(get_ticket_query.empty) {
-        attending = false;
-    }
+    return get_event_query.exists;
+}
+
+async function _checkUserAttendance(event_id, uid = auth.currentUser.uid) {
+    let attending = false;
+    
+    await db.collection('ticket')
+        .where('event_id', '==', event_id)
+        .where('owner', '==', uid).get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach(doc => {
+                if(doc.exists) {
+                    attending = true;
+                }
+            })
+        });
 
     console.log('Is User Attending?: ', attending);
 
@@ -199,7 +209,7 @@ async function _getAttendingCount(event_id) {
         .doc(event_id)
         .get();
     
-    if(get_participant_query.empty) {
+    if(!get_participant_query.exists) {
         return 0;
     }
 
@@ -222,5 +232,6 @@ export {
     _getOwnerDataByEventId,
     _getAttendingCount,
     _checkEventAvailability,
-    _checkUserAttendance
+    _checkUserAttendance,
+    _checkEventExist
 }

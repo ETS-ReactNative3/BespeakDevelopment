@@ -150,6 +150,11 @@ class NotificationScreen extends Component {
                 }).catch(err => console.log('Error!: ', err.message));
         }
 
+        if(item.type == 'DEL_EVENT') {
+            this.props.navigation.navigate('UserProfileScreen', {user_id: item.from});
+            return;
+        }
+
         this.props.navigation.navigate('EventScreen', {event_id: item.event_id});
     }
     render() {

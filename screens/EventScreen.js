@@ -42,7 +42,12 @@ import {
     _checkEventAvailability,
     _checkUserAttendance
 } from "../helper/EventLoad"
-import { _joinUserToEvent } from '../helper/EventHelper';
+import { 
+    _joinUserToEvent,
+    _cancelReservation,
+    _hasUserAdmitted,
+    _deleteEvent
+} from '../helper/EventHelper';
 import { _isFollowing } from "../helper/ProfileLoad";
 import { _setFollowConnection } from '../helper/ProfileHelper';
 
@@ -103,16 +108,28 @@ class EventScreen extends Component {
             .doc(event_id)
             .get();
         
-        if(get_event_query.empty) {
+        let _data = get_event_query.data();
+
+        if(!get_event_query.exists) {
             console.log('No data found for user: ', uid);
+            this._invalidAccess();
             return;
         }
 
-        let _data = get_event_query.data();
         _data.id = get_event_query.id;
         _data = await _arrangeData([_data], true); 
 
         _data = _data[0]
+
+        if(!_data.is_open) {
+            if(_data.owner != uid) {
+                this._invalidAccess();
+                return;
+            } else {
+                Alert.alert('Your event is hidden',
+                    'This event is currently hidden to other bespeak users, change its status in edit event.');
+            }
+        }
 
         _data.is_attending = await _checkUserAttendance(_data.id);
         _data.is_limit = current_count >= _data.max
@@ -137,6 +154,13 @@ class EventScreen extends Component {
         }
         
         this._loadImages(_data, uid);
+    }
+
+    _invalidAccess() {
+        Alert.alert('Content not available', 
+            'The event you are trying to open was either removed or hidden by the owner.')
+        this.props.navigation.goBack();
+        return;
     }
     
     async _loadImages(item, uid) {
@@ -349,9 +373,11 @@ class EventScreen extends Component {
                 msg_content = ['This event has ended', 'This event is now archived however interactions will remain enabled.'];
                 break;
             case 102:
-                msg_content = ['This event ', 
-                    'The event may have been deleted or hidden by its organizer.'];
-                break;
+                msg_content = ['Event not available', 
+                    'The event may have been deleted or hidden by the organizer.'];
+                    Alert.alert(msg_content[0], msg_content[1]);
+                    this.props.navigation.goBack();
+                return;
             case 101:
                 msg_content = ['No slots left', 
                     'The event has reached its registration limit.'];
@@ -386,6 +412,32 @@ class EventScreen extends Component {
                 {ticket_id: ticket_id, navigation: nav})
         }
     }
+
+    async _handleCancelation() {
+        this.setState({is_verifying: true});
+        let item = this.state.data;
+
+        if(!await _hasUserAdmitted(item.id)) {
+            await _cancelReservation(item.id);
+            this.doRefresh();
+        } else {
+            Alert.alert('Not allowed', 
+                'You cannot cancel your reservation to this event anymore.',
+                [{text: 'Okay'}]);
+        }
+        this.setState({is_verifying: false});
+    }
+
+    async _handleEventDelete() {
+        let item = this.state.data;
+
+        this.setState({is_admitting: true});
+        await _deleteEvent(item.id);
+        this.setState({is_admitting: false});
+
+        this.props.navigation.goBack();
+    }
+
     render() {
         let item = this.state.data;
         let comment_content = Object.values(this.state.comment_data);
@@ -564,8 +616,10 @@ class EventScreen extends Component {
                                     <Text style={SystemStyle.ViewAttendeeTextBtn}>View Attendees</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={EditProfileScreenStyle.DeleteBtn}
-                                //onPress = {() => { auth.signOut() }}
-                                >
+                                onPress = {() => Alert.alert('Delete Event', 'Are you sure? ' + 
+                                'This cannot be retrieved once done.', 
+                                [ {text: 'Cancel', style:'cancel'},
+                                    {text: 'Yes', onPress: () => this._handleEventDelete()}])}>
                                 <Text style={EditProfileScreenStyle.DeleteTextBtn}> Delete Event</Text>
                             </TouchableOpacity>
                         </>
@@ -584,10 +638,12 @@ class EventScreen extends Component {
                                             <MaterialCommunityIcons name="checkbox-multiple-marked-circle" size={20} color="#eb9834" />
                                             <Text style={SystemStyle.EventEndedTextForOrangeBtn}>You are attending</Text>
                                         </View>
-                                        <TouchableOpacity style={EditProfileScreenStyle.DeleteAcctBtn}
-                                            //onPress = {() => { auth.signOut() }}
-                                            >
-                                                <Text style={EditProfileScreenStyle.DeleteAcctTextBtn}> Cancel Reservation</Text>
+                                        <TouchableOpacity style={EditProfileScreenStyle.DeleteBtn}
+                                            onPress = {() => Alert.alert('Cancel Reservation', 'Are you sure? ' + 
+                                            'This will delete and invalidate your ticket.', 
+                                            [ {text: 'Cancel', style:'cancel'},
+                                                {text: 'Yes', onPress: () => this._handleCancelation()}])}>
+                                                    <Text style={EditProfileScreenStyle.DeleteTextBtn}> Cancel Reservation</Text>
                                         </TouchableOpacity>
                                     </>
                                 ) : (
@@ -616,11 +672,6 @@ class EventScreen extends Component {
                             )}
                         </>
                     )}
-                    <TouchableOpacity style={EditProfileScreenStyle.DeleteBtn}
-                        //onPress = {() => { auth.signOut() }}
-                        >
-                            <Text style={EditProfileScreenStyle.DeleteTextBtn}> Cancel Reservation</Text>
-                    </TouchableOpacity>
                 </View>
                 
                 <BottomSheet hasDraggableIcon

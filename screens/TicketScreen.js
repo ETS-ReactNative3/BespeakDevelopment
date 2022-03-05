@@ -3,6 +3,7 @@ import {
     TouchableOpacity, 
     Text, 
     View,
+    Alert
 } from 'react-native';
 import { sha256 } from 'react-native-sha256';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -38,8 +39,11 @@ class TicketScreen extends Component {
             .doc(ticket_id)
             .get();
 
-        if(get_ticket_query.empty) {
+        if(!get_ticket_query.exists) {
+            Alert.alert('Content not found', 
+                'This content is either not available or not existing.');
             this.props.navigation.goBack();
+            return;
         }
 
         let _ticket = get_ticket_query.data();

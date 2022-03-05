@@ -55,7 +55,7 @@ class ScanScreen extends Component {
             this.props.navigation.navigate('AdmitScreen', {content: _content});
         } catch (ex) {
             Alert.alert('Error!', 'Please try again. Showing error on logs...');
-            console.log('Error: ', e);
+            console.log('Error: ', ex);
         }
 
         this.setState({is_verifying: false});

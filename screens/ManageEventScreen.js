@@ -411,6 +411,7 @@ class CreateEventScreen extends Component {
 class EditEventScreen extends Component {
     state = {
         data: {},
+        to_compare: {},
         banner_photo: false,
         banner_has_change: false,
         valid: {},
@@ -503,6 +504,9 @@ class EditEventScreen extends Component {
                 info: data.info,
                 is_open: data.is_open
             },
+            to_compare: {
+                
+            }
         });
 
         this._loadImages(data);

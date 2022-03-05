@@ -58,8 +58,8 @@ class EventList extends Component {
 
             //# TODO: Optimize
             this._unsubscribe = this.props.navigation.addListener('focus', () => {
-                if(this.state.is_mounted && this.props.for_profile) {
-                    this._loadEvents();
+                if((this.state.is_mounted && this.props.for_profile)) {
+                        this._loadEvents();
                 }
             }); 
         } catch(error) {

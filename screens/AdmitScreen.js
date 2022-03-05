@@ -19,7 +19,10 @@ import PreviewTicketScanned from "../styles/PreviewTicketScanned.js";
 import SystemStyle from '../styles/SystemStyle.js';
 
 import dateFormat from '../helper/DateFormat';
-import { _arrangeData } from '../helper/EventLoad.js';
+import { 
+    _arrangeData,
+    _checkEventExist
+} from '../helper/EventLoad.js';
 import { _initializeDoc } from '../helper/ProfileHelper.js';
 
 class AdmitScreen extends Component {
@@ -43,7 +46,7 @@ class AdmitScreen extends Component {
             .doc(event_id)
             .get();
 
-        if(participant_query.empty) {
+        if(!participant_query.exists) {
             return false;
         }
 
@@ -93,6 +96,12 @@ class AdmitScreen extends Component {
         this.setState({is_verifying: true});
         let event_id = event_data.id;
 
+        if(!await _checkEventExist(event_id)) {
+            Alert.alert('Content not found',
+                'The content you are trying to open may have been removed.');
+            this.props.navigation.goBack();
+            return;
+        }
         if(!event_data.is_admitted) {
             db.collection("_participant")
                 .doc(event_id)
@@ -150,6 +159,7 @@ class AdmitScreen extends Component {
                     </View>
                     <View style={PreviewTicketScanned.TicketPersonalInfo}>
                         <Text style={PreviewTicketScanned.PersonName}>{ _user._name }</Text>
+                        <Text style={PreviewTicketScanned.PersonEmail}>{ _user.email }</Text>
                         <Text style={PreviewTicketScanned.PersonEmail}>{ _user.mobile }</Text>
                         <Text style={PreviewTicketScanned.DateRegistered}>{ _user.registration_date }</Text>
                     </View>

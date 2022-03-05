@@ -55,9 +55,12 @@ class ParticipantList extends Component {
         let _result = get_participant_query.data();
         let raw_data = [];
         let for_attending = false;
+        let allow_show = true;
 
         if(this.props._interested) {
             raw_data = _result?.interested;
+
+            allow_show = false;
         } else if(this.props._attending) {
             raw_data = _result?.attending;
 
@@ -101,7 +104,11 @@ class ParticipantList extends Component {
         let doc_data = [];
 
         get_profile_query.forEach((doc) => {
-            doc_data.push({id: doc.id, ...doc.data()})
+            doc_data.push({
+                id: doc.id, 
+                ...doc.data(),
+                show_additionals: allow_show
+            })
         })
         
         doc_data = await _arrangeProfileData(doc_data);
@@ -220,8 +227,12 @@ class ParticipantList extends Component {
                             </View>
                             <View style={SystemStyle.NamesInCard}>
                                 <Text style={SystemStyle.NamesInCardText}>{ item._name }</Text>
-                                <Text style={SystemStyle.EmailInCardText}>{ item._name }</Text>
-                                <Text style={SystemStyle.MobileNoInCardText}>{ item._name }</Text>
+                                { item.show_additionals &&
+                                    <>
+                                        <Text style={SystemStyle.EmailInCardText}>{ item.email }</Text>
+                                        <Text style={SystemStyle.MobileNoInCardText}>{ item.mobile }</Text>
+                                    </>
+                                }
                             </View>
                         </View>);
                     }}

@@ -24,6 +24,7 @@ import SystemStyle from "../styles/SystemStyle";
 
 import { _initiateSharing } from "../helper/LinkHelper";
 import { _initializeDoc } from '../helper/ProfileHelper';
+import { _checkEventExist } from '../helper/EventLoad';
 
 class EventCard extends Component {
     constructor() {
@@ -126,11 +127,17 @@ class EventCard extends Component {
 }
 
 class EventModal extends Component {
-    _handleInterested(event, save = true) {
+    async _handleInterested(event, save = true) {
         if(save) {
             this.props.modal_ref.current.close()
 
             let uid = auth.currentUser.uid;
+
+            if(!await _checkEventExist(event.id)) {
+                Alert.alert('Content not available',
+                    'The content you are trying to open may have been deleted.');
+                return;
+            }
 
             db.collection("_participant")
                 .doc(event.id)
