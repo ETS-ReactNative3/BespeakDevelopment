@@ -63,3 +63,5 @@ https://www.npmjs.com/package/react-native-popup-confirm-toast
 - ```expo install react-native-qrcode-scanner```
 - ```expo install react-native-permissions```
 - ```expo install react-native-sha256```
+
+- ```expo install react-native-dialog```
