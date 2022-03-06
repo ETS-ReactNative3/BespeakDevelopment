@@ -765,6 +765,7 @@ const SystemStyle = StyleSheet.create({
   CreateEventImgContainer: {
     alignItems:'center',
     justifyContent:'center',
+    marginTop:'20%'
   },
   CreateEventImg: {
     marginBottom:'1.5%',

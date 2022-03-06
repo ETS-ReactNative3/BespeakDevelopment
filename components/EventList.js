@@ -4,6 +4,7 @@ import { ActivityIndicator,
     Text,
     View,
     Image,
+    TouchableOpacity,
     RefreshControl
 } from 'react-native';
 
@@ -22,6 +23,7 @@ import { _getFollowing } from "../helper/ProfileLoad";
 import { EventCard, EventModal } from "./EventCard";
 
 import SystemStyle from "../styles/SystemStyle";
+import { ScrollView } from "react-native-gesture-handler";
 
 class EventList extends Component {
     constructor() {
@@ -333,19 +335,29 @@ class EventList extends Component {
                 }
                 {this.state.data.length == 0 && (
                         this.props.for_profile && this.props.user_id ? (
-                            <View style={SystemStyle.TabContainer}>
+                        <View style={SystemStyle.TabContainer}>
+                            <ScrollView>    
                                 <View style={SystemStyle.TabContainer}>
                                     <View style={SystemStyle.CreateEventImgContainer}>
                                         <Image style={SystemStyle.CreateEventImg} source={require('../assets/img/CreateEvent.png')}/>      
                                     </View>
-
-                                        <Text style={SystemStyle.EmptyTitle}> Create your event </Text>
-                                        <Text style={SystemStyle.EmptyTitleAdditionalInfo}> When you create an event, they will appear here</Text>
-                                        <View style={SystemStyle.Center}>
+                                    <Text style={SystemStyle.EmptyTitle}> Create your event </Text>
+                                    <Text style={SystemStyle.EmptyTitleAdditionalInfo}> When you create an event, they will appear here</Text>
+                                    <View style={SystemStyle.Center}>
                                         <Text style={SystemStyle.EmptyTitleAdditionalInfo}> on your profile. </Text>
                                     </View>
+                                    <Text style={SystemStyle.NameList}></Text>
+                                    <View style={SystemStyle.Center}>  
+                                        <TouchableOpacity style={SystemStyle.LoadBtn}
+                                            //onPress={() => this._extendLoadComments()}
+                                        >
+                                            <Text style={SystemStyle.LoadText}>Refresh...</Text>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
-                            </View>
+                            </ScrollView>
+                        </View>
+
                         ) : this.props.for_saved ? (
                             <View style={SystemStyle.TabContainer}>
                                 <View style={SystemStyle.LookEventImgContainer}>
@@ -361,6 +373,14 @@ class EventList extends Component {
                                 </View>
                                     <Text style={SystemStyle.EmptyTitle}> Welcome to Bespeak </Text>
                                     <Text style={SystemStyle.AdditionalInfo}> Follow organizers to start seeing their upcoming events. </Text>
+                                    <Text style={SystemStyle.NameList}></Text>
+                                    <View style={SystemStyle.Center}>  
+                                        <TouchableOpacity style={SystemStyle.LoadBtn}
+                                            //onPress={() => this._extendLoadComments()}
+                                        >
+                                            <Text style={SystemStyle.LoadText}>Refresh...</Text>
+                                        </TouchableOpacity>
+                                    </View>
                             </View>
                         )
                     ) 
