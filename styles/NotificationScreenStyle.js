@@ -40,6 +40,7 @@ const NotificationScreenStyle=StyleSheet.create({
         justifyContent:'center',
         alignSelf:'center',
         marginLeft:'4%',
+        width:'75%'
     },
     NotifContentName:{
         fontSize: 16,
@@ -62,6 +63,7 @@ const NotificationScreenStyle=StyleSheet.create({
         flexDirection:'row',
         paddingVertical:'3%',
         borderRadius: 6,
+        width:'100%'
     },
     NotifContentNameUnread:{
         fontSize: 16,
@@ -79,8 +81,9 @@ const NotificationScreenStyle=StyleSheet.create({
         color: '#000',
     },
     BUlletPosition:{
-        marginTop:'1.5%',
-        marginLeft:'3%'
+        alignItems:'center',
+        justifyContent:'center',
+
     }
 
 })

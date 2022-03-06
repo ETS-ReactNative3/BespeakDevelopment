@@ -204,13 +204,15 @@ class NotificationScreen extends Component {
                                         <Image style={NotificationScreenStyle.NotifImg}
                                             source={ item.owner_image }/>
                                     </View>
-                                    <View style={NotificationScreenStyle.NotifCard}>
-                                        <Text style={NotificationScreenStyle.NotifContentNameUnread}>{ item.owner_name }</Text>
-                                        <Text style={NotificationScreenStyle.NotifContentPostUnread}>{ item.content }</Text>
-                                        <Text style={NotificationScreenStyle.NotifContentTimeUnread}>{ item.ago }.</Text>
-                                    </View>
-                                    <View style={NotificationScreenStyle.BUlletPosition}>
-                                        <Entypo name="dot-single" size={40} color="#eb9834" />
+                                    <View style={SystemStyle.RowImg}>
+                                        <View style={NotificationScreenStyle.NotifCard}>
+                                            <Text style={NotificationScreenStyle.NotifContentNameUnread}>{ item.owner_name }</Text>
+                                            <Text style={NotificationScreenStyle.NotifContentPostUnread}>{ item.content }</Text>
+                                            <Text style={NotificationScreenStyle.NotifContentTimeUnread}>{ item.ago }.</Text>
+                                        </View>
+                                        <View style={NotificationScreenStyle.BUlletPosition}>
+                                            <Entypo name="dot-single" size={40} color="#eb9834" style={NotificationScreenStyle.BUlletPosition}/>
+                                        </View>
                                     </View>
                             </TouchableOpacity>
                         )
