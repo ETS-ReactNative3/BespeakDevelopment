@@ -6,8 +6,6 @@ const SignUpStyle=StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         paddingTop: '6%',
-        paddingLeft:'8%',
-        paddingRight:'8%',
     },
     //PageGuide
     PageGuide:{
@@ -15,6 +13,8 @@ const SignUpStyle=StyleSheet.create({
         marginBottom:'6%',
         color: '#000',
         fontFamily: 'RedHatDisplay-Medium',
+        marginLeft:'8%',
+        marginRight:'8%',
     },
     GuideText:{
         fontSize: 17,
@@ -24,10 +24,14 @@ const SignUpStyle=StyleSheet.create({
         color: '#ccc',
         fontFamily: 'RedHatDisplay-Regular',
         alignItems: 'center',
+        marginLeft:'8%',
+        marginRight:'8%',
     },
     //Text Input for Email and Password
     InputOutlineContainer:{
         marginTop:'4%',
+        marginLeft:'8%',
+        marginRight:'8%',
     },
     //Continue Buttons for SignUpForm
     ContinueBtn:{
@@ -64,9 +68,11 @@ const SignUpStyle=StyleSheet.create({
         justifyContent:'center',
     },
     AlmostThereImgContainer:{
-        marginTop:'-20%',
+        marginTop: '-20%',
         alignItems:'center',
         justifyContent:'center',
+        zIndex: -1, // works on ios
+        elevation: -1,
     },
     AlmostThereImg: {
         width: 280,
@@ -168,6 +174,12 @@ const SignUpStyle=StyleSheet.create({
         color: '#fff',
         fontFamily: 'RedHatDisplay-Medium',
     },
+    TermsContainer: {
+        backgroundColor: '#fff',
+        paddingTop: '6%',
+        marginLeft:'8%',
+        marginRight:'8%',
+    }
 
 
 })

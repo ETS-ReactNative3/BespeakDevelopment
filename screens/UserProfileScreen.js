@@ -13,7 +13,7 @@ import {
     SimpleLineIcons,
     Ionicons
 } from '@expo/vector-icons';
-import { auth, db, storage } from '../firebase';
+import { auth, db, _db } from '../firebase';
 
 import ProfileScreenStyle from "../styles/ProfileScreenStyle";
 import SystemStyle from "../styles/SystemStyle";
@@ -52,7 +52,11 @@ class UserProfileScreen extends Component {
                 'The content you were trying to access may have been removed on bespeak.');
             this.props.navigation.goBack();
             return;
-        } 
+        }
+
+        if(uid != auth.currentUser.uid) {
+            this._addPopularity(uid);
+        }
 
         var raw_data = snapshot.data()
         raw_data.id = snapshot.id;
@@ -71,6 +75,14 @@ class UserProfileScreen extends Component {
 
         this._loadImages(_data);
         console.log('Profile Name: ', this.state.data.profile_name)
+    }
+
+    async _addPopularity(uid) {
+        await db.collection('user_info')
+            .doc(uid)
+            .update({
+                _popularity: _db.FieldValue.increment(1)
+            });
     }
 
     async _loadImages(item) {

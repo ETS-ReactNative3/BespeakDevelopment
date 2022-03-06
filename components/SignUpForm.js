@@ -62,11 +62,12 @@ class SignUpNameFields extends Component {
                             returnKeyType="next"
                             onSubmitEditing={() => { this.txtLname.focus(); }}
                             blurOnSubmit={false}/> 
+                        {this.state.f_name.valid ?
+                            <Text style={Validation.textVal}>
+                                {this.state.f_name.valid}</Text>
+                        : null}
                     </SafeAreaView>
-                    {this.state.f_name.valid ?
-                        <Text style={Validation.textVal}>
-                            {this.state.f_name.valid}</Text>
-                    : null}
+                    
                     <SafeAreaView style={SignUpStyle.InputOutlineContainer}>
                         <InputOutline placeholder="Last Name"
                             characterCount = {26}
@@ -76,11 +77,12 @@ class SignUpNameFields extends Component {
                             onSubmitEditing = {() => { this._handleChildSubmit(); }}
                             blurOnSubmit = {false}
                             ref={(input) => { this.txtLname = input; }}/>
+                        {this.state.l_name.valid ?
+                            <Text style={Validation.textVal}>
+                                {this.state.l_name.valid}</Text>
+                        : null}
                     </SafeAreaView>
-                    {this.state.l_name.valid ?
-                        <Text style={Validation.textVal}>
-                            {this.state.l_name.valid}</Text>
-                    : null}
+                    
                     <TouchableOpacity style={SignUpStyle.ContinueBtn}
                         onPress={() => this._handleChildSubmit()}>
                             <Text style={SignUpStyle.ContinueTextBtn}>Continue</Text>
@@ -98,9 +100,11 @@ class SignUpNameFields extends Component {
                             returnKeyType = "done"
                             onSubmitEditing = {() => { this._handleChildSubmit(); }}
                             blurOnSubmit = {false}/> 
+                            
+                        <Text style={Validation.textVal}>
+                            {this.state.org_name.valid}</Text> 
                     </SafeAreaView>
-                    <Text style={Validation.textVal}>
-                        {this.state.org_name.valid}</Text>     
+                        
                     <TouchableOpacity style={SignUpStyle.ContinueBtn}
                         onPress={() => this._handleChildSubmit()}>
                             <Text style={SignUpStyle.ContinueTextBtn}>Continue</Text>

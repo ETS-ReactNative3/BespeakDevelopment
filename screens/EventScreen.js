@@ -22,7 +22,7 @@ import {
 } from '@expo/vector-icons';
 import BottomSheet from "react-native-gesture-bottom-sheet";
 
-import { auth, db } from '../firebase'
+import { auth, db, _db } from '../firebase'
 
 import fetch_date_time from '../api/GlobalTime'
 
@@ -131,6 +131,10 @@ class EventScreen extends Component {
             }
         }
 
+        if(!_data.is_owned) {
+            this._addPopularity(event_id);
+        }
+
         _data.is_attending = await _checkUserAttendance(_data.id);
         _data.is_limit = current_count >= _data.max
         _data.is_following = await _isFollowing(uid, _data.owner);
@@ -154,6 +158,14 @@ class EventScreen extends Component {
         }
         
         this._loadImages(_data, uid);
+    }
+
+    async _addPopularity(event_id) {
+        await db.collection('event')
+            .doc(event_id)
+            .update({
+                _popularity: _db.FieldValue.increment(1)
+            });
     }
 
     _invalidAccess() {
