@@ -522,14 +522,28 @@ const SystemStyle = StyleSheet.create({
       fontFamily: 'RedHatDisplay-Medium',
     },
     //For Refresh HomeScreen
-    RefreshBtn: {
-      marginTop:-2,
-      alignItems: 'center',
-      justifyContent:'center',
-      backgroundColor: '#ebebeb',
-      height: 40,
-      width:111,
+    RefreshBtnWrapper: {
+      marginTop: 10,
+      backgroundColor: '#5b5c5a',
       borderRadius: 25,
+    },
+    RefreshBtnContainer: {
+        alignItems: 'center',
+        flexDirection:'row',
+        marginTop:-2,
+        justifyContent:'center',
+        marginRight: 25,
+        marginLeft: 25,
+        marginTop: 10,
+        marginBottom: 10
+    },
+    RefreshBtnTxt: {
+        fontSize: 18,
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#fff',
+        fontFamily: 'RedHatDisplay-Medium',
+        marginLeft: 8,
     },
     ViewAttendeeBtn: {
       marginTop:-2,
@@ -618,7 +632,6 @@ const SystemStyle = StyleSheet.create({
     },
   //Screen Footer
   Footer:{
-    backgroundColor: '#ebebeb',
     padding: '12%',
     alignItems: 'center',
     justifyContent: 'flex-start',
@@ -841,6 +854,15 @@ EventEndedTextForOrangeBtn:{
   justifyContent: 'center',
   color: '#eb9834',
   fontFamily: 'RedHatDisplay-Medium',
+},
+ReOpenTicketForOrangeBtn:{
+    marginTop: -2,
+    marginLeft:'2%',
+    fontSize: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#fff',
+    fontFamily: 'RedHatDisplay-Medium',
 },
 //Gray Bordered Button
 EventEndedBtnButGray: {

@@ -4,7 +4,8 @@ import {
     FlatList,
     Text,
     View,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 } from 'react-native';
 import { sha256 } from 'react-native-sha256';
 import QRCode from 'react-native-qrcode-svg';
@@ -185,7 +186,17 @@ class TicketList extends Component {
                 }
                 {this.state.data.length == 0 &&
                     <View style={SystemStyle.TabContainer}>
-                        <Text style={SystemStyle.TabEmptyList}> No tickets found. </Text>
+                        <View style={SystemStyle.TabContainer}>
+                            <View style={SystemStyle.TabContainer}>
+                                <View style={SystemStyle.CreateEventImgContainer}>
+                                    <Image style={SystemStyle.CreateEventImg} source={require('../assets/img/LetsGetStarted.png')}/>      
+                                </View>
+                                <Text style={SystemStyle.EmptyTitle}> No ticket found </Text>
+                                <Text style={SystemStyle.EmptyTitleAdditionalInfo}> 
+                                    You may obtain one by browsing and joining events.</Text>
+                                <Text style={SystemStyle.NameList}></Text>
+                            </View>
+                        </View>
                     </View>
                 }
                 <FlatList

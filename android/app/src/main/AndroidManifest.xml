@@ -29,6 +29,7 @@
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="com.jedpedregosa.Bespeak"/>
         <data android:scheme="exp+bespeak"/>
+        <data android:scheme="https" android:host="bespeak.page.link"/>
       </intent-filter>
       <intent-filter android:autoVerify="true">
         <action android:name="android.intent.action.VIEW"/>

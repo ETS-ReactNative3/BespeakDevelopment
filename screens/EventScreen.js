@@ -454,6 +454,30 @@ class EventScreen extends Component {
         this.props.navigation.goBack();
     }
 
+    async _reOpenTicket() {
+        let uid = auth.currentUser.uid;
+        let item = this.state.data;
+        let ticket_id = null;
+
+        console.log('Getting ticket of user: ', uid, ' event: ', item.id);
+
+        let ticket_query = await db.collection('ticket')
+            .where('event_id', '==', item.id)
+            .where('owner', '==', uid)
+            .get();
+
+        ticket_query.forEach((doc) => {
+            ticket_id = doc.id;
+        })
+
+        if(ticket_id) {
+            this.doRefresh();
+            let nav = this.props.navigation;
+            this.props.navigation.navigate('TicketScreen', 
+                {ticket_id: ticket_id, navigation: nav})
+        }
+    }
+
     render() {
         let item = this.state.data;
         let comment_content = Object.values(this.state.comment_data);
@@ -650,10 +674,11 @@ class EventScreen extends Component {
                                 <>
                                 { item.is_attending ? (
                                     <>
-                                        <View style={SystemStyle.EventEndedBtnButOrange}>
-                                            <MaterialCommunityIcons name="checkbox-multiple-marked-circle" size={20} color="#eb9834" />
-                                            <Text style={SystemStyle.EventEndedTextForOrangeBtn}>You are attending</Text>
-                                        </View>
+                                        <TouchableOpacity style={SystemStyle.AttendingBtn}
+                                            onPress = { () => this._reOpenTicket() }>
+                                                <MaterialCommunityIcons name="ticket-confirmation" size={20} color="#fff" />
+                                                <Text style={SystemStyle.ReOpenTicketForOrangeBtn}>Attending — View Ticket</Text>
+                                        </TouchableOpacity>
                                         <TouchableOpacity style={EditProfileScreenStyle.DeleteBtn}
                                             onPress = {() => Alert.alert('Cancel Reservation', 'Are you sure? ' + 
                                             'This will delete and invalidate your ticket.', 
@@ -673,7 +698,7 @@ class EventScreen extends Component {
                                             <TouchableOpacity style={SystemStyle.AttendingBtn}
                                                 onPress={() => this._handleAttend()}>
                                                     <MaterialCommunityIcons name="human-handsup" size={20} color="#fff" />
-                                                    <Text style={SystemStyle.AttendingTextBtn}>Happening now - Register</Text>
+                                                    <Text style={SystemStyle.AttendingTextBtn}>Happening now — Register</Text>
                                             </TouchableOpacity>
                                         ) : (
                                             <TouchableOpacity style={SystemStyle.AttendingBtn}

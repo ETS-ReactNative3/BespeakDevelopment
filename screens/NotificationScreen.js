@@ -11,7 +11,8 @@ import {
     RefreshControl
 } from 'react-native';
 import { 
-    Entypo
+    Entypo,
+    Foundation
 } from '@expo/vector-icons';
 import { db } from '../firebase';
 
@@ -173,6 +174,15 @@ class NotificationScreen extends Component {
                         </View>
                             <Text style={SystemStyle.EmptyTitle}> Get Notified! </Text>
                             <Text style={SystemStyle.GetNotifiedInfo}> Follow organizers to be notified on their upcoming events. </Text>
+                            <View style={SystemStyle.Center}>  
+                                <TouchableOpacity style={SystemStyle.RefreshBtnWrapper}
+                                    onPress={this.onRefresh}>
+                                        <View style = {SystemStyle.RefreshBtnContainer}>
+                                            <Foundation name="refresh" size={20} color='#fff' />
+                                            <Text style={SystemStyle.RefreshBtnTxt}>Refresh</Text>
+                                        </View>
+                                </TouchableOpacity>
+                            </View>
                     </View>
                 }
                 <FlatList

@@ -462,9 +462,11 @@ class EditProfileScreen extends Component {
                         <Dialog.Input label = 'Confirm using your password' secureTextEntry={true}
                             onChangeText = {text => {
                                 this.setState({pass_confirm: text, show_valid: false})}}/>
-                        <Dialog.Description visible = {this.state.show_valid}>
-                            Your password does not match.
-                        </Dialog.Description>
+
+                        {this.state.show_valid && 
+                            <Text style = {Validation.EditedTextVal}>Your password does not match.</Text>
+                        }
+                        
                         <Dialog.Button label="Cancel" color = {'orange'}
                             onPress={() => { this.setState({show_confirm: false}) }} />
                         <Dialog.Button label="Delete my information" color = {'gray'}
