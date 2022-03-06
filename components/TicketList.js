@@ -185,19 +185,16 @@ class TicketList extends Component {
                     </View>
                 }
                 {this.state.data.length == 0 &&
-                    <View style={SystemStyle.TabContainer}>
-                        <View style={SystemStyle.TabContainer}>
                             <View style={SystemStyle.TabContainer}>
                                 <View style={SystemStyle.CreateEventImgContainer}>
                                     <Image style={SystemStyle.CreateEventImg} source={require('../assets/img/LetsGetStarted.png')}/>      
                                 </View>
+                                <View style={SystemStyle.Center}>
                                 <Text style={SystemStyle.EmptyTitle}> No ticket found </Text>
-                                <Text style={SystemStyle.EmptyTitleAdditionalInfo}> 
+                                <Text style={SystemStyle.AdditionalInfo}> 
                                     You may obtain one by browsing and joining events.</Text>
-                                <Text style={SystemStyle.NameList}></Text>
+                                </View>
                             </View>
-                        </View>
-                    </View>
                 }
                 <FlatList
                     contentContainerStyle={{ flexGrow: 1 }}

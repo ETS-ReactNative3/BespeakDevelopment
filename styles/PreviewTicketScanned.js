@@ -94,7 +94,7 @@ const PreviewTicketScannedStyle=StyleSheet.create({
     AdmitContainer:{
         marginHorizontal: '10%',
         marginBottom: '3%',
-
+        zIndex: -1, //pacheck neto pre mamats
     },
     AdmitBtn: {
         marginTop:'4%',

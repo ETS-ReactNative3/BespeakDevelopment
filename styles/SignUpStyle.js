@@ -6,6 +6,7 @@ const SignUpStyle=StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         paddingTop: '6%',
+        marginHorizontal:'8%',
     },
     //PageGuide
     PageGuide:{
@@ -141,6 +142,7 @@ const SignUpStyle=StyleSheet.create({
         marginBottom:'15%'
     },
     DoneBtn: {
+        marginHorizontal:'4%',
         marginBottom: '4%',
         alignItems: 'center',
         backgroundColor: '#fff',
@@ -177,8 +179,11 @@ const SignUpStyle=StyleSheet.create({
     TermsContainer: {
         backgroundColor: '#fff',
         paddingTop: '6%',
-        marginLeft:'8%',
-        marginRight:'8%',
+    },
+    Background:{
+        flexDirection:'row', 
+        justifyContent:'center', 
+        backgroundColor:'#fff'
     }
 
 

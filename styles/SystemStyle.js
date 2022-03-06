@@ -750,8 +750,6 @@ const SystemStyle = StyleSheet.create({
     fontFamily:'RedHatDisplay-Regular',
     alignItems:'center',
     justifyContent:'center',
-    marginLeft:'13%',
-    marginRight:'13%'
   },
   //
   AdditionalInfo:{
@@ -760,8 +758,6 @@ const SystemStyle = StyleSheet.create({
     fontFamily:'RedHatDisplay-Regular',
     alignItems:'center',
     justifyContent:'center',
-    marginLeft:'7.5%',
-    marginRight:'7.5%'
   },
   GetNotifiedInfo:{
     color:'#5b5c5a',

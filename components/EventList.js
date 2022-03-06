@@ -344,13 +344,14 @@ class EventList extends Component {
                             <View style={SystemStyle.TabContainer}>
                                 <ScrollView>    
                                     <View style={SystemStyle.TabContainer}>
+                                    <View style={SystemStyle.Center}>
                                         <View style={SystemStyle.CreateEventImgContainer}>
                                             <Image style={SystemStyle.CreateEventImg} source={require('../assets/img/CreateEvent.png')}/>      
                                         </View>
                                         <Text style={SystemStyle.EmptyTitle}> Create your event </Text>
                                         <Text style={SystemStyle.EmptyTitleAdditionalInfo}> 
                                             When you create an event, they will appear here on your profile.</Text>
-                                        <Text style={SystemStyle.NameList}></Text>
+                                        </View>
                                     </View>
                                 </ScrollView>
                             </View>
@@ -359,25 +360,31 @@ class EventList extends Component {
                                 <View style={SystemStyle.LookEventImgContainer}>
                                     <Image style={SystemStyle.LookEventImg} source={require('../assets/img/LookEvent.png')}/>      
                                 </View>
+                                    <View style={SystemStyle.Center}>
                                     <Text style={SystemStyle.EmptyTitle}> Look for an event </Text>
                                     <Text style={SystemStyle.EmptyTitleAdditionalInfo}> All the events you have saved will show up here. </Text>
+                                    </View>
                             </View>
                         ) : this.props.search_key ? (
                             <View style={SystemStyle.TabContainer}>
                                 <View style={SystemStyle.LookEventImgContainer}>
                                     <Image style={SystemStyle.LookEventImg} source={require('../assets/img/LookEvent.png')}/>      
                                 </View>
+                                <View style={SystemStyle.Center}>
                                     <Text style={SystemStyle.EmptyTitle}> Event Not Found </Text>
                                     <Text style={SystemStyle.EmptyTitleAdditionalInfo}> We can't find what you are looking for. </Text>
+                                </View>
                             </View>
                         ) : (
                             <View style={SystemStyle.TabContainer}>
                                 <View style={SystemStyle.WelcomeToBespeakImgContainer}>
                                     <Image style={SystemStyle.WelcomeToBespeakImg} source={require('../assets/img/WelcomeToBespeak.png')}/>      
                                 </View>
-                                    <Text style={SystemStyle.EmptyTitle}> Welcome to Bespeak </Text>
-                                    <Text style={SystemStyle.AdditionalInfo}> Follow organizers to start seeing their upcoming events. </Text>
-                                    <Text style={SystemStyle.NameList}></Text>
+                                    <View style={SystemStyle.Center}>
+                                        <Text style={SystemStyle.EmptyTitle}> Welcome to Bespeak </Text>
+                                        <Text style={SystemStyle.AdditionalInfo}> Follow organizers to start seeing their upcoming events. </Text>
+                                        <Text style={SystemStyle.NameList}></Text>
+                                    </View>
                                     <View style={SystemStyle.Center}>  
                                         <TouchableOpacity style={SystemStyle.RefreshBtnWrapper}
                                             onPress={this.onRefresh}>
