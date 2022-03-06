@@ -435,8 +435,10 @@ class EditProfileScreen extends Component {
                             <Text style={EditProfileScreenStyle.ChangePassTextBtn}> Change Password</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={EditProfileScreenStyle.LogOutBtn}
-                        onPress = {() => { auth.signOut() }}>
-                            <Text style={EditProfileScreenStyle.LogOutTextBtn}> Log Out</Text>
+                        onPress = {async () => { 
+                            try { await auth.signOut() }
+                            catch(e) { console.log('Error: ', e) }}}>
+                                <Text style={EditProfileScreenStyle.LogOutTextBtn}> Log Out</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={EditProfileScreenStyle.DeleteAcctBtn}
                         onPress = {() => { this.setState({show_dialog: true}) }}>
@@ -448,9 +450,9 @@ class EditProfileScreen extends Component {
                                 Do you want to delete this account? You will lose all of your events and
                                 connections on bespeak. Are you sure?
                             </Dialog.Description>
-                        <Dialog.Button label="Cancel" color = {'orange'}
+                        <Dialog.Button label="Cancel" color = {'orange'} bold = {true}
                             onPress={() => { this.setState({show_dialog: false}) }} />
-                        <Dialog.Button label="Delete" color = {'gray'}
+                        <Dialog.Button label="Delete" color = {'gray'} bold = {true}
                             onPress={() => { this.setState({show_confirm: true, show_dialog: false}) }} />
                     </Dialog.Container>
                     <Dialog.Container visible={this.state.show_confirm}>
@@ -467,9 +469,9 @@ class EditProfileScreen extends Component {
                             <Text style = {Validation.EditedTextVal}>Your password does not match.</Text>
                         }
                         
-                        <Dialog.Button label="Cancel" color = {'orange'}
+                        <Dialog.Button label="Cancel" color = {'orange'} bold = {true}
                             onPress={() => { this.setState({show_confirm: false}) }} />
-                        <Dialog.Button label="Delete my information" color = {'gray'}
+                        <Dialog.Button label="Delete my information" color = {'gray'} bold = {true}
                             onPress={() => { this._handleDelete(); }} />
                     </Dialog.Container>
                 </ScrollView>

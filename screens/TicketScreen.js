@@ -103,7 +103,7 @@ class TicketScreen extends Component {
                 </View>
                 <View style={TicketScreenStyle.QRContainer}>
                     <View style={TicketScreenStyle.QRImg}> 
-                        <QRCode value={ item.key_content }/>
+                        <QRCode value={ item.key_content } size = {150}/>
                     </View>
                 </View>
                 <View style={TicketScreenStyle.YourTicketContent}>

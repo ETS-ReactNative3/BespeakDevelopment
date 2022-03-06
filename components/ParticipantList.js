@@ -5,8 +5,11 @@ import {
     Text,
     View, 
     RefreshControl,
-    Image
+    Image,
+    TouchableOpacity
 } from 'react-native';
+import { Foundation } from '@expo/vector-icons';
+
 import { db, _db } from '../firebase';
 
 import SystemStyle from "../styles/SystemStyle";
@@ -208,6 +211,15 @@ class ParticipantList extends Component {
                 {this.state.data.length == 0 &&
                     <View style={SystemStyle.TabContainer}>
                         <Text style={SystemStyle.TabEmptyList}> No users found. </Text>
+                        <View style={SystemStyle.Center}>  
+                            <TouchableOpacity style={SystemStyle.RefreshBtnWrapper}
+                                onPress={this.onRefresh}>
+                                    <View style = {SystemStyle.RefreshBtnContainer}>
+                                        <Foundation name="refresh" size={20} color='#fff' />
+                                        <Text style={SystemStyle.RefreshBtnTxt}>Refresh</Text>
+                                    </View>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 }
                 <FlatList

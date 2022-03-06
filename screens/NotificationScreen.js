@@ -172,6 +172,7 @@ class NotificationScreen extends Component {
                             <Image style={SystemStyle.WelcomeToBespeakImg} 
                                 source={ require('../assets/img/WelcomeToBespeak.png') }/>      
                         </View>
+                        <View style={SystemStyle.Center}>
                             <Text style={SystemStyle.EmptyTitle}> Get Notified! </Text>
                             <Text style={SystemStyle.GetNotifiedInfo}> Follow organizers to be notified on their upcoming events. </Text>
                             <View style={SystemStyle.Center}>  
@@ -183,6 +184,7 @@ class NotificationScreen extends Component {
                                         </View>
                                 </TouchableOpacity>
                             </View>
+                        </View>
                     </View>
                 }
                 <FlatList
