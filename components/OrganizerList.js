@@ -5,7 +5,11 @@ import {
     Text,
     View, 
     RefreshControl,
+    TouchableOpacity,
+    Image
 } from 'react-native';
+import { Foundation } from '@expo/vector-icons'; 
+
 import { auth, db, _db } from '../firebase';
 
 import { ProfileCard } from "./ProfileCard";
@@ -212,10 +216,34 @@ class OrganizerList extends Component {
                             } color="orange"/> 
                     </View>
                 }
-                {this.state.data.length == 0 &&
-                    <View style={SystemStyle.TabContainer}>
-                        <Text style={SystemStyle.TabEmptyList}> No organizers found. </Text>
-                    </View>
+                {this.state.data.length == 0 && (
+                        this.props.for_search && this.props.search_key ? (
+                            <View style={SystemStyle.TabContainer}>
+                                <View style={SystemStyle.TabContainer}>
+                                    <View style={SystemStyle.CreateEventImgContainer}>
+                                        <Image style={SystemStyle.CreateEventImg} source={require('../assets/img/LogIN.png')}/>      
+                                    </View>
+                                    <Text style={SystemStyle.EmptyTitle}> Organizer Not Found </Text>
+                                    <Text style={SystemStyle.EmptyTitleAdditionalInfo}> 
+                                        We can't find what you are looking for.</Text>
+                                    <Text style={SystemStyle.NameList}></Text>
+                                </View>
+                            </View>
+                        ) : (
+                            <View style={SystemStyle.TabContainer}>
+                                <Text style={SystemStyle.TabEmptyList}> No users found. </Text>
+                                <View style={SystemStyle.Center}>  
+                                        <TouchableOpacity style={SystemStyle.RefreshBtnWrapper}
+                                            onPress={this.onRefresh}>
+                                                <View style = {SystemStyle.RefreshBtnContainer}>
+                                                    <Foundation name="refresh" size={20} color='#fff' />
+                                                    <Text style={SystemStyle.RefreshBtnTxt}>Refresh</Text>
+                                                </View>
+                                        </TouchableOpacity>
+                                    </View>
+                            </View>
+                        ) 
+                    )
                 }
                 <FlatList
                     refreshControl={

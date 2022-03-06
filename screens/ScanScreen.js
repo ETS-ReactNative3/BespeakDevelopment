@@ -13,10 +13,6 @@ import { RNCamera } from 'react-native-camera';
 import ScanScreenStyle from "../styles/ScanScreenStyle";
 import SystemStyle from "../styles/SystemStyle";
 
-import { 
-    Ionicons,
-} from '@expo/vector-icons';
-
 import { _fetchScannedData } from "../helper/ScanHelper";
 
 class ScanScreen extends Component {
@@ -28,6 +24,7 @@ class ScanScreen extends Component {
 
         this.Scanner = React.createRef();
     }
+
     onSuccess = async e => {     
         try {
             this.setState({is_verifying: true});
@@ -62,7 +59,6 @@ class ScanScreen extends Component {
     };
 
     render() {
-        /*<Ionicons name="scan-outline" size={440} color="#ccc" />*/
         return (
             <>
                 { this.state.is_verifying && 

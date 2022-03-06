@@ -7,6 +7,7 @@ import { ActivityIndicator,
     TouchableOpacity,
     RefreshControl
 } from 'react-native';
+import { Foundation } from '@expo/vector-icons'; 
 
 import { auth, db, _db } from '../firebase';
 
@@ -340,29 +341,19 @@ class EventList extends Component {
                 }
                 {this.state.data.length == 0 && (
                         this.props.for_profile && this.props.user_id ? (
-                        <View style={SystemStyle.TabContainer}>
-                            <ScrollView>    
-                                <View style={SystemStyle.TabContainer}>
-                                    <View style={SystemStyle.CreateEventImgContainer}>
-                                        <Image style={SystemStyle.CreateEventImg} source={require('../assets/img/CreateEvent.png')}/>      
+                            <View style={SystemStyle.TabContainer}>
+                                <ScrollView>    
+                                    <View style={SystemStyle.TabContainer}>
+                                        <View style={SystemStyle.CreateEventImgContainer}>
+                                            <Image style={SystemStyle.CreateEventImg} source={require('../assets/img/CreateEvent.png')}/>      
+                                        </View>
+                                        <Text style={SystemStyle.EmptyTitle}> Create your event </Text>
+                                        <Text style={SystemStyle.EmptyTitleAdditionalInfo}> 
+                                            When you create an event, they will appear here on your profile.</Text>
+                                        <Text style={SystemStyle.NameList}></Text>
                                     </View>
-                                    <Text style={SystemStyle.EmptyTitle}> Create your event </Text>
-                                    <Text style={SystemStyle.EmptyTitleAdditionalInfo}> When you create an event, they will appear here</Text>
-                                    <View style={SystemStyle.Center}>
-                                        <Text style={SystemStyle.EmptyTitleAdditionalInfo}> on your profile. </Text>
-                                    </View>
-                                    <Text style={SystemStyle.NameList}></Text>
-                                    <View style={SystemStyle.Center}>  
-                                        <TouchableOpacity style={SystemStyle.LoadBtn}
-                                            //onPress={() => this._extendLoadComments()}
-                                        >
-                                            <Text style={SystemStyle.LoadText}>Refresh...</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            </ScrollView>
-                        </View>
-
+                                </ScrollView>
+                            </View>
                         ) : this.props.for_saved ? (
                             <View style={SystemStyle.TabContainer}>
                                 <View style={SystemStyle.LookEventImgContainer}>
@@ -370,6 +361,14 @@ class EventList extends Component {
                                 </View>
                                     <Text style={SystemStyle.EmptyTitle}> Look for an event </Text>
                                     <Text style={SystemStyle.EmptyTitleAdditionalInfo}> All the events you have saved will show up here. </Text>
+                            </View>
+                        ) : this.props.search_key ? (
+                            <View style={SystemStyle.TabContainer}>
+                                <View style={SystemStyle.LookEventImgContainer}>
+                                    <Image style={SystemStyle.LookEventImg} source={require('../assets/img/LookEvent.png')}/>      
+                                </View>
+                                    <Text style={SystemStyle.EmptyTitle}> Event Not Found </Text>
+                                    <Text style={SystemStyle.EmptyTitleAdditionalInfo}> We can't find what you are looking for. </Text>
                             </View>
                         ) : (
                             <View style={SystemStyle.TabContainer}>
@@ -380,14 +379,16 @@ class EventList extends Component {
                                     <Text style={SystemStyle.AdditionalInfo}> Follow organizers to start seeing their upcoming events. </Text>
                                     <Text style={SystemStyle.NameList}></Text>
                                     <View style={SystemStyle.Center}>  
-                                        <TouchableOpacity style={SystemStyle.RefreshBtn}
-                                            //onPress={() => this._extendLoadComments()}
-                                        >
-                                            <Text style={SystemStyle.LoadText}>Refresh...</Text>
+                                        <TouchableOpacity style={SystemStyle.RefreshBtnWrapper}
+                                            onPress={this.onRefresh}>
+                                                <View style = {SystemStyle.RefreshBtnContainer}>
+                                                    <Foundation name="refresh" size={20} color='#fff' />
+                                                    <Text style={SystemStyle.RefreshBtnTxt}>Refresh</Text>
+                                                </View>
                                         </TouchableOpacity>
                                     </View>
                             </View>
-                        )
+                        ) 
                     ) 
                 }
                 <FlatList
