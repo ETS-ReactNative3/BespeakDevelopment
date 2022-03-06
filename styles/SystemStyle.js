@@ -305,12 +305,10 @@ const SystemStyle = StyleSheet.create({
   ViewBtn: {
     alignItems: 'center',
     justifyContent:'center',
-    backgroundColor: 'red',
+    backgroundColor: '#5b5c5a',
     height: 46,
     width: 150,
-    padding: 10,
     borderRadius: 25,
-    justifyContent:'center',
   },
   ViewTextBtn:{
     fontSize: 20,
@@ -523,10 +521,19 @@ const SystemStyle = StyleSheet.create({
       color: '#fff',
       fontFamily: 'RedHatDisplay-Medium',
     },
+    //For Refresh HomeScreen
+    RefreshBtn: {
+      marginTop:-2,
+      alignItems: 'center',
+      justifyContent:'center',
+      backgroundColor: '#ebebeb',
+      height: 40,
+      width:111,
+      borderRadius: 25,
+    },
     ViewAttendeeBtn: {
       marginTop:-2,
       alignItems: 'center',
-      alignContent:'center',
       justifyContent:'center',
       backgroundColor: '#5b5c5a',
       height: 40,
@@ -740,8 +747,8 @@ const SystemStyle = StyleSheet.create({
     fontFamily:'RedHatDisplay-Regular',
     alignItems:'center',
     justifyContent:'center',
-    marginLeft:'8%',
-    marginRight:'8%'
+    marginLeft:'7.5%',
+    marginRight:'7.5%'
   },
   GetNotifiedInfo:{
     color:'#5b5c5a',

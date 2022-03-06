@@ -375,7 +375,7 @@ class EventList extends Component {
                                     <Text style={SystemStyle.AdditionalInfo}> Follow organizers to start seeing their upcoming events. </Text>
                                     <Text style={SystemStyle.NameList}></Text>
                                     <View style={SystemStyle.Center}>  
-                                        <TouchableOpacity style={SystemStyle.LoadBtn}
+                                        <TouchableOpacity style={SystemStyle.RefreshBtn}
                                             //onPress={() => this._extendLoadComments()}
                                         >
                                             <Text style={SystemStyle.LoadText}>Refresh...</Text>
