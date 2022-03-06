@@ -223,10 +223,11 @@ class OrganizerList extends Component {
                                     <View style={SystemStyle.CreateEventImgContainer}>
                                         <Image style={SystemStyle.CreateEventImg} source={require('../assets/img/LogIN.png')}/>      
                                     </View>
+                                    <View style={SystemStyle.Center}>
                                     <Text style={SystemStyle.EmptyTitle}> Organizer Not Found </Text>
                                     <Text style={SystemStyle.EmptyTitleAdditionalInfo}> 
                                         We can't find what you are looking for.</Text>
-                                    <Text style={SystemStyle.NameList}></Text>
+                                    </View>
                                 </View>
                             </View>
                         ) : (
