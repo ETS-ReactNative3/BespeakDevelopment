@@ -127,6 +127,9 @@ class EventList extends Component {
                 .orderBy('name')
                 .where('name', '>=', key)
                 .where('name', '<', key + `z`)
+        } else if(this.props.for_search) {
+            get_events_query = get_events_query
+                .orderBy('_popularity', 'desc')
         } else if(this.props.for_home) {
             let following = await _getFollowing();
 
@@ -145,9 +148,11 @@ class EventList extends Component {
                 .where('owner', "in", following)
         }
 
-        if(!this.props.for_saved && !this.props.search_key) {
-                get_events_query = get_events_query
-                    .orderBy('server_time', 'desc')
+        if(!this.props.for_saved && 
+                !this.props.search_key &&
+                !this.props.for_search) {
+                    get_events_query = get_events_query
+                        .orderBy('server_time', 'desc')
         }
 
         if(type_extend) {

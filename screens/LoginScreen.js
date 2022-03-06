@@ -137,11 +137,13 @@ class LoginScreen extends Component {
                             onSubmitEditing={() => { this.txtPassword.focus(); }}
                             blurOnSubmit={false}
                             {...Properties.defaultInputStandard}/> 
-                    </SafeAreaView>
-                    {this.state.email.valid ?
-                        <Text style={Validation.textVal}>
-                            {this.state.email.valid}</Text>
+
+                        {this.state.email.valid ?
+                            <Text style={Validation.textVal}>
+                                {this.state.email.valid}</Text>
                     : null}   
+                    </SafeAreaView>
+                    
                     <SafeAreaView style={LogInScreenStyle.InputStandardContainer}>
                         <InputStandard placeholder="Password" style={LogInScreenStyle.PassiveInputColor}
                             characterCount = {15}
@@ -150,10 +152,13 @@ class LoginScreen extends Component {
                             onChangeText = {text => this._handleText('password', text)}
                             ref={(input) => { this.txtPassword = input; }}
                             {...Properties.defaultInputStandard}/> 
+
+                        {this.state.submit_result || this.state.password.valid ? (
+                            <Text style={Validation.textVal}> {this.state.submit_result ? 
+                                this.state.submit_result : this.state.password.valid}</Text>  
+                        ) : null}
                     </SafeAreaView>
-                    <Text style={Validation.textVal}>
-                        {this.state.submit_result ? 
-                            this.state.submit_result : this.state.password.valid}</Text>  
+                    
                     <TouchableOpacity
                         onPress = {() => this.props.navigation.navigate('ResetFormScreen')}>
                             <Text style={LogInScreenStyle.ForgotPasswordBtn}>Forgot Password?</Text>

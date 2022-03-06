@@ -71,6 +71,9 @@ class OrganizerList extends Component {
                 .orderBy('_name')
                 .where('_name', '>=', key)
                 .where('_name', '<', key + `z`)
+        } else if(this.props.for_search) {
+            get_organizer_query = get_organizer_query
+                .orderBy('_popularity', 'desc')
         } else if(this.props.list_follower) {
             let _list = await _getFollowersId();
 

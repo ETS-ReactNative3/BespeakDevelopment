@@ -49,8 +49,6 @@ SaveTextBtn: {
 EditProfileContainer: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingLeft:'8%',
-    paddingRight:'8%',
 },
 //Save Button For Edit Profile
 HeaderSave:{
@@ -78,8 +76,10 @@ EditCoverImgIcon:{
     position:'absolute',
 },
 EditProfileImgContainer: {
-    marginLeft:'-3%',
+    marginLeft: '8%',
     marginTop:'-11%',
+    zIndex: 3, // works on ios
+    elevation: 3,
 },
 EditProfileImg: {
     width: 70,
@@ -103,6 +103,8 @@ UpperSection:{
 },
 //Edit Profile Form
 EditProfileFormContainer: {
+    paddingLeft:'8%',
+    paddingRight:'8%',
     marginTop: '5%'
 },
   EditProfileTextInput: {
@@ -118,6 +120,8 @@ ChangePassBtn: {
     marginTop:'1%',
     alignItems: 'center',
     justifyContent:'center',
+    marginLeft: '8%',
+    marginRight: '8%'
 },
 ChangePassTextBtn:{
     alignItems: 'center',

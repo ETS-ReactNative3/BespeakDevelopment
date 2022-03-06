@@ -6,11 +6,11 @@ const LogInScreenStyle=StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         paddingTop: '6%',
-        paddingLeft:'8%',
-        paddingRight:'8%',
     },
     //PageGuide
     PageGuide:{
+        marginLeft:'8%',
+        marginRight:'8%',
         fontSize: 35,
         marginBottom:'6%',
         color: '#000',
@@ -19,6 +19,8 @@ const LogInScreenStyle=StyleSheet.create({
     //Text Input for Email and Password
     InputStandardContainer:{
         marginTop:'3%',
+        marginLeft:'8%',
+        marginRight:'8%',
     },
     PassiveInputColor:{
         tintColor:'#eb9834',
@@ -26,13 +28,17 @@ const LogInScreenStyle=StyleSheet.create({
     },
     //Forgot Password Text Button
     ForgotPasswordBtn:{
-        marginTop: '-1%',
+        marginLeft:'8%',
+        marginRight:'8%',
+        marginTop: '2%',
         color: '#ccc',
         fontFamily: 'RedHatDisplay-Regular',
         fontSize: 16,
     },
     //Log In Button
     LogInBtn: {
+        marginLeft:'8%',
+        marginRight:'8%',
         alignSelf: 'stretch',
         alignItems: 'center',
         justifyContent:'center',

@@ -165,6 +165,7 @@ class CreateEventScreen extends Component {
         event_data.server_time = (await fetch_date_time()).epoch;
         event_data.owner = auth.currentUser.uid;
         event_data.is_open = true;
+        event_data._popularity = 0;
 
         if(!has_upload) {
             event_data.random_banner = Math.floor(Math.random() * (8 - 1 + 1)) + 1;

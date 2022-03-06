@@ -194,6 +194,7 @@ class SignUpFormScreen extends Component {
 
                 data.mobile = this.state.mobile.value;
                 data.email = email;
+                data._popularity = 0;
                 
                 db
                     .collection('user_info')
@@ -257,66 +258,74 @@ class SignUpFormScreen extends Component {
                         <Text style={SignUpStyle.PageGuide}>Almost There...</Text>
                         <Text style={SignUpStyle.GuideText}>We need additional details to get to know you</Text>                        
                         <SafeAreaView style={SignUpStyle.InputOutlineContainer}>
-                        <InputOutline placeholder="Email"
-                            maxLength={150}
-                            value = {this.state.email.value}
-                            onChangeText = {text => this._handleText('email', text)}
-                            returnKeyType="next"
-                            ref={(input) => { this.txtEmail = input; }}
-                            onSubmitEditing={() => { this.txtMobile.focus(); }}
-                            blurOnSubmit={false}
-                        {...Properties.defaultInputOutline}/> 
+                            <InputOutline placeholder="Email"
+                                maxLength={150}
+                                value = {this.state.email.value}
+                                onChangeText = {text => this._handleText('email', text)}
+                                returnKeyType="next"
+                                ref={(input) => { this.txtEmail = input; }}
+                                onSubmitEditing={() => { this.txtMobile.focus(); }}
+                                blurOnSubmit={false}
+                            {...Properties.defaultInputOutline}/> 
+
+                            {this.state.email.valid ?
+                                <Text style={Validation.textVal}>
+                                    {this.state.email.valid}</Text>
+                            : null}
                         </SafeAreaView>
-                        {this.state.email.valid ?
-                            <Text style={Validation.textVal}>
-                                {this.state.email.valid}</Text>
-                        : null}
+                        
                         <SafeAreaView style={SignUpStyle.InputOutlineContainer}>
-                        <InputOutline placeholder="(+63)"
-                            maxLength={15}
-                            value = {this.state.mobile.value}
-                            onChangeText = {text => this._handleText('mobile', text)}
-                            returnKeyType="next"
-                            ref={(input) => { this.txtMobile = input; }}
-                            onSubmitEditing={() => { this.txtPassword.focus(); }}
-                            blurOnSubmit={false}
-                        {...Properties.defaultInputOutline}/> 
+                            <InputOutline placeholder="(+63)"
+                                maxLength={15}
+                                value = {this.state.mobile.value}
+                                onChangeText = {text => this._handleText('mobile', text)}
+                                returnKeyType="next"
+                                ref={(input) => { this.txtMobile = input; }}
+                                onSubmitEditing={() => { this.txtPassword.focus(); }}
+                                blurOnSubmit={false}
+                            {...Properties.defaultInputOutline}/> 
+
+                            {this.state.mobile.valid ?
+                                <Text style={Validation.textVal}>
+                                    {this.state.mobile.valid}</Text>
+                            : null}
                         </SafeAreaView>
-                        {this.state.mobile.valid ?
-                            <Text style={Validation.textVal}>
-                                {this.state.mobile.valid}</Text>
-                        : null}
+                        
                         <SafeAreaView style={SignUpStyle.InputOutlineContainer}>
-                        <InputOutline placeholder="Password"
-                            maxLength={15}
-                            value = {this.state.password.value}
-                            onChangeText = {text => this._handleText('password', text)}
-                            secureTextEntry={true}
-                            returnKeyType="next"
-                            ref={(input) => { this.txtPassword = input; }}
-                            onSubmitEditing={() => { this.txtConfirm.focus(); }}
-                            blurOnSubmit={false}
-                        {...Properties.defaultInputOutline}/> 
+                            <InputOutline placeholder="Password"
+                                maxLength={15}
+                                value = {this.state.password.value}
+                                onChangeText = {text => this._handleText('password', text)}
+                                secureTextEntry={true}
+                                returnKeyType="next"
+                                ref={(input) => { this.txtPassword = input; }}
+                                onSubmitEditing={() => { this.txtConfirm.focus(); }}
+                                blurOnSubmit={false}
+                            {...Properties.defaultInputOutline}/> 
+
+                            {this.state.password.valid ?
+                                <Text style={Validation.textVal}>
+                                    {this.state.password.valid}</Text>
+                            : null}
                         </SafeAreaView>  
-                        {this.state.password.valid ?
-                            <Text style={Validation.textVal}>
-                                {this.state.password.valid}</Text>
-                        : null}
+                        
                         <SafeAreaView style={SignUpStyle.InputOutlineContainer}>
-                        <InputOutline placeholder="Confirm Password"
-                            maxLength={15}
-                            value = {this.state.confirm.value}
-                            onChangeText = {text => this._handleText('confirm', text)}
-                            secureTextEntry={true}
-                            returnKeyType="next"
-                            ref={(input) => { this.txtConfirm = input; }}
-                        {...Properties.defaultInputOutline}/> 
+                            <InputOutline placeholder="Confirm Password"
+                                maxLength={15}
+                                value = {this.state.confirm.value}
+                                onChangeText = {text => this._handleText('confirm', text)}
+                                secureTextEntry={true}
+                                returnKeyType="next"
+                                ref={(input) => { this.txtConfirm = input; }}
+                            {...Properties.defaultInputOutline}/>
+
+                            {this.state.confirm.valid ?
+                                <Text style={Validation.textVal}>
+                                    {this.state.confirm.valid}</Text>
+                            : null}  
                         </SafeAreaView>
-                        {this.state.confirm.valid ?
-                            <Text style={Validation.textVal}>
-                                {this.state.confirm.valid}</Text>
-                        : null}  
-                        <View style={SignUpStyle.Container}>
+                        
+                        <View style={SignUpStyle.TermsContainer}>
                             <Text style={SignUpStyle.GreyText}>By clicking the button below, 
                                 you are agreeing to our</Text>
                         </View>
