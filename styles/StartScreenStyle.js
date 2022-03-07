@@ -35,9 +35,7 @@ const StartScreenStyle=StyleSheet.create({
         marginBottom:27,
     },
     LogInText:{
-        //fontSize: 20, default pixel
-        //fontSize: RFPercentage(3),
-        fontSize: RFValue(20),
+        fontSize: 20,
         alignItems: 'center',
         justifyContent: 'center',
         color: '#eb9834',
