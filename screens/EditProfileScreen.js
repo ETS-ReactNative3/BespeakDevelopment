@@ -447,8 +447,8 @@ class EditProfileScreen extends Component {
                     <Dialog.Container visible={this.state.show_dialog}>
                         <Dialog.Title>Account Delete</Dialog.Title>
                             <Dialog.Description>
-                                Do you want to delete this account? You will lose all of your events and
-                                connections on bespeak. Are you sure?
+                                Do you want to delete this account? Please take note that this action will
+                                 lose all of your events and connections on bespeak.
                             </Dialog.Description>
                         <Dialog.Button label="Cancel" color = {'orange'} bold = {true}
                             onPress={() => { this.setState({show_dialog: false}) }} />
