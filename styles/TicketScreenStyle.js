@@ -100,7 +100,8 @@ const TicketScreenStyle=StyleSheet.create({
         marginBottom: '3%',
         borderRadius:20,
         backgroundColor:'#eb9834',
-        height: 140,
+        //height: 140,
+        maxHeight:'90%'
     },
     //For MyTicketExpiredStub || Gray
     MyTicketExpiredStub:{
@@ -108,7 +109,8 @@ const TicketScreenStyle=StyleSheet.create({
         marginBottom:'3%',
         borderRadius:20,
         backgroundColor:'#5b5c5a',
-        height: 140,
+        //height: 140,
+        maxHeight:'90%'
     },
     MyTicketStubDiv:{
         marginVertical: '5%',
