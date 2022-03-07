@@ -6,8 +6,6 @@ Container: {
     flex: 1,
     backgroundColor: '#fff',
     paddingTop: '6%',
-    marginLeft:'8%',
-    marginRight:'8%',
 },
 //Option Guide
 OptionGuide:{
@@ -16,9 +14,13 @@ OptionGuide:{
     color: '#ccc',
     fontFamily: 'RedHatDisplay-Regular',
     alignItems: 'center',
+    marginLeft:'8%',
+    marginRight:'8%',
 },
 //Text Inputs
 ChangePassInput:{
+    marginLeft:'8%',
+    marginRight:'8%',
     height: '10%',
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
@@ -37,6 +39,8 @@ SaveBtn:{
     color: '#eb9834',
     marginBottom: '10%',
     alignItems: 'center',
+    marginLeft:'8%',
+    marginRight:'8%',
 },
 SaveTextBtn: {
     alignItems: 'center',

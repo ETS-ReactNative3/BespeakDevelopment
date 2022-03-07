@@ -13,6 +13,8 @@ import {
 } from '@expo/vector-icons';
 import Spinner from 'react-native-loading-spinner-overlay/lib';
 
+import fetch_date_time from '../api/GlobalTime'
+
 import { db, _db } from '../firebase.js';
 
 import PreviewTicketScanned from "../styles/PreviewTicketScanned.js";
@@ -62,6 +64,7 @@ class AdmitScreen extends Component {
     }
     async _loadData() {
         let _content = this.props.route.params.content;
+        let current_time = await fetch_date_time();
 
         let event = await _arrangeData([_content.event]);
 
@@ -70,6 +73,9 @@ class AdmitScreen extends Component {
         event.is_admitted = await this._getAdmitStatus(
             _content.event.id, _content.ticket.owner
         );
+
+        event.is_admittable = 
+            event.schedule - 2 * (60 * 60 * 1000) < current_time.epoch ;
 
         if(event.is_admitted) {
             Alert.alert('User has been admitted', 
@@ -126,62 +132,64 @@ class AdmitScreen extends Component {
         let _user = this.state.user_data;
 
         return (
-            <ScrollView>
-                { this.state.is_loading && 
-                    <View style={SystemStyle.TabContainer}>
-                        <ActivityIndicator size={50} color="orange"/> 
-                    </View>
-                }
-                { this.state.is_verifying && 
-                    <Spinner visible={true} textContent={'Verifying your request...'}
-                        textStyle={SystemStyle.defaultLoader}
-                        animation = 'fade'
-                        overlayColor = 'rgba(0, 0, 0, 0.50)'/>
-                }
-                <View style={PreviewTicketScanned.TicketContainer}>
-                    <View style={PreviewTicketScanned.EventContainer}>
-                        <Text style={PreviewTicketScanned.EventName}>{ _event.name }</Text>
-                        <Text style={PreviewTicketScanned.EventDate}>{ _event.sched }</Text>
-                        <Text style={PreviewTicketScanned.EventOrganizer}>{ _event.owner_name }</Text>
-                        <View style={PreviewTicketScanned.TicketLocContainer}>
-                            <SimpleLineIcons name="location-pin" size={16} color="black"/>
-                            <Text style={PreviewTicketScanned.EventLocation}>{ _event.location }</Text>
+            <View style = {PreviewTicketScanned.Wrapper}>
+                <ScrollView style = {PreviewTicketScanned.ScrollContainer} > 
+                    { this.state.is_loading && 
+                        <View style={SystemStyle.TabContainer}>
+                            <ActivityIndicator size={50} color="orange"/> 
+                        </View>
+                    }
+                    { this.state.is_verifying && 
+                        <Spinner visible={true} textContent={'Verifying your request...'}
+                            textStyle={SystemStyle.defaultLoader}
+                            animation = 'fade'
+                            overlayColor = 'rgba(0, 0, 0, 0.50)'/>
+                    }
+                    <View style={PreviewTicketScanned.TicketContainer}>
+                        <View style={PreviewTicketScanned.EventContainer}>
+                            <Text style={PreviewTicketScanned.EventName}>{ _event.name }</Text>
+                            <Text style={PreviewTicketScanned.EventDate}>{ _event.sched }</Text>
+                            <Text style={PreviewTicketScanned.EventOrganizer}>{ _event.owner_name }</Text>
+                            <View style={PreviewTicketScanned.TicketLocContainer}>
+                                <SimpleLineIcons name="location-pin" size={16} color="black"/>
+                                <Text style={PreviewTicketScanned.EventLocation}>{ _event.location }</Text>
+                            </View>
+                        </View>
+                        <View style={PreviewTicketScanned.imgContainer}>
+                            <Image style={PreviewTicketScanned.imgscan}
+                                source={ _user.profile_image ? _user.profile_image 
+                                    : require('../assets/img/blank-profile.png')}/>
+                        </View>
+                        <View style={PreviewTicketScanned.EventStat}>
+                            <Text style={PreviewTicketScanned.EventStattxt}>Your event is now</Text>
+                            <Text style={PreviewTicketScanned.EventStattxt}> in full swing!</Text>
+                        </View>
+                        <View style={PreviewTicketScanned.TicketPersonalInfo}>
+                            <Text style={PreviewTicketScanned.PersonName}>{ _user._name }</Text>
+                            <Text style={PreviewTicketScanned.PersonEmail}>{ _user.email }</Text>
+                            <Text style={PreviewTicketScanned.PersonEmail}>{ _user.mobile }</Text>
+                            <Text style={PreviewTicketScanned.DateRegistered}>{ _user.registration_date }</Text>
+                        </View>
+                        <View style={PreviewTicketScanned.ticketfooter}>
+                            <Text style={PreviewTicketScanned.bespeaklogo}>bespeak</Text>
+                            <Text style={PreviewTicketScanned.sandboxtech}>© Sandbox Tech</Text>
+                        </View>      
+                        <View style={PreviewTicketScanned.AdmitContainer}>
+                            { _event.is_admittable ? (
+                                <TouchableOpacity style={PreviewTicketScanned.AdmitBtn}
+                                onPress={() => this._handleAdmit(_event, _user.id)}>
+                                    <Text style={PreviewTicketScanned.AdmitTextBtn}>{
+                                        _event.is_admitted ? 'Re-admit' : 'Admit'}</Text>
+                                </TouchableOpacity>
+                            ) : (
+                                <TouchableOpacity style={PreviewTicketScanned.WhyAreYouHere}>
+                                    <Text style={PreviewTicketScanned.WhyAreYouStillHere}>
+                                        Event is on {_event.sched}</Text>
+                                </TouchableOpacity>)}
                         </View>
                     </View>
-                    <View style={PreviewTicketScanned.imgContainer}>
-                        <Image style={PreviewTicketScanned.imgscan}
-                            source={ _user.profile_image ? _user.profile_image 
-                                : require('../assets/img/blank-profile.png')}/>
-                    </View>
-                    <View style={PreviewTicketScanned.EventStat}>
-                        <Text style={PreviewTicketScanned.EventStattxt}>Your event is now</Text>
-                        <Text style={PreviewTicketScanned.EventStattxt}> in full swing!</Text>
-                    </View>
-                    <View style={PreviewTicketScanned.TicketPersonalInfo}>
-                        <Text style={PreviewTicketScanned.PersonName}>{ _user._name }</Text>
-                        <Text style={PreviewTicketScanned.PersonEmail}>{ _user.email }</Text>
-                        <Text style={PreviewTicketScanned.PersonEmail}>{ _user.mobile }</Text>
-                        <Text style={PreviewTicketScanned.DateRegistered}>{ _user.registration_date }</Text>
-                    </View>
-                    <View style={PreviewTicketScanned.ticketfooter}>
-                        <Text style={PreviewTicketScanned.bespeaklogo}>bespeak</Text>
-                        <Text style={PreviewTicketScanned.sandboxtech}>© Sandbox Tech</Text>
-                    </View>      
-                    <View style={PreviewTicketScanned.AdmitContainer}>
-                        { _event.is_overlap ? (
-                            <TouchableOpacity style={PreviewTicketScanned.AdmitBtn}
-                            onPress={() => this._handleAdmit(_event, _user.id)}>
-                                <Text style={PreviewTicketScanned.AdmitTextBtn}>{
-                                    _event.is_admitted ? 'Re-admit' : 'Admit'}</Text>
-                            </TouchableOpacity>
-                        ) : (
-                            <TouchableOpacity style={PreviewTicketScanned.WhyAreYouHere}>
-                                <Text style={PreviewTicketScanned.WhyAreYouStillHere}>
-                                    Event is on {_event.sched}</Text>
-                            </TouchableOpacity>)}
-                    </View>
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </View>
         );
     }
 }

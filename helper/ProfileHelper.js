@@ -61,7 +61,7 @@ async function _getUserGeneratedLink(value, _title = 'A Bespeak User',
         link: `https://bespeak.page.link/app?user=${value}`,
         android: {
             packageName: 'com.jedpedregosa.Bespeak',
-            fallbackUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+            fallbackUrl: 'https://bespeak-development.web.app/'
         },
         
         social: {

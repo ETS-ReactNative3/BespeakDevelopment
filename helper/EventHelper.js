@@ -254,7 +254,7 @@ async function _getGeneratedLink(param, value, _title = 'Bespeak Event',
         link: `https://bespeak.page.link/app?${param}=${value}`,
         android: {
             packageName: 'com.jedpedregosa.Bespeak',
-            fallbackUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+            fallbackUrl: 'https://bespeak-development.web.app/'
         },
         
         social: {

@@ -393,11 +393,12 @@ class EmailVerificationScreen extends Component {
                     </View>
                     <View style={SignUpStyle.LowerContainer}>
                         <TouchableOpacity style={SignUpStyle.DoneBtn}
-                            onPress={() => {
-                                    auth.signOut(); // #TODO: Error Message Shown 'No User Currently Signed In'
+                            onPress={async () => {
+                                try {
+                                    await auth.signOut(); // #TODO: Error Message Shown 'No User Currently Signed In'
                                     this.props.navigation.navigate('TitleScreen')
-                                }}>
-                            <Text style={SignUpStyle.DoneTextBtn}>Done</Text>
+                                } catch(e) { console.log('Error: ', e) }}}>
+                                    <Text style={SignUpStyle.DoneTextBtn}>Done</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={SignUpStyle.ResendBtn}
                             onPress={() => {

@@ -1,6 +1,14 @@
 import {StyleSheet} from 'react-native'
 
 const PreviewTicketScannedStyle=StyleSheet.create({
+    ScrollContainer: {
+        flex: 1,
+    },
+    Wrapper: {
+        flex: 1,
+        height: '100%',
+        backgroundColor: '#fff',
+    },
     TicketContainer: {
         flex: 1,
         backgroundColor: '#fff',

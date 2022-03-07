@@ -6,7 +6,6 @@ const SignUpStyle=StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         paddingTop: '6%',
-        marginHorizontal:'8%',
     },
     //PageGuide
     PageGuide:{
@@ -139,7 +138,8 @@ const SignUpStyle=StyleSheet.create({
     //Email Verification  Buttons
     LowerContainer:{
         alignItems:'center',
-        marginBottom:'15%'
+        marginBottom:'15%',
+        marginHorizontal: '8%'
     },
     DoneBtn: {
         marginHorizontal:'4%',
@@ -179,6 +179,7 @@ const SignUpStyle=StyleSheet.create({
     TermsContainer: {
         backgroundColor: '#fff',
         paddingTop: '6%',
+        marginHorizontal: '8%'
     },
     Background:{
         flexDirection:'row', 
