@@ -56,9 +56,8 @@ class ContinueScreen extends Component {
               <Ionicons name="md-person" size={23} style={StartScreenStyle.IndivIcon}/>
               <View style={StartScreenStyle.Card}>
                 <Text style={StartScreenStyle.OptionTitle}>Individual</Text>
-                <Text style={StartScreenStyle.OptionText}>For freelancers, Individuals who requires a quick</Text>
-                <Text style={StartScreenStyle.OptionText}>social gathering, and users who wish to attend</Text>
-                <Text style={StartScreenStyle.OptionText}>events</Text>
+                <Text style={StartScreenStyle.OptionText}>For freelancers, Individuals who requires a quick
+                social gathering, and users who wish to attend events. </Text>
               </View>
           </TouchableOpacity>
           <TouchableOpacity style={StartScreenStyle.SignUpAsContainerNotActive}

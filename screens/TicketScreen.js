@@ -87,7 +87,7 @@ class TicketScreen extends Component {
                 <Spinner visible={true}
                     textStyle={SystemStyle.defaultLoader}
                     animation = 'fade'
-                    overlayColor = "orange"/>
+                    overlayColor = "orange"/> //For Overlay Gray #5b5c5a
             );
         }
 

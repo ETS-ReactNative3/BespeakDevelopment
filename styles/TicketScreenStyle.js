@@ -6,6 +6,11 @@ const TicketScreenStyle=StyleSheet.create({
         flex: 1,
         backgroundColor: '#eb9834',
     },
+    //For Previewing Ticket in Full Screen But Gray
+    ContainerOnGray: {
+        flex: 1,
+        backgroundColor: '#5b5c5a',
+    },
     YourTicketContent:{
         flex: 1,
         alignItems:'center',

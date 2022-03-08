@@ -80,6 +80,7 @@ const StartScreenStyle=StyleSheet.create({
         justifyContent:'space-between',
         alignSelf:'center',
         marginLeft:'3.5%',
+        marginRight:'25%',
     },
     OptionTitle:{
         fontSize: 20,

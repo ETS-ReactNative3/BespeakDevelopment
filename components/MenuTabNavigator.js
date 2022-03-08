@@ -62,7 +62,7 @@ class UserTabNavigate extends Component {
                             tabBarShowLabel:false,
                             tabBarLabel: 'Scan',
                             tabBarIcon: ({ color, size }) => (
-                                <Ionicons name="scan" color={color} size={45} />
+                                <Ionicons name="scan" color={color} size={32} />
                             ),
                         }}/>
                     <Tab.Screen name="NotificationTab" component={Menu.NotificationNavigator}

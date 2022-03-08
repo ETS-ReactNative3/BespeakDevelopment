@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import {
   TextInput, 
   Text, 
-  View
+  View,
+  TouchableOpacity
 } from 'react-native';
 
 import SearchScreenStyle from "../styles/SearchScreenStyle";
-import SystemStyle from "../styles/SystemStyle";
 
 import { 
   Feather,
+  MaterialIcons
 } from '@expo/vector-icons';
 
 import SearchContent from "../components/SearchContent";
@@ -45,8 +46,10 @@ class SearchScreen extends Component {
             onChangeText = {text => {
               this._handleText(text);
             }}/>
+          <TouchableOpacity style={SearchScreenStyle.SearchClear}>
+            <MaterialIcons name="clear" size={22} color="black"/>
+          </TouchableOpacity>
         </View>
-        
         <SearchContent refreshing = {this.state.refreshing} 
           search_key = {this.state._search_key}
           navigation = {this.props.navigation}/>

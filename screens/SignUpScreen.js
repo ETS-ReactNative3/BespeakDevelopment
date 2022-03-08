@@ -324,23 +324,20 @@ class SignUpFormScreen extends Component {
                                     {this.state.confirm.valid}</Text>
                             : null}  
                         </SafeAreaView>
-                        
-                        <View style={SignUpStyle.TermsContainer}>
-                            <Text style={SignUpStyle.GreyText}>By clicking the button below, 
-                                you are agreeing to our</Text>
-                        </View>
-                        <View style={SignUpStyle.Background}>
-                            <TouchableOpacity 
-                                onPress = {() => this.setState({show_terms: true})}>
-                                    <Text style={SignUpStyle.TextBtn}>Terms</Text>
-                            </TouchableOpacity>
-                            <Text style={SignUpStyle.GreyText}> and </Text>
-                            <TouchableOpacity
-                                onPress = {() => Alert.alert("Data Policy", Messages.policy)}>
-                                    <Text style={SignUpStyle.TextBtn}>Data Policy</Text>
-                            </TouchableOpacity>
-                            <Text style={SignUpStyle.GreyText}>.</Text>
-                        </View>
+                            <View style={SignUpStyle.TermsContainer}>
+                                <Text style={SignUpStyle.GreyText}>By clicking the button below, 
+                                    you are agreeing to our </Text>     
+                                <TouchableOpacity 
+                                    onPress = {() => this.setState({show_terms: true})}>
+                                        <Text style={SignUpStyle.TextBtn}>Terms</Text>
+                                </TouchableOpacity>
+                                <Text style={SignUpStyle.GreyText}> and </Text>
+                                <TouchableOpacity
+                                    onPress = {() => Alert.alert("Data Policy", Messages.policy)}>
+                                        <Text style={SignUpStyle.TextBtn}>Data Policy</Text>
+                                </TouchableOpacity>
+                                <Text style={SignUpStyle.GreyText}>.</Text>
+                            </View>
                         <TouchableOpacity style={SignUpStyle.ContinueBtn}
                             onPress={() => this._handleSubmit()}>
                                 <Text style={SignUpStyle.ContinueTextBtn}>I'm done!</Text>

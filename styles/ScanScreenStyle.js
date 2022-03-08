@@ -1,17 +1,13 @@
 import {StyleSheet} from 'react-native'
 
 const ScanScreenStyle=StyleSheet.create({
-    Container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
     ScanText:{
-        color: '#fff',
-        padding: 10,
-        backgroundColor: '#5b5c5a',
+        color: '#5b5c5a',
+        backgroundColor: '#ebebeb',
         alignSelf:'center',
         justifyContent:'center',
-        margin:20,
+        padding: '3%',
+        marginVertical:'8%',
         borderRadius: 10,
         fontSize:18,
         fontFamily:'RedHatDisplay-Light',
