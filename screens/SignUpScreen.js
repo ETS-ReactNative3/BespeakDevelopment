@@ -333,7 +333,8 @@ class SignUpFormScreen extends Component {
                                 </TouchableOpacity>
                                 <Text style={SignUpStyle.GreyText}> and </Text>
                                 <TouchableOpacity
-                                    onPress = {() => Alert.alert("Data Policy", Messages.policy)}>
+                                    //onPress = {() => Alert.alert("Data Policy", Messages.policy)}
+                                    onPress = {() => this.setState({show_policy: true})}>
                                         <Text style={SignUpStyle.TextBtn}>Data Policy</Text>
                                 </TouchableOpacity>
                                 <Text style={SignUpStyle.GreyText}>.</Text>
@@ -354,8 +355,18 @@ class SignUpFormScreen extends Component {
                     <Dialog.Description>
                         {Messages.terms}
                     </Dialog.Description>
-                    <Dialog.Button label="I understand" color = {'gray'}
+                    <Dialog.Button label="I understand" color = {'#3b3c3a'}
                         onPress={() => { this.setState({show_terms: false}) }} />
+                    </ScrollView>
+                </Dialog.Container>
+                <Dialog.Container visible={this.state.show_policy}>
+                    <ScrollView>
+                    <Dialog.Title>Terms and Conditions</Dialog.Title>
+                    <Dialog.Description>
+                        {Messages.policy}
+                    </Dialog.Description>
+                    <Dialog.Button label="I understand" color = {'#3b3c3a'}
+                        onPress={() => { this.setState({show_policy: false}) }} />
                     </ScrollView>
                 </Dialog.Container>
             </View>
