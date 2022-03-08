@@ -16,6 +16,7 @@ const SearchScreenStyle=StyleSheet.create({
         backgroundColor: '#fff',
         borderRadius: 25,
         flexDirection:'row',
+        justifyContent: 'center',
         marginTop: 40,
         borderColor:'#ccc',
         opacity:.5,
@@ -48,6 +49,7 @@ const SearchScreenStyle=StyleSheet.create({
     //For "X"
     SearchClear:{
         //backgroundColor:'#5b5c5a'
+        marginTop: 2
     }
 })
 

@@ -339,17 +339,16 @@ class EditProfileScreen extends Component {
                         animation = 'fade'
                         overlayColor = 'rgba(0, 0, 0, 0.50)'/>
                 }
-                <TouchableOpacity onPress = {() => this._selectImage("cover")}>
-                    <View style={EditProfileScreenStyle.EditProfileCoverImgContainer}>
+                <TouchableOpacity style={EditProfileScreenStyle.EditProfileCoverImgContainer}
+                    onPress = {() => this._selectImage("cover")}>
                         <Feather name="plus" size={50} style={EditProfileScreenStyle.EditCoverImgIcon}/>
                         <Image style={EditProfileScreenStyle.EditProfileCoverImg}
                             source={ this.state.cover_photo.uri ?
                                 this.state.cover_photo.uri 
                                 : require('../assets/img/blank-cover.png') }/>
-                    </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress = {() => this._selectImage("dp")}>
-                    <View style={EditProfileScreenStyle.UpperSection}>
+                <TouchableOpacity style={EditProfileScreenStyle.UpperSection} 
+                    onPress = {() => this._selectImage("dp")}>
                         <View style={EditProfileScreenStyle.EditProfileImgContainer}>
                             <Feather name="plus" size={50} style={EditProfileScreenStyle.EditProfileImgIcon}/>
                             <Image style={EditProfileScreenStyle.EditProfileImg}
@@ -357,7 +356,6 @@ class EditProfileScreen extends Component {
                                     this.state.profile_photo.uri
                                     : require('../assets/img/blank-profile.png') }/>
                         </View>
-                    </View>
                 </TouchableOpacity>
                 <ScrollView>
                     <View style = {EditProfileScreenStyle.EditProfileFormContainer}>

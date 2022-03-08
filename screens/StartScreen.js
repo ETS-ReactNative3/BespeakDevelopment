@@ -11,8 +11,6 @@ import {
 } from '@expo/vector-icons';
 
 import StartScreenStyle from "../styles/StartScreenStyle.js";
-import SystemStyle from "../styles/SystemStyle.js";
-
 
 class TitleScreen extends Component {
     componentDidMount() {
@@ -57,7 +55,7 @@ class ContinueScreen extends Component {
               <View style={StartScreenStyle.Card}>
                 <Text style={StartScreenStyle.OptionTitle}>Individual</Text>
                 <Text style={StartScreenStyle.OptionText}>For freelancers, Individuals who requires a quick
-                social gathering, and users who wish to attend events. </Text>
+                    social gathering, and users who wish to attend events. </Text>
               </View>
           </TouchableOpacity>
           <TouchableOpacity style={StartScreenStyle.SignUpAsContainerNotActive}
@@ -67,8 +65,8 @@ class ContinueScreen extends Component {
               </View>
               <View style={StartScreenStyle.Card}>
                 <Text style={StartScreenStyle.OptionTitle}>Organization</Text>
-                <Text style={StartScreenStyle.OptionText}>For mid-small organization, small communities,</Text>
-                <Text style={StartScreenStyle.OptionText}>groups, social networks</Text>
+                <Text style={StartScreenStyle.OptionText}>For mid-small organization, 
+                    small communities, groups, social networks</Text>
               </View>
           </TouchableOpacity>    
         </ScrollView>

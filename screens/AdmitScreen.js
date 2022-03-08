@@ -74,8 +74,9 @@ class AdmitScreen extends Component {
             _content.event.id, _content.ticket.owner
         );
 
+        event.time_admittable = event.schedule - 2 * (60 * 60 * 1000)
         event.is_admittable = 
-            event.schedule - 2 * (60 * 60 * 1000) < current_time.epoch ;
+            event.time_admittable < current_time.epoch ;
 
         if(event.is_admitted) {
             Alert.alert('User has been admitted', 
@@ -182,7 +183,9 @@ class AdmitScreen extends Component {
                                         _event.is_admitted ? 'Re-admit' : 'Admit'}</Text>
                                 </TouchableOpacity>
                             ) : (
-                                <TouchableOpacity style={PreviewTicketScanned.WhyAreYouHere}>
+                                <TouchableOpacity style={PreviewTicketScanned.WhyAreYouHere}
+                                    onPress = {() => Alert.alert('Cannot be admitted', 
+                                        'Admission starts on ', _event.time_admittable )}>
                                     <Text style={PreviewTicketScanned.WhyAreYouStillHere}>
                                         Event is on {_event.sched}</Text>
                                 </TouchableOpacity>)}
