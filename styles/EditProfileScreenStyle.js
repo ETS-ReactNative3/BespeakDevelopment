@@ -66,6 +66,8 @@ HeaderSave:{
 EditProfileCoverImgContainer: {
     alignItems:'center',
     justifyContent:'center',
+    zIndex: 2, // works on ios
+    elevation: 2,
 },
 EditProfileCoverImg: {
     width: 412,
@@ -80,10 +82,7 @@ EditCoverImgIcon:{
     position:'absolute',
 },
 EditProfileImgContainer: {
-    marginLeft: '8%',
-    marginTop:'-11%',
-    zIndex: 3, // works on ios
-    elevation: 3,
+    
 },
 EditProfileImg: {
     width: 70,
@@ -102,8 +101,12 @@ EditProfileImgIcon:{
 },
 //Upper Section
 UpperSection:{
+    marginLeft: '8%',
+    maxWidth: 70,
+    marginTop:'-11%',
+    zIndex: 3, // works on ios
+    elevation: 3,
     flexDirection:'row',
-    justifyContent:'space-between',
 },
 //Edit Profile Form
 EditProfileFormContainer: {

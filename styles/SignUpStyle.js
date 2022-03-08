@@ -178,14 +178,13 @@ const SignUpStyle=StyleSheet.create({
     },
     TermsContainer: {
         backgroundColor: '#fff',
-        paddingTop: '6%',
-        marginHorizontal: '8%'
+        paddingVertical: '6%',
+        marginHorizontal:'8%',
+        width:'84%',
+        flexDirection:'row',
+        flexWrap:'wrap',
+        justifyContent:'center'
     },
-    Background:{
-        flexDirection:'row', 
-        justifyContent:'center', 
-        backgroundColor:'#fff'
-    }
 
 
 })

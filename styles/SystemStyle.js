@@ -290,9 +290,7 @@ const SystemStyle = StyleSheet.create({
     backgroundColor: '#eb9834',
     height: 46,
     width: 150,
-    padding: 10,
     borderRadius: 25,
-    justifyContent:'center',
   },
   InterestedTextBtn:{
     fontSize: 20,
