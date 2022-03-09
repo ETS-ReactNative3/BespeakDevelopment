@@ -51,6 +51,10 @@ export async function _loadAllNotification(type_extend = false,
                 item.content = `Decided to cancel "${ item.event_name }", an event that you were planning to attend.`;
             } else if(item.type == 'UPD_EVENT') {
                 item.content = "Updated the description of an event you are attending.";
+            } else if(item.type == 'EVNT_CMMNT') {
+                item.content = "Commented on your event.";
+            } else if(item.type == 'NEW_CMMNT') { 
+                item.content = "Commented to an event discussion you are in.";
             } else {
                 item.content = "A Bespeak Notification.";
             }

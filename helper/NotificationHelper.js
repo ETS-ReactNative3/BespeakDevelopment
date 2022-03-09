@@ -126,6 +126,48 @@ async function _constructDelEventNotif(_tokens = [], _data = {}, _creator = auth
     return _result;
 }
 
+
+async function _processCommentNotif(event_id, to_notif = [],  _creator = auth.currentUser.uid) {
+    const current_time = await fetch_date_time();
+    var batch = db.batch();
+
+    if(to_notif == 0) return;
+
+    to_notif.forEach((item) => {
+        var to_notif_query = db.collection('_notification').doc();
+        batch.set(to_notif_query, {
+            type: to_notif.indexOf(item) == 0 ? 'EVNT_CMMNT' : 'NEW_CMMNT',
+            event_id: event_id,
+            to: item,
+            from: _creator,
+            is_read: false,
+            server_time: current_time.epoch
+        });
+    })
+
+    batch.commit();
+}
+
+async function _constructCommentNotif(_tokens = [], _data = {}, _special = [], _creator = auth.currentUser.uid) {
+    if(_tokens.length == 0) return;
+
+
+    let _result = [];
+    let owner_name = await _getUserData('_name', _creator);
+
+    for(var token in _tokens) {
+        _result.push({
+            to: _tokens[token],
+            title: owner_name,
+            body: _special.includes(_tokens[token]) ? "Commented on your event."
+                : "Commented to an event discussion you are in.",
+            data: _data
+        });
+    }
+
+    return _result;
+}
+
 export { 
     _constructNewEventNotif,
     _processNewEventNotif,
@@ -133,4 +175,6 @@ export {
     _processDelEventNotif,
     _constructEventChangeNotif,
     _processEventChangeNotif,
+    _processCommentNotif,
+    _constructCommentNotif
 };

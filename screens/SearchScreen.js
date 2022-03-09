@@ -31,6 +31,8 @@ class SearchScreen extends Component {
         }
     }
     _handleText(value) {
+        if(value == '')
+            value = false;
         this.setState({_raw_key: value});
     } 
     _handleSubmit() {
@@ -46,7 +48,7 @@ class SearchScreen extends Component {
                 <View style={SearchScreenStyle.CardSearchInHeader}> 
                     <Feather name="search" size={24} style={SearchScreenStyle.SearchBarIcon}/>
                     <TextInput style={SearchScreenStyle.SearchBar} placeholder='Search Bespeak... '
-                        value = {this.state._search_key ? this.state._search_key : null}
+                        value = {this.state._raw_key ? this.state._raw_key : null}
                         selectionColor={'#eb9834'}
                         onChangeText = {text => this._handleText(text)}
                         onSubmitEditing={() => this._handleSubmit() }/>

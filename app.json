@@ -2,7 +2,7 @@
   "expo": {
     "name": "Bespeak",
     "slug": "Bespeak",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/bespeak-icon-test.png",
     "userInterfaceStyle": "automatic",
@@ -33,7 +33,7 @@
       "@react-native-firebase/app",
       ["expo-notifications",
         {
-          "icon": "./assets/bespeak-icon-test.png"
+          "icon": "./assets/ic_notification.png"
         }
       ]
     ],
