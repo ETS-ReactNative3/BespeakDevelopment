@@ -40,17 +40,15 @@ const ProfileScreenStyle=StyleSheet.create({
   },
   //Edit Profile Button
   EditProfileBtn: {
-    marginRight:'-1%',
     alignItems: 'center',
-    backgroundColor: '#eb9834',
-    height: 36,
-    width: 120,
-    borderRadius: 25,
     justifyContent:'center',
   },
   EditProfileText:{
-    marginTop: -2,
-    fontSize: 17,
+    backgroundColor: '#eb9834',
+    paddingVertical: '2%',
+    paddingHorizontal :'4.5%',
+    borderRadius: 25,
+    fontSize: 18,
     alignItems: 'center',
     justifyContent: 'center',
     color: '#fff',
