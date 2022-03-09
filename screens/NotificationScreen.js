@@ -24,8 +24,6 @@ import {
 } from '../helper/EventLoad';
 import { _loadAllNotification } from "../helper/NotificationLoad";
 
-import Loader from 'react-native-three-dots-loader';
-
 class NotificationScreen extends Component {
     state = {
         data: {},
@@ -34,7 +32,6 @@ class NotificationScreen extends Component {
         loading: true,
         refreshing: false,
         user_refresh: false,
-        is_mounted: false,
 
         last_data: null,
         can_extend: true
@@ -47,24 +44,11 @@ class NotificationScreen extends Component {
     componentDidMount() {
         try {
             this._loadNotifications();
-
-            this.setState({is_mounted: true});
-
-            //# TODO: Optimize
-            this._unsubscribe = this.props.navigation.addListener('focus', () => {
-                if(this.state.is_mounted) {
-                    this._loadNotifications();
-                }
-            }); 
         } catch(error) {
             console.log(error);
         }
     }
     
-    componentWillUnmount() {
-        this._unsubscribe();
-    }
-
     async _retrieveNotifications(type_extend = false) {
         return await _loadAllNotification(type_extend, this.state.limit, this.state.last_data);
     }
@@ -157,6 +141,7 @@ class NotificationScreen extends Component {
         }
 
         this.props.navigation.navigate('EventScreen', {event_id: item.event_id});
+        this._loadNotifications() 
     }
     render() {
         return (
