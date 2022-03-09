@@ -46,7 +46,8 @@ import {
     _joinUserToEvent,
     _cancelReservation,
     _hasUserAdmitted,
-    _deleteEvent
+    _deleteEvent,
+    _notifyOnComment
 } from '../helper/EventHelper';
 import { _isFollowing } from "../helper/ProfileLoad";
 import { _setFollowConnection } from '../helper/ProfileHelper';
@@ -303,11 +304,12 @@ class EventScreen extends Component {
     }
     
     async _handleSubmit() {
+        let event = this.state.data;
         if(this.state.raw_comment) {
             this.setState({is_submitting: true});
             let comment_data = {
                 owner: auth.currentUser.uid,
-                event_id: this.state.data.id,
+                event_id: event.id,
                 content: this.state.raw_comment,
                 server_time: await (await fetch_date_time()).epoch
             }
@@ -336,6 +338,8 @@ class EventScreen extends Component {
                     this.setState({comment_data: current, is_submitting: false});
                     
                     console.log(this.comment_scroll.current);
+
+                    _notifyOnComment(comment_data.event_id, event.owner);
                 });
         }
     }

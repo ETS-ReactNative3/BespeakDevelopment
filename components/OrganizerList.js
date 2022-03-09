@@ -135,7 +135,6 @@ class OrganizerList extends Component {
             data: query_res.data,
             last_data: query_res.last,
             loading: false,
-            can_extend: query_res.data.length == this.state.limit
         });
 
         this._loadImages(query_res.data)
@@ -149,7 +148,7 @@ class OrganizerList extends Component {
 
         let query_res = await this._retrieveOrganizers(true);
 
-        let has_data = query_res.data.length == this.state.limit;
+        let has_data = query_res.data.length > 0;
         let current_data = this.state.data;
 
         this.setState({

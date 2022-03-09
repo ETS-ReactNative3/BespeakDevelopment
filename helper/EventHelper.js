@@ -11,7 +11,9 @@ import {
     _processDelEventNotif,
     _constructDelEventNotif,
     _processEventChangeNotif,
-    _constructEventChangeNotif
+    _constructEventChangeNotif,
+    _processCommentNotif,
+    _constructCommentNotif
 } from './NotificationHelper';
 
 async function _joinUserToEvent(event_id, uid = auth.currentUser.uid) {
@@ -231,6 +233,49 @@ async function _notifyEventChange(event_id, uid = auth.currentUser.uid) {
     }
 }
 
+async function _notifyOnComment(event_id, event_owner, uid = auth.currentUser.uid) {
+    let commented_users = [event_owner];
+    let user_tokens = [];
+
+    await db.collection('comment')
+        .where('event_id', '==', event_id)
+        .get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                let user_id = doc.data();
+                user_id = user_id.owner;
+                commented_users.push(user_id);
+            })
+        })
+
+    let uniq_users = [...new Set(commented_users)];
+    console.log('Commented Duplicate Removal: ', uniq_users);
+
+    const to_remove = uniq_users.indexOf(uid);
+    uniq_users.splice(to_remove, 1);
+
+    _processCommentNotif(event_id, uniq_users);
+    let special_tokens = [];
+
+    await db.collection('_token')
+        .where('owner', 'in', uniq_users)
+        .get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                let data = doc.data();
+                if(data.owner == event_owner) 
+                    special_tokens.push(doc.id)
+                user_tokens.push(doc.id);
+            })
+        })
+
+    console.log('Tokens obtained: ', user_tokens);
+    console.log('Special Token: ', special_tokens);
+
+    if(user_tokens.length > 0) {
+        const _notif_data = await _constructCommentNotif(user_tokens, {event: event_id}, special_tokens);
+        push_notif(_notif_data);
+    }
+}
+
 // #TODO: Move to Helper
 function _uploadToStorage(path, imageName) {
     let reference = storage.ref(imageName);         
@@ -276,6 +321,7 @@ export {
     _cancelReservation,
     _hasUserAdmitted,
     _deleteEvent,
-    _notifyEventChange
+    _notifyEventChange,
+    _notifyOnComment
 }
 
