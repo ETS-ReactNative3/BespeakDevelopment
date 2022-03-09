@@ -83,6 +83,11 @@ class AdmitScreen extends Component {
                 'This ticket was already used earlier.')
         }
 
+        if(!event.is_admittable) {
+            event.time_admittable = await dateFormat(new Date
+                (event.time_admittable), "EEEE, MMMM d, yyyy h:mm aaa");
+        }
+
         let user_query = await db.collection('user_info')
             .doc(_content.ticket.owner)
             .get();
@@ -185,7 +190,7 @@ class AdmitScreen extends Component {
                             ) : (
                                 <TouchableOpacity style={PreviewTicketScanned.WhyAreYouHere}
                                     onPress = {() => Alert.alert('Cannot be admitted', 
-                                        'Admission starts on ', _event.time_admittable )}>
+                                        `Admission starts on ${_event.time_admittable}.`)}>
                                     <Text style={PreviewTicketScanned.WhyAreYouStillHere}>
                                         Event is on {_event.sched}</Text>
                                 </TouchableOpacity>)}
