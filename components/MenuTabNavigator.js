@@ -42,7 +42,7 @@ class UserTabNavigate extends Component {
                             tabBarShowLabel:false,
                             tabBarLabel: 'Home',
                             tabBarIcon: ({ color, size }) => (
-                                <MaterialCommunityIcons name="home-variant" color={color} size={30} />
+                                <MaterialCommunityIcons name="home-variant" color={color} size={29} />
                             )
                         }}/>
                     <Tab.Screen name="SearchTab" component={Menu.SearchNavigator} initialParams = {{direct: _direct}}
@@ -52,7 +52,7 @@ class UserTabNavigate extends Component {
                             tabBarShowLabel:false,
                             tabBarLabel: 'Search',
                             tabBarIcon: ({ color, size }) => (
-                                <Ionicons name="search"  color={color} size={30} />
+                                <Ionicons name="search"  color={color} size={29} />
                             ),
                         }}/>
                     <Tab.Screen name="ScanTab" component={Menu.ScanNavigator}
@@ -62,7 +62,7 @@ class UserTabNavigate extends Component {
                             tabBarShowLabel:false,
                             tabBarLabel: 'Scan',
                             tabBarIcon: ({ color, size }) => (
-                                <Ionicons name="scan" color={color} size={32} />
+                                <Ionicons name="scan" color={color} size={30} />
                             ),
                         }}/>
                     <Tab.Screen name="NotificationTab" component={Menu.NotificationNavigator}
