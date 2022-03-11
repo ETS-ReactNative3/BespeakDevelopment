@@ -102,8 +102,6 @@ class EventScreen extends Component {
     async _retrieveData(event_id) {
         let uid = auth.currentUser.uid;
 
-        let current_count = await _getAttendingCount(event_id);
-
         let get_event_query = await db
             .collection('event')
             .doc(event_id)
@@ -120,7 +118,7 @@ class EventScreen extends Component {
         _data.id = get_event_query.id;
         _data = await _arrangeData([_data], true); 
 
-        _data = _data[0]
+        _data = _data[0];
 
         if(!_data.is_open) {
             if(_data.owner != uid) {
@@ -135,6 +133,8 @@ class EventScreen extends Component {
         if(!_data.is_owned) {
             this._addPopularity(event_id);
         }
+
+        let current_count = await _getAttendingCount(event_id);
 
         _data.is_attending = await _checkUserAttendance(_data.id);
         _data.is_limit = current_count >= _data.max

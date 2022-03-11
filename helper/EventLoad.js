@@ -7,7 +7,7 @@ import fetch_date_time from '../api/GlobalTime'
 import Banners from '../values/Banners'
 
 async function _arrangeData(events_data, mod = false) {
-    let saved_events = await _getUserData("bookmarked");
+    let saved_events = [];
     let current_time = await fetch_date_time();
     //console.log("Bookmarked Events: ", saved_events) // Logs All Events
 
@@ -37,18 +37,21 @@ async function _arrangeData(events_data, mod = false) {
         let raw_sched = parseInt(item.schedule);
         let raw_posted = parseInt(item.server_time);
         
-        if(!item.is_overlap) {
-            let current_count = await  _getAttendingCount(item.id);
-            let remaining = item.max - current_count
-            if(remaining < item.max * .20 && remaining > 0) {
-                item.remaining_status = remaining + ' limited slots left';
-            } else {
-                let countdown = await _getTimeAgo(raw_sched, current_time.epoch);
-                countdown = countdown[0].toLowerCase() + countdown.slice(1);
+        // Has no modifications (Not for Card)
+        if(!mod)  
+            saved_events = await _getUserData("bookmarked");
+            if(!item.is_overlap) {
+                let current_count = await  _getAttendingCount(item.id);
+                let remaining = item.max - current_count
+                if(remaining < item.max * .20 && remaining > 0) {
+                    item.remaining_status = remaining + ' limited slots left';
+                } else {
+                    let countdown = await _getTimeAgo(raw_sched, current_time.epoch);
+                    countdown = countdown[0].toLowerCase() + countdown.slice(1);
 
-                item.countdown_status = 'Starts ' + countdown
+                    item.countdown_status = 'Starts ' + countdown
+                }
             }
-        }
 
         let sched = await dateFormat(new Date(raw_sched), 
             mod ? "EEEE, MMMM d, yyyy ∘ Starts at h:mm aaa" : "EEEE, MMMM d, yyyy ∘ h:mm aaa");
