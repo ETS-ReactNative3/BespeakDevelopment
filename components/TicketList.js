@@ -21,6 +21,8 @@ import {
     _arrangeData
 } from '../helper/EventLoad';
 
+import ContentLoader, { Rect, Circle, } from "react-content-loader/native"
+
 class TicketList extends Component {
     constructor() {
         super();
@@ -236,3 +238,35 @@ class TicketList extends Component {
 }
 
 export default React.memo(TicketList);
+/*
+--- FOR ORANGE ---
+    <View style={TicketScreenStyle.Container}>
+        <ContentLoader 
+            speed={4}
+            width={'100%'}
+            height={100}
+            backgroundColor="#cccccc"
+            foregroundColor="#ebebeb">
+                <Rect x="3%" y="0" rx="4" ry="4" width="45%" height="10"/>
+                <Rect x="3%" y="20" rx="3" ry="3" width="55%" height="6"/>
+                <Rect x="3%" y="50" rx="4" ry="4" width="35%" height="10"/>
+                <Rect x="3%" y="70" rx="3" ry="3" width="20%" height="6"/>
+        </ContentLoader>
+    </View>
+
+
+--- FOR GRAY ---
+    <View style={TicketScreenStyle.ContainerOnGray}>
+        <ContentLoader 
+            speed={4}
+            width={'100%'}
+            height={100}
+            backgroundColor="#cccccc"
+            foregroundColor="#ebebeb">
+                <Rect x="3%" y="0" rx="4" ry="4" width="45%" height="10"/>
+                <Rect x="3%" y="20" rx="3" ry="3" width="55%" height="6"/>
+                <Rect x="3%" y="50" rx="4" ry="4" width="35%" height="10"/>
+                <Rect x="3%" y="70" rx="3" ry="3" width="20%" height="6"/>
+        </ContentLoader>
+    </View>
+ */
