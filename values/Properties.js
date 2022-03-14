@@ -24,6 +24,14 @@ const Properties = {
         paddingVertical: 8,
         characterCountFontSize: 0 // To Hide Character Count
     },
+    /*Not Working 
+    defaultContentLoader: {
+        speed: 2,
+        width:'100%',
+        height:'100%',
+        backgroundColor:"#cccccc",
+        foregroundColor:"#ebebeb",
+    }*/
 }
 
 export default Properties;

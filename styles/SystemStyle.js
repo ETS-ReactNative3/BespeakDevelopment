@@ -49,6 +49,19 @@ const SystemStyle = StyleSheet.create({
     marginRight: '3.5%',
     borderRadius: 20,
   },
+  //Content Loader
+  CardContentLoader:{
+    backgroundColor: '#f5f5f5',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    marginTop: '1%',
+    marginBottom: '1.5%',
+    marginLeft: '3.5%',
+    marginRight: '3.5%',
+    borderRadius: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
   //Card Image
   CardImage:{
     width: '100%',

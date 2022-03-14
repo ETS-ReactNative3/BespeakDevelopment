@@ -26,6 +26,8 @@ import { _initiateSharing } from "../helper/LinkHelper";
 import { _initializeDoc } from '../helper/ProfileHelper';
 import { _checkEventExist } from '../helper/EventLoad';
 
+import ContentLoader, { Rect, Circle, Path } from "react-content-loader/native"
+
 class EventCard extends Component {
     constructor() {
         super();
@@ -120,8 +122,31 @@ class EventCard extends Component {
                             )}
                         </TouchableOpacity>
                         </View>
-                    </View>     
-            </TouchableOpacity>
+                    </View>
+                </TouchableOpacity>  
+            
+            /*
+            <TouchableOpacity style={SystemStyle.CardContentLoader}>
+                <ContentLoader 
+                    speed={2}
+                    width={'100%'}
+                    height={280}
+                    backgroundColor="#cccccc"
+                    foregroundColor="#ebebeb">
+                        <Rect x="0" y="0" rx="20" width="100%" height="130" />
+                        <Rect x="5%" y="150" rx="3" ry="3" width="50%" height="6"/>
+                        <Rect x="5%" y="170" rx="3" ry="3" width="70%" height="6"/>
+                        <Rect x="5%" y="190" rx="3" ry="3" width="44%" height="6"/>
+                        <Circle cx="7%" y="203" cy="10" r="10" />
+                        <Rect x="11%" y="210" rx="3" ry="3" width="20%" height="6"/>
+                        <Circle cx="7%" y="243" cy="10" r="10" />
+                        <Rect x="11%" y="250" rx="3" ry="3" width="25%" height="6"/>
+                        <Circle cx="85%" y="243" cy="10" r="10" />
+                        <Circle cx="92%" y="243" cy="10" r="10" />
+                </ContentLoader>
+            </TouchableOpacity>  
+            */  
+            
         )
     }
 }
