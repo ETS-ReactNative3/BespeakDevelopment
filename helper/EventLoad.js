@@ -6,9 +6,11 @@ import fetch_date_time from '../api/GlobalTime'
 
 import Banners from '../values/Banners'
 
-async function _arrangeData(events_data, mod = false) {
+async function _arrangeData(events_data, mod = false, current_time = false) {
     let saved_events = [];
-    let current_time = await fetch_date_time();
+
+    if(!current_time) 
+        current_time = await fetch_date_time()
     //console.log("Bookmarked Events: ", saved_events) // Logs All Events
 
     //console.log('Arranging: ', events_data)
@@ -29,17 +31,26 @@ async function _arrangeData(events_data, mod = false) {
         
         let sched_end = item.schedule + 86400000 // Add one day to event schedule
 
-        console.log('Comparing time: ', item.schedule, ' to ', current_time.epoch);
+        console.log('Comparing time: ', item.schedule, ' to ', current_time.epoch
+            ,'for: ', item.name);
 
         item.is_overlap = item.schedule < current_time.epoch;
         item.has_ended = sched_end < current_time.epoch;
 
         let raw_sched = parseInt(item.schedule);
         let raw_posted = parseInt(item.server_time);
+
+        let sched = await dateFormat(new Date(raw_sched), 
+            mod ? "EEEE, MMMM d, yyyy ∘ Starts at h:mm aaa" : "EEEE, MMMM d, yyyy ∘ h:mm aaa");
+        let posted = await dateFormat(new Date(raw_posted), "MMMM d, yyyy");
         
+        item.sched = sched;
+        item.date_posted = posted;
+
         // Has no modifications (Not for Card)
         if(!mod)  
             saved_events = await _getUserData("bookmarked");
+            item.is_bookmarked = saved_events?.includes(item.id);
             if(!item.is_overlap) {
                 let current_count = await  _getAttendingCount(item.id);
                 let remaining = item.max - current_count
@@ -52,15 +63,6 @@ async function _arrangeData(events_data, mod = false) {
                     item.countdown_status = 'Starts ' + countdown
                 }
             }
-
-        let sched = await dateFormat(new Date(raw_sched), 
-            mod ? "EEEE, MMMM d, yyyy ∘ Starts at h:mm aaa" : "EEEE, MMMM d, yyyy ∘ h:mm aaa");
-        let posted = await dateFormat(new Date(raw_posted), "MMMM d, yyyy");
-        
-        item.sched = sched;
-        item.date_posted = posted;
-
-        item.is_bookmarked = saved_events?.includes(item.id);
 
         arranged_data.push(item)
     }

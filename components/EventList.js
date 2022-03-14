@@ -37,10 +37,11 @@ class EventList extends Component {
             loading: true,
             refreshing: false,
             user_refresh: false, // Manual Refreshing
-            can_extend: true,
+            can_extend: false,
             modal_data: false,
 
-            is_mounted: false
+            is_mounted: false,
+            item_mounting: true
         }
         this.onRefresh = this.onRefresh.bind(this)
         this._viewModal = this._viewModal.bind(this)
@@ -164,25 +165,52 @@ class EventList extends Component {
         let documentSnapshots = await get_events_query
             .limit(this.state.limit)
             .get();
-        let doc_data = [];
 
-        documentSnapshots.forEach((doc) => {
-            doc_data.push({id: doc.id, ...doc.data()})
+        let doc_data = [];
+        let arranged_data = [];
+
+        let current_time = await fetch_date_time();
+
+        let current_data = this.state.data;
+
+        let ctr = 0;
+        documentSnapshots.forEach(async (doc) => {
+            this.setState({item_mounting: true});
+
+            let _data = {id: doc.id, ...doc.data()};
+            doc_data.push(_data);
+
+            let arranged_item = 
+                await _arrangeData([_data], undefined, current_time);
+
+            arranged_data.push(arranged_item[0])
+
+            this.setState({
+                data: type_extend ? 
+                    [... current_data, ... arranged_data] : arranged_data,
+                loading: false,
+                refreshing: false,
+                can_extend: arranged_data.length == this.state.limit
+            });
+
+            this._loadImages(arranged_item[0]);
+            this._loadMiscs(arranged_item[0]);
+            
+            ctr++;
+            if(ctr === documentSnapshots.docs.length) {
+                this.setState({item_mounting: false});
+            }
+           // this.setState({
+               // data: [... current_to_add, ... query_res.data],
         })
         
         // console.log("Loaded Data: ", doc_data)
 
-        doc_data = await _arrangeData(doc_data);
-        // console.log("Arranged Data: ", doc_data)
-        /*
-        for(var i = 0; i < doc_data.length; i++) {
-            
-            //console.log('User Images: ', doc_data[i].sneak_imgs);
-        }*/
+        
 
         console.log("Loaded Events.")
 
-        let last_value = documentSnapshots.docs[documentSnapshots.docs.length-1]; //doc_data[doc_data.length - 1]?.id;
+        let last_value = documentSnapshots.docs[documentSnapshots.docs.length-1];
 
         return {'data': doc_data, 'last': last_value}
     }
@@ -193,16 +221,14 @@ class EventList extends Component {
         let query_res = await this._retrieveEvents();
 
         this.setState({
-            data: query_res.data,
             last_data: query_res.last,
-            loading: false,
-            can_extend: query_res.data.length == this.state.limit
+            refreshing: query_res.data.length < 0
         });
 
-        this._loadImages(query_res.data)
+        //this._loadImages(query_res.data)
 
-        if(!this.props.for_profile)
-            this._loadMiscs(query_res.data)
+        //if(!this.props.for_profile)
+            //this._loadMiscs(query_res.data)
     }
     // #TODO: Optimize, Minimalize
     async _extendLoadEvents() {
@@ -218,81 +244,88 @@ class EventList extends Component {
         let current_to_add = this.state.data;
 
         this.setState({
-            data: [... current_to_add, ... query_res.data],
             last_data: query_res.last,
-            refreshing: false,
-            can_extend: has_data
         });
         
-        this._loadImages(query_res.data, current_to_add)
+        //this._loadImages(query_res.data, current_to_add)
 
-        if(!this.props.for_profile)
-            this._loadMiscs(query_res.data, current_to_add)
+        //if(!this.props.for_profile)
+            //this._loadMiscs(query_res.data, current_to_add)
     }
-    _loadMiscs(items, has_add = []) {
+    async _loadMiscs(item) {
         // Load Images
-        items?.forEach(async (item) => {
-            item.sneak_imgs = [];
-            item.summary = 'Be the first to join this event!';
 
-            let get_participant_query = await db.collection("_participant")
-                .doc(item.id)
-                .get();
+        item.sneak_imgs = [];
+        item.summary = 'Be the first to join this event!';
 
-            if(!get_participant_query.empty) {
-                let participant = []
-                let _names = []
-                
-                let raw_data = get_participant_query.data();
+        let get_participant_query = await db.collection("_participant")
+            .doc(item.id)
+            .get();
 
-                raw_data = raw_data?.interested;
+        if(!get_participant_query.empty) {
+            let participant = []
+            let _names = []
+            
+            let raw_data = get_participant_query.data();
 
-                if(raw_data) {
-                    //console.log('Participants: ', raw_data)
+            raw_data = raw_data?.interested;
 
-                    for(var inc = 0; inc < raw_data.length 
-                        && inc < 5; inc++) {
-                            participant.push(await _getProfileImage(raw_data[inc]));
-                            if(inc < 2) {
-                                let f_name = await _getUserData('f_name', raw_data[inc])
+            if(raw_data) {
+                //console.log('Participants: ', raw_data)
 
-                                if(f_name) 
-                                    _names.push(f_name);
-                                else
-                                    _names.push(await _getUserData('org_name', raw_data[inc]))
-                                    
-                            }
+                for(var inc = 0; inc < raw_data.length 
+                    && inc < 5; inc++) {
+                        participant.push(await _getProfileImage(raw_data[inc]));
+                        if(inc < 2) {
+                            let f_name = await _getUserData('f_name', raw_data[inc])
+
+                            if(f_name) 
+                                _names.push(f_name);
+                            else
+                                _names.push(await _getUserData('org_name', raw_data[inc]))
+                                
                         }
-                    
-                    if(_names.length > 1) {
-                        let others = raw_data.length - 2;
+                    }
+                
+                if(_names.length > 1) {
+                    let others = raw_data.length - 2;
 
-                        item.summary = `${_names[0] ? _names[0] : 'A user'}, ${_names[1] ? _names[1] : 'A user'}` +
-                        `${others > 1 ? ' and ' + others : others == 1 ? ' and one other' : ''} are interested.`
-                    } else if(_names.length == 1){
-                        item.summary = `${_names[0] ? _names[0] : 'A user'} is interested.`
-                    } 
-                }
-                item.sneak_imgs = participant;
-            } 
+                    item.summary = `${_names[0] ? _names[0] : 'A user'}, ${_names[1] ? _names[1] : 'A user'}` +
+                    `${others > 1 ? ' and ' + others : others == 1 ? ' and one other' : ''} are interested.`
+                } else if(_names.length == 1){
+                    item.summary = `${_names[0] ? _names[0] : 'A user'} is interested.`
+                } 
+            }
+            item.sneak_imgs = participant;
+        } 
 
-            
-            this.setState({data: [...has_add, ...items]});
-        })
+        let _data = [...this.state.data];
+        let index = _data.findIndex(el => el.id === item.id);
+        _data[index] = {...item};
+
+        this.setState({ data: _data });
     }
-    _loadImages(items, has_add = []) {
+    async _loadImages(item) {
         // Load Images
-        items?.forEach(async (item) => {
-            item.event_image = item._banner ? item._banner
-                : await _getEventImage(undefined, item.random_banner)
-            
-            this.setState({data: [...has_add, ...items]});
 
-            item.owner_image = await _getProfileImage(item.owner)
+        item.event_image = item._banner ? item._banner
+            : await _getEventImage(undefined, item.random_banner)
 
-            this.setState({data: [...has_add, ...items]});
-        })
+        let _data = [...this.state.data];
+        let index = _data.findIndex(el => el.id === item.id);
+        _data[index] = {...item};
+
+        this.setState({ data: _data });
+
+        item.owner_image = await _getProfileImage(item.owner)
+
+        _data = [...this.state.data];
+        index = _data.findIndex(el => el.id === item.id);
+        _data[index] = {...item};
+
+        this.setState({ data: _data });
     }
+
     doRefresh() {
         return new Promise((resolve) => {
           this._loadEvents() 
@@ -311,7 +344,7 @@ class EventList extends Component {
         })
     }
     _renderFooter() {
-        if(this.state.refreshing) {
+        if(this.state.refreshing || this.state.item_mounting) {
             return (
                 <>
                     <ActivityIndicator color="orange"/> 
@@ -417,8 +450,10 @@ class EventList extends Component {
                     keyExtractor={(item, index) => index.toString()}
                     ListFooterComponent={this._renderFooter()}
                     onEndReached={() => { 
-                            console.log("Can Extend: ", this.state.can_extend)
-                            if(this.state.can_extend) this._extendLoadEvents()
+                            console.log("Can Extend: ", this.state.can_extend
+                                && !this.state.item_mounting)
+                            if(this.state.can_extend && !this.state.item_mounting) 
+                                this._extendLoadEvents()
                         }
                     }
                     onEndReachedThreshold={0.5}
