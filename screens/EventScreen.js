@@ -27,6 +27,7 @@ import { auth, db, _db } from '../firebase'
 import fetch_date_time from '../api/GlobalTime'
 
 import { CommentSection } from '../components/CommentSection'
+import { EventScreenLoader } from '../components/SectionLoader' 
 
 import SystemStyle from "../styles/SystemStyle";
 import EditEventStyle from "../styles/EditEventStyle";
@@ -51,8 +52,6 @@ import {
 } from '../helper/EventHelper';
 import { _isFollowing } from "../helper/ProfileLoad";
 import { _setFollowConnection } from '../helper/ProfileHelper';
-
-import ContentLoader, { Rect, Circle, Path } from "react-content-loader/native"
 
 class EventScreen extends Component {
     constructor() {
@@ -491,9 +490,11 @@ class EventScreen extends Component {
 
         if(this.state.loading) 
             return (
+                <EventScreenLoader/>
+                /*
                 <View style={SystemStyle.TabContainer}>
                     <ActivityIndicator size={'large'} color="grey"/> 
-                </View>
+                </View>*/
             )
 
         return (
@@ -741,65 +742,7 @@ class EventScreen extends Component {
                             </View>
                         </View>
                 </BottomSheet>
-
             </ScrollView>
-            /*
-            <ScrollView
-            refreshControl={
-                <RefreshControl
-                    refreshing={this.state.refreshing}
-                    onRefresh={this.onRefresh}
-                    colors={["gray", "orange"]}/>
-            }>
-                <View style={EditEventStyle.Container}>
-                <ContentLoader 
-                    speed={2}
-                    width={'100%'}
-                    height={1000}
-                    backgroundColor="#cccccc"
-                    foregroundColor="#ebebeb">
-                        <Rect x="0" y="0" width="100%" height="135" />
-                        <Rect x="5%" y="160" rx="3" ry="3" width="70%" height="6"/>
-                        <Circle cx="8%" y="185" cy="15" r="15" />
-                        <Rect x="15%" y="195" rx="3" ry="3" width="20%" height="6"/>
-                        <Circle cx="7%" y="220" cy="10" r="10" />
-                        <Rect x="11%" y="227" rx="3" ry="3" width="55%" height="6"/>
-                        <Circle cx="7%" y="243" cy="10" r="10" />
-                        <Rect x="12%" y="250" rx="3" ry="3" width="70%" height="6"/>
-                        <Rect x="12%" y="270" rx="3" ry="3" width="30%" height="6"/>
-                            
-                        <Rect x="5%" y="310" rx="3" ry="3" width="20%" height="6"/>
-                        <Rect x="5%" y="330" rx="3" ry="3" width="70%" height="6"/>
-                        <Rect x="5%" y="350" rx="3" ry="3" width="75%" height="6"/>
-                        <Rect x="5%" y="370" rx="3" ry="3" width="50%" height="6"/>
-                        <Rect x="5%" y="400" rx="3" ry="3" width="80%" height="6"/>
-                        <Rect x="5%" y="420" rx="3" ry="3" width="75%" height="6"/>
-                        <Rect x="5%" y="440" rx="3" ry="3" width="50%" height="6"/>
-                        <Rect x="5%" y="460" rx="3" ry="3" width="15%" height="6"/>
-
-                        <Rect x="5%" y="500" rx="3" ry="3" width="35%" height="6"/>
-                        <Rect x="5%" y="520" rx="3" ry="3" width="70%" height="6"/>
-                        <Rect x="5%" y="540" rx="3" ry="3" width="75%" height="6"/>
-                        <Rect x="5%" y="560" rx="3" ry="3" width="80%" height="6"/>
-                        <Rect x="5%" y="580" rx="3" ry="3" width="80%" height="6"/>
-                        <Rect x="5%" y="600" rx="3" ry="3" width="75%" height="6"/>
-                        <Rect x="5%" y="620" rx="3" ry="3" width="50%" height="6"/>
-                        <Rect x="5%" y="640" rx="3" ry="3" width="45%" height="6"/>
-
-                        <Circle cx="7%" y="700" cy="15" r="15" />
-                        <Rect x="12%" y="705" rx="3" ry="3" width="50%" height="6"/>
-                        <Rect x="12%" y="718" rx="3" ry="3" width="65%" height="6"/>
-                        <Circle cx="7%" y="750" cy="15" r="15" />
-                        <Rect x="12%" y="755" rx="3" ry="3" width="50%" height="6"/>
-                        <Rect x="12%" y="768" rx="3" ry="3" width="30%" height="6"/>
-                        <Circle cx="7%" y="800" cy="15" r="15" />
-                        <Rect x="12%" y="805" rx="3" ry="3" width="45%" height="6"/>
-                        <Rect x="12%" y="818" rx="3" ry="3" width="80%" height="6"/>
-                </ContentLoader>
-                </View>
-            </ScrollView>
-            */
-            
         );
     }
 }
