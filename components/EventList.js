@@ -22,7 +22,6 @@ import {
 import { _getFollowing } from "../helper/ProfileLoad";
 
 import { EventCard, EventModal } from "./EventCard";
-import { EventListLoader } from "./SectionLoader";
 
 import SystemStyle from "../styles/SystemStyle";
 import { ScrollView } from "react-native-gesture-handler";
@@ -333,14 +332,12 @@ class EventList extends Component {
         return (
             <View style = {SystemStyle.EventListContainer}>
                 {this.state.loading && 
-                    <EventListLoader />
-                /*
                     <View style={SystemStyle.TabContainer}>
                         <ActivityIndicator size={
                                 this.props.for_profile || this.props.for_user ? 
                                 'large' : 50
                             } color="orange"/> 
-                    </View>*/
+                    </View>
                 }
                 {this.state.data.length == 0 && (
                         this.props.for_profile && this.props.user_id ? (

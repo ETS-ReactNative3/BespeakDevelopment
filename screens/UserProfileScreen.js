@@ -19,7 +19,6 @@ import ProfileScreenStyle from "../styles/ProfileScreenStyle";
 import SystemStyle from "../styles/SystemStyle";
 
 import EventList from "../components/EventList";
-import { UserProfileLoader, EventListLoader } from "../components/SectionLoader";
 
 import { 
     _arrangeProfileData,
@@ -29,14 +28,16 @@ import {
 import { _initiateUserSharing } from "../helper/LinkHelper";
 import { _setFollowConnection } from "../helper/ProfileHelper";
 
+import ContentLoader, { Rect, Circle, Path } from "react-content-loader/native"
+
 class UserProfileScreen extends Component {
     constructor() {
         super()
         this.onRefresh = this.onRefresh.bind(this)
         this.state = {
-            data: {},
-            is_loading: true,
-            refreshing: false
+        data: {},
+        is_loading: true,
+        refreshing: false
         }
     }
     async _loadUserData() {
@@ -100,7 +101,7 @@ class UserProfileScreen extends Component {
     }
 
     componentDidMount() {
-        this._loadUserData();
+        this.onRefresh()
     }
 
     componentDidUpdate(prevProps) {
@@ -137,15 +138,6 @@ class UserProfileScreen extends Component {
         }
     }   
     render() {
-        if(this.state.is_loading)
-            return(
-                <>
-                <UserProfileLoader/>
-                <View style={ProfileScreenStyle.Container}>
-                <EventListLoader/>
-                </View>
-                </>
-            );
         let item = this.state.data;
         return (
             <>
@@ -153,7 +145,7 @@ class UserProfileScreen extends Component {
                     <ScrollView
                         refreshControl={
                         <RefreshControl
-                            refreshing={this.state.refreshing}
+                            refreshing={this.state.refreshing || this.state.is_loading}
                             onRefresh={this.onRefresh}
                             colors={["gray", "orange"]}/>
                         }>
@@ -235,6 +227,38 @@ class UserProfileScreen extends Component {
                 </View>
                 
             </>
+            /*
+            <SafeAreaView>
+                    <ScrollView
+                        refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.refreshing || this.state.is_loading}
+                            onRefresh={this.onRefresh}
+                            colors={["gray", "orange"]}/>
+                        }>
+                        <View style={ProfileScreenStyle.Container}>
+                           <View style={ProfileScreenStyle.ProfileHeader}/>
+                            <ContentLoader 
+                                speed={2}
+                                width={'100%'}
+                                height={1000}
+                                backgroundColor="#cccccc"
+                                foregroundColor="#ebebeb">
+                            <Rect x="0" y="0" width="100%" height="145" />
+                            <Circle cx="14%" y="110" cy="35" r="35" />
+                            <Rect x="4%" y="210" rx="3" ry="3" width="35%" height="6"/>
+                            <Rect x="4%" y="230" rx="3" ry="3" width="50%" height="6"/>
+                            
+                            <Circle cx="7%" y="250" cy="10" r="10" />
+                            <Rect x="11%" y="257" rx="3" ry="3" width="65%" height="6"/>
+
+                            <Rect x="4%" y="280" rx="3" ry="3" width="12%" height="6"/>
+                            <Rect x="20%" y="280" rx="3" ry="3" width="12%" height="6"/>
+                            </ContentLoader>
+                            </View>                        
+                    </ScrollView>
+            </SafeAreaView>
+            */
         );
     }
 }
