@@ -65,3 +65,8 @@ https://www.npmjs.com/package/react-native-popup-confirm-toast
 - ```expo install react-native-sha256```
 
 - ```expo install react-native-dialog```
+
+UPDATE AS OF 12:05PM | MARCH 14, 2022
+# PENDING
+- ```expo install react-content-loader```
+- ```expo install react-content-loader react-native-svg```
