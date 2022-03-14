@@ -19,12 +19,12 @@ import { db } from '../firebase';
 import NotificationScreenStyle from "../styles/NotificationScreenStyle";
 import SystemStyle from "../styles/SystemStyle";
 
+import { NotificationListLoader } from "../components/SectionLoader";
+
 import { 
     _getProfileImage
 } from '../helper/EventLoad';
 import { _loadAllNotification } from "../helper/NotificationLoad";
-
-import ContentLoader, { Rect, Circle, } from "react-content-loader/native"
 
 class NotificationScreen extends Component {
     state = {
@@ -150,9 +150,7 @@ class NotificationScreen extends Component {
 
             <View style={NotificationScreenStyle.Container}>   
                 { this.state.loading && 
-                    <View style={SystemStyle.TabContainer}>
-                        <ActivityIndicator size={50} color="orange"/> 
-                    </View>
+                    <NotificationListLoader/>
                 }
                 { this.state.data.length == 0 && 
                     <View style={SystemStyle.TabContainer}>
@@ -228,21 +226,6 @@ class NotificationScreen extends Component {
                     refreshing={this.state.refreshing}>
                 </FlatList>   
             </View>
-            /*
-            <View style={NotificationScreenStyle.Container}>
-               <ContentLoader 
-                    speed={4}
-                    width={'100%'}
-                    height={100}
-                    backgroundColor="#cccccc"
-                    foregroundColor="#ebebeb">
-                        <Circle cx="10%" y="0" cy="25" r="25" />
-                        <Rect x="20%" y="0" rx="4" ry="4" width="45%" height="10"/>
-                        <Rect x="20%" y="20" rx="3" ry="3" width="70%" height="6"/>
-                        <Rect x="20%" y="35" rx="3" ry="3" width="20%" height="6"/>
-                </ContentLoader>
-           </View>
-           */
         );
     }
 }

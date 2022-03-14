@@ -484,14 +484,15 @@ const SystemStyle = StyleSheet.create({
     },
     //Write a comment
     MyCommentInput:{
-      fontSize:15,
-      borderRadius:25,
-      height:35,
-      backgroundColor:'#f5f5f5',
-      paddingLeft:'4.5%',
-      paddingRight:'4%',
-      width:'98%',
-      fontFamily: 'RedHatDisplay-Regular',
+        fontSize:15,
+        borderRadius:10,
+        backgroundColor:'#f5f5f5',
+        paddingTop: '2%',
+        paddingBottom: '2%',
+        paddingLeft:'4%',
+        paddingRight:'4%',
+        width: '100%',
+        fontFamily: 'RedHatDisplay-Regular',
     },
     BespeakerInput:{
       flexDirection:'row',

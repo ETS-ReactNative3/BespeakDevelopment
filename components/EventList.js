@@ -277,8 +277,10 @@ class EventList extends Component {
                 item.sneak_imgs = participant;
             } 
 
-            
-            this.setState({data: [...has_add, ...items]});
+            let current_data = [...this.state.data];
+            let index = current_data.findIndex(el => el.id === item.id);
+            current_data[index] = item;
+            this.setState({data: current_data});
         })
     }
     _loadImages(items, has_add = []) {
@@ -286,12 +288,13 @@ class EventList extends Component {
         items?.forEach(async (item) => {
             item.event_image = item._banner ? item._banner
                 : await _getEventImage(undefined, item.random_banner)
-            
-            this.setState({data: [...has_add, ...items]});
 
             item.owner_image = await _getProfileImage(item.owner)
 
-            this.setState({data: [...has_add, ...items]});
+            let current_data = [...this.state.data];
+            let index = current_data.findIndex(el => el.id === item.id);
+            current_data[index] = item;
+            this.setState({data: current_data});
         })
     }
     doRefresh() {

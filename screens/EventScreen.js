@@ -103,8 +103,6 @@ class EventScreen extends Component {
     async _retrieveData(event_id) {
         let uid = auth.currentUser.uid;
 
-        let current_count = await _getAttendingCount(event_id);
-
         let get_event_query = await db
             .collection('event')
             .doc(event_id)
@@ -121,7 +119,7 @@ class EventScreen extends Component {
         _data.id = get_event_query.id;
         _data = await _arrangeData([_data], true); 
 
-        _data = _data[0]
+        _data = _data[0];
 
         if(!_data.is_open) {
             if(_data.owner != uid) {
@@ -132,6 +130,8 @@ class EventScreen extends Component {
                     'This event is currently hidden to other bespeak users, change its status in edit event.');
             }
         }
+
+        let current_count = await _getAttendingCount(event_id);
 
         if(!_data.is_owned) {
             this._addPopularity(event_id);
@@ -624,7 +624,8 @@ class EventScreen extends Component {
                         <View style={SystemStyle.BespeakerContainer}>
                             <Text style={SystemStyle.BespeakerName}> { this.state.user_data.name } </Text>
                             <View style={SystemStyle.BespeakerInput}>
-                                <TextInput style={SystemStyle.MyCommentInput} 
+                                <TextInput style={SystemStyle.MyCommentInput}
+                                    autoCorrect = {false}
                                     value = {this.state.raw_comment}
                                     selectionColor={'#eb9834'}
                                     multiline={true}

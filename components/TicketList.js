@@ -15,13 +15,13 @@ import { auth, db, _db } from '../firebase';
 import SystemStyle from "../styles/SystemStyle";
 import TicketScreenStyle from '../styles/TicketScreenStyle';
 
+import { TicketListLoader } from "./SectionLoader";
+
 import dateFormat from '../helper/DateFormat';
 import { 
     _getUserData,
     _arrangeData
 } from '../helper/EventLoad';
-
-import ContentLoader, { Rect, Circle, } from "react-content-loader/native"
 
 class TicketList extends Component {
     constructor() {
@@ -179,24 +179,24 @@ class TicketList extends Component {
         }
     }
     render() {
+        if(this.state.loading) 
+            return(
+                <TicketListLoader />
+            );
+            
         return (
             <View style={SystemStyle.EventListContainer}> 
-                {this.state.loading && 
-                    <View style={SystemStyle.TabContainer}>
-                        <ActivityIndicator size={'large' } color="orange"/> 
-                    </View>
-                }
                 {this.state.data.length == 0 &&
-                            <View style={SystemStyle.TabContainer}>
-                                <View style={SystemStyle.CreateEventImgContainer}>
-                                    <Image style={SystemStyle.CreateEventImg} source={require('../assets/img/LetsGetStarted.png')}/>      
-                                </View>
-                                <View style={SystemStyle.Center}>
-                                <Text style={SystemStyle.EmptyTitle}> No ticket found </Text>
-                                <Text style={SystemStyle.AdditionalInfo}> 
-                                    You may obtain one by browsing and joining events.</Text>
-                                </View>
-                            </View>
+                    <View style={SystemStyle.TabContainer}>
+                        <View style={SystemStyle.CreateEventImgContainer}>
+                            <Image style={SystemStyle.CreateEventImg} source={require('../assets/img/LetsGetStarted.png')}/>      
+                        </View>
+                        <View style={SystemStyle.Center}>
+                        <Text style={SystemStyle.EmptyTitle}> No ticket found </Text>
+                        <Text style={SystemStyle.AdditionalInfo}> 
+                            You may obtain one by browsing and joining events.</Text>
+                        </View>
+                    </View>
                 }
                 <FlatList
                     contentContainerStyle={{ flexGrow: 1 }}

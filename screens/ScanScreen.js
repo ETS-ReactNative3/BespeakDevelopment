@@ -28,8 +28,16 @@ class ScanScreen extends Component {
     onSuccess = async e => {     
         try {
             this.setState({is_verifying: true});
+            let _data = [];
 
-            let _data = JSON.parse(e.data)
+            try {
+                _data = JSON.parse(e.data)
+            } catch (ex) {
+                this.setState({is_verifying: false});
+                Alert.alert('Invalid bespeak QR',
+                    'Please make sure that the ticket is from bespeak.');
+                return;
+            }
             console.log('QR Result: ', _data);
             let _content = await _fetchScannedData(_data);
             let _result = []
