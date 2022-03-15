@@ -160,10 +160,12 @@ const SystemStyle = StyleSheet.create({
     justifyContent: 'flex-end',
     alignSelf:'baseline',
     backgroundColor:'#fff',
+    width: '100%'
   },
   BottomSheetModalContainer: {
     flex: 1,
     height: '100%',
+    width: '100%',
     backgroundColor:'#fff',
     alignItems: "center",
     justifyContent:'center',
