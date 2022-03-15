@@ -14,6 +14,7 @@ import { auth, db, _db } from '../firebase';
 
 import { ProfileCard } from "./ProfileCard";
 import { ProfileListItem } from "./ProfileListItem";
+import { OrganizerListLoader } from "./SectionLoader";
 
 import SystemStyle from "../styles/SystemStyle";
 
@@ -212,13 +213,17 @@ class OrganizerList extends Component {
     render() {
         return (
             <View style={SystemStyle.EventListContainer}> 
-                {this.state.loading && 
-                    <View style={SystemStyle.TabContainer}>
-                        <ActivityIndicator size={
-                                !this.props.for_search ? 
-                                'large' : 50
-                            } color="orange"/> 
-                    </View>
+                {this.state.loading && (
+                        <>
+                            {this.props.for_search ? (
+                                <OrganizerListLoader/>
+                            ) : (
+                                <View style={SystemStyle.TabContainer}>
+                                    <ActivityIndicator size={'large'} color="orange"/> 
+                                </View>
+                            )}
+                        </>
+                    ) 
                 }
                 {this.state.data.length == 0 && (
                         this.props.for_search && this.props.search_key ? (

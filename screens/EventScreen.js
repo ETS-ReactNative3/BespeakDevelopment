@@ -543,7 +543,7 @@ class EventScreen extends Component {
                                     </View>
                             </TouchableOpacity>
 
-                            {item.owner != auth.currentUser.uid &&
+                            { item.owner != auth.currentUser.uid &&
                                 <TouchableOpacity style={
                                     !item.is_following ? 
                                         SystemStyle.FollowOrgBtn : SystemStyle.FollowingOrgBtn}
@@ -553,7 +553,6 @@ class EventScreen extends Component {
                                         }</Text>
                                 </TouchableOpacity>
                             }
-                            
                         </View>
                         <View style={SystemStyle.LowerSection}>
                             <Feather name="calendar" size={24} color="black" />
@@ -601,8 +600,7 @@ class EventScreen extends Component {
                                                     'Load more comments...'
                                                 } </Text>
                                         </TouchableOpacity>
-                                    </View>
-                                    
+                                    </View>    
                                 }
                                 <ScrollView>
                                     { comment_content.map((item)=> 
