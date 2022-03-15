@@ -26,6 +26,8 @@ import { _initiateSharing } from "../helper/LinkHelper";
 import { _initializeDoc } from '../helper/ProfileHelper';
 import { _checkEventExist } from '../helper/EventLoad';
 
+import ContentLoader, { Rect, Circle, } from "react-content-loader/native"
+
 class EventCard extends Component {
     constructor() {
         super();
@@ -230,3 +232,25 @@ export {
     EventCard,
     EventModal
 };
+
+/*
+FOR LINE 197 to 209
+                                <View style={SystemStyle.InterestedParticipantsContainer}>
+                                    <View style={SystemStyle.InterestedParticipantsBtn}> 
+                                        <View style={SystemStyle.RowImg}>
+                                            <ContentLoader
+                                                speed={4}
+                                                width={'100%'}
+                                                height={60}
+                                                backgroundColor="#cccccc"
+                                                foregroundColor="#ebebeb">
+                                                    <Circle cx="30%" y="0" cy="8" r="8" />  
+                                                    <Circle cx="40%" y="0" cy="8" r="8" />  
+                                                    <Circle cx="50%" y="0" cy="8" r="8" />  
+                                                    <Circle cx="60%" y="0" cy="8" r="8" />
+                                                    <Circle cx="70%" y="0" cy="8" r="8" />
+                                                    <Rect x="10%" y="20" rx="3" ry="3" width="80%" height="6"/>
+                                                    <Rect x="10%" y="30" rx="3" ry="3" width="55%" height="6"/>   
+                                            </ContentLoader>
+                                        </View>
+*/

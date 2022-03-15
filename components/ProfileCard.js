@@ -17,6 +17,8 @@ import SystemStyle from "../styles/SystemStyle";
 
 import { _initiateUserSharing } from "../helper/LinkHelper";
 
+import ContentLoader, { Rect, Circle, } from "react-content-loader/native"
+
 class ProfileCard extends Component {
     async _handleFollow(uid) {
         let item = this.props.data;
@@ -75,3 +77,20 @@ class ProfileCard extends Component {
 export {
     ProfileCard
 };
+
+/*
+            <View style={SystemStyle.CardContentLoader}>
+            <ContentLoader 
+                    speed={4}
+                    width={'100%'}
+                    height={270}
+                    backgroundColor="#cccccc"
+                    foregroundColor="#ebebeb">
+                        <Rect x="0" y="0" rx="20" width="100%" height="130" />
+                        <Circle cx="10%" y="145" cy="23" r="23" />
+                        <Rect x="20%" y="163" rx="4" ry="4" width="50%" height="10"/>
+                        <Rect x="5%" y="205" rx="3" ry="3" width="50%" height="6"/>
+                        <Rect x="5%" y="225" rx="3" ry="3" width="70%" height="6"/>
+                </ContentLoader>
+            </View>  
+*/

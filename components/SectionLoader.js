@@ -69,19 +69,19 @@ class EventScreenLoader extends Component {
                 backgroundColor="#cccccc"
                 foregroundColor="#ebebeb">
                     <Rect x="0" y="0" width="100%" height="160" />
-                    <Rect x="5%" y="190" rx="4" ry="4" width="70%" height="10"/>
+                    <Rect x="5%" y="190" rx="4" ry="4" width="65%" height="10"/>
                     <Circle cx="12%" y="220" cy="15" r="25" />
                     <Rect x="20%" y="232" rx="3" ry="3" width="20%" height="8"/>
                     <Rect x="5%" y="270" rx="3" ry="3" width="70%" height="6"/>
-                    <Rect x="5%" y="280" rx="3" ry="3" width="30%" height="6"/>
+                    <Rect x="5%" y="290" rx="3" ry="3" width="30%" height="6"/>
                         
-                    <Rect x="5%" y="330" rx="4" ry="4" width="20%" height="10"/>
+                    <Rect x="5%" y="340" rx="4" ry="4" width="20%" height="10"/>
                     <Rect x="5%" y="360" rx="3" ry="3" width="75%" height="6"/>
-                    <Rect x="5%" y="390" rx="3" ry="3" width="50%" height="6"/>
-                    <Rect x="5%" y="420" rx="3" ry="3" width="25%" height="6"/>
+                    <Rect x="5%" y="380" rx="3" ry="3" width="60%" height="6"/>
+                    <Rect x="5%" y="400" rx="3" ry="3" width="25%" height="6"/>
 
                     <Rect x="5%" y="470" rx="4" ry="4" width="35%" height="10"/>
-                    <Rect x="5%" y="490" rx="3" ry="3" width="75%" height="6"/>
+                    <Rect x="5%" y="490" rx="3" ry="3" width="85%" height="6"/>
                     <Rect x="5%" y="510" rx="3" ry="3" width="75%" height="6"/>
                     <Rect x="5%" y="530" rx="3" ry="3" width="45%" height="6"/>
             </ContentLoader>
@@ -151,7 +151,7 @@ class TicketListLoader extends Component {
                         speed={4}
                         width={'100%'}
                         height={100}
-                        backgroundColor="white"
+                        backgroundColor="#fff"
                         foregroundColor="#eb9834">
                             <Rect x="3%" y="0" rx="4" ry="4" width="45%" height="10"/>
                             <Rect x="3%" y="20" rx="3" ry="3" width="55%" height="6"/>
