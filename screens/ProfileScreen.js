@@ -155,17 +155,19 @@ class ProfileScreen extends Component {
                                     <Text style={ProfileScreenStyle.ProfileName}>
                                         { item.profile_name } </Text>
                                 
-                                    { item.bio &&
-                                        <Text style={ProfileScreenStyle.ProfileBio}>
-                                            { item.bio.replace(/(\r\n|\n|\r)/gm, " ") } </Text>
+                                    { item.bio ? (
+                                            <Text style={ProfileScreenStyle.ProfileBio}>
+                                                { item.bio.replace(/(\r\n|\n|\r)/gm, " ") } </Text>
+                                        ) : null
                                     }
 
-                                    { item.location &&
-                                        <View style={ProfileScreenStyle.LocationContainer}>
-                                            <SimpleLineIcons name="location-pin" size={13} color="#808080" />
-                                            <Text style={ProfileScreenStyle.ProfileLocation}>
-                                                { item.location } </Text>
-                                        </View>
+                                    { item.location ? (
+                                            <View style={ProfileScreenStyle.LocationContainer}>
+                                                <SimpleLineIcons name="location-pin" size={13} color="#808080" />
+                                                <Text style={ProfileScreenStyle.ProfileLocation}>
+                                                    { item.location } </Text>
+                                            </View>
+                                        ) : null
                                     }
 
                                     { !this.state.is_loading &&

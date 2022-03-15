@@ -37,7 +37,8 @@ import {
 import { 
     _getUserGeneratedLink, 
     _deleteOverallAccount
-} from "../helper/ProfileHelper"
+} from "../helper/ProfileHelper";
+import { registerForPushNotificationsAsync } from '../helper/PushNotifHelper';
 
 
 class EditProfileScreen extends Component {
@@ -434,7 +435,21 @@ class EditProfileScreen extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity style={EditProfileScreenStyle.LogOutBtn}
                         onPress = {async () => { 
-                            try { await auth.signOut() }
+                            try {
+                                try {
+                                    registerForPushNotificationsAsync().then(async (token) => {
+                                        db.collection("_token").doc(token)
+                                            .get().then((doc) => {
+                                                if(!doc.empty)
+                                                    console.log('Removing access to token: ', token);
+                                                    doc.ref.delete();
+                                            });
+                                    });
+                                } catch(e) {
+                                    console.log('Error Removing Token!:', e);
+                                }
+                                await auth.signOut() 
+                            }
                             catch(e) { console.log('Error: ', e) }}}>
                                 <Text style={EditProfileScreenStyle.LogOutTextBtn}> Log Out</Text>
                     </TouchableOpacity>
@@ -456,8 +471,8 @@ class EditProfileScreen extends Component {
                     <Dialog.Container visible={this.state.show_confirm}>
                         <Dialog.Title>Confirm Delete</Dialog.Title>
                         <Dialog.Description>
-                            We need your confirmation for your request. Its sad for us to see you go but we guarantee that
-                            all of your information saved in bespeak will be securely removed. 
+                            We need your confirmation for your request. It's sad for us to see you go but we guarantee that
+                            all of your information that are saved in bespeak will be securely removed. 
                         </Dialog.Description>
                         <Dialog.Input label = 'Confirm using your password' secureTextEntry={true}
                             onChangeText = {text => {

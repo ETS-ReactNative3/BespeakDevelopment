@@ -6,9 +6,13 @@ import {
     MaterialCommunityIcons,
 } from '@expo/vector-icons';
 
+import { auth, db } from '../firebase';
+
 import Menu from './MenuNavigator'
 
+import { registerForPushNotificationsAsync } from '../helper/PushNotifHelper';
 import { _loadAllNotification } from "../helper/NotificationLoad";
+import { _initializeDoc } from '../helper/ProfileHelper';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,6 +25,30 @@ class UserTabNavigate extends Component {
         let all_notif = await _loadAllNotification();
         all_notif = all_notif.unread_count;
         this.setState({notif_count: all_notif, is_mounted: true});
+
+        let uid = auth.currentUser.uid;
+        this._saveTokenToUser(uid);
+    }
+
+    _saveTokenToUser(uid) {
+        registerForPushNotificationsAsync().then(async (token) => {
+            let _token_doc = db.collection("_token").doc(token);
+
+            await _token_doc.update({
+                owner: uid, 
+            }).catch(async (err) => {
+                if(err.code == 'firestore/not-found') {
+                    await _initializeDoc("_token", {
+                        owner: uid
+                    }, token)
+                    return;
+                }
+    
+                Alert.alert("Error!", err.message);
+                console.log("Error: ", err)
+            }).then(() => {
+            });
+        });
     }
 
     render() {

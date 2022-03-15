@@ -140,10 +140,10 @@ class UserProfileScreen extends Component {
         if(this.state.is_loading)
             return(
                 <>
-                <UserProfileLoader/>
-                <View style={ProfileScreenStyle.Container}>
-                <EventListLoader/>
-                </View>
+                    <UserProfileLoader/>
+                    <View style={ProfileScreenStyle.Container}>
+                        <EventListLoader/>
+                    </View>
                 </>
             );
         let item = this.state.data;
@@ -195,17 +195,19 @@ class UserProfileScreen extends Component {
                                 <Text style={ProfileScreenStyle.ProfileName}> 
                                     { item.profile_name } </Text>
 
-                                { item.bio &&
-                                    <Text style={ProfileScreenStyle.ProfileBio}> {
-                                        item.bio.replace(/(\r\n|\n|\r)/gm, " ") } </Text>
+                                { item.bio ? (
+                                        <Text style={ProfileScreenStyle.ProfileBio}>
+                                            { item.bio.replace(/(\r\n|\n|\r)/gm, " ") } </Text>
+                                    ) : null
                                 }
 
-                                { item.location &&
-                                    <View style={ProfileScreenStyle.LocationContainer}>
-                                        <SimpleLineIcons name="location-pin" size={13} color="#808080" />
-                                        <Text style={ProfileScreenStyle.ProfileLocation}> 
-                                            { item.location } </Text>
-                                    </View>
+                                { item.location ? (
+                                        <View style={ProfileScreenStyle.LocationContainer}>
+                                            <SimpleLineIcons name="location-pin" size={13} color="#808080" />
+                                            <Text style={ProfileScreenStyle.ProfileLocation}>
+                                                { item.location } </Text>
+                                        </View>
+                                    ) : null
                                 }
 
                                 <View style={ProfileScreenStyle.Dashboard}>
