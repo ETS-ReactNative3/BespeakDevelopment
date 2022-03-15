@@ -14,6 +14,14 @@ const Validation = StyleSheet.create({
         fontFamily:'RedHatDisplay-Light', 
         fontSize:14,
     },
+    IndentedTextVal: {
+        color:'red', 
+        fontFamily:'RedHatDisplay-Light', 
+        fontSize:14,
+        marginLeft:'8%',
+    },
+
+
 })
 
 

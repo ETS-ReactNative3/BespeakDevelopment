@@ -583,7 +583,7 @@ class ChangePasswordScreen extends Component {
                         returnKeyType="next"
                         onSubmitEditing={() => { this.txtNewPassword.focus(); }}
                         blurOnSubmit={false}/>
-                    <Text style={Validation.textVal}>
+                    <Text style={Validation.IndentedTextVal}>
                         {this.state.valid.current}</Text>
                     <Text style={EditProfileScreenStyle.OptionGuide}>New Password</Text>
                     <TextInput style={EditProfileScreenStyle.ChangePassInput} secureTextEntry={true}
@@ -593,7 +593,7 @@ class ChangePasswordScreen extends Component {
                         onSubmitEditing={() => { this.txtConfirmPassword.focus(); }}
                         blurOnSubmit={false}
                         ref={(input) => { this.txtNewPassword = input; }}/>
-                    <Text style={Validation.textVal}>
+                    <Text style={Validation.IndentedTextVal}>
                         {this.state.valid.new}</Text>
                     <Text style={EditProfileScreenStyle.OptionGuide}>Confirm Password</Text>
                     <TextInput style={EditProfileScreenStyle.ChangePassInput} secureTextEntry={true}
@@ -602,7 +602,7 @@ class ChangePasswordScreen extends Component {
                         returnKeyType="next"
                         ref={(input) => { this.txtConfirmPassword = input; }}
                         blurOnSubmit={false}/>
-                    <Text style={Validation.textVal}>
+                    <Text style={Validation.IndentedTextVal}>
                         {this.state.valid.confirm}</Text>
                 </ScrollView>
                 <View>

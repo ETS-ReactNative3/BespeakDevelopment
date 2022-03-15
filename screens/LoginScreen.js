@@ -256,7 +256,7 @@ class ResetFormScreen extends Component {
                             {...Properties.defaultInputStandard}/> 
                         </SafeAreaView>
                         {this.state.email.valid ?
-                            <Text style={Validation.textVal}>
+                            <Text style={Validation.IndentedTextVal}>
                                 {this.state.email.valid}</Text>
                         : null}
                     <View style={LogInScreenStyle.ResetPWContainer}>

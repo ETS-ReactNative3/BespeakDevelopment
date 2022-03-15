@@ -76,10 +76,15 @@ const TicketScreenStyle=StyleSheet.create({
     },
     EventDescriptionText:{
         color:'#fff',
+        fontFamily:'RedHatDisplay-Light',
+    },
+    EventInformationText:{
+        marginTop:'2%',
+        color:'#fff',
         fontFamily:'RedHatDisplay-Regular',
     },
     Button:{
- alignItems: 'center',
+        alignItems: 'center',
         justifyContent:'center',
     },
     DoneBtn: {
