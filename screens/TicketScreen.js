@@ -114,7 +114,7 @@ class TicketScreen extends Component {
                     <Text style={TicketScreenStyle.EventDescriptionText}>
                         { item.desc }
                     </Text>
-                    <Text style={TicketScreenStyle.EventDescriptionText}>
+                    <Text style={TicketScreenStyle.EventInformationText}>
                         { item.info }
                     </Text>
                 </View>
