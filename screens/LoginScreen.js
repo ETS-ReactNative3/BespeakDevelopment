@@ -208,10 +208,10 @@ class ResetFormScreen extends Component {
             auth
                 .sendPasswordResetEmail(email)
                 .catch(error => {
-                    if(error.message = 'auth/user-not-found') {
+                    if(error.code == 'auth/user-not-found') {
                         this.setState({'email': {'valid': 'This email is unavailable.'}})
                         return
-                    }else if(error.code == 'auth/too-many-requests') {
+                    } else if(error.code == 'auth/too-many-requests') {
                         Alert.alert('Reset Password', 'Please wait, we have sended you the email already.')
                         return
                     }
@@ -221,6 +221,7 @@ class ResetFormScreen extends Component {
                     if(!this.state.email.valid)
                         this.props.navigation.navigate('ResetPasswordScreen', {email: email})
                 })
+            this.setState({'is_loading': false})
             return
         }
         this.setState({'is_loading': false})
