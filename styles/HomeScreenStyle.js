@@ -11,7 +11,6 @@ const HomeScreenStyle = StyleSheet.create({
         paddingLeft:'4%',
         paddingRight:'4%',
         marginTop: '10%',
-        marginBottom:'4%',
         alignSelf: 'stretch',
     },
     //bespeak text Logo

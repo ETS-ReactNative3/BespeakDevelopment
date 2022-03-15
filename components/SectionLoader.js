@@ -62,29 +62,29 @@ class EventScreenLoader extends Component {
     render() {
         return(
             <View style={EditEventStyle.Container}>
-            <ContentLoader 
-                speed={4}
-                width={'100%'}
-                height={1000}
-                backgroundColor="#cccccc"
-                foregroundColor="#ebebeb">
-                    <Rect x="0" y="0" width="100%" height="160" />
-                    <Rect x="5%" y="190" rx="4" ry="4" width="65%" height="10"/>
-                    <Circle cx="12%" y="220" cy="15" r="25" />
-                    <Rect x="20%" y="232" rx="3" ry="3" width="20%" height="8"/>
-                    <Rect x="5%" y="270" rx="3" ry="3" width="70%" height="6"/>
-                    <Rect x="5%" y="290" rx="3" ry="3" width="30%" height="6"/>
-                        
-                    <Rect x="5%" y="340" rx="4" ry="4" width="20%" height="10"/>
-                    <Rect x="5%" y="360" rx="3" ry="3" width="75%" height="6"/>
-                    <Rect x="5%" y="380" rx="3" ry="3" width="60%" height="6"/>
-                    <Rect x="5%" y="400" rx="3" ry="3" width="25%" height="6"/>
+                <ContentLoader 
+                    speed={4}
+                    width={'100%'}
+                    height={1000}
+                    backgroundColor="#cccccc"
+                    foregroundColor="#ebebeb">
+                        <Rect x="0" y="0" width="100%" height="160" />
+                        <Rect x="5%" y="190" rx="4" ry="4" width="65%" height="10"/>
+                        <Circle cx="12%" y="220" cy="15" r="25" />
+                        <Rect x="20%" y="232" rx="3" ry="3" width="20%" height="8"/>
+                        <Rect x="5%" y="270" rx="3" ry="3" width="70%" height="6"/>
+                        <Rect x="5%" y="290" rx="3" ry="3" width="30%" height="6"/>
+                            
+                        <Rect x="5%" y="340" rx="4" ry="4" width="20%" height="10"/>
+                        <Rect x="5%" y="360" rx="3" ry="3" width="75%" height="6"/>
+                        <Rect x="5%" y="380" rx="3" ry="3" width="60%" height="6"/>
+                        <Rect x="5%" y="400" rx="3" ry="3" width="25%" height="6"/>
 
-                    <Rect x="5%" y="470" rx="4" ry="4" width="35%" height="10"/>
-                    <Rect x="5%" y="490" rx="3" ry="3" width="85%" height="6"/>
-                    <Rect x="5%" y="510" rx="3" ry="3" width="75%" height="6"/>
-                    <Rect x="5%" y="530" rx="3" ry="3" width="45%" height="6"/>
-            </ContentLoader>
+                        <Rect x="5%" y="470" rx="4" ry="4" width="35%" height="10"/>
+                        <Rect x="5%" y="490" rx="3" ry="3" width="85%" height="6"/>
+                        <Rect x="5%" y="510" rx="3" ry="3" width="75%" height="6"/>
+                        <Rect x="5%" y="530" rx="3" ry="3" width="45%" height="6"/>
+                </ContentLoader>
             </View>
         );
     }
@@ -164,12 +164,86 @@ class TicketListLoader extends Component {
     }
 }
 
+class ParticipantSummaryLoader extends Component {
+    render() {
+        return(
+            <ContentLoader
+                speed={4}
+                width={'100%'}
+                height={60}
+                backgroundColor="#cccccc"
+                foregroundColor="#ebebeb">
+                    <Circle cx="30%" y="0" cy="8" r="8" />  
+                    <Circle cx="40%" y="0" cy="8" r="8" />  
+                    <Circle cx="50%" y="0" cy="8" r="8" />  
+                    <Circle cx="60%" y="0" cy="8" r="8" />
+                    <Circle cx="70%" y="0" cy="8" r="8" />
+                    <Rect x="10%" y="20" rx="3" ry="3" width="80%" height="6"/>
+                    <Rect x="10%" y="30" rx="3" ry="3" width="55%" height="6"/>   
+            </ContentLoader>
+        );
+    }
+}
+
+class OrganizerListLoader extends Component {
+    render() {
+        return(
+            <>
+                <View style={SystemStyle.CardContentLoader}>
+                    <ContentLoader 
+                        speed={4}
+                        width={'100%'}
+                        height={270}
+                        backgroundColor="#cccccc"
+                        foregroundColor="#ebebeb">
+                            <Rect x="0" y="0" rx="20" width="100%" height="130" />
+                            <Circle cx="10%" y="145" cy="23" r="23" />
+                            <Rect x="20%" y="163" rx="4" ry="4" width="50%" height="10"/>
+                            <Rect x="5%" y="205" rx="3" ry="3" width="50%" height="6"/>
+                            <Rect x="5%" y="225" rx="3" ry="3" width="70%" height="6"/>
+                    </ContentLoader>
+                </View>
+                <View style={SystemStyle.CardContentLoader}>
+                    <ContentLoader 
+                        speed={4}
+                        width={'100%'}
+                        height={270}
+                        backgroundColor="#cccccc"
+                        foregroundColor="#ebebeb">
+                            <Rect x="0" y="0" rx="20" width="100%" height="130" />
+                            <Circle cx="10%" y="145" cy="23" r="23" />
+                            <Rect x="20%" y="163" rx="4" ry="4" width="50%" height="10"/>
+                            <Rect x="5%" y="205" rx="3" ry="3" width="50%" height="6"/>
+                            <Rect x="5%" y="225" rx="3" ry="3" width="70%" height="6"/>
+                    </ContentLoader>
+                </View>
+                <View style={SystemStyle.CardContentLoader}>
+                    <ContentLoader 
+                        speed={4}
+                        width={'100%'}
+                        height={270}
+                        backgroundColor="#cccccc"
+                        foregroundColor="#ebebeb">
+                            <Rect x="0" y="0" rx="20" width="100%" height="130" />
+                            <Circle cx="10%" y="145" cy="23" r="23" />
+                            <Rect x="20%" y="163" rx="4" ry="4" width="50%" height="10"/>
+                            <Rect x="5%" y="205" rx="3" ry="3" width="50%" height="6"/>
+                            <Rect x="5%" y="225" rx="3" ry="3" width="70%" height="6"/>
+                    </ContentLoader>
+                </View>
+            </>
+        );
+    }
+}
+
 export {
     EventListLoader,
     EventScreenLoader,
     UserProfileLoader,
     NotificationListLoader,
-    TicketListLoader
+    TicketListLoader,
+    ParticipantSummaryLoader,
+    OrganizerListLoader
 };
 
 

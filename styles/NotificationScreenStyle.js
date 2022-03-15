@@ -5,7 +5,6 @@ const NotificationScreenStyle=StyleSheet.create({
     Container: {
         flex: 1,
         backgroundColor: '#fff',
-        paddingTop:'4%',
     },
     //Page Guide
     NotifDates:{

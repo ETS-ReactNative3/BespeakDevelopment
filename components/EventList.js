@@ -234,7 +234,7 @@ class EventList extends Component {
         // Load Images
         items?.forEach(async (item) => {
             item.sneak_imgs = [];
-            item.summary = 'Be the first to join this event!';
+            item.summary = false;
 
             let get_participant_query = await db.collection("_participant")
                 .doc(item.id)
@@ -272,10 +272,16 @@ class EventList extends Component {
                         `${others > 1 ? ' and ' + others : others == 1 ? ' and one other' : ''} are interested.`
                     } else if(_names.length == 1){
                         item.summary = `${_names[0] ? _names[0] : 'A user'} is interested.`
-                    } 
+                    } else {
+                        item.summary = 'Be the first to join this event!';
+                    }
+                } else {
+                    item.summary = 'Be the first to join this event!';
                 }
                 item.sneak_imgs = participant;
-            } 
+            } else {
+                item.summary = 'Be the first to join this event!';
+            }
 
             let current_data = [...this.state.data];
             let index = current_data.findIndex(el => el.id === item.id);
