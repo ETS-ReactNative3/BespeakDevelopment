@@ -244,6 +244,7 @@ class CreateEventScreen extends Component {
                 {
                     this.state.is_loading && 
                     <Spinner visible={true} textStyle={SystemStyle.defaultLoader}
+                        textContent={'Creating event...'}
                         animation = 'fade'
                         overlayColor = 'rgba(0, 0, 0, 0.50)'/>
                 }
