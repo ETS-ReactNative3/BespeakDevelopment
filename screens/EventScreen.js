@@ -663,7 +663,9 @@ class EventScreen extends Component {
                             </TouchableOpacity>
                             <TouchableOpacity style={EditProfileScreenStyle.DeleteBtn}
                                 onPress = {() => Alert.alert('Delete Event', 'Are you sure? ' + 
-                                'This cannot be retrieved once done.', 
+                                    'This cannot be retrieved anymore once done. '  + 
+                                    'Those who have registered to the event will receive a notification about ' + 
+                                    'your decision to cancel the event.', 
                                 [ {text: 'Cancel', style:'cancel'},
                                     {text: 'Yes', onPress: () => this._handleEventDelete()}])}>
                                 <Text style={EditProfileScreenStyle.DeleteTextBtn}> Delete Event</Text>

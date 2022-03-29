@@ -130,8 +130,8 @@ class EventCard extends Component {
 
 class EventModal extends Component {
     async _handleInterested(event, save = true) {
+        this.props.modal_ref.current.close()
         if(save) {
-            this.props.modal_ref.current.close()
 
             let uid = auth.currentUser.uid;
 
