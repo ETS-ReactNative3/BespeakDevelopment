@@ -10,8 +10,7 @@ const ProfileContentStyle=StyleSheet.create({
     CreateCard:{
         backgroundColor: '#fff',
         borderWidth: 1,
-        borderColor: '#000',
-        opacity:0.4,
+        borderColor: '#eb9834',
         flexDirection: 'row',
         alignSelf:'stretch',
         justifyContent: 'space-between',

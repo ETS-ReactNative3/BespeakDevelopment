@@ -296,6 +296,10 @@ class EditProfileScreen extends Component {
     async _handleDelete() {
         this.setState({show_load: true});
 
+        if(!this.state.pass_confirm) {
+            this.setState({show_load: false, show_valid: true});
+            return;
+        }
         var user_creds = _auth.EmailAuthProvider
             .credential(this.state.user.email, this.state.pass_confirm)
         console.log('Started deleting account... ')
@@ -483,7 +487,7 @@ class EditProfileScreen extends Component {
                         }
                         
                         <Dialog.Button label="Cancel" color = {'orange'} bold = {true}
-                            onPress={() => { this.setState({show_confirm: false}) }} />
+                            onPress={() => { this.setState({show_confirm: false, show_valid: false}) }} />
                         <Dialog.Button label="Delete my information" color = {'gray'} bold = {true}
                             onPress={() => { this._handleDelete(); }} />
                     </Dialog.Container>
