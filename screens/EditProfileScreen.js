@@ -167,8 +167,8 @@ class EditProfileScreen extends Component {
             }) 
             .then(async () => {
                 let _update = _cleaned_data;
-                _update.profile_image = _data.profile_image;
-                _update.cover_image = _data.cover_image;
+                _update.profile_image = _data.profile_image ? _data.profile_image : null;
+                _update.cover_image = _data.cover_image ? _data.cover_image : null;
 
                 if (this.state.profile_photo.hasChange) {
                     await this._uploadToStorage(this.state.profile_photo.uri.uri, `/users/${user_id}/profile`)
